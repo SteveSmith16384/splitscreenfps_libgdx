@@ -37,7 +37,7 @@ public class Inventory implements IInventory {
 
         itemPositions = new ArrayList<ItemPos>();
 
-        Texture itemPos = new Texture(Gdx.files.internal("item_positions.png"));
+        /*Texture itemPos = new Texture(Gdx.files.internal("item_positions.png"));
         itemPos.getTextureData().prepare();
 
         Pixmap pixmap = itemPos.getTextureData().consumePixmap();
@@ -79,7 +79,7 @@ public class Inventory implements IInventory {
                 }
 
             }
-        }
+        }*/
     }
     
 /*

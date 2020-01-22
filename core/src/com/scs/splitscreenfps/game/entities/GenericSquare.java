@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModel;
-import com.scs.splitscreenfps.game.entities.androids.GSquare;
 
 public class GenericSquare extends AbstractEntity {
 

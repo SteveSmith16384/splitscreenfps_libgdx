@@ -2,16 +2,12 @@ package com.scs.splitscreenfps.game;
 
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.GulpmanLevel;
-import com.scs.splitscreenfps.game.levels.IntroLevel;
-import com.scs.splitscreenfps.game.levels.MinedOutLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
-import com.scs.splitscreenfps.game.levels.OhMummyLevel;
 import com.scs.splitscreenfps.game.levels.StartLevel;
 
 public class Levels {
 	
-	private int currentLevelNum = Settings.RELEASE_MODE ? 0 : Settings.START_LEVEL-1; 
+	private int currentLevelNum = 1;//Settings.RELEASE_MODE ? 0 : Settings.START_LEVEL-1; 
 	public int numberTimesLoopAround = 0;
 
 	public Levels() {
@@ -20,17 +16,9 @@ public class Levels {
 	public AbstractLevel getLevel() {
 		switch (currentLevelNum) {
 		case 0:
-			return new IntroLevel();
-		case 1:
 			return new StartLevel();
-		case 2:
-			return new OhMummyLevel(numberTimesLoopAround);
-		case 3:
-			return new GulpmanLevel(numberTimesLoopAround);
-		case 4:
+		case 1:
 			return new MonsterMazeLevel(numberTimesLoopAround);
-		case 5:
-			return new MinedOutLevel(numberTimesLoopAround);
 		//case 6:
 			//return new EricAndTheFloatersLevel(entityManager, decalManager);
 			//return new MaziacsLevel(entityManager, decalManager);
@@ -40,7 +28,7 @@ public class Levels {
 		default:
 			//throw new RuntimeException("Unknown level: " + currentLevelNum);
 			// Loop around
-			currentLevelNum -= 4;
+			currentLevelNum -= 1;
 			numberTimesLoopAround++;
 			return getLevel();
 		}

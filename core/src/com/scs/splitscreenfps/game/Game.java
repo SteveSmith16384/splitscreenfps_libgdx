@@ -22,8 +22,7 @@ import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.GameOverLevel;
-import com.scs.splitscreenfps.game.levels.IntroLevel;
-import com.scs.splitscreenfps.game.levels.PippoLevel;
+import com.scs.splitscreenfps.game.levels.StartLevel;
 import com.scs.splitscreenfps.game.player.Inventory;
 import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.renderable.GameShaderProvider;
@@ -93,13 +92,13 @@ public class Game implements IModule {
 		 */
 		this.createECS();
 
-		if (Settings.TEST_SPECIFIC_LEVEL == false) {
-			this.gameLevel = new IntroLevel();
+		/*if (Settings.TEST_SPECIFIC_LEVEL == false) {
+			this.gameLevel = new StartLevel();
 			gameLevel.load(this);
-		} else {
+		} else {*/
 			this.game_stage = 0;
 			startGame();
-		}
+		//}
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {
 			//post = new PostProcessing();
@@ -165,13 +164,13 @@ public class Game implements IModule {
 
 			this.createECS();
 
-			if (Settings.TEST_SPECIFIC_LEVEL == false) {
+			//if (Settings.TEST_SPECIFIC_LEVEL == false) {
 				if (player.getLives() >= 0) {
 					gameLevel = levels.getLevel();
 				} else {
 					gameLevel = new GameOverLevel();
 				}
-			} else {
+			//} else {
 				//gameLevel = new GameOverLevel();
 				//gameLevel = new OhMummyLevel(0);
 				//gameLevel = new GulpmanLevel(0);
@@ -181,11 +180,11 @@ public class Game implements IModule {
 				//gameLevel = new AliensLevel(0);
 				//gameLevel = new ChaosLevel(0);
 				//gameLevel = new AndroidsLevel(0);
-				gameLevel = new PippoLevel(0);
-			}
+				//gameLevel = new PippoLevel(0);
+			//}
 
 			loadLevel();
-			ecs.addEntity(new Ceiling("gamer1.jpg", -10, -10, 40, 40, false, Game.UNIT*8));
+			//ecs.addEntity(new Ceiling("gamer1.jpg", -10, -10, 40, 40, false, Game.UNIT*8));
 			ecs.addEntity(player);
 
 			/*if (Settings.DEBUG_LEVEL_JUMP) {

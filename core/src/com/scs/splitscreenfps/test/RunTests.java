@@ -8,7 +8,7 @@ public class RunTests {
 
 	
 	public RunTests() {
-		new TestCountMinesSystem();
+		//new TestCountMinesSystem();
 	}
 
 
