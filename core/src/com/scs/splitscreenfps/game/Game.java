@@ -286,7 +286,8 @@ public class Game implements IModule {
 			batch2d.setColor(c,c,c,1);
 			//batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), - Gdx.graphics.getHeight());
 			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), 0, viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
-			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
+			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
+			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, Gdx.graphics.getWidth(), -viewportData.viewPos.height);
 
 			/*
 			if (player != null) {
