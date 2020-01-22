@@ -66,14 +66,13 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			}
 			this.current_module.setFullScreen(fullscreen);
 		}
-
 	}
 
 
 	@Override
 	public void resize(int width, int height) {
 		if(this.current_module != null) {
-			this.current_module.resize(width,height);
+			this.current_module.resize(width, height);
 		}
 	}
 
@@ -84,4 +83,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			current_module.destroy();
 		}
 	}
+	
 }
+

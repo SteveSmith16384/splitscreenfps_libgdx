@@ -49,9 +49,7 @@ public class Game implements IModule {
 	private SpriteBatch batch2d;
 	private BitmapFont font_white, font_black;
 	private ModelBatch batch;
-	//private PerspectiveCamera camera;
 	private ViewportData[] viewports;
-	//private FrameBuffer frameBuffer = null;
 
 	public Player player;
 	public static World world;
@@ -75,10 +73,8 @@ public class Game implements IModule {
 
 		batch = new ModelBatch(new GameShaderProvider());
 
-		viewports = new ViewportData[4];
-		for (int i=0 ; i<viewports.length ; i++) {
-			this.viewports[i] = new ViewportData(i);
-		}
+		this.calcViewports(false);
+		
 		/*
 		camera = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(10f, 0, 10f);
@@ -106,7 +102,15 @@ public class Game implements IModule {
 
 	}
 
+	
+	public void calcViewports(boolean full_screen) {
+		viewports = new ViewportData[4];
+		for (int i=0 ; i<viewports.length ; i++) {
+			this.viewports[i] = new ViewportData(full_screen, i);
+		}
+	}
 
+	
 	private void startGame() {
 		inventory = new Inventory();
 		player = new Player(this.viewports[0].camera, inventory, 1, 4);
@@ -187,14 +191,10 @@ public class Game implements IModule {
 			//ecs.addEntity(new Ceiling("gamer1.jpg", -10, -10, 40, 40, false, Game.UNIT*8));
 			ecs.addEntity(player);
 
-			/*if (Settings.DEBUG_LEVEL_JUMP) {
-				Settings.p("New level is " + gameLevel.getClass().getSimpleName());
-			}*/
-
-			if (gameLevel.GetName().length() > 0) {
+			/*if (gameLevel.GetName().length() > 0) {
 				AbstractEntity text = new TextEntity("LOADING: " + gameLevel.GetName(), 30, 30, 4);
 				ecs.addEntity(text);
-			}
+			}*/
 
 			if (gameLevel.getMusicFilename().length() > 0) {
 				audio.startMusic(gameLevel.getMusicFilename());				
@@ -233,7 +233,6 @@ public class Game implements IModule {
 			//Gdx.gl.glViewport(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			Gdx.gl.glViewport(viewportData.viewPos.x, viewportData.viewPos.y, viewportData.viewPos.width, viewportData.viewPos.height);
 
-			//frameBuffer.begin();
 			viewportData.frameBuffer.begin();
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -286,7 +285,7 @@ public class Game implements IModule {
 			//batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), - Gdx.graphics.getHeight());
 			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), 0, viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
-			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, Gdx.graphics.getWidth(), -viewportData.viewPos.height);
+			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 
 			/*
 			if (player != null) {
@@ -302,7 +301,6 @@ public class Game implements IModule {
 			if (post != null) {
 				post.end();
 			}
-			//break;
 		}
 	}
 
@@ -332,6 +330,7 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
+		//this.calcViewports(false);
 	}
 
 
@@ -356,6 +355,7 @@ public class Game implements IModule {
 	@Override
 	public void setFullScreen(boolean fullscreen) {
 		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // scs todo?
+		this.calcViewports(true);
 	}
 
 }

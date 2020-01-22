@@ -15,10 +15,14 @@ public class ViewportData {
 	public Rectangle viewPos;
 	public FrameBuffer frameBuffer = null;
 	
-	public ViewportData(int idx) {
+	public ViewportData(boolean full_screen, int idx) {
 		int w = Gdx.graphics.getWidth()/2;
 		int h = Gdx.graphics.getHeight()/2;
-
+		if (full_screen) {
+			w = Gdx.graphics.getBackBufferWidth()/2;
+			h = Gdx.graphics.getBackBufferHeight()/2;
+		}
+		
 		// Goes clockwise starting top-left
 		switch (idx) {
 		case 0:
