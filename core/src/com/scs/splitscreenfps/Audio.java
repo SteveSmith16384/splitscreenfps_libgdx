@@ -5,13 +5,8 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.scs.splitscreenfps.game.Game;
 
 public class Audio {
-
-	private String preload[] = new String[] {
-			"loot","weapon","door","pickup","hurt","death","ladder","player_hurt","read","wall_open","success","step", "select"
-	};
 
 	private Music music;
 	private HashMap<String, Sound> sounds; 
@@ -21,11 +16,11 @@ public class Audio {
 	public Audio() {
 		sounds = new HashMap<String, Sound>();
 
-		for(String s : preload) {
+		/*for(String s : preload) {
 			String filename = "audio/" +s+".wav";
 			Sound sfx = Gdx.audio.newSound(Gdx.files.internal(filename));
 			sounds.put(s, sfx);
-		}
+		}*/
 
 		//music = Gdx.audio.newMusic(Gdx.files.internal("audio/orbital_colossus.mp3"));
 		//music.setLooping(true);
@@ -34,10 +29,10 @@ public class Audio {
 
 	public void update() {
 		if (music != null) {
-		//if (Game.game_stage == 0) {
+			//if (Game.game_stage == 0) {
 			musicVolume = Math.min(musicVolume + Gdx.graphics.getDeltaTime() / 2f, 1.0f);
 			music.setVolume(musicVolume);
-		/*} else {
+			/*} else {
 			musicVolume = Math.max(musicVolume-Gdx.graphics.getDeltaTime()/4f, 0f);
 			music.setVolume(musicVolume);
 		}*/
@@ -53,9 +48,9 @@ public class Audio {
 		//if (!music.isPlaying()) {
 		music = Gdx.audio.newMusic(Gdx.files.internal(filename));//orbital_colossus.mp3"));
 		music.setLooping(true);
-			music.play();
-			music.setVolume(0f);
-			musicVolume = 0f;
+		music.play();
+		music.setVolume(0f);
+		musicVolume = 0f;
 		//}
 	}
 

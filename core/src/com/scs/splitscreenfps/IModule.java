@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.modules;
+package com.scs.splitscreenfps;
 
 public interface IModule {
 

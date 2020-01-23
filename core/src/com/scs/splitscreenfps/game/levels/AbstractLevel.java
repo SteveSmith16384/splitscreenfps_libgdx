@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.ICollectionHandler;
 import com.scs.splitscreenfps.game.World;
 
-public abstract class AbstractLevel implements ICollectionHandler {
+public abstract class AbstractLevel {
 
 	protected int map_width;
 	protected int map_height;
@@ -20,11 +19,11 @@ public abstract class AbstractLevel implements ICollectionHandler {
 		Gdx.gl.glClearColor(0.1f, 1f, 0, 1);
 	}
 
-	public abstract String getInstructions(); 
+	//public abstract String getInstructions();
 	
 	public abstract void load(Game game);
 	
-	public abstract String GetName();
+	//public abstract String GetName();
 	
 	public void update(Game game, World world) {};
 	

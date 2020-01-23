@@ -27,14 +27,14 @@ public class GameShaderProvider extends DefaultShaderProvider {
 
 	@Override
 	public Shader createShader(Renderable renderable) {
-		if(renderable.userData instanceof RenderData) {
+		/*if(renderable.userData instanceof RenderData) {
 			RenderData data = (RenderData) renderable.userData;
 			return new CustomShader(renderable, getConfig(data.shaderType));
-		} else {
+		} else {*/
 			return super.createShader(renderable);
-		}
+		//}
 	}
-
+/*
 	private DefaultShader.Config getConfig(RenderData.ShaderType type){
 		switch(type){
 		case FOG_TEXTURE:
@@ -46,7 +46,7 @@ public class GameShaderProvider extends DefaultShaderProvider {
 		}
 	}
 
-
+*/
 	private class CustomShader extends DefaultShader {
 
 		public final int u_tilemapOffset = register("u_tilemapOffset");
@@ -60,13 +60,13 @@ public class GameShaderProvider extends DefaultShaderProvider {
 
 		@Override
 		public void render(Renderable renderable, Attributes combinedAttributes) {
-			RenderData renderData = (RenderData)renderable.userData;
+			/*RenderData renderData = (RenderData)renderable.userData;
 			if (renderData != null) {
 				set(u_tilemapOffset, renderData.tilemapOffset);
 				set(u_tilemapSize, renderData.tilemapSize);
 				set(u_textureRepeat, renderData.textureRepeat);
 				super.render(renderable, combinedAttributes);
-			}
+			}*/
 		}
 	}
 

@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,11 +11,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.bitfire.postprocessing.PostProcessing;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Audio;
+import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
-import com.scs.splitscreenfps.game.player.Inventory;
 import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.renderable.GameShaderProvider;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
@@ -29,13 +31,12 @@ import com.scs.splitscreenfps.game.systems.GotToExitSystem;
 import com.scs.splitscreenfps.game.systems.MobAISystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
-import com.scs.splitscreenfps.modules.IModule;
 
 public class Game implements IModule {
 
 	public static final float UNIT = 16f; // Square/box size
 
-	public static final CollisionDetector collision = new CollisionDetector();
+	//public static final CollisionDetector collision = new CollisionDetector();
 	public static final Art art = new Art();
 	public static final Audio audio = new Audio();
 
@@ -46,14 +47,11 @@ public class Game implements IModule {
 
 	public Player[] players;
 	public static World world;
-	//public Inventory inventory;
 	public static BasicECS ecs;
 
 	public static boolean levelComplete = false;
 	public static boolean restartLevel = false;
 	public static AbstractLevel gameLevel;
-
-	//public static int game_stage = -1;
 
 	private PostProcessing post; // todo - add
 
@@ -69,7 +67,8 @@ public class Game implements IModule {
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
 			//inventory = new Inventory();
-			players[i] = new Player(this.viewports[0], new Inventory(), 4); // todo
+			IInputMethod input = i==0?new MouseAndKeyboardInputMethod() : new NoInputMethod();
+			players[i] = new Player(i, this.viewports[i], input); // todo
 		}
 
 		this.createECS();
@@ -135,11 +134,6 @@ public class Game implements IModule {
 				ecs.addEntity(players[i]);
 			}
 
-			/*if (gameLevel.GetName().length() > 0) {
-				AbstractEntity text = new TextEntity("LOADING: " + gameLevel.GetName(), 30, 30, 4);
-				ecs.addEntity(text);
-			}*/
-
 			if (gameLevel.getMusicFilename().length() > 0) {
 				audio.startMusic(gameLevel.getMusicFilename());				
 			}
@@ -172,7 +166,6 @@ public class Game implements IModule {
 
 		for (int viewid=0 ; viewid<viewports.length ; viewid++) {
 			ViewportData viewportData = this.viewports[viewid];
-			//Gdx.gl.glViewport(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			Gdx.gl.glViewport(viewportData.viewPos.x, viewportData.viewPos.y, viewportData.viewPos.width, viewportData.viewPos.height);
 
 			viewportData.frameBuffer.begin();
@@ -197,11 +190,11 @@ public class Game implements IModule {
 			/*if (inventory != null) {
 				inventory.render(batch2d, player);
 			}*/
-			for (int i=0 ; i<4 ; i++) {
+			/*for (int i=0 ; i<4 ; i++) {
 				if (players[i] != null) {
-					players[i].render(batch2d);
+					players[i].renderWeapon(batch2d);
 				}
-			}
+			}*/
 
 			if (ecs != null) {
 				this.ecs.getSystem(DrawTextSystem.class).process();
@@ -227,8 +220,8 @@ public class Game implements IModule {
 
 			for (int i=0 ; i<4 ; i++) {
 				if (players[i] != null) {
-				players[i].renderUI(batch2d, font_white);
-			}
+					players[i].renderUI(batch2d, font_white);
+				}
 			}
 			gameLevel.renderUI(batch2d, font_white, font_black);
 
@@ -256,7 +249,7 @@ public class Game implements IModule {
 		for (int i=0 ; i<4 ; i++) {
 			players[i].update();
 		}
-		
+
 		for (int viewid=0 ; viewid<viewports.length ; viewid++) {
 			ViewportData viewport = this.viewports[viewid];
 			Camera camera = viewport.camera;

@@ -50,7 +50,7 @@ public class CameraController {
 			Gdx.input.setCursorCatched(false);
 		}
 
-		//Rotation
+		//Rotation - todo - read input
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 			if(camera.direction.y < 0.95) {
 				tmp.set(camera.direction).crs(camera.up).nor();

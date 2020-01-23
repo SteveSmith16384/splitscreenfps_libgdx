@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps;
+package com.scs.splitscreenfps.mapgen;
 
 import java.util.LinkedList;
 import java.util.Random;

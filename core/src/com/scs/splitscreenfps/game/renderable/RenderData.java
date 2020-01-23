@@ -1,5 +1,5 @@
 package com.scs.splitscreenfps.game.renderable;
-
+/*
 import com.badlogic.gdx.math.Vector2;
 
 public class RenderData { // todo - delete this?
@@ -43,3 +43,4 @@ public class RenderData { // todo - delete this?
 	}
 
 }
+*/

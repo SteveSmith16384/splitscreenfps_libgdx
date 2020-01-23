@@ -40,8 +40,8 @@ public class CollectionSystem extends AbstractSystem {
 				if (collector_pos.position.dst(collectable_pos.position) < Game.UNIT/2f) {
 					Settings.p(collectable.name + " collected");
 					collectable.remove();
-					Game.gameLevel.entityCollected(collector, collectable);
-					Game.audio.play("beepfx_samples/28_item_1.wav");
+					//Game.gameLevel.entityCollected(collector, collectable);
+					//Game.audio.play("beepfx_samples/28_item_1.wav");
 				}
 			}
 		}

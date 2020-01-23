@@ -10,7 +10,7 @@ public class Art {
 	public Art() {
 	}
 
-
+/*
 	public static TextureRegion[][] createSheet(String src, int numX, int numY){
 		Texture tex = new Texture(Gdx.files.internal(src));
 		int w = tex.getWidth()/numX;
@@ -27,7 +27,7 @@ public class Art {
 
 	}
 
-
+*/
 	public static Decal DecalHelper(String filename, float sizePcent) {
 		Texture tex = new Texture(Gdx.files.internal(filename));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
@@ -38,8 +38,6 @@ public class Art {
 
 
 	public static Decal DecalHelper(TextureRegion tr, float sizePcent) {
-		//Texture tex = new Texture(Gdx.files.internal(filename));
-		//TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
 		Decal decal = Decal.newDecal(tr, true);
 		decal.setScale(Game.UNIT * sizePcent / tr.getRegionWidth());
 		return decal;

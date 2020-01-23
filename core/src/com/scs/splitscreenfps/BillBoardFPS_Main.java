@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.modules.IModule;
 
 public class BillBoardFPS_Main extends ApplicationAdapter {
 

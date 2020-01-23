@@ -2,7 +2,7 @@ package com.scs.basicecs;
 
 import java.util.HashMap;
 
-public abstract class AbstractEntity {
+public final class AbstractEntity {
 
 	private static int next_id = 0;
 

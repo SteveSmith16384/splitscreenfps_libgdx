@@ -3,8 +3,6 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.Maze;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.World;
@@ -15,6 +13,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
+import com.scs.splitscreenfps.mapgen.Maze;
 
 public class MonsterMazeLevel extends AbstractLevel {
 
@@ -30,8 +29,6 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	@Override
 	public void load(Game game) {
-		//loadMapFromImage(game);
-		//loadTestMap(game);
 		loadMapFromMazegen(game);
 
 	}
@@ -65,15 +62,15 @@ public class MonsterMazeLevel extends AbstractLevel {
 		}
 
 		trex = new TRex(maze.middle_pos.x, maze.middle_pos.y);
-		game.ecs.addEntity(trex);
+		//game.ecs.addEntity(trex);
 
 		MonsterMazeExit exit = new MonsterMazeExit(maze.end_pos.x, maze.end_pos.y);
 		game.ecs.addEntity(exit);
 
 		game.ecs.addEntity(new Floor("colours/white.png", map_width, map_height, false));
-}
+	}
 
-/*
+	/*
 	private void loadTestMap(Game game) {
 		this.map_width = 5;
 		this.map_height = 5;
@@ -107,7 +104,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 			}
 		}
 	}
-*/
+	 */
 
 	@Override
 	public void update(Game game, World world) {
@@ -148,11 +145,6 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 
 	@Override
-	public void entityCollected(AbstractEntity collector, AbstractEntity collectable) {
-	}
-
-
-	@Override
 	public void renderUI(SpriteBatch batch, BitmapFont font_white, BitmapFont font_black) {		
 		font_black.draw(batch, trex_msg, 10-1, Settings.WINDOW_HEIGHT_PIXELS-40);
 		font_black.draw(batch, trex_msg, 10, Settings.WINDOW_HEIGHT_PIXELS-40-1);
@@ -160,18 +152,6 @@ public class MonsterMazeLevel extends AbstractLevel {
 		font_black.draw(batch, trex_msg, 10, Settings.WINDOW_HEIGHT_PIXELS-40+1);
 
 		font_white.draw(batch, trex_msg, 10, Settings.WINDOW_HEIGHT_PIXELS-40);
-}
-
-
-	@Override
-	public String GetName() {
-		return "3D MONSTER MAZE";
-	}
-
-
-	@Override
-	public String getInstructions() {
-		return "Find the exit";
 	}
 
 
