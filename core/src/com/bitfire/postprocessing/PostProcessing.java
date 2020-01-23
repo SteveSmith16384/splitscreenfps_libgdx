@@ -37,7 +37,7 @@ public final class PostProcessing implements Disposable, PostProcessorListener {
 
 	public PostProcessing() {
 		boolean isDesktop = (Gdx.app.getType() == ApplicationType.Desktop);
-		int vpW = Gdx.graphics.getWidth();
+		int vpW = Gdx.graphics.getWidth(); // todo - and rest
 		int vpH = Gdx.graphics.getHeight();
 		blending = false;
 

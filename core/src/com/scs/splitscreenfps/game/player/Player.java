@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.CanCollect;
 import com.scs.splitscreenfps.game.components.HarmsPlayer;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -21,18 +22,15 @@ import com.scs.splitscreenfps.game.player.weapons.IPlayersWeapon;
 public class Player extends AbstractEntity {
 
 	private static final float moveSpeed = 2f * Game.UNIT;
-	private static final float gravityScale = 25 * Game.UNIT;
 	public static final float playerHeight = Game.UNIT * 0.4f;
 	//private static final float colliderSize = .2f * Game.UNIT;
-	private static final float jumpScale = 4f * Game.UNIT;
-	private static final float hurtDistanceSquared = Game.UNIT * .5f * Game.UNIT * .5f;
+	//private static final float hurtDistanceSquared = Game.UNIT * .5f * Game.UNIT * .5f;
 
-	public Camera camera;
-	public IInventory inventory;
+	private Camera camera;
+	private ViewportData viewportData;
+	//public IInventory inventory;
 	public CameraController cameraController;
 	private Vector3 tmpVector;
-	private boolean onGround = false;
-	private float gravity = 0f;
 	private boolean mouseReleased = false;
 	private float footstepTimer;
 	private int lives;
@@ -45,7 +43,7 @@ public class Player extends AbstractEntity {
 
 	private IPlayersWeapon weapon;
 
-	public Player(Camera cam, IInventory inv, int lookSens, int _lives) {
+	public Player(ViewportData _viewportData, IInventory inv, int _lives) {
 		super(Player.class.getSimpleName());
 
 		this.movementData = new MovementData(0.5f);
@@ -54,11 +52,12 @@ public class Player extends AbstractEntity {
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
 
-		inventory = inv;
-		camera = cam;
+		//inventory = inv;
+		camera = _viewportData.camera;
+		viewportData = _viewportData;
 		this.lives = _lives;
 
-		cameraController = new CameraController(camera, lookSens);
+		cameraController = new CameraController(camera);
 
 		tmpVector = new Vector3();
 
@@ -74,11 +73,9 @@ public class Player extends AbstractEntity {
 
 	public void update() {
 		move();
-		//gravity();
 		if (weapon != null) {
 			checkForAttack();
 		}
-		//interact();
 
 		cameraController.update();
 
@@ -105,34 +102,6 @@ public class Player extends AbstractEntity {
 				}
 			}
 		}
-	}
-
-
-	private void interact() {
-		//interactTarget = null;
-
-		float dist = 0f;
-		float d = 0;
-
-		Vector3 hitPos = new Vector3().set(getPosition()).mulAdd(camera.direction, Game.UNIT/2f);
-		/*
-		for(Entity ent : Game.entityManager.getEntities()) {
-			if (ent instanceof IInteractable) {
-				IInteractable ii = (IInteractable)ent;
-				if (ii.isInteractable()) {
-					d = ent.getPosition().dst2(getPosition());
-					if(Game.collision.hitCircle(hitPos, ent.getPosition(), Game.UNIT/2f) && (dist==0 || d<dist)) {
-						interactTarget = (IInteractable)ent;
-						dist = d;
-					}
-				}
-			}
-		}
-		 */
-		/*		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && interactTarget!=null) {
-			interactTarget.interact(this);
-		}
-		 */
 	}
 
 
@@ -170,26 +139,6 @@ public class Player extends AbstractEntity {
 			checkAttackHit();
 		}*/
 	}
-
-	/*
-	private void gravity() {
-		gravity -= gravityScale*Gdx.graphics.getDeltaTime();
-		position.y += gravity*Gdx.graphics.getDeltaTime();
-
-		position.y = Math.max(0, position.y);
-		position.y = Math.min(0.8f*Game.UNIT-playerHeight, position.y);
-
-		onGround = (position.y == 0);
-
-		if (onGround) {
-			if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-				gravity = jumpScale;
-			} else {
-				gravity = 0f;
-			}
-		}
-	}
-	 */
 
 	private void move() {
 		float dt = Gdx.graphics.getDeltaTime();
@@ -247,14 +196,17 @@ public class Player extends AbstractEntity {
 			batch.draw(Game.art.items[0][0], 10 + i*50, Gdx.graphics.getHeight()-40, 48, 48);
 		}*/
 
-		int sx = Gdx.graphics.getWidth()/2 - lives*18;
+		//int sx = Gdx.graphics.getWidth()/2 - lives*18;
+		int sx = (int)this.viewportData.viewPos.x + (this.viewportData.viewPos.width/2) - (lives*18);
 		for (int i = 0; i < lives; i++) {
-			batch.draw(heart, sx + i*36, Gdx.graphics.getHeight()-40, 32, 32);
+			//batch.draw(heart, sx + i*36, Gdx.graphics.getHeight()-40, 32, 32);
+			batch.draw(heart, sx + i*36, this.viewportData.viewPos.y-40, 32, 32);
 		}
 
 		if (hurtTimer > 0 && (int)(hurtTimer*5)%2 == 0) {
 			batch.setColor(1,1,1,.25f);
-			batch.draw(hurtTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			//batch.draw(hurtTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			batch.draw(hurtTexture, this.viewportData.viewPos.x, this.viewportData.viewPos.y, this.viewportData.viewPos.width, this.viewportData.viewPos.height);
 			batch.setColor(1,1,1,1);
 		}
 

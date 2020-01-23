@@ -119,7 +119,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		// left to do - ", or RUN HE IS BEHIND YOU"
 		PositionData trexPos = (PositionData)trex.getComponent(PositionData.class);
-		PositionData playerPos = (PositionData)game.player.getComponent(PositionData.class);
+		PositionData playerPos = (PositionData)game.players[0].getComponent(PositionData.class);
 		float dist = trexPos.position.dst(playerPos.position);
 		if (dist < Game.UNIT*2) {
 			//Game.audio.play("beepfx_samples/58_grr.wav");

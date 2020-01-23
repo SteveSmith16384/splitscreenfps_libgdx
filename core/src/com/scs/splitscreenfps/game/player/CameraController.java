@@ -30,10 +30,11 @@ public class CameraController {
 	final float maxLookY = 80f;
 	float lookY = 0f;
 
-	public CameraController(Camera cam, int sens) {
+	public CameraController(Camera cam) {
 		camera = cam;
 		tmp = new Vector3();
 
+		int sens = 1;
 		rotSpeed *= sensitivity[sens];
 		rotSpeedY *= sensitivity[sens];
 		cursorSpeed *= sensitivity2[sens];

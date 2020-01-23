@@ -10,12 +10,12 @@ import com.scs.splitscreenfps.game.player.Player;
 
 public class GotToExitSystem extends AbstractSystem {
 
-	private Player player;
+	//private Player player;
 	
-	public GotToExitSystem(BasicECS ecs, Player _player) {
+	public GotToExitSystem(BasicECS ecs) {//, Player _player) {
 		super(ecs);
 		
-		player = _player;
+		//player = _player;
 	}
 
 
@@ -28,18 +28,13 @@ public class GotToExitSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		PositionData ourPos = (PositionData)entity.getComponent(PositionData.class);
-		PositionData playerPos = (PositionData)player.getComponent(PositionData.class);
+		/* todo - loop through players
+		 PositionData playerPos = (PositionData)player.getComponent(PositionData.class);
 		float dist = ourPos.getMapPos().dst(playerPos.getMapPos());
-		/*if (!Settings.RELEASE_MODE) {
-			Settings.p("Dist to exit: " + dist);
-		}*/
 		if (dist < 1) {//Game.UNIT / 2) {
 			Game.audio.play("beepfx_samples/19_jet_burst.wav");
 			Game.levelComplete = true;
-			/*if (Settings.DEBUG_LEVEL_JUMP) {
-				Settings.p("Got to exit!");
-			}*/
-		}
+		}*/
 	}
 
 }

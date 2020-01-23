@@ -6,8 +6,8 @@ import com.scs.splitscreenfps.game.entities.PlayersLaserBullet;
 
 public class PlayersLaserGun extends AbstractIntervalWeapon implements IPlayersWeapon {
 
-	public PlayersLaserGun(String image) {
-		super(image, .5f);
+	public PlayersLaserGun(String image, int screenWidth) {
+		super(image, .5f, screenWidth);
 	}
 
 	

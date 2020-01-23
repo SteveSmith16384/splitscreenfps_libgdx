@@ -44,17 +44,16 @@ public class Game implements IModule {
 	private ModelBatch batch;
 	private final ViewportData[] viewports;
 
-	public Player player;
+	public Player[] players;
 	public static World world;
-	public Inventory inventory;
+	//public Inventory inventory;
 	public static BasicECS ecs;
 
 	public static boolean levelComplete = false;
 	public static boolean restartLevel = false;
-	//public Levels levels = new Levels();
 	public static AbstractLevel gameLevel;
 
-	public static int game_stage = -1;
+	//public static int game_stage = -1;
 
 	private PostProcessing post; // todo - add
 
@@ -66,29 +65,21 @@ public class Game implements IModule {
 		batch = new ModelBatch(new GameShaderProvider());
 
 		viewports = new ViewportData[4];
+		players = new Player[4];
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
+			//inventory = new Inventory();
+			players[i] = new Player(this.viewports[0], new Inventory(), 4); // todo
 		}
 
-		/*
-		camera = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(10f, 0, 10f);
-		camera.lookAt(11f, 0, 10f);
-		camera.near = .5f;
-		camera.far = 30f * Game.UNIT;
-		camera.update();
-
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-		 */
 		this.createECS();
-
-		this.game_stage = 0;
-		startGame();
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {
 			//post = new PostProcessing();
 		}
+
+		//this.game_stage = 0;
+		this.restartLevel = true;
 
 	}
 
@@ -100,43 +91,37 @@ public class Game implements IModule {
 	}
 
 
-	private void startGame() {
-		inventory = new Inventory();
-		player = new Player(this.viewports[0].camera, inventory, 1, 4); // todo
-		this.restartLevel = true;
-	}
-
-
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new DrawDecalSystem(ecs, this.viewports[0].camera)); // todo
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
-		ecs.addSystem(new MobAISystem(ecs, player));
-		ecs.addSystem(new MovementSystem(ecs, player));
+		ecs.addSystem(new MobAISystem(ecs, players[0]));
+		ecs.addSystem(new MovementSystem(ecs));
 		ecs.addSystem(new DrawModelSystem(ecs, batch));
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
 		ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
-		ecs.addSystem(new GotToExitSystem(ecs, player));
+		ecs.addSystem(new GotToExitSystem(ecs));
 
 		world = new World();
 	}
 
 
 	public void update() {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+		/*if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 			if (this.game_stage == -1) {
 				this.game_stage = 0;
 				this.startGame();
 			}
-		}
+		}*/
 
 		if (levelComplete) {
-			this.startGame();
+			/*this.startGame();
 			levelComplete = false;
-			restartLevel = true;
+			restartLevel = true;*/
 			audio.stopMusic();
+			// todo- new module
 		}		
 		if (restartLevel) {
 			restartLevel = false;
@@ -146,7 +131,9 @@ public class Game implements IModule {
 			gameLevel = new MonsterMazeLevel();
 
 			loadLevel();
-			ecs.addEntity(player);
+			for (int i=0 ; i<4 ; i++) {
+				ecs.addEntity(players[i]);
+			}
 
 			/*if (gameLevel.GetName().length() > 0) {
 				AbstractEntity text = new TextEntity("LOADING: " + gameLevel.GetName(), 30, 30, 4);
@@ -158,24 +145,22 @@ public class Game implements IModule {
 			}
 		}
 
-		if (player != null) {
-			player.update();
+		for (int i=0 ; i<4 ; i++) {
+			if (players[i] != null) {
+				players[i].update();
+			}
 		}
-		//camera.update();
+
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i].camera.update();
 		}
 
 		this.ecs.getSystem(RemoveAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
-		if (this.game_stage == 0) {
-			this.ecs.getSystem(MobAISystem.class).process();
-		}
+		this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(CollectionSystem.class).process();
-		if (this.game_stage == 0) {
-			this.ecs.getSystem(GotToExitSystem.class).process();
-		}
+		this.ecs.getSystem(GotToExitSystem.class).process();
 		gameLevel.update(this, world);
 	}
 
@@ -209,12 +194,15 @@ public class Game implements IModule {
 			}
 
 			batch2d.begin();
-			if (inventory != null) {
+			/*if (inventory != null) {
 				inventory.render(batch2d, player);
+			}*/
+			for (int i=0 ; i<4 ; i++) {
+				if (players[i] != null) {
+					players[i].render(batch2d);
+				}
 			}
-			if (player != null) {
-				player.render(batch2d);
-			}
+
 			if (ecs != null) {
 				this.ecs.getSystem(DrawTextSystem.class).process();
 			}
@@ -237,8 +225,10 @@ public class Game implements IModule {
 			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 
-			if (player != null) {
-				player.renderUI(batch2d, font_white);
+			for (int i=0 ; i<4 ; i++) {
+				if (players[i] != null) {
+				players[i].renderUI(batch2d, font_white);
+			}
 			}
 			gameLevel.renderUI(batch2d, font_white, font_black);
 
@@ -260,10 +250,13 @@ public class Game implements IModule {
 		if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
 			throw new RuntimeException ("No player start position set");
 		}
-		PositionData posData = (PositionData)this.player.getComponent(PositionData.class);
+		PositionData posData = (PositionData)this.players[0].getComponent(PositionData.class); // todo - diff start positions
 		posData.position.set(gameLevel.getPlayerStartMapX()*Game.UNIT+(Game.UNIT/2), 0, gameLevel.getPlayerStartMapY()*Game.UNIT+(Game.UNIT/2)); // Start in middle of square
 
-		player.update();
+		for (int i=0 ; i<4 ; i++) {
+			players[i].update();
+		}
+		
 		for (int viewid=0 ; viewid<viewports.length ; viewid++) {
 			ViewportData viewport = this.viewports[viewid];
 			Camera camera = viewport.camera;

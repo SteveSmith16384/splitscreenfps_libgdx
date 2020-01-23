@@ -18,12 +18,12 @@ import com.scs.splitscreenfps.game.player.Player;
 
 public class MovementSystem extends AbstractSystem {
 
-	private Player player;
+	//private Player player;
 
-	public MovementSystem(BasicECS ecs, Player _player) {
+	public MovementSystem(BasicECS ecs) {
 		super(ecs);
 
-		player = _player;
+		//player = _player;
 	}
 
 
@@ -90,7 +90,7 @@ public class MovementSystem extends AbstractSystem {
 		if (moveVec.y != 0) {
 			position.y += moveVec.y;
 		}
-
+/*
 		if (entity != player) {
 			if (checkForNastiesCollision(entity, position)) {
 				//if (checkForPlayerCollision(entity, position) || checkForNastiesCollision(entity, position)) {
@@ -98,7 +98,7 @@ public class MovementSystem extends AbstractSystem {
 				return false;
 			}
 		}
-
+*/
 		return resultX && resultZ;
 	}
 

@@ -14,7 +14,7 @@ public abstract class AbstractIntervalWeapon implements IPlayersWeapon {
 	private float timeSinceLastFire = 0;
 	private final float shot_interval;
 
-	public AbstractIntervalWeapon(String tex, float interval) {
+	public AbstractIntervalWeapon(String tex, float interval, int screenWidth) {
 		Texture weaponTex = new Texture(Gdx.files.internal(tex));
 		this.shot_interval = interval;
 		
@@ -24,8 +24,8 @@ public abstract class AbstractIntervalWeapon implements IPlayersWeapon {
 		//weaponSprite.setScale(7.5f, 5f);
 		float scale = (float)Settings.WINDOW_WIDTH_PIXELS / (float)weaponTex.getWidth() / 3f;
 		weaponSprite.setScale(scale);
-		//weaponSprite.setPosition(Gdx.graphics.getWidth()-300, -20);
-		weaponSprite.setPosition((Gdx.graphics.getWidth()-weaponSprite.getWidth())/2, 0);
+		//weaponSprite.setPosition((Gdx.graphics.getWidth()-weaponSprite.getWidth())/2, 0);
+		weaponSprite.setPosition((screenWidth-weaponSprite.getWidth())/2, 0);
 	}
 	
 	
