@@ -68,7 +68,7 @@ public class CameraController {
 			camera.rotate(Vector3.Y, -rotSpeed * dt);
 		}
 
-		if(Gdx.input.isCursorCatched()){
+		if (Gdx.input.isCursorCatched()) {
 			float rx = Gdx.input.getDeltaX();
 			float ry = Gdx.input.getDeltaY();
 

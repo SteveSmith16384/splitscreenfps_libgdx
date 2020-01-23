@@ -2,7 +2,7 @@ package com.scs.splitscreenfps.game.renderable;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class RenderData {
+public class RenderData { // todo - delete this?
 
 	public enum ShaderType {
 		FOG_TEXTURE,

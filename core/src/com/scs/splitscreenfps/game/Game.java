@@ -1,7 +1,5 @@
 package com.scs.splitscreenfps.game;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,19 +8,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.bitfire.postprocessing.PostProcessing;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Audio;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.entities.Ceiling;
-import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.GameOverLevel;
-import com.scs.splitscreenfps.game.levels.StartLevel;
+import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.player.Inventory;
 import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.renderable.GameShaderProvider;
@@ -49,22 +42,21 @@ public class Game implements IModule {
 	private SpriteBatch batch2d;
 	private BitmapFont font_white, font_black;
 	private ModelBatch batch;
-	private ViewportData[] viewports;
+	private final ViewportData[] viewports;
 
 	public Player player;
 	public static World world;
 	public Inventory inventory;
 	public static BasicECS ecs;
-	public ArrayList<ModelInstance> modelInstances;
 
 	public static boolean levelComplete = false;
 	public static boolean restartLevel = false;
-	public Levels levels = new Levels();
+	//public Levels levels = new Levels();
 	public static AbstractLevel gameLevel;
 
 	public static int game_stage = -1;
 
-	private PostProcessing post;
+	private PostProcessing post; // todo - add
 
 	public Game() {
 		batch2d = new SpriteBatch();
@@ -73,8 +65,11 @@ public class Game implements IModule {
 
 		batch = new ModelBatch(new GameShaderProvider());
 
-		this.calcViewports(false);
-		
+		viewports = new ViewportData[4];
+		for (int i=0 ; i<viewports.length ; i++) {
+			this.viewports[i] = new ViewportData(false, i);
+		}
+
 		/*
 		camera = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(10f, 0, 10f);
@@ -88,13 +83,8 @@ public class Game implements IModule {
 		 */
 		this.createECS();
 
-		/*if (Settings.TEST_SPECIFIC_LEVEL == false) {
-			this.gameLevel = new StartLevel();
-			gameLevel.load(this);
-		} else {*/
-			this.game_stage = 0;
-			startGame();
-		//}
+		this.game_stage = 0;
+		startGame();
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {
 			//post = new PostProcessing();
@@ -102,19 +92,18 @@ public class Game implements IModule {
 
 	}
 
-	
-	public void calcViewports(boolean full_screen) {
-		viewports = new ViewportData[4];
+
+	public void resizeViewports(boolean full_screen) {
 		for (int i=0 ; i<viewports.length ; i++) {
-			this.viewports[i] = new ViewportData(full_screen, i);
+			this.viewports[i].resize(full_screen, i);
 		}
 	}
 
-	
+
 	private void startGame() {
 		inventory = new Inventory();
-		player = new Player(this.viewports[0].camera, inventory, 1, 4);
-		levelComplete = true; // So we load the first level 
+		player = new Player(this.viewports[0].camera, inventory, 1, 4); // todo
+		this.restartLevel = true;
 	}
 
 
@@ -136,16 +125,6 @@ public class Game implements IModule {
 
 
 	public void update() {
-		if (Settings.RELEASE_MODE == false) {
-			// Cheat mode!
-			if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
-				this.levelComplete = true;
-				/*if (Settings.DEBUG_LEVEL_JUMP) {
-					Settings.p("X pressed");
-				}*/
-			}
-		}
-
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 			if (this.game_stage == -1) {
 				this.game_stage = 0;
@@ -154,41 +133,19 @@ public class Game implements IModule {
 		}
 
 		if (levelComplete) {
-			if (this.gameLevel instanceof GameOverLevel) {
-				this.startGame();
-			}
+			this.startGame();
 			levelComplete = false;
-			levels.nextLevel();
 			restartLevel = true;
 			audio.stopMusic();
-			audio.play("zxspectrumloadingnoise.ogg");
 		}		
 		if (restartLevel) {
 			restartLevel = false;
 
 			this.createECS();
 
-			//if (Settings.TEST_SPECIFIC_LEVEL == false) {
-				if (player.getLives() >= 0) {
-					gameLevel = levels.getLevel();
-				} else {
-					gameLevel = new GameOverLevel();
-				}
-			//} else {
-				//gameLevel = new GameOverLevel();
-				//gameLevel = new OhMummyLevel(0);
-				//gameLevel = new GulpmanLevel(0);
-				//gameLevel = new MinedOutLevel(0);
-				//gameLevel = new MonsterMazeLevel(0);
-				//gameLevel = new ChaosLevel(0);
-				//gameLevel = new AliensLevel(0);
-				//gameLevel = new ChaosLevel(0);
-				//gameLevel = new AndroidsLevel(0);
-				//gameLevel = new PippoLevel(0);
-			//}
+			gameLevel = new MonsterMazeLevel();
 
 			loadLevel();
-			//ecs.addEntity(new Ceiling("gamer1.jpg", -10, -10, 40, 40, false, Game.UNIT*8));
 			ecs.addEntity(player);
 
 			/*if (gameLevel.GetName().length() > 0) {
@@ -240,24 +197,17 @@ public class Game implements IModule {
 			this.gameLevel.setBackgroundColour();
 
 			batch.begin(viewportData.camera);
-			if (modelInstances != null) {
-				for (int i = 0; i < modelInstances.size(); i++) {
-					batch.render(modelInstances.get(i));
-				}
-			}
-
 			if (ecs != null) {
 				this.ecs.getSystem(DrawModelSystem.class).process();
 			}
 			batch.end();
-			/*
 
 			if (ecs != null) {
 				this.ecs.getSystem(CycleThruDecalsSystem.class).process();
-				//this.ecs.getSystem(DrawDecalSystem.class).process();
+				this.ecs.getSystem(DrawDecalSystem.class).process();
 				this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 			}
-			
+
 			batch2d.begin();
 			if (inventory != null) {
 				inventory.render(batch2d, player);
@@ -269,14 +219,14 @@ public class Game implements IModule {
 				this.ecs.getSystem(DrawTextSystem.class).process();
 			}
 			batch2d.end();
-*/
+
 			//frameBuffer.end();
 			viewportData.frameBuffer.end();
-/*
+
 			if (post != null) {
 				post.begin();
 			}
-*/
+
 			//Draw buffer and FPS
 			batch2d.begin();
 
@@ -287,12 +237,11 @@ public class Game implements IModule {
 			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 
-			/*
 			if (player != null) {
 				player.renderUI(batch2d, font_white);
 			}
 			gameLevel.renderUI(batch2d, font_white, font_black);
-*/
+
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}
@@ -306,7 +255,6 @@ public class Game implements IModule {
 
 
 	private void loadLevel() {
-		modelInstances = new ArrayList<ModelInstance>();
 		gameLevel.load(this);
 
 		if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
@@ -330,11 +278,11 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
-		//this.calcViewports(false);
+		//this.calcViewports(false); scs todo?
 	}
 
 
-	public void destroy() {
+	public void dispose() {
 		if (post != null) {
 			post.dispose();
 		}
@@ -346,16 +294,16 @@ public class Game implements IModule {
 	}
 
 
-	@Override
+	/*	@Override
 	public boolean isFinished() {
 		return false; // Never finishes
 	}
-
+	 */
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
 		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // scs todo?
-		this.calcViewports(true);
+		this.resizeViewports(true);
 	}
 
 }

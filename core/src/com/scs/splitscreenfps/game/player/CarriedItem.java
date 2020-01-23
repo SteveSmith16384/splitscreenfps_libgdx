@@ -10,7 +10,6 @@ public class CarriedItem {
 
     public float rotation;
     public Sprite sprite;
-
     public Vector2 position;
 
     public CarriedItem(Texture src, int tx, int ty){

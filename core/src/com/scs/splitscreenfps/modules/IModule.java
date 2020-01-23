@@ -6,9 +6,9 @@ public interface IModule {
 	
 	void render();
 	
-	boolean isFinished();
+	//boolean isFinished();
 
-	void destroy();
+	void dispose();
 	
 	void setFullScreen(boolean fullscreen);
 	

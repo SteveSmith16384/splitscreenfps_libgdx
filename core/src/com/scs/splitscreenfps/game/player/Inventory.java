@@ -2,12 +2,8 @@ package com.scs.splitscreenfps.game.player;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class Inventory implements IInventory {
 
@@ -16,10 +12,10 @@ public class Inventory implements IInventory {
 
     //public boolean gameComplete = false; // todo - move
 
-    public int totalLoot = 0;
-    private ArrayList<ItemPos> itemPositions;
-    public int keys = 0;//Settings.INFINITE_KEYS ? 10 : 0;
-
+    //public int totalLoot = 0;
+    //private ArrayList<ItemPos> itemPositions;
+    //public int keys = 0;//Settings.INFINITE_KEYS ? 10 : 0;
+/*
     private class ItemPos {
     	
         public Vector2 position;
@@ -30,12 +26,12 @@ public class Inventory implements IInventory {
             priority = p;
         }
     }
-    
+  */  
     public Inventory() {
         //itemTexture = new Texture(Gdx.files.internal("items.png"));
         items = new ArrayList<CarriedItem>();
 
-        itemPositions = new ArrayList<ItemPos>();
+        //itemPositions = new ArrayList<ItemPos>();
 
         /*Texture itemPos = new Texture(Gdx.files.internal("item_positions.png"));
         itemPos.getTextureData().prepare();
@@ -124,7 +120,7 @@ public class Inventory implements IInventory {
         itemPositions.remove(ip);
     }
 */
-    
+
     public void render(SpriteBatch batch, Player player) {
         Sprite spr = null;
         CarriedItem item;

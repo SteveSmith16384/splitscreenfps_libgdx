@@ -12,21 +12,8 @@ public class World {
 	private static final WorldSquare BLOCKED_WALL = new WorldSquare(true);
 
 	public WorldSquare world[][];
-	//public TextureRegion detailTexture[];
 
 	public World() {
-		/*Texture detailTex = new Texture(Gdx.files.internal("detail.png"));
-
-		int w = detailTex.getWidth()/16;
-		int h = detailTex.getHeight()/16;
-
-		detailTexture = new TextureRegion[w*h];
-
-		for (int x = 0; x < w; x++) {
-			for (int y = 0; y < h; y++) {
-				detailTexture[x + y*w] = new TextureRegion(detailTex, x*16, y*16, 16, 16);
-			}
-		}*/
 	}
 
 

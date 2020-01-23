@@ -23,8 +23,8 @@ public class MonsterMazeLevel extends AbstractLevel {
 	private boolean has_seen = false;
 	private float next_check = 0;
 
-	public MonsterMazeLevel(int difficulty) {
-		super(difficulty);
+	public MonsterMazeLevel() {
+		super();
 	}
 
 
@@ -43,8 +43,8 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 
 	private void loadMapFromMazegen(Game game) {
-		this.map_width = 16 + (this.difficulty * 3);
-		this.map_height = 16 + (this.difficulty * 3);
+		this.map_width = 16;
+		this.map_height = 16;
 
 		Game.world.world = new WorldSquare[map_width][map_height];
 
@@ -122,13 +122,13 @@ public class MonsterMazeLevel extends AbstractLevel {
 		PositionData playerPos = (PositionData)game.player.getComponent(PositionData.class);
 		float dist = trexPos.position.dst(playerPos.position);
 		if (dist < Game.UNIT*2) {
-			Game.audio.play("beepfx_samples/58_grr.wav");
+			//Game.audio.play("beepfx_samples/58_grr.wav");
 			trex_msg = "RUN HE IS BESIDE YOU";
 			return;
 		}
 		HasAI ai = (HasAI)trex.getComponent(HasAI.class);
 		if (ai.can_see_player) {
-			Game.audio.play("beepfx_samples/58_grr.wav");
+			//Game.audio.play("beepfx_samples/58_grr.wav");
 
 			trex_msg = "REX HAS SEEN YOU";
 			has_seen = true;

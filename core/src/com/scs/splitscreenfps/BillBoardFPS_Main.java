@@ -25,9 +25,9 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			current_module.update();
 			current_module.render();
 
-			if(current_module.isFinished()) {
+			/*if(current_module.isFinished()) {
 				Game.audio.stopMusic();
-			}
+			}*/
 		}
 
 		Game.audio.update();
@@ -78,9 +78,9 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 
 	@Override
-	public void dispose () {
+	public void dispose() {
 		if (current_module != null) {
-			current_module.destroy();
+			current_module.dispose();
 		}
 	}
 	
