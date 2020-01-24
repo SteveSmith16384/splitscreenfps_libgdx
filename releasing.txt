@@ -2,7 +2,5 @@ RELEASING
 
 Update version number
 Release mode = true
-compile_html.bat
-Delete web-inf from live - C:\code\spectrumplatformer\html\build\dist
 Zip up and upload to Itch
 Run compile_desktop to get jar

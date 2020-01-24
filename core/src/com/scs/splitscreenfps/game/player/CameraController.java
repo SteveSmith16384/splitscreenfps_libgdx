@@ -28,8 +28,8 @@ public class CameraController {
 			0.25f, 1f, 1.75f
 	};
 
-	private static final float maxLookY = 80f;
-	private float lookY = 0f;
+	//private static final float maxLookY = 80f;
+	//private float lookY = 0f;
 
 	private IInputMethod input;
 
