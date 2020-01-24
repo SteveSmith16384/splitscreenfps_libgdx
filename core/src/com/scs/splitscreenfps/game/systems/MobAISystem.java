@@ -10,18 +10,17 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.player.Player;
 
 public class MobAISystem extends AbstractSystem {
 
 	public enum Mode {GoForPlayerIfSeen, GoForPlayerIfClose, MoveLikeRook}
+	
+	private Game game;
 
-	private Player player;
-
-	public MobAISystem(BasicECS ecs, Player _player) {
+	public MobAISystem(Game _game, BasicECS ecs) {
 		super(ecs);
-
-		player = _player;
+		
+		game = _game;
 	}
 
 
@@ -43,12 +42,12 @@ public class MobAISystem extends AbstractSystem {
 		ai.changeDirTimer -= Gdx.graphics.getDeltaTime();
 		ai.can_see_player = false;
 
-		if (player.getPosition().dst2(pos.position) < ai.moveRange*ai.moveRange) { //&& Game.world.canSee(pos.position, Game.player.getPosition())) {
-			ai.can_see_player = Game.world.canSee(pos.position, player.getPosition());
+		if (ai.player.getPosition().dst2(pos.position) < ai.moveRange*ai.moveRange) { //&& Game.world.canSee(pos.position, Game.player.getPosition())) {
+			ai.can_see_player = game.mapData.canSee(pos.position, ai.player.getPosition());
 			switch (ai.mode) {
 			case GoForPlayerIfSeen:
 				if (ai.can_see_player) {
-					ai.direction.set(player.getPosition()).sub(pos.position).nor();
+					ai.direction.set(ai.player.getPosition()).sub(pos.position).nor();
 					ai.direction.scl(Gdx.graphics.getDeltaTime() * ai.speed * Game.UNIT);
 					ai.direction.y = 0f;
 
@@ -58,7 +57,7 @@ public class MobAISystem extends AbstractSystem {
 				break;
 
 			case GoForPlayerIfClose:
-				ai.direction.set(player.getPosition()).sub(pos.position).nor();
+				ai.direction.set(ai.player.getPosition()).sub(pos.position).nor();
 				ai.direction.scl(Gdx.graphics.getDeltaTime() * ai.speed * Game.UNIT);
 				ai.direction.y = 0f;
 

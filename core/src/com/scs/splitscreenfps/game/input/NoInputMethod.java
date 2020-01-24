@@ -42,7 +42,7 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public float getLookRight() {
-		return 0.1f;
+		return 0;//.1f;
 	}
 
 	@Override

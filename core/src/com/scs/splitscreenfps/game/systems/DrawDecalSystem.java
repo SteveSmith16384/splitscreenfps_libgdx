@@ -14,19 +14,13 @@ import com.scs.splitscreenfps.game.components.PositionData;
 
 public class DrawDecalSystem extends AbstractSystem {
 
-	//private Camera camera;
-	//private DecalBatch batch;
 	private Vector3 tmp = new Vector3();
 	private Game game;
 
-	public DrawDecalSystem(Game _game, BasicECS ecs) {//, Camera _camera) {
+	public DrawDecalSystem(Game _game, BasicECS ecs) {
 		super(ecs);
 
 		game = _game;
-		//camera = _camera;
-
-		//ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
-		//batch = new DecalBatch(groupStrategy);
 	}
 
 
@@ -38,16 +32,17 @@ public class DrawDecalSystem extends AbstractSystem {
 
 	@Override
 	public void process() {
-		for (int i=0 ; i<game.players.length ; i++) {
-			Camera camera = game.players[i].camera;
-			DecalBatch batch = game.players[i].batch;
-			Iterator<AbstractEntity> it = entities.iterator();
-			while (it.hasNext()) {
-				AbstractEntity entity = it.next();
-				this.processEntity(entity, camera, batch);
-			}
-			batch.flush();
+		int i = game.viewid;
+		Camera camera = game.players[i].camera;
+		DecalBatch batch = game.players[i].batch;
+
+		Iterator<AbstractEntity> it = entities.iterator();
+		while (it.hasNext()) {
+			AbstractEntity entity = it.next();
+			this.processEntity(entity, camera, batch);
 		}
+
+		batch.flush();
 	}
 
 

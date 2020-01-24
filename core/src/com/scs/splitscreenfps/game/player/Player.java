@@ -21,7 +21,6 @@ public class Player extends AbstractEntity {
 	public static final float playerHeight = Game.UNIT * 0.4f;
 
 	public Camera camera;
-	//private ViewportData viewportData;
 	public CameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
 	private float footstepTimer;
@@ -59,13 +58,12 @@ public class Player extends AbstractEntity {
 
 
 	public void update() {
-		checkMovement();
-
+		checkMovementInput();
 		cameraController.update();
 	}
 
 
-	private void checkMovement() {
+	private void checkMovementInput() {
 		float delta = Gdx.graphics.getDeltaTime();
 
 		this.movementData.offset.setZero();
@@ -90,7 +88,7 @@ public class Player extends AbstractEntity {
 			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		}
 
-		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
+		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z); // todo - move to movememnt system
 
 		if (this.movementData.offset.len2() > 0) {
 			footstepTimer += Gdx.graphics.getDeltaTime();
@@ -129,21 +127,6 @@ public class Player extends AbstractEntity {
 
 	}
 
-/*
-	public void damaged(int amt, Vector3 dir) {
-		if (Settings.PLAYER_INVINCIBLE) {
-			Settings.p("Player Invincible!");
-			return;
-		}
-		//health -= amt;
-		lives--;
-		hurtTimer = 1.5f;
-		if (lives >= 0) {
-			Game.audio.play("player_hurt");
-		}
-		Game.restartLevel = true;
-	}
 
-*/
 }
 

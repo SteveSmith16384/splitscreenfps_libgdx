@@ -21,12 +21,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	@Override
 	public void render() {
 		if (current_module != null) {
-			current_module.update();
 			current_module.render();
-
-			/*if(current_module.isFinished()) {
-				Game.audio.stopMusic();
-			}*/
 		}
 
 		Game.audio.update();
@@ -45,7 +40,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			this.toggleFullscreen = false;
 			if (fullscreen) {
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
-				//scs new Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 				fullscreen = false;
 			} else {
 				DisplayMode m = null;
@@ -60,7 +54,6 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 				}
 
 				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-				//scs new Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 				fullscreen = true;
 			}
 			this.current_module.setFullScreen(fullscreen);

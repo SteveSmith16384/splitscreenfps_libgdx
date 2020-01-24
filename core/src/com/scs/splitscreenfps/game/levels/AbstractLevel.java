@@ -19,11 +19,7 @@ public abstract class AbstractLevel {
 		Gdx.gl.glClearColor(0.1f, 1f, 0, 1);
 	}
 
-	//public abstract String getInstructions();
-	
-	public abstract void load(Game game);
-	
-	//public abstract String GetName();
+	public abstract void load();
 	
 	public void update(Game game, MapData world) {};
 	

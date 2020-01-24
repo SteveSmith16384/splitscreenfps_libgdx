@@ -1,7 +1,7 @@
 package com.scs.splitscreenfps.game;
 
 import com.badlogic.gdx.math.Vector3;
-import com.scs.splitscreenfps.game.data.WorldSquare;
+import com.scs.splitscreenfps.game.data.MapSquare;
 
 public class MapData {
 
@@ -9,19 +9,19 @@ public class MapData {
 	public static final int WALL = 1;
 	public static final int BLOCKED = 2;
 
-	private static final WorldSquare BLOCKED_WALL = new WorldSquare(true);
+	private static final MapSquare BLOCKED_WALL = new MapSquare(true);
 
-	public WorldSquare map[][];
+	public MapSquare map[][];
 
 	public MapData() {
 	}
 
 
-	public WorldSquare getMapSquareAt(int x, int y) {
-		if (x < 0 || y < 0) {
+	public MapSquare getMapSquareAt(int x, int y) {
+		/*if (x < 0 || y < 0) {
 			//Settings.p("OOB!");
 			return BLOCKED_WALL;
-		}
+		}*/
 
 		try {
 			return map[x][y];//.type;
@@ -125,12 +125,12 @@ public class MapData {
 	}
 
 
-	public WorldSquare getMapSquareAt(float x, float y) {
+	public MapSquare getMapSquareAt(float x, float y) {
 		return getMapSquareAt((int)(x/Game.UNIT+0.5f), (int)(y/Game.UNIT+0.5f));
 	}
 
 
-	public WorldSquare getMapSquareAt(Vector3 vec) {
+	public MapSquare getMapSquareAt(Vector3 vec) {
 		return getMapSquareAt((int)((vec.x/Game.UNIT)+0.5f), (int)((vec.z/Game.UNIT)+0.5f));
 	}
 

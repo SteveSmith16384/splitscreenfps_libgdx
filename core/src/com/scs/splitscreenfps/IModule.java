@@ -2,8 +2,6 @@ package com.scs.splitscreenfps;
 
 public interface IModule {
 
-	void update();
-	
 	void render();
 	
 	//boolean isFinished();

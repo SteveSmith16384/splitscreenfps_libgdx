@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractSystem {
+public abstract class AbstractSystem implements ISystem {
 
 	protected BasicECS ecs;
 	protected List<AbstractEntity> entities;

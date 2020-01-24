@@ -14,16 +14,15 @@ import com.scs.splitscreenfps.game.components.HarmsNasties;
 import com.scs.splitscreenfps.game.components.IsDamagableNasty;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.player.Player;
 
 public class MovementSystem extends AbstractSystem {
 
-	//private Player player;
+	private Game game;
 
-	public MovementSystem(BasicECS ecs) {
+	public MovementSystem(Game _game, BasicECS ecs) {
 		super(ecs);
 
-		//player = _player;
+		game = _game;
 	}
 
 
@@ -47,7 +46,7 @@ public class MovementSystem extends AbstractSystem {
 			movementData.offset = auto.dir.cpy().scl(Gdx.graphics.getDeltaTime());
 		}
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-			boolean res = this.tryMove(entity, Game.world, movementData.offset, movementData.sizeAsFracOfMapsquare);
+			boolean res = this.tryMove(entity, game.mapData, movementData.offset, movementData.sizeAsFracOfMapsquare);
 			if (!res) {
 				movementData.hitWall = true;
 				if (movementData.removeIfHitWall) {
@@ -131,7 +130,7 @@ public class MovementSystem extends AbstractSystem {
 
 
 	private boolean isMoverBlocked(AbstractEntity mover, Vector3 moverPos) {
-		Iterator<AbstractEntity> it = this.entities.iterator();//.getIterator();
+		Iterator<AbstractEntity> it = this.entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity blocker = it.next();
 			if (blocker != mover) {

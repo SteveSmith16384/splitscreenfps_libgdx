@@ -10,7 +10,7 @@ public class Settings {
 	// Hacks
 	public static final boolean PLAYER_INVINCIBLE = !RELEASE_MODE && false;
 	public static final boolean TEST_FLOOR_SQ = !RELEASE_MODE && false;
-	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
+	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	
 	public static final int ENEMY_HEALTH = 3;
 	

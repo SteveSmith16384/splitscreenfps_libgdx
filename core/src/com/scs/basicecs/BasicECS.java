@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BasicECS {
 
-	private HashMap<Class<?>, AbstractSystem> systems = new HashMap<Class<?>, AbstractSystem>();
+	private HashMap<Class<?>, ISystem> systems = new HashMap<Class<?>, ISystem>();
 	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>();
 	private List<AbstractEntity> to_add_entities = new ArrayList<AbstractEntity>();
 
@@ -15,13 +15,13 @@ public class BasicECS {
 	}
 
 
-	public void addSystem(AbstractSystem system) {
+	public void addSystem(ISystem system) {
 		this.systems.put(system.getClass(), system);
 	}
 
 
 
-	public AbstractSystem getSystem(Class<?> clazz) {
+	public ISystem getSystem(Class<?> clazz) {
 		return this.systems.get(clazz);
 	}
 
@@ -31,12 +31,12 @@ public class BasicECS {
 	 * method on all your systems individually as required.
 	 */
 	public void processAllSystems() {
-		for (AbstractSystem system : this.systems.values()) {
+		for (ISystem system : this.systems.values()) {
 			system.process();
 		}
 	}
-	
-	
+
+
 	public void addAndRemoveEntities() {
 		// Remove any entities
 		for (int i = this.entities.size()-1 ; i >= 0; i--) {
@@ -45,11 +45,14 @@ public class BasicECS {
 				this.entities.remove(entity);
 
 				// Remove from systems
-				for(AbstractSystem system : this.systems.values()) {
-					Class<?> clazz = system.getComponentClass();
-					if (clazz != null) {
-						if (entity.getComponents().containsKey(clazz)) {
-							system.entities.remove(entity);
+				for(ISystem isystem : this.systems.values()) {
+					if (isystem instanceof AbstractSystem) {
+						AbstractSystem system = (AbstractSystem)isystem;
+						Class<?> clazz = system.getComponentClass();
+						if (clazz != null) {
+							if (entity.getComponents().containsKey(clazz)) {
+								system.entities.remove(entity);
+							}
 						}
 					}
 				}
@@ -57,11 +60,14 @@ public class BasicECS {
 		}
 
 		for(AbstractEntity e : this.to_add_entities) {
-			for(AbstractSystem system : this.systems.values()) {
-				Class<?> clazz = system.getComponentClass();
-				if (clazz != null) {
-					if (e.getComponents().containsKey(clazz)) {
-						system.entities.add(e);
+			for(ISystem isystem : this.systems.values()) {
+				if (isystem instanceof AbstractSystem) {
+					AbstractSystem system = (AbstractSystem)isystem;
+					Class<?> clazz = system.getComponentClass();
+					if (clazz != null) {
+						if (e.getComponents().containsKey(clazz)) {
+							system.entities.add(e);
+						}
 					}
 				}
 			}

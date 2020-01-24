@@ -14,11 +14,12 @@ import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.systems.MobAISystem.Mode;
 
 public class TRex extends AbstractEntity {
 
-    public TRex(int x, int y) {
+    public TRex(int x, int y, Player target) {
         super(TRex.class.getSimpleName());
 
         PositionData pos = new PositionData();
@@ -39,7 +40,7 @@ public class TRex extends AbstractEntity {
         cycle.decals[1] = Art.DecalHelper("monstermaze/trex2.png", 1f);
         this.addComponent(cycle);
         
-        HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, Game.UNIT*7f);
+        HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, Game.UNIT*7f, target);
         this.addComponent(ai);
         
         this.addComponent(new MovementData(.85f));

@@ -8,12 +8,15 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.data.WorldSquare;
+import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
+import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.mapgen.Maze;
+
+import ssmith.lang.NumberFunctions;
 
 public class MonsterMazeLevel extends AbstractLevel {
 
@@ -21,14 +24,17 @@ public class MonsterMazeLevel extends AbstractLevel {
 	private String trex_msg = "REX LIES IN WAIT";
 	private boolean has_seen = false;
 	private float next_check = 0;
+	private Game game;
 
-	public MonsterMazeLevel() {
+	public MonsterMazeLevel(Game _game) {
 		super();
+		
+		game = _game;
 	}
 
 
 	@Override
-	public void load(Game game) {
+	public void load() {
 		loadMapFromMazegen(game);
 
 	}
@@ -43,7 +49,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		this.map_width = 16;
 		this.map_height = 16;
 
-		Game.world.map = new WorldSquare[map_width][map_height];
+		game.mapData.map = new MapSquare[map_width][map_height];
 
 		Maze maze = new Maze(map_width, map_height, 10);
 
@@ -52,17 +58,18 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
-				Game.world.map[x][z] = new WorldSquare();
-				Game.world.map[x][z].blocked = maze.map[x][z] == Maze.WALL;
-				if (Game.world.map[x][z].blocked) {
+				game.mapData.map[x][z] = new MapSquare();
+				game.mapData.map[x][z].blocked = maze.map[x][z] == Maze.WALL;
+				if (game.mapData.map[x][z].blocked) {
 					Wall wall = new Wall("monstermaze/wall.png", x, z);
 					game.ecs.addEntity(wall);
 				}
 			}
 		}
 
-		trex = new TRex(maze.middle_pos.x, maze.middle_pos.y);
-		//game.ecs.addEntity(trex);
+		Player target = game.players[NumberFunctions.rnd(0,  game.players.length-1)];
+		trex = new TRex(maze.middle_pos.x, maze.middle_pos.y, target);
+		game.ecs.addEntity(trex);
 
 		MonsterMazeExit exit = new MonsterMazeExit(maze.end_pos.x, maze.end_pos.y);
 		game.ecs.addEntity(exit);
