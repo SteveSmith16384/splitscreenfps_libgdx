@@ -11,22 +11,22 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 
 public class DrawDecalSystem extends AbstractSystem {
 
-	private Camera camera;
-	private DecalBatch batch;
-	//private ShadedGroupStrategy groupStrategy;
+	//private Camera camera;
+	//private DecalBatch batch;
 	private Vector3 tmp = new Vector3();
-	
-	public DrawDecalSystem(BasicECS ecs, Camera _camera) {
+	private Game game;
+
+	public DrawDecalSystem(Game _game, BasicECS ecs) {//, Camera _camera) {
 		super(ecs);
 
-		camera = _camera;
+		game = _game;
+		//camera = _camera;
 
-		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
-		batch = new DecalBatch(groupStrategy);
+		//ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
+		//batch = new DecalBatch(groupStrategy);
 	}
 
 
@@ -35,24 +35,28 @@ public class DrawDecalSystem extends AbstractSystem {
 		return HasDecal.class;
 	}
 
-	
+
 	@Override
 	public void process() {
-		Iterator<AbstractEntity> it = entities.iterator();
-		while (it.hasNext()) {
-			AbstractEntity entity = it.next();
-			this.processEntity(entity);
+		for (int i=0 ; i<game.players.length ; i++) {
+			Camera camera = game.players[i].camera;
+			DecalBatch batch = game.players[i].batch;
+			Iterator<AbstractEntity> it = entities.iterator();
+			while (it.hasNext()) {
+				AbstractEntity entity = it.next();
+				this.processEntity(entity, camera, batch);
+			}
+			batch.flush();
 		}
-		batch.flush();
 	}
 
 
-	@Override
-	public void processEntity(AbstractEntity entity) {
+	//@Override
+	public void processEntity(AbstractEntity entity, Camera camera, DecalBatch batch) {
 		HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
 		PositionData hasPosition = (PositionData)entity.getComponent(PositionData.class);
 		updateTransform(camera, hasDecal, hasPosition);
-		
+
 		if(!camera.frustum.sphereInFrustum(hasPosition.position, Game.UNIT)) {
 			return;
 		}

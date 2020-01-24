@@ -8,7 +8,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.World;
+import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
 import com.scs.splitscreenfps.game.components.HarmsNasties;
 import com.scs.splitscreenfps.game.components.IsDamagableNasty;
@@ -62,7 +62,7 @@ public class MovementSystem extends AbstractSystem {
 	/**
 	 * Returns false if entity fails to move on any axis.
 	 */
-	private boolean tryMove(AbstractEntity entity, World world, Vector3 moveVec, float sizeAsFracOfMapsquare) {
+	private boolean tryMove(AbstractEntity entity, MapData world, Vector3 moveVec, float sizeAsFracOfMapsquare) {
 		if (moveVec.len() <= 0) {
 			return true;
 		}
@@ -102,20 +102,6 @@ public class MovementSystem extends AbstractSystem {
 		return resultX && resultZ;
 	}
 
-/*
-	private boolean checkForPlayerCollision(AbstractEntity entity, Vector3 pos) {
-		HarmsPlayer hp = (HarmsPlayer)entity.getComponent(HarmsPlayer.class);
-		if (hp != null) {
-			float dist = pos.dst(player.getPosition());
-			if (dist < Game.UNIT * .5f) {
-				player.damaged(hp.damageCaused, new Vector3()); // todo - direction
-				entity.remove(); // Prevent further collisions
-				return true;
-			}
-		}
-		return false;
-	}
-*/
 
 	private boolean checkForNastiesCollision(AbstractEntity bullet, Vector3 pos) {
 		HarmsNasties hp = (HarmsNasties)bullet.getComponent(HarmsNasties.class);

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.World;
+import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.data.WorldSquare;
@@ -43,7 +43,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		this.map_width = 16;
 		this.map_height = 16;
 
-		Game.world.world = new WorldSquare[map_width][map_height];
+		Game.world.map = new WorldSquare[map_width][map_height];
 
 		Maze maze = new Maze(map_width, map_height, 10);
 
@@ -52,9 +52,9 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
-				Game.world.world[x][z] = new WorldSquare();
-				Game.world.world[x][z].blocked = maze.map[x][z] == Maze.WALL;
-				if (Game.world.world[x][z].blocked) {
+				Game.world.map[x][z] = new WorldSquare();
+				Game.world.map[x][z].blocked = maze.map[x][z] == Maze.WALL;
+				if (Game.world.map[x][z].blocked) {
 					Wall wall = new Wall("monstermaze/wall.png", x, z);
 					game.ecs.addEntity(wall);
 				}
@@ -107,7 +107,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 	 */
 
 	@Override
-	public void update(Game game, World world) {
+	public void update(Game game, MapData world) {
 		if (next_check > 0) {
 			next_check -= Gdx.graphics.getDeltaTime();
 			return;

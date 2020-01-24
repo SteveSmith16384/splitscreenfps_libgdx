@@ -33,4 +33,33 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return Gdx.input.isKeyPressed(Keys.SPACE);
 	}
 
+	@Override
+	public boolean isMouse() {
+		return true;
+	}
+
+	@Override
+	public float getLookLeft() {
+		// Not used in this implementation
+		return 0;
+	}
+
+	@Override
+	public float getLookRight() {
+		// Not used in this implementation
+		return 0;
+	}
+
+	@Override
+	public float getLookUp() {
+		// Not used in this implementation
+		return 0;
+	}
+
+	@Override
+	public float getLookDown() {
+		// Not used in this implementation
+		return 0;
+	}
+
 }

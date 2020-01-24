@@ -20,33 +20,30 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.player.Player;
-import com.scs.splitscreenfps.game.renderable.GameShaderProvider;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.GotToExitSystem;
 import com.scs.splitscreenfps.game.systems.MobAISystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 
 public class Game implements IModule {
 
-	public static final float UNIT = 16f; // Square/box size
+	public static final float UNIT = 16f; // Square/box size - todo - remove
 
-	//public static final CollisionDetector collision = new CollisionDetector();
 	public static final Art art = new Art();
 	public static final Audio audio = new Audio();
 
 	private SpriteBatch batch2d;
-	private BitmapFont font_white, font_black;
+	private final BitmapFont font_white, font_black;
 	private ModelBatch batch;
-	private final ViewportData[] viewports;
+	public final ViewportData[] viewports;
 
 	public Player[] players;
-	public static World world;
+	public static MapData world;
 	public static BasicECS ecs;
 
 	public static boolean levelComplete = false;
@@ -60,15 +57,14 @@ public class Game implements IModule {
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
 
-		batch = new ModelBatch(new GameShaderProvider());
+		batch = new ModelBatch();
 
 		viewports = new ViewportData[4];
 		players = new Player[4];
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
-			//inventory = new Inventory();
-			IInputMethod input = i==0?new MouseAndKeyboardInputMethod() : new NoInputMethod();
-			players[i] = new Player(i, this.viewports[i], input); // todo
+			IInputMethod input = i==0 ? new MouseAndKeyboardInputMethod() : new NoInputMethod();
+			players[i] = new Player(i, this.viewports[i], input);
 		}
 
 		this.createECS();
@@ -77,9 +73,7 @@ public class Game implements IModule {
 			//post = new PostProcessing();
 		}
 
-		//this.game_stage = 0;
 		this.restartLevel = true;
-
 	}
 
 
@@ -92,7 +86,7 @@ public class Game implements IModule {
 
 	private void createECS() {
 		ecs = new BasicECS();
-		ecs.addSystem(new DrawDecalSystem(ecs, this.viewports[0].camera)); // todo
+		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
 		ecs.addSystem(new MobAISystem(ecs, players[0]));
@@ -101,20 +95,12 @@ public class Game implements IModule {
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
 		ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
-		ecs.addSystem(new GotToExitSystem(ecs));
 
-		world = new World();
+		world = new MapData();
 	}
 
 
 	public void update() {
-		/*if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-			if (this.game_stage == -1) {
-				this.game_stage = 0;
-				this.startGame();
-			}
-		}*/
-
 		if (levelComplete) {
 			/*this.startGame();
 			levelComplete = false;
@@ -134,9 +120,9 @@ public class Game implements IModule {
 				ecs.addEntity(players[i]);
 			}
 
-			if (gameLevel.getMusicFilename().length() > 0) {
+			/*if (gameLevel.getMusicFilename().length() > 0) {
 				audio.startMusic(gameLevel.getMusicFilename());				
-			}
+			}*/
 		}
 
 		for (int i=0 ; i<4 ; i++) {
@@ -154,7 +140,6 @@ public class Game implements IModule {
 		this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(CollectionSystem.class).process();
-		this.ecs.getSystem(GotToExitSystem.class).process();
 		gameLevel.update(this, world);
 	}
 
@@ -264,7 +249,7 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
-		//this.calcViewports(false); scs todo?
+		//this.resizeViewports(false);
 	}
 
 
@@ -288,7 +273,7 @@ public class Game implements IModule {
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
-		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // scs todo?
+		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.resizeViewports(true);
 	}
 

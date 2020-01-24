@@ -2,9 +2,9 @@ package com.scs.splitscreenfps.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
@@ -12,6 +12,7 @@ import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.CanCollect;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class Player extends AbstractEntity {
@@ -19,16 +20,18 @@ public class Player extends AbstractEntity {
 	private static final float moveSpeed = 2f * Game.UNIT;
 	public static final float playerHeight = Game.UNIT * 0.4f;
 
-	private Camera camera;
-	private ViewportData viewportData;
+	public Camera camera;
+	//private ViewportData viewportData;
 	public CameraController cameraController;
-	private Vector3 tmpVector;
+	private Vector3 tmpVector = new Vector3();
 	private float footstepTimer;
 
 	private MovementData movementData;
 	private PositionData positionData;
 	private IInputMethod inputMethod;
 
+	public DecalBatch batch;
+	
 	public Player(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(Player.class.getSimpleName() + "_" + idx);
 
@@ -41,11 +44,12 @@ public class Player extends AbstractEntity {
 		this.addComponent(new CanCollect());
 
 		camera = _viewportData.camera;
-		viewportData = _viewportData;
 
-		cameraController = new CameraController(camera);
+		cameraController = new CameraController(camera, inputMethod);
 
-		tmpVector = new Vector3();
+		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
+		batch = new DecalBatch(groupStrategy);
+
 	}
 
 
@@ -58,26 +62,6 @@ public class Player extends AbstractEntity {
 		checkMovement();
 
 		cameraController.update();
-/*
-		if (hurtTimer > 0) {
-			hurtTimer -= Gdx.graphics.getDeltaTime();
-		} else {
-			// Check if any enemies are harming us
-			Iterator<AbstractEntity> it = Game.ecs.getIterator();
-			while (it.hasNext()) {
-				AbstractEntity entity = it.next();
-				HarmsPlayer hp = (HarmsPlayer)entity.getComponent(HarmsPlayer.class);
-				if (hp != null) {
-					PositionData posData = (PositionData)entity.getComponent(PositionData.class);
-					Vector3 enemyPos = posData.position;
-					float dist = enemyPos.dst(camera.position);
-					if (dist < Game.UNIT * .5f) {
-						this.damaged(hp.damageCaused, new Vector3()); // todo - direction
-						entity.remove(); // Prevent further collisions
-					}
-				}
-			}
-		}*/
 	}
 
 
@@ -143,11 +127,6 @@ public class Player extends AbstractEntity {
 			batch.setColor(1,1,1,1);
 		}*/
 
-	}
-
-/*
-	public int getHealth() {
-		return lives;
 	}
 
 /*

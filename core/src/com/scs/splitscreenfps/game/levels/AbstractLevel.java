@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.World;
+import com.scs.splitscreenfps.game.MapData;
 
 public abstract class AbstractLevel {
 
@@ -25,7 +25,7 @@ public abstract class AbstractLevel {
 	
 	//public abstract String GetName();
 	
-	public void update(Game game, World world) {};
+	public void update(Game game, MapData world) {};
 	
 	public abstract void renderUI(SpriteBatch batch, BitmapFont font_white, BitmapFont font_black);
 

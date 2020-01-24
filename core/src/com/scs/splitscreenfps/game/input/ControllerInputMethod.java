@@ -36,4 +36,33 @@ public class ControllerInputMethod implements IInputMethod {
 		return false;
 	}
 
+	@Override
+	public boolean isMouse() {
+		return false;
+	}
+
+	@Override
+	public float getLookLeft() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getLookRight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getLookUp() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getLookDown() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

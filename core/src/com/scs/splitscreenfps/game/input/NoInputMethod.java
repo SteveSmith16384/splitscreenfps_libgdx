@@ -30,4 +30,29 @@ public class NoInputMethod implements IInputMethod {
 		return false;
 	}
 
+	@Override
+	public boolean isMouse() {
+		return false;
+	}
+
+	@Override
+	public float getLookLeft() {
+		return 0;
+	}
+
+	@Override
+	public float getLookRight() {
+		return 0.1f;
+	}
+
+	@Override
+	public float getLookUp() {
+		return 0;
+	}
+
+	@Override
+	public float getLookDown() {
+		return 0;
+	}
+
 }

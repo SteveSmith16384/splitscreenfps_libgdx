@@ -3,7 +3,7 @@ package com.scs.splitscreenfps.game;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.data.WorldSquare;
 
-public class World {
+public class MapData {
 
 	public static final int NOTHING = 0;
 	public static final int WALL = 1;
@@ -11,9 +11,9 @@ public class World {
 
 	private static final WorldSquare BLOCKED_WALL = new WorldSquare(true);
 
-	public WorldSquare world[][];
+	public WorldSquare map[][];
 
-	public World() {
+	public MapData() {
 	}
 
 
@@ -24,7 +24,7 @@ public class World {
 		}
 
 		try {
-			return world[x][y];//.type;
+			return map[x][y];//.type;
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			return BLOCKED_WALL;
 		}
