@@ -42,8 +42,8 @@ public class ViewportData {
 		camera = new PerspectiveCamera(65, w, h);
 		camera.position.set(10f, 0, 10f);
 		camera.lookAt(11f, 0, 10f);
-		camera.near = .1f;
-		camera.far = 30f;// * Game.UNIT;
+		camera.near = 0.1f;
+		camera.far = 30f;
 		camera.update();
 		
 		this.resize(full_screen, idx);

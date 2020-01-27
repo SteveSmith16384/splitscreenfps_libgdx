@@ -12,7 +12,7 @@ public interface IInputMethod {
 
 	boolean isStrafeRightPressed();
 	
-	boolean isShootPressed();
+	boolean isPickupDropPressed();
 	
 	float getLookLeft();
 

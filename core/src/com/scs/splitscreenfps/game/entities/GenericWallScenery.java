@@ -13,7 +13,7 @@ public class GenericWallScenery extends AbstractEntity {
 	
 	public enum Side {Left, Right, Front, Back}
 	
-	private static final float TINY = 0.01f; 
+	private static final float TINY = 0.01f;
 
 	public GenericWallScenery(String name, String filename, int x, int y, Side side) {
 		super(name);

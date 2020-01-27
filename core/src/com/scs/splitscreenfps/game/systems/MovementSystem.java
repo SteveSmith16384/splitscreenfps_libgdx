@@ -8,7 +8,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
-import com.scs.splitscreenfps.game.components.CollisionComponent;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.data.CollisionResults;
@@ -92,7 +92,7 @@ public class MovementSystem extends AbstractSystem {
 		
 		// Reset collision just in case it's got out of sync
 		//if (resultX || resultZ) {
-		CollisionComponent moverCC = (CollisionComponent)mover.getComponent(CollisionComponent.class);
+		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 		if (moverCC != null) {
 			moverCC.bb.getCenter(tmp);
 			tmp.add(offset);

@@ -22,6 +22,8 @@ public abstract class AbstractSystem implements ISystem {
 
 	/**
 	 * Override if this system should only deal with entities that have a specific component.
+	 * Note to future self: Do NOT change this to handle multiple component types.  If that is
+	 * needed, create a separate system!
 	 */
 	public Class<?> getComponentClass() {
 		return null;

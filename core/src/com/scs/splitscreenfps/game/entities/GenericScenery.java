@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.components.CollisionComponent;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.PositionData;
 
-import ssmith.libgdx.LibGDXHelper;
+import ssmith.libgdx.MyBoundingBox;
 
 public class GenericScenery extends AbstractEntity {
 
@@ -37,7 +37,7 @@ public class GenericScenery extends AbstractEntity {
             this.addComponent(pos);
             
             // todo - create collision component
-            this.addComponent(new CollisionComponent(LibGDXHelper.createFromCentreAndExtents(pos.position, .3f, .3f, .3f)));
+            this.addComponent(new CollidesComponent(new MyBoundingBox(pos.position, .3f, .3f, .3f)));
 
         }
 	}

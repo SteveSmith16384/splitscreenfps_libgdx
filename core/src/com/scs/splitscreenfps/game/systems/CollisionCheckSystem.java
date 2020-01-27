@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.CollisionComponent;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.data.CollisionResults;
 
@@ -21,7 +21,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 
 	@Override
 	public Class<?> getComponentClass() {
-		return CollisionComponent.class;
+		return CollidesComponent.class;
 	}
 
 
@@ -30,8 +30,8 @@ public class CollisionCheckSystem extends AbstractSystem {
 
 		// Move bounding box to correct position
 		PositionData posData = (PositionData)mover.getComponent(PositionData.class);
-		CollisionComponent moverCC = (CollisionComponent)mover.getComponent(CollisionComponent.class);
-		moverCC.bb.getCenter(tmp);
+		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
+		tmp = moverCC.bb.getCentre();
 		tmp.x = posData.position.x + offX;
 		tmp.y = posData.position.y;
 		tmp.z = posData.position.z + offZ;
@@ -40,7 +40,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
 			if (e != mover) {
-				CollisionComponent cc = (CollisionComponent)e.getComponent(CollisionComponent.class);
+				CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
 				if (cc != null) {
 					if (cc.bb.intersects(moverCC.bb)) {
 						cr = new CollisionResults(e, cc.blocksMovement);

@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Art;
-import com.scs.splitscreenfps.game.components.CollisionComponent;
-import com.scs.splitscreenfps.game.components.HarmsPlayer;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
@@ -17,7 +16,7 @@ import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.systems.MobAISystem.Mode;
 
-import ssmith.libgdx.LibGDXHelper;
+import ssmith.libgdx.MyBoundingBox;
 
 public class TRex extends AbstractEntity {
 
@@ -37,7 +36,7 @@ public class TRex extends AbstractEntity {
         hasDecal.faceCameraTilted = true;        
         this.addComponent(hasDecal);
         
-        HasDecalCycle cycle = new HasDecalCycle(.5f, 2);
+        HasDecalCycle cycle = new HasDecalCycle(.8f, 2);
         cycle.decals[0] = hasDecal.decal;
         cycle.decals[1] = Art.DecalHelper("monstermaze/trex2.png", 1f);
         this.addComponent(cycle);
@@ -47,9 +46,9 @@ public class TRex extends AbstractEntity {
         
         this.addComponent(new MovementData(.85f));
 
-        this.addComponent(new HarmsPlayer(1));
+        //this.addComponent(new HarmsPlayer(1));
         
-        this.addComponent(new CollisionComponent(LibGDXHelper.createFromCentreAndExtents(pos.position, .3f, .3f, .3f)));
+        this.addComponent(new CollidesComponent(new MyBoundingBox(pos.position, .3f, .3f, .3f)));
 
     }
     

@@ -9,14 +9,15 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
+import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CanCollect;
-import com.scs.splitscreenfps.game.components.CollisionComponent;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
-import ssmith.libgdx.LibGDXHelper;
+import ssmith.libgdx.MyBoundingBox;
 
 public class Player extends AbstractEntity {
 
@@ -44,7 +45,8 @@ public class Player extends AbstractEntity {
 		this.positionData = new PositionData();
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
-        this.addComponent(new CollisionComponent(LibGDXHelper.createFromCentreAndExtents(positionData.position, .3f, .3f, .3f)));
+		this.addComponent(new CanCarry());
+        this.addComponent(new CollidesComponent(new MyBoundingBox(positionData.position, .3f, .3f, .3f)));
 
 		camera = _viewportData.camera;
 

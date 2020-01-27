@@ -26,7 +26,7 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isShootPressed() {
+	public boolean isPickupDropPressed() {
 		return false;
 	}
 
