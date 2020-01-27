@@ -3,27 +3,21 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.components.HasAI;
-import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
 import com.scs.splitscreenfps.game.player.Player;
-import com.scs.splitscreenfps.mapgen.Maze;
+import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 import ssmith.lang.NumberFunctions;
 
 public class MonsterMazeLevel extends AbstractLevel {
 
 	private TRex trex;
-	private String trex_msg = "REX LIES IN WAIT";
-	private boolean has_seen = false;
-	private float next_check = 0;
 	private Game game;
 
 	public MonsterMazeLevel(Game _game) {
@@ -51,15 +45,15 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		game.mapData.map = new MapSquare[map_width][map_height];
 
-		Maze maze = new Maze(map_width, map_height, 10);
+		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
 
 		this.playerStartMapX = maze.start_pos.x;
-		this.playerStartMapY = maze.start_pos.y;
+		this.playerStartMapZ = maze.start_pos.y;
 
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare();
-				game.mapData.map[x][z].blocked = maze.map[x][z] == Maze.WALL;
+				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {
 					Wall wall = new Wall("monstermaze/wall.png", x, z);
 					game.ecs.addEntity(wall);
@@ -115,50 +109,12 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	@Override
 	public void update(Game game, MapData world) {
-		if (next_check > 0) {
-			next_check -= Gdx.graphics.getDeltaTime();
-			return;
-		}
-		next_check = 3;
 
-		// left to do - ", or RUN HE IS BEHIND YOU"
-		PositionData trexPos = (PositionData)trex.getComponent(PositionData.class);
-		PositionData playerPos = (PositionData)game.players[0].getComponent(PositionData.class);
-		float dist = trexPos.position.dst(playerPos.position);
-		if (dist < Game.UNIT*2) {
-			//Game.audio.play("beepfx_samples/58_grr.wav");
-			trex_msg = "RUN HE IS BESIDE YOU";
-			return;
-		}
-		HasAI ai = (HasAI)trex.getComponent(HasAI.class);
-		if (ai.can_see_player) {
-			//Game.audio.play("beepfx_samples/58_grr.wav");
-
-			trex_msg = "REX HAS SEEN YOU";
-			has_seen = true;
-			return;
-		}
-
-		if (dist < Game.UNIT*5) {
-			trex_msg = "FOOTSTEPS APPROACHING";
-			return;
-		}
-
-		if (has_seen) {
-			trex_msg = "HE IS HUNTING FOR YOU";
-			return;
-		}
 	}
 
 
 	@Override
 	public void renderUI(SpriteBatch batch, BitmapFont font_white, BitmapFont font_black) {		
-		font_black.draw(batch, trex_msg, 10-1, Settings.WINDOW_HEIGHT_PIXELS-40);
-		font_black.draw(batch, trex_msg, 10, Settings.WINDOW_HEIGHT_PIXELS-40-1);
-		font_black.draw(batch, trex_msg, 10+1, Settings.WINDOW_HEIGHT_PIXELS-40);
-		font_black.draw(batch, trex_msg, 10, Settings.WINDOW_HEIGHT_PIXELS-40+1);
-
-		font_white.draw(batch, trex_msg, 10, Settings.WINDOW_HEIGHT_PIXELS-40);
 	}
 
 

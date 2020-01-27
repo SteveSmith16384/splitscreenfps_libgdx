@@ -32,7 +32,7 @@ public class DrawDecalSystem extends AbstractSystem {
 
 	@Override
 	public void process() {
-		int i = game.viewid;
+		int i = game.currentViewId;
 		Camera camera = game.players[i].camera;
 		DecalBatch batch = game.players[i].batch;
 
@@ -52,7 +52,7 @@ public class DrawDecalSystem extends AbstractSystem {
 		PositionData hasPosition = (PositionData)entity.getComponent(PositionData.class);
 		updateTransform(camera, hasDecal, hasPosition);
 
-		if(!camera.frustum.sphereInFrustum(hasPosition.position, Game.UNIT)) {
+		if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
 			return;
 		}
 
@@ -73,7 +73,7 @@ public class DrawDecalSystem extends AbstractSystem {
 		}
 
 		hasDecal.decal.setPosition(pos.position);
-		hasDecal.decal.translateY(.5f * Game.UNIT);
+		hasDecal.decal.translateY(.5f);
 
 	}
 

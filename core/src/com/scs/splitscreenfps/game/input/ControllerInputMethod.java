@@ -1,39 +1,38 @@
 package com.scs.splitscreenfps.game.input;
 
+import com.badlogic.gdx.controllers.Controller;
+
 public class ControllerInputMethod implements IInputMethod {
 
-	public ControllerInputMethod() {
-		// TODO Auto-generated constructor stub
+	public Controller controller;
+
+	public ControllerInputMethod(Controller _controller) {
+		controller = _controller;
 	}
 
 	@Override
 	public boolean isForwardsPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return controller.getAxis(1) < -0.5f;
 	}
 
 	@Override
 	public boolean isBackwardsPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return controller.getAxis(1) > -0.5f;
 	}
 
 	@Override
 	public boolean isStrafeLeftPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return controller.getAxis(0) < -0.5f;
 	}
 
 	@Override
 	public boolean isStrafeRightPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return controller.getAxis(0) > -0.5f;
 	}
 
 	@Override
 	public boolean isShootPressed() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.controller.getButton(1);	
 	}
 
 	@Override
@@ -43,26 +42,22 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public float getLookLeft() {
-		// TODO Auto-generated method stub
-		return 0;
+		return controller.getAxis(2);
 	}
 
 	@Override
 	public float getLookRight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return -controller.getAxis(2);
 	}
 
 	@Override
 	public float getLookUp() {
-		// TODO Auto-generated method stub
-		return 0;
+		return controller.getAxis(3);
 	}
 
 	@Override
 	public float getLookDown() {
-		// TODO Auto-generated method stub
-		return 0;
+		return -controller.getAxis(3);
 	}
 
 }

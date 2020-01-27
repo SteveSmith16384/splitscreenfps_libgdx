@@ -10,15 +10,18 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.CanCollect;
+import com.scs.splitscreenfps.game.components.CollisionComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
+import ssmith.libgdx.LibGDXHelper;
+
 public class Player extends AbstractEntity {
 
-	private static final float moveSpeed = 2f * Game.UNIT;
-	public static final float playerHeight = Game.UNIT * 0.4f;
+	private static final float moveSpeed = 2f;
+	public static final float playerHeight = 0.4f;
 
 	public Camera camera;
 	public CameraController cameraController;
@@ -41,6 +44,7 @@ public class Player extends AbstractEntity {
 		this.positionData = new PositionData();
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
+        this.addComponent(new CollisionComponent(LibGDXHelper.createFromCentreAndExtents(positionData.position, .3f, .3f, .3f)));
 
 		camera = _viewportData.camera;
 
@@ -88,7 +92,7 @@ public class Player extends AbstractEntity {
 			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		}
 
-		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z); // todo - move to movememnt system
+		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
 
 		if (this.movementData.offset.len2() > 0) {
 			footstepTimer += Gdx.graphics.getDeltaTime();

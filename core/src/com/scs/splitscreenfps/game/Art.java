@@ -32,14 +32,14 @@ public class Art {
 		Texture tex = new Texture(Gdx.files.internal(filename));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
 		Decal decal = Decal.newDecal(tr, true);
-		decal.setScale(Game.UNIT * sizePcent / tr.getRegionWidth());
+		decal.setScale(sizePcent / tr.getRegionWidth());
 		return decal;
 	}
 
 
 	public static Decal DecalHelper(TextureRegion tr, float sizePcent) {
 		Decal decal = Decal.newDecal(tr, true);
-		decal.setScale(Game.UNIT * sizePcent / tr.getRegionWidth());
+		decal.setScale(sizePcent / tr.getRegionWidth());
 		return decal;
 	}
 

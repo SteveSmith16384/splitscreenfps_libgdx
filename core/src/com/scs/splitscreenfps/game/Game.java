@@ -20,7 +20,6 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.player.Player;
-import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
@@ -33,8 +32,6 @@ import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 
 public class Game implements IModule {
-
-	public static final float UNIT = 16f; // Square/box size - todo - remove
 
 	public static final Art art = new Art();
 	public static final Audio audio = new Audio();
@@ -52,7 +49,7 @@ public class Game implements IModule {
 
 	private PostProcessing post; // todo - add
 	
-	public int viewid; // todo - rename
+	public int currentViewId;
 	
 	public Game() {
 		batch2d = new SpriteBatch();
@@ -105,8 +102,32 @@ public class Game implements IModule {
 		ecs.addSystem(new MovementSystem(this, ecs));
 		ecs.addSystem(new DrawModelSystem(ecs, batch));
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
-		ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
+	}
+
+
+	private void loadLevel() {
+		gameLevel.load();
+
+		if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
+			throw new RuntimeException ("No player start position set");
+		}
+
+		for (int i=0 ; i<4 ; i++) { // todo - remove?
+			PositionData posData = (PositionData)this.players[i].getComponent(PositionData.class);
+			posData.position.set(gameLevel.getPlayerStartMapX() + 0.5f, 0, gameLevel.getPlayerStartMapY() + 0.5f); // Start in middle of square
+			players[i].update();
+		}
+
+		for (int viewid=0 ; viewid<viewports.length ; viewid++) {
+			ViewportData viewport = this.viewports[viewid];
+			Camera camera = viewport.camera;
+			camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
+			//this.viewports[0].camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
+
+			camera.update();
+			//this.viewports[0].camera.update();
+		}
 	}
 
 
@@ -117,15 +138,14 @@ public class Game implements IModule {
 		this.ecs.getSystem(InputSystem.class).process();
 		this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
-		this.ecs.getSystem(CollectionSystem.class).process();
 		gameLevel.update(this, mapData);
 
 		if (post != null) {
 			post.update(Gdx.graphics.getDeltaTime());
 		}
 
-		for (viewid=0 ; viewid<viewports.length ; viewid++) {
-			ViewportData viewportData = this.viewports[viewid];
+		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
+			ViewportData viewportData = this.viewports[currentViewId];
 			Gdx.gl.glViewport(viewportData.viewPos.x, viewportData.viewPos.y, viewportData.viewPos.width, viewportData.viewPos.height);
 
 			viewportData.frameBuffer.begin();
@@ -166,8 +186,8 @@ public class Game implements IModule {
 			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 
-				if (players[viewid] != null) {
-					players[viewid].renderUI(batch2d, font_white);
+				if (players[currentViewId] != null) {
+					players[currentViewId].renderUI(batch2d, font_white);
 				}
 				
 			gameLevel.renderUI(batch2d, font_white, font_black);
@@ -180,31 +200,6 @@ public class Game implements IModule {
 			if (post != null) {
 				post.end();
 			}
-		}
-	}
-
-
-	private void loadLevel() {
-		gameLevel.load();
-
-		if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
-			throw new RuntimeException ("No player start position set");
-		}
-		PositionData posData = (PositionData)this.players[0].getComponent(PositionData.class); // todo - diff start positions
-		posData.position.set(gameLevel.getPlayerStartMapX()*Game.UNIT+(Game.UNIT/2), 0, gameLevel.getPlayerStartMapY()*Game.UNIT+(Game.UNIT/2)); // Start in middle of square
-
-		for (int i=0 ; i<4 ; i++) { // todo - remove?
-			players[i].update();
-		}
-
-		for (int viewid=0 ; viewid<viewports.length ; viewid++) {
-			ViewportData viewport = this.viewports[viewid];
-			Camera camera = viewport.camera;
-			camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
-			//this.viewports[0].camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
-
-			camera.update();
-			//this.viewports[0].camera.update();
 		}
 	}
 

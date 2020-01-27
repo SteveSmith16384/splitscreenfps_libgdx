@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModel;
 
 public class Wall extends AbstractEntity {
@@ -19,12 +18,12 @@ public class Wall extends AbstractEntity {
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
-		Model box_model = modelBuilder.createBox(Game.UNIT, Game.UNIT, Game.UNIT, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
 		ModelInstance instance = new ModelInstance(box_model);
 		//instance.transform.translate(map_width*Game.UNIT, Game.UNIT/2f, map_height*Game.UNIT);
 		//instance.transform.translate(map_width*Game.UNIT-(Game.UNIT/2), Game.UNIT/2f, map_height*Game.UNIT-(Game.UNIT/2));
-		instance.transform.translate(map_width*Game.UNIT+(Game.UNIT/2), Game.UNIT/2f, map_height*Game.UNIT+(Game.UNIT/2));
+		instance.transform.translate(map_width+0.5f, 0.5f, map_height+0.5f);
 		instance.transform.rotate(Vector3.Z, 90);
 
 		HasModel model = new HasModel(instance);

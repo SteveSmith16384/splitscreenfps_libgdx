@@ -10,7 +10,7 @@ public abstract class AbstractLevel {
 
 	protected int map_width;
 	protected int map_height;
-	protected int playerStartMapX = -1, playerStartMapY = -1;
+	protected int playerStartMapX = -1, playerStartMapZ = -1;
 	
 	public AbstractLevel() {
 	}
@@ -30,7 +30,7 @@ public abstract class AbstractLevel {
 	}
 	
 	public int getPlayerStartMapY() {
-		return this.playerStartMapY;
+		return this.playerStartMapZ;
 	}
 
 	

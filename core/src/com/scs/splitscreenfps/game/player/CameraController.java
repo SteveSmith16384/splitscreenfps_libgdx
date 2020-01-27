@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class CameraController {
@@ -17,19 +16,12 @@ public class CameraController {
 
 	private float cursorSpeed = .15f;
 
-	public float bobbing = 0f;
-	private float bobHeight = .03f;
-	public float bobSpeed = 20f;
-
 	float[] sensitivity = new float[]{
 			0.5f, 1f, 1.75f
 	};
 	float[] sensitivity2 = new float[]{
 			0.25f, 1f, 1.75f
 	};
-
-	//private static final float maxLookY = 80f;
-	//private float lookY = 0f;
 
 	private IInputMethod input;
 
@@ -86,14 +78,6 @@ public class CameraController {
 				camera.rotate(Vector3.Y, -rotSpeedX * input.getLookRight() * dt);
 			}
 		}
-
-		// todo - move this:-
-		if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)){
-			bobbing += dt;
-		}
-
-		tmp.set(0f, (float) (Math.sin(bobbing * bobSpeed) * bobHeight * Game.UNIT), 0f);
-		camera.position.add(tmp);
 
 	}
 

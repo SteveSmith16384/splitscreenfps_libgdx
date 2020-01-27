@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.math.GridPoint2;
 
-public class Maze {
+public class MazeGen1 {
 
 	private static final char PASSAGE_CHAR = '.';
 	private static final char WALL_CHAR = 'W';
@@ -21,11 +21,11 @@ public class Maze {
 
 	public static void main(String args[]) {
 		//System.out.println(new Maze(21, 21));
-		new Maze(16, 16, 1);
+		new MazeGen1(16, 16, 1);
 	}
 
 
-	public Maze(final int _width, final int _height, int numToRemove) {
+	public MazeGen1(final int _width, final int _height, int numToRemove) {
 		this.width = _width;
 		this.height = _height;
 		this.map = new boolean[width][height];

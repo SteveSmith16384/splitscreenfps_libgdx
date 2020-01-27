@@ -1,5 +1,5 @@
 package com.scs.splitscreenfps.game.components;
-
+/*
 public class IsDamagableNasty {
 
 	public int health;
@@ -9,3 +9,4 @@ public class IsDamagableNasty {
 	}
 
 }
+*/

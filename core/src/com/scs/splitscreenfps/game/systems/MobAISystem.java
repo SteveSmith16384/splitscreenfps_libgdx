@@ -48,7 +48,7 @@ public class MobAISystem extends AbstractSystem {
 			case GoForPlayerIfSeen:
 				if (ai.can_see_player) {
 					ai.direction.set(ai.player.getPosition()).sub(pos.position).nor();
-					ai.direction.scl(Gdx.graphics.getDeltaTime() * ai.speed * Game.UNIT);
+					ai.direction.scl(Gdx.graphics.getDeltaTime() * ai.speed);
 					ai.direction.y = 0f;
 
 					movementData.offset.x = ai.direction.x;
@@ -58,7 +58,7 @@ public class MobAISystem extends AbstractSystem {
 
 			case GoForPlayerIfClose:
 				ai.direction.set(ai.player.getPosition()).sub(pos.position).nor();
-				ai.direction.scl(Gdx.graphics.getDeltaTime() * ai.speed * Game.UNIT);
+				ai.direction.scl(Gdx.graphics.getDeltaTime() * ai.speed);
 				ai.direction.y = 0f;
 
 				movementData.offset.x = ai.direction.x;
@@ -78,7 +78,7 @@ public class MobAISystem extends AbstractSystem {
 				}
 				movementData.offset.x = ai.direction.x;
 				movementData.offset.z = ai.direction.z;
-				movementData.offset.scl(Gdx.graphics.getDeltaTime() * ai.speed * Game.UNIT);
+				movementData.offset.scl(Gdx.graphics.getDeltaTime() * ai.speed);
 				break;
 
 			default:

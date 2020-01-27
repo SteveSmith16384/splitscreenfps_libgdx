@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Art;
-import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.CollisionComponent;
 import com.scs.splitscreenfps.game.components.CompletesLevelData;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.PositionData;
+
+import ssmith.libgdx.LibGDXHelper;
 
 public class MonsterMazeExit extends AbstractEntity {
 
@@ -18,14 +20,14 @@ public class MonsterMazeExit extends AbstractEntity {
 		super(MonsterMazeExit.class.getSimpleName());
 		
 		//PositionData posData = new PositionData((map_x*Game.UNIT)-(Game.UNIT/2), (map_y*Game.UNIT)-(Game.UNIT/2));
-		PositionData posData = new PositionData((map_x*Game.UNIT)+(Game.UNIT/2), (map_y*Game.UNIT)+(Game.UNIT/2));
+		PositionData posData = new PositionData((map_x)+(0.5f), (map_y)+(0.5f));
 		this.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
 		Texture tex = new Texture(Gdx.files.internal("monstermaze/exit1.png"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
-        hasDecal.decal.setScale(Game.UNIT / tr.getRegionWidth());
+        hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
         hasDecal.faceCameraTilted = true;        
@@ -38,6 +40,7 @@ public class MonsterMazeExit extends AbstractEntity {
         
 		this.addComponent(new CompletesLevelData());
 
+        this.addComponent(new CollisionComponent(LibGDXHelper.createFromCentreAndExtents(posData.position, .3f, .3f, .3f)));
 	}
 
 }

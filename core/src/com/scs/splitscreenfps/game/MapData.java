@@ -33,32 +33,32 @@ public class MapData {
 
 	public boolean rectangleFree(float center_x, float center_z, float width, float depth) {
 		//Upper left
-		float x = (center_x/Game.UNIT)-(width/2);// + 0.5f;
-		float y = center_z/Game.UNIT-depth/2;// + 0.5f;
+		float x = (center_x)-(width/2);// + 0.5f;
+		float y = center_z-depth/2;// + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
 		}
 
 		//Down left
-		x = center_x/Game.UNIT-width/2;// + 0.5f;
-		y = center_z/Game.UNIT+depth/2;// + 0.5f;
+		x = center_x-width/2;// + 0.5f;
+		y = center_z+depth/2;// + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
 		}
 
 		//Upper right
-		x = center_x/Game.UNIT+width/2;// + 0.5f;
-		y = center_z/Game.UNIT-depth/2;// + 0.5f;
+		x = center_x+width/2;// + 0.5f;
+		y = center_z-depth/2;// + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
 		}
 
 		//Down right
-		x = center_x/Game.UNIT+width/2;// + 0.5f;
-		y = center_z/Game.UNIT+depth/2;// + 0.5f;
+		x = center_x+width/2;// + 0.5f;
+		y = center_z+depth/2;// + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
@@ -70,32 +70,32 @@ public class MapData {
 
 	public boolean rectangleFree_ORIG(float center_x, float center_z, float width, float depth) {
 		//Upper left
-		float x = (center_x/Game.UNIT)-(width/2) + 0.5f;
-		float y = center_z/Game.UNIT-depth/2 + 0.5f;
+		float x = (center_x)-(width/2) + 0.5f;
+		float y = center_z-depth/2 + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
 		}
 
 		//Down left
-		x = center_x/Game.UNIT-width/2 + 0.5f;
-		y = center_z/Game.UNIT+depth/2 + 0.5f;
+		x = center_x-width/2 + 0.5f;
+		y = center_z+depth/2 + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
 		}
 
 		//Upper right
-		x = center_x/Game.UNIT+width/2 + 0.5f;
-		y = center_z/Game.UNIT-depth/2 + 0.5f;
+		x = center_x+width/2 + 0.5f;
+		y = center_z-depth/2 + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
 		}
 
 		//Down right
-		x = center_x/Game.UNIT+width/2 + 0.5f;
-		y = center_z/Game.UNIT+depth/2 + 0.5f;
+		x = center_x+width/2 + 0.5f;
+		y = center_z+depth/2 + 0.5f;
 
 		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
 			return false;
@@ -114,8 +114,8 @@ public class MapData {
 		dir.y = 0;
 		dir.nor();
 
-		while(tmp.dst2(pos2) > (Game.UNIT/2f) * (Game.UNIT/2f)){
-			tmp.mulAdd(dir, -Game.UNIT/4f);
+		while(tmp.dst2(pos2) > (0.5f * 0.5f)){
+			tmp.mulAdd(dir, -0.25f);
 
 			if (getMapSquareAt(tmp.x, tmp.z).blocked) {
 				return false;
@@ -126,12 +126,12 @@ public class MapData {
 
 
 	public MapSquare getMapSquareAt(float x, float y) {
-		return getMapSquareAt((int)(x/Game.UNIT+0.5f), (int)(y/Game.UNIT+0.5f));
+		return getMapSquareAt((int)(x+0.5f), (int)(y+0.5f));
 	}
 
 
 	public MapSquare getMapSquareAt(Vector3 vec) {
-		return getMapSquareAt((int)((vec.x/Game.UNIT)+0.5f), (int)((vec.z/Game.UNIT)+0.5f));
+		return getMapSquareAt((int)((vec.x)+0.5f), (int)((vec.z)+0.5f));
 	}
 
 

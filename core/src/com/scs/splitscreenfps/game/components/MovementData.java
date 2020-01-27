@@ -9,7 +9,7 @@ public class MovementData {
 	public float sizeAsFracOfMapsquare;
 	public boolean removeIfHitWall = false;
 	public boolean hitWall = false;
-	public boolean blocksMovement = false;
+	//public boolean blocksMovement = false;
 	
 	public MovementData(float _sizeAsFracOfMapsquare) {
 		sizeAsFracOfMapsquare = _sizeAsFracOfMapsquare;

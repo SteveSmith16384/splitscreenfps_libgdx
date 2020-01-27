@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.HasModelCycle;
 
@@ -34,9 +33,9 @@ public class Floor extends AbstractEntity {
 
 			ModelBuilder modelBuilder = new ModelBuilder();
 			Model floor = modelBuilder.createRect(
-					0f,0f, (float) map_height*Game.UNIT,
-					(float)map_width*Game.UNIT, 0f, (float)map_height*Game.UNIT,
-					(float)map_width*Game.UNIT, 0f, 0f,
+					0f,0f, (float) map_height,
+					(float)map_width, 0f, (float)map_height,
+					(float)map_width, 0f, 0f,
 					0f,0f,0f,
 					1f,1f,1f,
 					white_material,
@@ -65,9 +64,9 @@ public class Floor extends AbstractEntity {
 
 			ModelBuilder modelBuilder = new ModelBuilder();
 			Model floor = modelBuilder.createRect(
-					0f,0f, (float) map_height*Game.UNIT,
-					(float)map_width*Game.UNIT, 0f, (float)map_height*Game.UNIT,
-					(float)map_width*Game.UNIT, 0f, 0f,
+					0f,0f, (float) map_height,
+					(float)map_width, 0f, (float)map_height,
+					(float)map_width, 0f, 0f,
 					0f,0f,0f,
 					1f,1f,1f,
 					white_material,

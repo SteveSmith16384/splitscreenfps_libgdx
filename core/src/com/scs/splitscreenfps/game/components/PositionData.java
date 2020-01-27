@@ -2,7 +2,6 @@ package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
-import com.scs.splitscreenfps.game.Game;
 
 public class PositionData {
 
@@ -20,8 +19,8 @@ public class PositionData {
 	
 	
 	public GridPoint2 getMapPos() {
-		float x = (position.x/Game.UNIT);// + 0.5f;
-		float y = position.z/Game.UNIT;// + 0.5f;
+		float x = (position.x);// + 0.5f;
+		float y = position.z;// + 0.5f;
 		
 		return new GridPoint2((int)x, (int)y) ;
 

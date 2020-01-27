@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.CollisionComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
+
+import ssmith.libgdx.LibGDXHelper;
 
 public class GenericScenery extends AbstractEntity {
 
@@ -20,21 +21,24 @@ public class GenericScenery extends AbstractEntity {
 		Texture tex = new Texture(Gdx.files.internal(filename));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
-        hasDecal.decal.setScale(Game.UNIT / tr.getRegionWidth() / 2);
-        hasDecal.decal.setPosition(new Vector3(x*Game.UNIT, -Game.UNIT/5, y*Game.UNIT));
+        hasDecal.decal.setScale(1f / tr.getRegionWidth() / 2);
+        hasDecal.decal.setPosition(new Vector3(x, -.5f, y));
         hasDecal.faceCamera = true;
         hasDecal.faceCameraTilted = true;        
         this.addComponent(hasDecal);
         
         if (blocks_movement) {
-        	MovementData md = new MovementData(.5f);
-        	md.blocksMovement = true;
-            this.addComponent(md);
+        	/*MovementData md = new MovementData(.5f);
+        	//md.blocksMovement = true;
+            this.addComponent(md);*/
 
             PositionData pos = new PositionData();
-            pos.position = new Vector3(x*Game.UNIT+(Game.UNIT/2), -Game.UNIT/5, y*Game.UNIT+(Game.UNIT/2));
+            pos.position = new Vector3(x+0.5f, -.2f, y+0.5f);
             this.addComponent(pos);
             
+            // todo - create collision component
+            this.addComponent(new CollisionComponent(LibGDXHelper.createFromCentreAndExtents(pos.position, .3f, .3f, .3f)));
+
         }
 	}
 
