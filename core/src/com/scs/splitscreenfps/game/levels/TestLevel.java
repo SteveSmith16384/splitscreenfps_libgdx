@@ -11,7 +11,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
-import com.scs.splitscreenfps.game.entities.MyModel;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class TestLevel extends AbstractLevel {
@@ -37,18 +36,18 @@ public class TestLevel extends AbstractLevel {
 		this.map_width = 16;
 		this.map_height = 16;
 
-		game.mapData = new MapData(map_width, map_height);//.map = new MapSquare[map_width][map_height];
+		game.mapData = new MapData(map_width, map_height);
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare(false);
 			}
 		}
 
-		Wall wall = new Wall("heart.png", 10, 10, true);
+		/*Wall wall = new Wall("heart.png", 10, 10, true);
 		game.ecs.addEntity(wall);
 		
-		MyModel soldier = new MyModel("soldier", 3, 0, 3);
-		game.ecs.addEntity(soldier);
+		/*MyModel soldier = new MyModel("soldier", 3, 0, 3);
+		game.ecs.addEntity(soldier);*/
 
 	}
 
@@ -108,6 +107,16 @@ public class TestLevel extends AbstractLevel {
 					String tex = tokens[6];
 					Floor wall = new Floor(name, tex, x, z, w, d);
 					game.ecs.addEntity(wall);
+					break;
+				}
+				case 3: // Model
+				{
+					/*todo float x = Float.parseFloat(tokens[2]);
+					float y = Float.parseFloat(tokens[3]);
+					float z = Float.parseFloat(tokens[4]);
+					String tex = tokens[6];
+					Floor wall = new Floor(name, tex, x, z, w, d);
+					game.ecs.addEntity(wall);*/
 					break;
 				}
 				}

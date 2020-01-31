@@ -53,9 +53,8 @@ public class AStar_LibGDX {
 	private volatile WayPoints route = new WayPoints();
 	private boolean can_timeout = false;
 	private long max_dur, timeout_time;
-	public volatile static int tot_threads=0; // How many concurrent instances are there?
+	//public volatile static int tot_threads=0; // How many concurrent instances are there?
 
-	// Debugging vars
 	private String[][] strmap;
 
 	public AStar_LibGDX(IAStarMapInterface intface, long max_duration) {
@@ -106,12 +105,11 @@ public class AStar_LibGDX {
 		this.end_z = targ_z;
 		this.max_dist = max_dist;
 
-			run();
+		run();
 	}
 
-	
+
 	public void run() {
-		tot_threads++;
 		//System.out.println("Tot A* threads:" + this.tot_threads);
 
 		int w = map_interface.getMapWidth();
@@ -178,7 +176,6 @@ public class AStar_LibGDX {
 		//showMap();
 
 		this.finding_path = false;
-		tot_threads--;
 		//System.out.println("Finished finding path. (threads:" + this.tot_threads + ")");
 	}
 

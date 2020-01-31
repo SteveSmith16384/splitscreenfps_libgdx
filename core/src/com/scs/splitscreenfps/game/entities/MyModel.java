@@ -16,14 +16,14 @@ public class MyModel extends AbstractEntity {
 		super(name);
 
 		AssetManager am = new AssetManager();
-		am.load("models/Suit_Male.g3dj", Model.class);
+		am.load("models/Spider.g3dj", Model.class);
 		am.finishLoading();
-		Model model = am.get("models/Suit_Male.g3dj");
+		Model model = am.get("models/Spider.g3dj");
 		//ModelLoader loader = new ObjLoader();
 		//Model model = loader.loadModel(Gdx.files.internal("data/ship.obj"));
 
 		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
-		instance.transform.scl(.01f);
+		instance.transform.scl(.002f);
 		
 		HasModel hasModel = new HasModel(instance);
 		this.addComponent(hasModel);

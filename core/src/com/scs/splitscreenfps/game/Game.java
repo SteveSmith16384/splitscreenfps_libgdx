@@ -16,7 +16,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.TestLevel;
+import com.scs.splitscreenfps.game.levels.CleanTheLitterLevel;
 import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
@@ -68,7 +68,7 @@ public class Game implements IModule {
 
 		this.createECS();
 
-		gameLevel = new TestLevel(this);//MonsterMazeLevel(this);
+		gameLevel = new CleanTheLitterLevel(this);//TestLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
 		for (int i=0 ; i<4 ; i++) {
@@ -94,7 +94,7 @@ public class Game implements IModule {
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
 		ecs.addSystem(new MobAISystem(this, ecs));
 		ecs.addSystem(new MovementSystem(this, ecs));
-		ecs.addSystem(new DrawModelSystem(ecs, batch));
+		ecs.addSystem(new DrawModelSystem(this, ecs, batch));
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
 		ecs.addSystem(new CollectionSystem(ecs));

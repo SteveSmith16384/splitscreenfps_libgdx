@@ -4,15 +4,17 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModel;
 
 public class DrawModelSystem extends AbstractSystem {
 	
+	private Game game;
 	private ModelBatch batch;
 
-	public DrawModelSystem(BasicECS ecs, ModelBatch _batch) {
+	public DrawModelSystem(Game _game, BasicECS ecs, ModelBatch _batch) {
 		super(ecs);
-		
+		game = _game;
 		this.batch = _batch;
 	}
 
@@ -26,7 +28,9 @@ public class DrawModelSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
-		batch.render(model.model);
+		if (model.playerViewId != game.currentViewId) {
+			batch.render(model.model);
+		}
 	}
 	
 }
