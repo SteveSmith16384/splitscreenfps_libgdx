@@ -22,7 +22,7 @@ public class Wall extends AbstractEntity {
 		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, 0.5f, mapPosZ+0.5f));
-		instance.transform.rotate(Vector3.Z, 90);
+		instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 		//instance.calculateTransforms();
 
 		HasModel model = new HasModel(instance);
@@ -37,7 +37,6 @@ public class Wall extends AbstractEntity {
 	}
 
 
-	//
 	public Wall(String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
 		super(name);
 		
@@ -46,6 +45,7 @@ public class Wall extends AbstractEntity {
 		Model box_model = modelBuilder.createBox(w, h, d, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(posX+(w/2), posY+(h/2), posZ+(d/2)));
+		instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
 		HasModel model = new HasModel(instance);
 		this.addComponent(model);

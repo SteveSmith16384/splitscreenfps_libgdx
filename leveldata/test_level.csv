@@ -1,3 +1,6 @@
-w1	2	0	2	1	2	1
-w2	4	0	4	1	2	1
-w3	6	0	6	1	4	1
+#Name	Type	x	y	z	w	h	d	text
+w1	1	2	0	2	1	2	1	testassets/unit_highlighter_nw.png
+w2	1	4	0	4	1	2	1	testassets/unit_highlighter_nw.png
+w3	1	6	0	6	1	4	1	testassets/unit_highlighter_nw.png
+f1	2	2	2	4	4	testassets/exit.png
+

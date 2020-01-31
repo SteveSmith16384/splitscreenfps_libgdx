@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.HasModelCycle;
@@ -21,7 +22,7 @@ public class Floor extends AbstractEntity {
 	}
 
 
-	public Floor(String tex_filename1, String tex_filename2, int map_width, int map_height, boolean tile) {
+	public Floor(String tex_filename1, String tex_filename2, int map_width, int map_depth, boolean tile) {
 		super(Floor.class.getSimpleName());
 
 		HasModelCycle model_cycle = new HasModelCycle(.5f, 2);
@@ -33,8 +34,8 @@ public class Floor extends AbstractEntity {
 
 			ModelBuilder modelBuilder = new ModelBuilder();
 			Model floor = modelBuilder.createRect(
-					0f,0f, (float) map_height,
-					(float)map_width, 0f, (float)map_height,
+					0f,0f, (float) map_depth,
+					(float)map_width, 0f, (float)map_depth,
 					(float)map_width, 0f, 0f,
 					0f,0f,0f,
 					1f,1f,1f,
@@ -43,14 +44,14 @@ public class Floor extends AbstractEntity {
 
 			Matrix3 mat = new Matrix3();
 			if (tile) {
-				mat.scl(new Vector2(map_width, map_height));
+				mat.scl(new Vector2(map_width, map_depth));
 			}
 			floor.meshes.get(0).transformUV(mat);
 
 			ModelInstance instance = new ModelInstance(floor);
 			//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 			//instance.calculateTransforms();
-			
+
 			HasModel model = new HasModel(instance);
 			this.addComponent(model);
 
@@ -65,8 +66,8 @@ public class Floor extends AbstractEntity {
 
 			ModelBuilder modelBuilder = new ModelBuilder();
 			Model floor = modelBuilder.createRect(
-					0f,0f, (float) map_height,
-					(float)map_width, 0f, (float)map_height,
+					0f,0f, (float) map_depth,
+					(float)map_width, 0f, (float)map_depth,
 					(float)map_width, 0f, 0f,
 					0f,0f,0f,
 					1f,1f,1f,
@@ -75,7 +76,7 @@ public class Floor extends AbstractEntity {
 
 			Matrix3 mat = new Matrix3();
 			if (tile) {
-				mat.scl(new Vector2(map_width, map_height));
+				mat.scl(new Vector2(map_width, map_depth));
 			}
 			floor.meshes.get(0).transformUV(mat);
 
@@ -85,6 +86,35 @@ public class Floor extends AbstractEntity {
 			this.addComponent(model_cycle);
 		}
 
+	}
+
+
+	public Floor(String name, String tex_filename1, float x, float z, float w, float d) {
+		super(name);
+
+		Texture tex = new Texture(tex_filename1);
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model floor = modelBuilder.createRect(
+				0f,0f, (float) d,
+				(float)w, 0f, (float)d,
+				(float)w, 0f, 0f,
+				0f,0f,0f,
+				1f,1f,1f,
+				white_material,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		Matrix3 mat = new Matrix3();
+		floor.meshes.get(0).transformUV(mat);
+
+		ModelInstance instance = new ModelInstance(floor, new Vector3(x, 0, z));
+		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
+		//instance.calculateTransforms();
+
+		HasModel model = new HasModel(instance);
+		this.addComponent(model);
 	}
 
 }

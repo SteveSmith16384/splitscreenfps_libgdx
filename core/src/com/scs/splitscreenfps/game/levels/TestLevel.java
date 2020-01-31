@@ -6,9 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
+import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class TestLevel extends AbstractLevel {
@@ -49,7 +51,6 @@ public class TestLevel extends AbstractLevel {
 
 	@Override
 	public void update(Game game, MapData world) {
-		//String s = Gdx.files.getLocalStoragePath();
 		FileHandle file = Gdx.files.internal("../../" + DATA_FILE);
 		if (file.exists()) {
 			long lm = file.lastModified();
@@ -65,28 +66,49 @@ public class TestLevel extends AbstractLevel {
 		String str = file.readString();
 		String[] str2 = str.split("\n");
 		for (String s : str2) {
-			String tokens[] = s.split("\t");
-			String name = ENAME + tokens[0];
-			float x = Float.parseFloat(tokens[1]);
-			float y = Float.parseFloat(tokens[2]);
-			float z = Float.parseFloat(tokens[3]);
-			float w = Float.parseFloat(tokens[4]);
-			float h = Float.parseFloat(tokens[5]);
-			float d = Float.parseFloat(tokens[6]);
-			
-			Iterator<AbstractEntity> it = game.ecs.getIterator();
-			while (it.hasNext()) {
-				AbstractEntity entity = it.next();
-				if (entity.name.equalsIgnoreCase(name)) {
-					entity.remove();
+			s = s.trim();
+			if (s.length() > 0 && s.startsWith("#") == false) {
+				String tokens[] = s.split("\t");
+				String name = ENAME + tokens[0];
+				Iterator<AbstractEntity> it = game.ecs.getIterator();
+				while (it.hasNext()) {
+					AbstractEntity entity = it.next();
+					if (entity.name.equalsIgnoreCase(name)) {
+						Settings.p("Replacing " + entity);
+						entity.remove();
+						break;
+					}
+				}
+
+				int type = Integer.parseInt(tokens[1]);
+				switch (type) { 
+				case 1: // Block
+				{
+					float x = Float.parseFloat(tokens[2]);
+					float y = Float.parseFloat(tokens[3]);
+					float z = Float.parseFloat(tokens[4]);
+					float w = Float.parseFloat(tokens[5]);
+					float h = Float.parseFloat(tokens[6]);
+					float d = Float.parseFloat(tokens[7]);
+					String tex = tokens[8];
+					Wall wall = new Wall(name, tex, x, y, z, w, h, d, true);
+					game.ecs.addEntity(wall);
 					break;
 				}
+				case 2: // Floor
+				{
+					float x = Float.parseFloat(tokens[2]);
+					float z = Float.parseFloat(tokens[3]);
+					float w = Float.parseFloat(tokens[4]);
+					float d = Float.parseFloat(tokens[5]);
+					String tex = tokens[6];
+					Floor wall = new Floor(name, tex, x, z, w, d);
+					game.ecs.addEntity(wall);
+					break;
+				}
+				}
 			}
-			
-			Wall wall = new Wall(name, "unit_highlighter_nw.png", x, y, z, w, h, d, true);
-			game.ecs.addEntity(wall);
 		}
 	}
-
 
 }
