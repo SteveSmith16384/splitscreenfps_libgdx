@@ -42,6 +42,7 @@ public class Ceiling extends AbstractEntity {
 		instance.transform.translate(mapOffX, height, mapOffZ);
 		instance.transform.rotate(Vector3.X, 180);
 		instance.transform.translate(0, 0, -(float)map_width);
+		instance.calculateTransforms();
 
 		HasModel model = new HasModel(instance);
 		this.addComponent(model);

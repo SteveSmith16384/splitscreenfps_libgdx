@@ -43,19 +43,20 @@ public class MonsterMazeLevel extends AbstractLevel {
 		this.map_width = 16;
 		this.map_height = 16;
 
-		game.mapData.map = new MapSquare[map_width][map_height];
+		game.mapData = new MapData(map_width, map_height);//.map = new MapSquare[map_width][map_height];
 
 		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
 
-		this.playerStartMapX = maze.start_pos.x;
-		this.playerStartMapZ = maze.start_pos.y;
+		for (int i=0 ; i<this.startPositions.length ;i++) {
+			this.startPositions[i] = maze.start_pos;
+		}
 
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare();
 				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {
-					Wall wall = new Wall("monstermaze/wall.png", x, z);
+					Wall wall = new Wall("monstermaze/wall.png", x, z, false);
 					game.ecs.addEntity(wall);
 				}
 			}
@@ -107,19 +108,10 @@ public class MonsterMazeLevel extends AbstractLevel {
 	}
 	 */
 
-	@Override
-	public void update(Game game, MapData world) {
-
-	}
-
 
 	@Override
 	public void renderUI(SpriteBatch batch, BitmapFont font_white, BitmapFont font_black) {		
 	}
 
 
-	@Override
-	public String getMusicFilename() {
-		return "";
-	}
 }

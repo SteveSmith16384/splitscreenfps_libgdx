@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.bitfire.postprocessing.PostProcessing;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Audio;
 import com.scs.splitscreenfps.IModule;
@@ -18,7 +16,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
+import com.scs.splitscreenfps.game.levels.TestLevel;
 import com.scs.splitscreenfps.game.player.Player;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -33,7 +31,7 @@ import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 
 public class Game implements IModule {
 
-	public static final Art art = new Art();
+	public static final Graphics art = new Graphics();
 	public static final Audio audio = new Audio();
 
 	private SpriteBatch batch2d;
@@ -47,10 +45,8 @@ public class Game implements IModule {
 
 	private AbstractLevel gameLevel;
 
-	private PostProcessing post; // todo - add
-	
 	public int currentViewId;
-	
+
 	public Game() {
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
@@ -66,19 +62,15 @@ public class Game implements IModule {
 			players[i] = new Player(i, this.viewports[i], input);
 		}
 
-		mapData = new MapData();
+		//mapData = new MapData();
 
 		this.createECS();
 
-		gameLevel = new MonsterMazeLevel(this);
+		gameLevel = new TestLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
-		
+
 		for (int i=0 ; i<4 ; i++) {
 			ecs.addEntity(players[i]);
-		}
-
-		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			//post = new PostProcessing();
 		}
 
 	}
@@ -109,24 +101,26 @@ public class Game implements IModule {
 	private void loadLevel() {
 		gameLevel.load();
 
-		if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
+		/*if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
 			throw new RuntimeException ("No player start position set");
-		}
+		}*/
 
-		for (int i=0 ; i<4 ; i++) { // todo - remove?
-			PositionData posData = (PositionData)this.players[i].getComponent(PositionData.class);
-			posData.position.set(gameLevel.getPlayerStartMapX() + 0.5f, 0, gameLevel.getPlayerStartMapY() + 0.5f); // Start in middle of square
-			players[i].update();
-		}
+		// Set start position of players
+		for (int idx=0 ; idx<4 ; idx++) {
+			PositionData posData = (PositionData)this.players[idx].getComponent(PositionData.class);
+			posData.position.set(gameLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, gameLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
+			players[idx].update();
+		/*}
 
-		for (int viewid=0 ; viewid<viewports.length ; viewid++) {
-			ViewportData viewport = this.viewports[viewid];
+		for (int viewid=0 ; viewid<viewports.length ; viewid++) {*/
+			ViewportData viewport = this.viewports[idx];
 			Camera camera = viewport.camera;
+			camera.position.set(posData.position);
+			camera.position.y += Settings.CAMERA_HEIGHT_OFFSET;
 			camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
 			//this.viewports[0].camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
 
 			camera.update();
-			//this.viewports[0].camera.update();
 		}
 	}
 
@@ -140,12 +134,12 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		gameLevel.update(this, mapData);
 
-		if (post != null) {
-			post.update(Gdx.graphics.getDeltaTime());
-		}
-
 		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
+			if (viewportData.post != null) {
+				viewportData.post.update(Gdx.graphics.getDeltaTime());
+			}
+
 			Gdx.gl.glViewport(viewportData.viewPos.x, viewportData.viewPos.y, viewportData.viewPos.width, viewportData.viewPos.height);
 
 			viewportData.frameBuffer.begin();
@@ -172,8 +166,8 @@ public class Game implements IModule {
 
 			viewportData.frameBuffer.end();
 
-			if (post != null) {
-				post.begin();
+			if (viewportData.post != null) {
+				viewportData.post.begin();
 			}
 
 			//Draw buffer and FPS
@@ -181,15 +175,12 @@ public class Game implements IModule {
 
 			float c = 1.0f;
 			batch2d.setColor(c,c,c,1);
-			//batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), - Gdx.graphics.getHeight());
-			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), 0, viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
-			//batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y);
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 
-				if (players[currentViewId] != null) {
-					players[currentViewId].renderUI(batch2d, font_white);
-				}
-				
+			if (players[currentViewId] != null) {
+				players[currentViewId].renderUI(batch2d, font_white);
+			}
+
 			gameLevel.renderUI(batch2d, font_white, font_black);
 
 			if (Settings.SHOW_FPS) {
@@ -197,8 +188,8 @@ public class Game implements IModule {
 			}
 
 			batch2d.end();
-			if (post != null) {
-				post.end();
+			if (viewportData.post != null) {
+				viewportData.post.end();
 			}
 		}
 	}
@@ -212,9 +203,13 @@ public class Game implements IModule {
 
 	@Override
 	public void dispose() {
-		if (post != null) {
-			post.dispose();
+		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
+			ViewportData viewportData = this.viewports[currentViewId];
+			viewportData.dispose();
 		}
+		/*if (post != null) {
+			post.dispose();
+		}*/
 		font_white.dispose(); 
 		font_black.dispose();
 		audio.dipose();
@@ -222,12 +217,6 @@ public class Game implements IModule {
 		batch2d.dispose();
 	}
 
-
-	/*	@Override
-	public boolean isFinished() {
-		return false; // Never finishes
-	}
-	 */
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {

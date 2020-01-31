@@ -34,6 +34,7 @@ public class GenericSquare extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(floor);
 		//instance.transform.translate((map_x*Game.UNIT)-(Game.UNIT/2), 0.1f, (map_y*Game.UNIT)-(Game.UNIT/2));
 		instance.transform.translate(map_x, 0.1f, map_y);
+		instance.calculateTransforms();
 		this.addComponent(new HasModel(instance));
 
 	}

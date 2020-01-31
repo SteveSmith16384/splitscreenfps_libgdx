@@ -49,7 +49,8 @@ public class Floor extends AbstractEntity {
 
 			ModelInstance instance = new ModelInstance(floor);
 			//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
-
+			//instance.calculateTransforms();
+			
 			HasModel model = new HasModel(instance);
 			this.addComponent(model);
 

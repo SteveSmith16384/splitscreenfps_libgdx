@@ -36,8 +36,7 @@ public class GenericScenery extends AbstractEntity {
             pos.position = new Vector3(x+0.5f, -.2f, y+0.5f);
             this.addComponent(pos);
             
-            // todo - create collision component
-            this.addComponent(new CollidesComponent(new MyBoundingBox(pos.position, .3f, .3f, .3f)));
+            this.addComponent(new CollidesComponent(blocks_movement, new MyBoundingBox(pos.position, .3f, .3f, .3f)));
 
         }
 	}

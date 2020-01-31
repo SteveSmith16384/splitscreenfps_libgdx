@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.game.Art;
+import com.scs.splitscreenfps.game.Graphics;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -38,7 +38,7 @@ public class TRex extends AbstractEntity {
         
         HasDecalCycle cycle = new HasDecalCycle(.8f, 2);
         cycle.decals[0] = hasDecal.decal;
-        cycle.decals[1] = Art.DecalHelper("monstermaze/trex2.png", 1f);
+        cycle.decals[1] = Graphics.DecalHelper("monstermaze/trex2.png", 1f);
         this.addComponent(cycle);
         
         HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, 7f, target);
@@ -48,7 +48,7 @@ public class TRex extends AbstractEntity {
 
         //this.addComponent(new HarmsPlayer(1));
         
-        this.addComponent(new CollidesComponent(new MyBoundingBox(pos.position, .3f, .3f, .3f)));
+        this.addComponent(new CollidesComponent(true, new MyBoundingBox(pos.position, .3f, .3f, .3f)));
 
     }
     

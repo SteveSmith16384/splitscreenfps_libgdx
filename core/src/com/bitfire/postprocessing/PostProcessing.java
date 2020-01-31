@@ -33,24 +33,28 @@ public final class PostProcessing implements Disposable, PostProcessorListener {
 	public boolean zoomRadialBlur;
 	public float zoomAmount, zoomFactor;
 	private boolean blending;
-	//private LensFlare2 lensFlare2;
+	private LensFlare2 lensFlare2;
+	public int vpW, vpH;
 
-	public PostProcessing() {
+	public PostProcessing(int _vpW, int _vpH) {
+		vpW = _vpW;
+		vpH = _vpW;
+		
 		boolean isDesktop = (Gdx.app.getType() == ApplicationType.Desktop);
-		int vpW = Gdx.graphics.getWidth(); // todo - and rest
-		int vpH = Gdx.graphics.getHeight();
+		//int vpW = Gdx.graphics.getWidth(); // todo - and rest
+		//int vpH = Gdx.graphics.getHeight();
 		blending = false;
 
 		// create the postprocessor
 		// ShaderLoader.Pedantic = false;
-		postProcessor = new PostProcessor( false, true, isDesktop );
+		postProcessor = new PostProcessor(vpW, vpH, false, true, isDesktop);
 
 		// optionally create a listener
 		postProcessor.setListener( this );
 		PostProcessor.EnableQueryStates = false;
 
 		// create the effects you want
-		bloom = new Bloom( (int)(Gdx.graphics.getWidth() * 0.25f), (int)(Gdx.graphics.getHeight() * 0.25f) );
+		bloom = new Bloom( (int)(vpW * 0.25f), (int)(vpH * 0.25f) );
 		curvature = new Curvature();
 		zoomer = new Zoomer( vpW, vpH, isDesktop ? RadialBlur.Quality.VeryHigh : RadialBlur.Quality.Low );
 		int effects = Effect.TweakContrast.v | Effect.PhosphorVibrance.v | Effect.Scanlines.v | Effect.Tint.v;
@@ -64,7 +68,7 @@ public final class PostProcessing implements Disposable, PostProcessorListener {
 		this.motionBlur = new MotionBlur();
 		motionBlur.setBlurOpacity(.9f); // scs new
 		
-		//this.lensFlare2 = new LensFlare2(vpW, vpH);
+		this.lensFlare2 = new LensFlare2(vpW, vpH);
 
 		vignette = new Vignette( vpW, vpH, false );
 
@@ -84,17 +88,17 @@ public final class PostProcessing implements Disposable, PostProcessorListener {
 		// specify a negative value to blur inside-to-outside,
 		// so that to avoid artifacts at borders
 		zoomer.setBlurStrength( -0.1f );
-		zoomer.setOrigin( Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 );
+		zoomer.setOrigin( vpW / 2, vpH / 2 );
 		curvature.setZoom( 1f );
 		vignette.setIntensity( 1f );
 
 		bloom.setEnabled(true);
-		crt.setEnabled( true );
+		crt.setEnabled( false );
 		vignette.setEnabled( false );
 		curvature.setEnabled( false );
 		zoomer.setEnabled( false );
 		motionBlur.setEnabled(true);
-		//lensFlare2.setEnabled(true);
+		lensFlare2.setEnabled(true);
 	}
 
 	

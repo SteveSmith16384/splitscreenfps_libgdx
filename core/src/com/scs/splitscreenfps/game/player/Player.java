@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.CanCarry;
@@ -42,11 +43,11 @@ public class Player extends AbstractEntity {
 		
 		this.movementData = new MovementData(0.5f);
 		this.addComponent(movementData);
-		this.positionData = new PositionData();
+		this.positionData = new PositionData(); // Centre of the player, but NOT where the camera is!
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
-        this.addComponent(new CollidesComponent(new MyBoundingBox(positionData.position, .3f, .3f, .3f)));
+        this.addComponent(new CollidesComponent(false, new MyBoundingBox(positionData.position, .3f, Settings.PLAYER_HEIGHT/2, .3f)));
 
 		camera = _viewportData.camera;
 

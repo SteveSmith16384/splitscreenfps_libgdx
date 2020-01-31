@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 
-public class Art {
+public class Graphics {
 
-	public Art() {
+	public Graphics() {
 	}
 
 /*

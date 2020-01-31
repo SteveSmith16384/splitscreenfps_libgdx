@@ -62,9 +62,9 @@ public final class PostProcessor implements Disposable {
 	private Array<PostProcessorEffect> enabledEffects = new Array<PostProcessorEffect>(5);
 
 	/** Construct a new PostProcessor with FBO dimensions set to the size of the screen */
-	public PostProcessor (boolean useDepth, boolean useAlphaChannel, boolean use32Bits) {
+	/*public PostProcessor (boolean useDepth, boolean useAlphaChannel, boolean use32Bits) {
 		this(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), useDepth, useAlphaChannel, use32Bits);
-	}
+	}*/
 
 	/** Construct a new PostProcessor with the given parameters, defaulting to <em>TextureWrap.ClampToEdge</em> as texture wrap mode */
 	public PostProcessor (int fboWidth, int fboHeight, boolean useDepth, boolean useAlphaChannel, boolean use32Bits) {

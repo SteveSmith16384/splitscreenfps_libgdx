@@ -8,16 +8,15 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.data.CollisionResults;
+import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
 public class MovementSystem extends AbstractSystem {
 
-	private Vector3 tmp = new Vector3();
+	//private Vector3 tmp = new Vector3();
 	private Game game;
-	private CollisionCheckSystem collCheck;
+	private CollisionCheckSystem collCheckSystem;
 	
 	public MovementSystem(Game _game, BasicECS ecs) {
 		super(ecs);
@@ -37,8 +36,8 @@ public class MovementSystem extends AbstractSystem {
 		if (entity.isMarkedForRemoval()) {
 			return;
 		}
-		if (collCheck == null) {
-			this.collCheck = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
+		if (collCheckSystem == null) {
+			this.collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
@@ -49,38 +48,38 @@ public class MovementSystem extends AbstractSystem {
 			movementData.offset = auto.dir.cpy().scl(Gdx.graphics.getDeltaTime());
 		}
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-			boolean has_moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.sizeAsFracOfMapsquare);
+			boolean has_moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter);
 			if (has_moved) {
 			} else {
 				movementData.hitWall = true;
-				if (movementData.removeIfHitWall) {
+				/*if (movementData.removeIfHitWall) {
 					entity.remove();
 					//Settings.p(entity + " removed");
-				}
+				}*/
 			}
 		}
 	}
 
 
 	/**
-	 * Returns false if entity fails to move on any axis.
+	 * Returns true if entity moved successfully on BOTH axis.
 	 */
-	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float sizeAsFracOfMapsquare) {
+	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter) {
 		PositionData pos = (PositionData)mover.getComponent(PositionData.class);
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
 		boolean resultX = false;
-		if (world.rectangleFree(position.x+offset.x, position.z, sizeAsFracOfMapsquare, sizeAsFracOfMapsquare)) {
-			if (this.checkForEntityCollisions(mover, offset.x, 0) == false) {
+		if (world.rectangleFree(position.x+offset.x, position.z, diameter, diameter)) {
+			if (this.movementBlockedByEntity(mover, offset.x, 0) == false) {
 				position.x += offset.x;
 				resultX = true;
 			}
 		}
 
 		boolean resultZ = false;
-		if (world.rectangleFree(position.x, position.z+offset.z, sizeAsFracOfMapsquare, sizeAsFracOfMapsquare)) {
-			if (this.checkForEntityCollisions(mover, 0, offset.z) == false) {
+		if (world.rectangleFree(position.x, position.z+offset.z, diameter, diameter)) {
+			if (this.movementBlockedByEntity(mover, 0, offset.z) == false) {
 				position.z += offset.z;
 				resultZ = true;
 			}
@@ -92,20 +91,20 @@ public class MovementSystem extends AbstractSystem {
 		
 		// Reset collision just in case it's got out of sync
 		//if (resultX || resultZ) {
-		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
+		/*CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 		if (moverCC != null) {
 			moverCC.bb.getCenter(tmp);
 			tmp.add(offset);
-		}					
+		}*/					
 		//}
 
 		return resultX && resultZ;
 	}
 
 
-	private boolean checkForEntityCollisions(AbstractEntity mover, float offX, float offZ) {
-		CollisionResults cr = this.collCheck.collided(mover, offX, offZ);
-		return cr == null || !cr.blocksMovement;
+	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ) {
+		CollisionResultsList cr = this.collCheckSystem.collided(mover, offX, offZ);
+		return cr.blocksMovement;
 	}
 
 }

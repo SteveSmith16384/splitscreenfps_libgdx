@@ -3,18 +3,21 @@ package com.scs.splitscreenfps.game;
 import java.awt.Rectangle;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 //import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.bitfire.postprocessing.PostProcessing;
 
 public class ViewportData {
 
 	public PerspectiveCamera camera;
 	public Rectangle viewPos;
 	public FrameBuffer frameBuffer = null;
-	
+	public PostProcessing post;
+
 	public ViewportData(boolean full_screen, int idx) {
 		int w = Gdx.graphics.getWidth()/2;
 		int h = Gdx.graphics.getHeight()/2;
@@ -81,6 +84,16 @@ public class ViewportData {
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+		if (Gdx.app.getType() != ApplicationType.WebGL) {
+			//post = new PostProcessing(w, h);
+		}
+	}
+	
+	
+	public void dispose() {
+		if (this.post != null) {
+			post.dispose();
+		}
 	}
 
 }

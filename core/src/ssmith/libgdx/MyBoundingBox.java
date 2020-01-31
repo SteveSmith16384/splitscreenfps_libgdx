@@ -20,15 +20,15 @@ public class MyBoundingBox implements Serializable {
 	public final Vector3 min = new Vector3();
 	public final Vector3 max = new Vector3();
 
-	private final Vector3 cnt = new Vector3();
+	public final Vector3 cnt = new Vector3();
 	private final Vector3 dim = new Vector3();
 	
-	public Vector3 getCentre() {
-		return this.cnt;
+	public void setCentre(float x, float y, float z) {
+		this.setCentre(new Vector3(x, y, z));
 	}
 
 	public void setCentre(Vector3 c) {
-		this.cnt.set(c);
+		this.set(new Vector3(c.x-this.getWidth()/2, c.y-this.getHeight()/2, c.z-this.getDepth()/2), new Vector3(c.x+this.getWidth()/2, c.y+this.getHeight()/2, c.z+this.getDepth()/2));
 	}
 
 	/** @param out The {@link Vector3} to receive the center of the bounding box.
@@ -125,7 +125,7 @@ public class MyBoundingBox implements Serializable {
 
 
 	public MyBoundingBox(Vector3 centre, float w, float h, float d) {
-		this (new Vector3(centre.x-w, centre.y-h, centre.z-d), new Vector3(centre.x+w, centre.y+h, centre.z+d));
+		this (new Vector3(centre.x-w/2, centre.y-h/2, centre.z-d/2), new Vector3(centre.x+w/2, centre.y+h/2, centre.z+d/2));
 	}
 
 	

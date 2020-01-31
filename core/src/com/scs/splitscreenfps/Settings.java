@@ -12,6 +12,8 @@ public class Settings {
 	public static final boolean TEST_FLOOR_SQ = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	
+	public static final float PLAYER_HEIGHT = .7f;
+	public static final float CAMERA_HEIGHT_OFFSET = -.2f;
 	public static final int ENEMY_HEALTH = 3;
 	
 	public static final String TITLE ="Split-Screen FPS";

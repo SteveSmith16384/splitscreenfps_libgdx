@@ -13,7 +13,8 @@ public class MapData {
 
 	public MapSquare map[][];
 
-	public MapData() {
+	public MapData(int w, int h) {
+		map = new MapSquare[w][h];
 	}
 
 
