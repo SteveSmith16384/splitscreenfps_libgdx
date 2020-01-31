@@ -8,13 +8,13 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
 public class MovementSystem extends AbstractSystem {
 
-	//private Vector3 tmp = new Vector3();
 	private Game game;
 	private CollisionCheckSystem collCheckSystem;
 	
@@ -42,15 +42,19 @@ public class MovementSystem extends AbstractSystem {
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 		movementData.hitWall = false;
+		
+		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
+		if (cc != null) {
+			cc.results.clear();
+		}
 
 		AutoMove auto = (AutoMove)entity.getComponent(AutoMove.class);
 		if (auto != null) {
 			movementData.offset = auto.dir.cpy().scl(Gdx.graphics.getDeltaTime());
 		}
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-			boolean has_moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter);
-			if (has_moved) {
-			} else {
+			boolean has_moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+			if (!has_moved) {
 				movementData.hitWall = true;
 				/*if (movementData.removeIfHitWall) {
 					entity.remove();
@@ -64,14 +68,14 @@ public class MovementSystem extends AbstractSystem {
 	/**
 	 * Returns true if entity moved successfully on BOTH axis.
 	 */
-	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter) {
+	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter, CollidesComponent cc) {
 		PositionData pos = (PositionData)mover.getComponent(PositionData.class);
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
 		boolean resultX = false;
 		if (world.rectangleFree(position.x+offset.x, position.z, diameter, diameter)) {
-			if (this.movementBlockedByEntity(mover, offset.x, 0) == false) {
+			if (this.movementBlockedByEntity(mover, offset.x, 0, cc) == false) {
 				position.x += offset.x;
 				resultX = true;
 			}
@@ -79,7 +83,7 @@ public class MovementSystem extends AbstractSystem {
 
 		boolean resultZ = false;
 		if (world.rectangleFree(position.x, position.z+offset.z, diameter, diameter)) {
-			if (this.movementBlockedByEntity(mover, 0, offset.z) == false) {
+			if (this.movementBlockedByEntity(mover, 0, offset.z, cc) == false) {
 				position.z += offset.z;
 				resultZ = true;
 			}
@@ -102,8 +106,11 @@ public class MovementSystem extends AbstractSystem {
 	}
 
 
-	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ) {
+	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ, CollidesComponent cc) {
 		CollisionResultsList cr = this.collCheckSystem.collided(mover, offX, offZ);
+		if (cc != null) {
+			cc.results.addAll(cr.results);
+		}
 		return cr.blocksMovement;
 	}
 

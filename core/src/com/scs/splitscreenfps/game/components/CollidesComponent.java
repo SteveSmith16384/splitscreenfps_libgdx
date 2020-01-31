@@ -1,7 +1,11 @@
 package com.scs.splitscreenfps.game.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.scs.splitscreenfps.game.data.CollisionResult;
 
 import ssmith.libgdx.MyBoundingBox;
 
@@ -9,6 +13,7 @@ public class CollidesComponent {
 
 	public MyBoundingBox bb;
 	public boolean blocksMovement = true;
+	public List<CollisionResult> results = new ArrayList<CollisionResult>(); // Results since last movement
 
 	public CollidesComponent(boolean _blocks, MyBoundingBox _bb) {
 		this.blocksMovement = _blocks;
@@ -22,11 +27,7 @@ public class CollidesComponent {
 		BoundingBox bbx = new BoundingBox();
 		instance.calculateBoundingBox(bbx);
 		bbx.mul(instance.transform);
-		/*Vector3 minOffset = new Vector3(bbx.min);
-		minOffset.add(instance.transform.getTranslation(new Vector3()));
-		Vector3 maxOffset = new Vector3(bbx.max);
-		maxOffset.add(instance.transform.getTranslation(new Vector3()));
-		bb = new MyBoundingBox(minOffset, maxOffset);*/
 		bb = new MyBoundingBox(bbx.min, bbx.max);
 	}
+	
 }

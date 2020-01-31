@@ -18,6 +18,7 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.TestLevel;
 import com.scs.splitscreenfps.game.player.Player;
+import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
@@ -95,6 +96,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawModelSystem(ecs, batch));
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
+		ecs.addSystem(new CollectionSystem(ecs));
 	}
 
 
@@ -132,6 +134,8 @@ public class Game implements IModule {
 		this.ecs.getSystem(InputSystem.class).process();
 		this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
+		this.ecs.getSystem(CollectionSystem.class).process();
+		
 		gameLevel.update(this, mapData);
 
 		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
@@ -152,17 +156,17 @@ public class Game implements IModule {
 			}
 			batch.end();
 
-			if (ecs != null) {
+			//if (ecs != null) {
 				this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 				this.ecs.getSystem(DrawDecalSystem.class).process();
 				this.ecs.getSystem(CycleThroughModelsSystem.class).process();
-			}
+			/*}
 
-			if (ecs != null) {
+			if (ecs != null) {*/
 				batch2d.begin();
 				this.ecs.getSystem(DrawTextSystem.class).process();
 				batch2d.end();
-			}
+			//}
 
 			viewportData.frameBuffer.end();
 

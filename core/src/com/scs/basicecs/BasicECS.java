@@ -26,17 +26,6 @@ public class BasicECS {
 	}
 
 
-	/**
-	 * In your game loop, you can either call this method, or call the process()
-	 * method on all your systems individually as required.
-	 */
-	public void processAllSystems() {
-		for (ISystem system : this.systems.values()) {
-			system.process();
-		}
-	}
-
-
 	public void addAndRemoveEntities() {
 		// Remove any entities
 		for (int i = this.entities.size()-1 ; i >= 0; i--) {
@@ -92,6 +81,7 @@ public class BasicECS {
 		return this.entities.iterator();
 	}
 
+	
 	public void removeAllEntities() {
 		for(AbstractEntity e : this.entities) {
 			e.remove();
