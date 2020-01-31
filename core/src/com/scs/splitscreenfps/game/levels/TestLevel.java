@@ -11,6 +11,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.entities.MyModel;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class TestLevel extends AbstractLevel {
@@ -45,6 +46,9 @@ public class TestLevel extends AbstractLevel {
 
 		Wall wall = new Wall("heart.png", 10, 10, true);
 		game.ecs.addEntity(wall);
+		
+		MyModel soldier = new MyModel("soldier", 3, 0, 3);
+		game.ecs.addEntity(soldier);
 
 	}
 

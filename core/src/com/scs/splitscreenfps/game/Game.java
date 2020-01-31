@@ -18,6 +18,7 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.TestLevel;
 import com.scs.splitscreenfps.game.player.Player;
+import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -97,6 +98,7 @@ public class Game implements IModule {
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
 		ecs.addSystem(new CollectionSystem(ecs));
+		ecs.addSystem(new AnimationSystem(ecs));
 	}
 
 
@@ -135,6 +137,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(CollectionSystem.class).process();
+		this.ecs.getSystem(AnimationSystem.class).process();
 		
 		gameLevel.update(this, mapData);
 
