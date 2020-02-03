@@ -13,7 +13,7 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 
-public class TestLevel extends AbstractLevel {
+public class LoadMapDynamicallyLevel extends AbstractLevel {
 
 	private static final String DATA_FILE = "leveldata/test_level.csv";
 	private static final String ENAME = "TEST_";
@@ -21,7 +21,7 @@ public class TestLevel extends AbstractLevel {
 	private Game game;
 	private long lastFileTime = -1;
 
-	public TestLevel(Game _game) {
+	public LoadMapDynamicallyLevel(Game _game) {
 		game = _game;
 	}
 

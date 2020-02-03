@@ -58,7 +58,7 @@ public class Tilemap extends Visual {
 
 		super( 0, 0, 0, 0 );
 
-		this.texture = TextureCache.get( tx );
+		this.texture = TextureCache.get("shatteredpixeldungeon/" + tx );
 		this.tileset = tileset;
 
 		RectF r = tileset.get( 0 );

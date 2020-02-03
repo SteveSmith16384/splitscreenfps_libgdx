@@ -54,7 +54,7 @@ public class TextureFilm {
 	
 	public TextureFilm( Object tx, int width, int height ) {
 		
-		texture = TextureCache.get( "shatteredpixeldungeon/" + tx );
+		texture = TextureCache.get("shatteredpixeldungeon/" + tx );
 		
 		texWidth = texture.width;
 		texHeight = texture.height;

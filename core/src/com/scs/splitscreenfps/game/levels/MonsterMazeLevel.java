@@ -69,7 +69,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		MonsterMazeExit exit = new MonsterMazeExit(maze.end_pos.x, maze.end_pos.y);
 		game.ecs.addEntity(exit);
 
-		game.ecs.addEntity(new Floor("colours/white.png", map_width, map_height, false));
+		game.ecs.addEntity(new Floor("colours/white.png", 0, 0, map_width, map_height, false));
 	}
 
 	/*
