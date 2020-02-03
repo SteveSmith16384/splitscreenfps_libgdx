@@ -50,40 +50,40 @@ public class SPDLevelTest extends AbstractLevel {
 				//game.mapData.map[x][z].blocked = sewer.passable[idx];//map[idx] == 4;
 				mapStr.append(sewer.map[idx] + ",");
 				if (game.mapData.map[x][z].blocked) {
-					Wall wall = new Wall("monstermaze/wall.png", x, z, false);
-					game.ecs.addEntity(wall);
+					Pixmap pixmap2 = this.getPixmap(tiles, x, z, idx);
+					if (pixmap2 != null) {
+						Wall wall = new Wall(pixmap2, x, z, false);
+						game.ecs.addEntity(wall);
+					} else if (sewer.map[idx] != 4) { // Ignore
+						Wall wall = new Wall("monstermaze/wall.png", x, z, false);
+						game.ecs.addEntity(wall);
+					}
 				} else {
-					/*switch (sewer.map[idx]) {
+					switch (sewer.map[idx]) {
 					case Terrain.WATER: {
 						Floor floor = new Floor("shatteredpixeldungeon/water0.png", x, z, 1, 1, false);
 						game.ecs.addEntity(floor);
 						break;
 					}
-					case Terrain.CHASM: 
+					/*case Terrain.CHASM: 
 						break;
 					case Terrain.EMPTY: {
 						Floor floor = new Floor("shatteredpixeldungeon/water3.png", x, z, 1, 1, false);
 						game.ecs.addEntity(floor);
 						break;
-					}
-					default:
-						Settings.p("Unhandled: " + sewer.map[idx]);
-					}
 					}*/
+					default:
+						//Settings.p("Unhandled: " + sewer.map[idx]);
 
-					try {
-						Image img = tiles.image(x, z);
-						Pixmap pixmap = img.texture.bitmap;
-						if (pixmap != null) {
-							//RectF r = img.frame();
-							Pixmap pixmap2 = new Pixmap(16, 16, pixmap.getFormat());
-							pixmap2.drawPixmap(pixmap, 0, 0, 0, 0, 16, 16);
+						Pixmap pixmap2 = this.getPixmap(tiles, x, z, idx);
+						if (pixmap2 != null) {
 							Floor floor = new Floor("test", pixmap2, x, z, 1, 1);
 							game.ecs.addEntity(floor);
-							Settings.p("Created tex");
+						} else {
+							Floor floor = new Floor("heart.png", "heart.png", x, z, 1, 1);
+							game.ecs.addEntity(floor);
 						}
-					} catch (NullPointerException npe) {
-
+						break;
 					}
 				}
 
@@ -107,8 +107,31 @@ public class SPDLevelTest extends AbstractLevel {
 		}
 
 		//System.out.println(mapStr.toString());
+	}
 
 
+	private Pixmap getPixmap(DungeonTerrainTilemap tiles, int x, int z, int idx) {
+		try {
+			//Image img = tiles.image(x, z);
+			Image img = tiles.tile(idx, Dungeon.level.map[idx]);
+			if (img != null && img.texture != null && img.texture.bitmap != null) {
+				Pixmap pixmap = img.texture.bitmap;
+				if (pixmap != null) {
+					RectF r = img.frame();
+					Pixmap pixmap2 = new Pixmap(16, 16, pixmap.getFormat());
+					int x1 = (int)(r.left * pixmap.getWidth());
+					int y1 = (int)(r.top * pixmap.getHeight());
+					int w1 = (int)(r.width() * pixmap.getWidth());
+					int h1 = (int)(r.height() * pixmap.getHeight());
+
+					pixmap2.drawPixmap(pixmap, 0, 0, x1, y1, w1, h1);
+					return pixmap2;
+				}
+			}
+		} catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
+		return null;
 	}
 
 }
