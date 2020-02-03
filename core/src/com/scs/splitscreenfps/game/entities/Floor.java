@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -17,12 +18,12 @@ import com.scs.splitscreenfps.game.components.HasModelCycle;
 
 public class Floor extends AbstractEntity {
 
-	public Floor(String tex_filename, int map_width, int map_height, boolean tile) {
-		this(tex_filename, null, map_width, map_height, tile);
+	public Floor(String tex_filename, int mapX, int mapZ, int map_width, int map_height, boolean tile) {
+		this(tex_filename, null, mapX, mapZ, map_width, map_height, tile);
 	}
 
 
-	public Floor(String tex_filename1, String tex_filename2, int map_width, int map_depth, boolean tile) {
+	public Floor(String tex_filename1, String tex_filename2, int mapX, int mapZ, int map_width, int map_depth, boolean tile) {
 		super(Floor.class.getSimpleName());
 
 		HasModelCycle model_cycle = new HasModelCycle(.5f, 2);
@@ -48,7 +49,7 @@ public class Floor extends AbstractEntity {
 			}
 			floor.meshes.get(0).transformUV(mat);
 
-			ModelInstance instance = new ModelInstance(floor);
+			ModelInstance instance = new ModelInstance(floor, new Vector3(mapX, 0, mapZ));
 			//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 			//instance.calculateTransforms();
 
@@ -117,4 +118,32 @@ public class Floor extends AbstractEntity {
 		this.addComponent(model);
 	}
 
+
+	public Floor(String name, Pixmap pixmap, float x, float z, float w, float d) {
+		super(name);
+
+		Texture tex = new Texture(pixmap);
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model floor = modelBuilder.createRect(
+				0f,0f, (float) d,
+				(float)w, 0f, (float)d,
+				(float)w, 0f, 0f,
+				0f,0f,0f,
+				1f,1f,1f,
+				white_material,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		Matrix3 mat = new Matrix3();
+		floor.meshes.get(0).transformUV(mat);
+
+		ModelInstance instance = new ModelInstance(floor, new Vector3(x, 0, z));
+		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
+		//instance.calculateTransforms();
+
+		HasModel model = new HasModel(instance);
+		this.addComponent(model);
+	}
 }

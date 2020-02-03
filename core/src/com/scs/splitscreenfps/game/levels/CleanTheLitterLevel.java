@@ -50,13 +50,13 @@ public class CleanTheLitterLevel extends AbstractLevel {
 					//Wall wall = new Wall("monstermaze/wall.png", x, z, false);
 					//game.ecs.addEntity(wall);
 				} else {
-					Floor floor = new Floor();
-					game.ecs.addEntity(wall);
+					Floor floor = new Floor("colours/white.png", x, z, 1, 1, false);
+					game.ecs.addEntity(floor);
 				}
 			}
 		}
 
-		game.ecs.addEntity(new Floor("colours/white.png", map_width, map_height, false));
+		//game.ecs.addEntity(new Floor("colours/white.png", map_width, map_height, false));
 	}
 
 }
