@@ -1,18 +1,25 @@
 package com.scs.splitscreenfps.game.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CanCollect;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
@@ -20,7 +27,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 import ssmith.libgdx.MyBoundingBox;
 
-public class Player extends AbstractEntity {
+public class PlayersAvatar extends AbstractEntity {
 
 	private static final float moveSpeed = 2f;
 	public static final float playerHeight = 0.4f;
@@ -35,19 +42,46 @@ public class Player extends AbstractEntity {
 	private IInputMethod inputMethod;
 
 	public DecalBatch batch;
-	
-	public Player(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
-		super(Player.class.getSimpleName() + "_" + idx);
+
+	public PlayersAvatar(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
+		super(PlayersAvatar.class.getSimpleName() + "_" + idx);
 
 		inputMethod = _inputMethod;
-		
+
 		this.movementData = new MovementData(0.5f);
 		this.addComponent(movementData);
 		this.positionData = new PositionData(); // Centre of the player, but NOT where the camera is!
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
-        this.addComponent(new CollidesComponent(false, new MyBoundingBox(positionData.position, .3f, Settings.PLAYER_HEIGHT/2, .3f)));
+		this.addComponent(new CollidesComponent(false, new MyBoundingBox(positionData.position, .3f, Settings.PLAYER_HEIGHT/2, .3f)));
+
+		// Model stuff
+		{
+			AssetManager am = new AssetManager();
+			am.load("models/KnightCharacter.g3dj", Model.class);
+			am.finishLoading();
+			Model model = am.get("models/KnightCharacter.g3dj");
+
+			ModelInstance instance = new ModelInstance(model);
+			instance.transform.scl(.002f);
+			HasModel hasModel = new HasModel(instance);
+			hasModel.playerViewId = idx;
+			this.addComponent(hasModel);
+
+			AnimationController animation = new AnimationController(instance);
+			/*String id = model.animations.get(0).id;
+			animation.animate(id, 200, 1f, null, 0.2f); // First anim*/
+			AnimatedComponent anim = new AnimatedComponent();
+			anim.animationController = animation;
+			this.addComponent(anim);
+			
+			AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+			avatarAnim.idle_anim = "HumanArmature|Idle";
+			avatarAnim.walk_anim = "HumanArmature|Walking";			
+			this.addComponent(avatarAnim);
+		}
+
 
 		camera = _viewportData.camera;
 
@@ -97,12 +131,17 @@ public class Player extends AbstractEntity {
 
 		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
 
+		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
+		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
 		if (this.movementData.offset.len2() > 0) {
+			anim.new_animation = avatarAnim.walk_anim;
 			footstepTimer += Gdx.graphics.getDeltaTime();
 			if (footstepTimer > 0.45f) {
 				footstepTimer -= 0.45f;
 				Game.audio.play("step");
 			}
+		} else {
+			anim.new_animation = avatarAnim.idle_anim;
 		}
 	}
 

@@ -13,14 +13,14 @@ import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.player.Player;
+import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.MobAISystem.Mode;
 
 import ssmith.libgdx.MyBoundingBox;
 
 public class TRex extends AbstractEntity {
 
-    public TRex(int x, int y, Player target) {
+    public TRex(int x, int y, PlayersAvatar target) {
         super(TRex.class.getSimpleName());
 
         PositionData pos = new PositionData();

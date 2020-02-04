@@ -22,8 +22,12 @@ public class AnimationSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
+		if (anim.current_animation != anim.new_animation) {
+			anim.new_animation = anim.current_animation;
+			anim.animationController.animate(anim.new_animation, -1, 1, null, 0f);
+		}
+		
 		anim.animationController.update(Gdx.graphics.getDeltaTime());
 	}
-
 
 }

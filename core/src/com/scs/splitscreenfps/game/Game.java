@@ -17,7 +17,7 @@ import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.SPDLevelTest;
-import com.scs.splitscreenfps.game.player.Player;
+import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
@@ -41,7 +41,7 @@ public class Game implements IModule {
 	private ModelBatch batch;
 	public final ViewportData[] viewports;
 
-	public Player[] players;
+	public PlayersAvatar[] players;
 	public MapData mapData;
 	public BasicECS ecs;
 
@@ -57,11 +57,11 @@ public class Game implements IModule {
 		batch = new ModelBatch();
 
 		viewports = new ViewportData[4];
-		players = new Player[4];
+		players = new PlayersAvatar[4];
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
 			IInputMethod input = i==0 ? new MouseAndKeyboardInputMethod() : new NoInputMethod();
-			players[i] = new Player(i, this.viewports[i], input);
+			players[i] = new PlayersAvatar(i, this.viewports[i], input);
 		}
 
 		//mapData = new MapData();

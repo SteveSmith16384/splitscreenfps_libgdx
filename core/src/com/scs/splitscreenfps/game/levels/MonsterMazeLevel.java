@@ -10,7 +10,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
-import com.scs.splitscreenfps.game.player.Player;
+import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 import ssmith.lang.NumberFunctions;
@@ -62,7 +62,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 			}
 		}
 
-		Player target = game.players[NumberFunctions.rnd(0,  game.players.length-1)];
+		PlayersAvatar target = game.players[NumberFunctions.rnd(0,  game.players.length-1)];
 		trex = new TRex(maze.middle_pos.x, maze.middle_pos.y, target);
 		game.ecs.addEntity(trex);
 

@@ -10,9 +10,9 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 
-public class MyModel extends AbstractEntity {
+public class ModelEntity extends AbstractEntity {
 
-	public MyModel(String name, float posX, float posY, float posZ) {
+	public ModelEntity(String name, float posX, float posY, float posZ) {
 		super(name);
 
 		AssetManager am = new AssetManager();
