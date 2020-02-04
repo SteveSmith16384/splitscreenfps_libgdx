@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
@@ -42,6 +43,8 @@ public class PlayersAvatar extends AbstractEntity {
 	private IInputMethod inputMethod;
 
 	public DecalBatch batch;
+	
+	private Quaternion qRot = new Quaternion();
 
 	public PlayersAvatar(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(PlayersAvatar.class.getSimpleName() + "_" + idx);
@@ -70,8 +73,8 @@ public class PlayersAvatar extends AbstractEntity {
 			this.addComponent(hasModel);
 
 			AnimationController animation = new AnimationController(instance);
-			/*String id = model.animations.get(0).id;
-			animation.animate(id, 200, 1f, null, 0.2f); // First anim*/
+			//String id = model.animations.get(0).id;
+			//animation.animate(id, 200, 1f, null, 0.2f); // First anim
 			AnimatedComponent anim = new AnimatedComponent();
 			anim.animationController = animation;
 			this.addComponent(anim);
@@ -101,6 +104,16 @@ public class PlayersAvatar extends AbstractEntity {
 	public void update() {
 		checkMovementInput();
 		cameraController.update();
+
+		// Rotate model if it has one
+		HasModel hasModel = (HasModel)getComponent(HasModel.class);
+		if (hasModel != null) {
+			//hasModel.model.transform.translate(position);
+			//Quaternion q = hasModel.model.transform.getRotation(qRot);
+			PositionData pos = (PositionData)getComponent(PositionData.class);
+			hasModel.model.transform.setTranslation(pos.position);
+		}
+
 	}
 
 
@@ -130,18 +143,22 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 
 		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
-
+		
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
 		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
 		if (this.movementData.offset.len2() > 0) {
-			anim.new_animation = avatarAnim.walk_anim;
+			if (anim != null) {
+				anim.new_animation = avatarAnim.walk_anim;
+			}
 			footstepTimer += Gdx.graphics.getDeltaTime();
 			if (footstepTimer > 0.45f) {
 				footstepTimer -= 0.45f;
 				Game.audio.play("step");
 			}
 		} else {
-			anim.new_animation = avatarAnim.idle_anim;
+			if (anim != null) {
+				anim.new_animation = avatarAnim.idle_anim;
+			}
 		}
 	}
 

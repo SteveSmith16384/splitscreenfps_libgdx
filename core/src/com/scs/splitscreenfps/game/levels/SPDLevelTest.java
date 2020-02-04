@@ -7,6 +7,7 @@ import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.entities.ModelEntity;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
@@ -94,6 +95,8 @@ public class SPDLevelTest extends AbstractLevel {
 					for (int i=0 ; i<this.startPositions.length ;i++) {
 						this.startPositions[i] = new GridPoint2(x, z);
 					}
+					ModelEntity soldier = new ModelEntity("soldier", x, 0, z); // todo - remove
+					game.ecs.addEntity(soldier);
 				}
 
 				idx++;

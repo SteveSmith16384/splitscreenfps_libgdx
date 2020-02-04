@@ -5,18 +5,18 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Audio;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.SPDLevelTest;
+import com.scs.splitscreenfps.game.levels.LoadMapDynamicallyLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
@@ -26,7 +26,7 @@ import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.InputSystem;
+import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.MobAISystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
@@ -38,7 +38,6 @@ public class Game implements IModule {
 
 	private SpriteBatch batch2d;
 	private final BitmapFont font_white, font_black;
-	private ModelBatch batch;
 	public final ViewportData[] viewports;
 
 	public PlayersAvatar[] players;
@@ -46,6 +45,7 @@ public class Game implements IModule {
 	public BasicECS ecs;
 
 	private AbstractLevel gameLevel;
+	private DrawModelSystem drawModelSystem;
 
 	public int currentViewId;
 
@@ -53,8 +53,6 @@ public class Game implements IModule {
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
-
-		batch = new ModelBatch();
 
 		viewports = new ViewportData[4];
 		players = new PlayersAvatar[4];
@@ -64,11 +62,9 @@ public class Game implements IModule {
 			players[i] = new PlayersAvatar(i, this.viewports[i], input);
 		}
 
-		//mapData = new MapData();
-
 		this.createECS();
 
-		gameLevel = new SPDLevelTest(this);//CleanTheLitterLevel(this);//TestLevel(this);//MonsterMazeLevel(this);
+		gameLevel = new LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
 		for (int i=0 ; i<4 ; i++) {
@@ -87,36 +83,38 @@ public class Game implements IModule {
 
 	private void createECS() {
 		ecs = new BasicECS();
-		ecs.addSystem(new InputSystem(this));
+		ecs.addSystem(new PlayerInputSystem(this));
 		ecs.addSystem(new CollisionCheckSystem(ecs));
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
 		ecs.addSystem(new MobAISystem(this, ecs));
 		ecs.addSystem(new MovementSystem(this, ecs));
-		ecs.addSystem(new DrawModelSystem(this, ecs, batch));
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
 		ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
+
+		this.drawModelSystem = new DrawModelSystem(this, ecs); 
+		ecs.addSystem(this.drawModelSystem);
 	}
 
 
 	private void loadLevel() {
 		gameLevel.load();
 
-		/*if (gameLevel.getPlayerStartMapX() < 0 || gameLevel.getPlayerStartMapY() < 0) {
-			throw new RuntimeException ("No player start position set");
-		}*/
-
 		// Set start position of players
 		for (int idx=0 ; idx<4 ; idx++) {
 			PositionData posData = (PositionData)this.players[idx].getComponent(PositionData.class);
 			posData.position.set(gameLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, gameLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
-		/*}
 
-		for (int viewid=0 ; viewid<viewports.length ; viewid++) {*/
+			// Move model if it has one
+			HasModel hasModel = (HasModel)this.players[idx].getComponent(HasModel.class);
+			if (hasModel != null) {
+				hasModel.model.transform.setTranslation(posData.position);
+			}
+
 			ViewportData viewport = this.viewports[idx];
 			Camera camera = viewport.camera;
 			camera.position.set(posData.position);
@@ -133,12 +131,12 @@ public class Game implements IModule {
 	public void render() {
 		this.ecs.getSystem(RemoveAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
-		this.ecs.getSystem(InputSystem.class).process();
+		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
-		
+
 		gameLevel.update(this, mapData);
 
 		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
@@ -150,26 +148,21 @@ public class Game implements IModule {
 			Gdx.gl.glViewport(viewportData.viewPos.x, viewportData.viewPos.y, viewportData.viewPos.width, viewportData.viewPos.height);
 
 			viewportData.frameBuffer.begin();
+
+			//Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			this.gameLevel.setBackgroundColour();
 
-			batch.begin(viewportData.camera);
-			if (ecs != null) {
-				this.ecs.getSystem(DrawModelSystem.class).process();
-			}
-			batch.end();
+			//this.drawModelSystem.process(true, viewportData.camera); Doesn't work.
+			this.drawModelSystem.process(false, viewportData.camera);
 
-			//if (ecs != null) {
-				this.ecs.getSystem(CycleThruDecalsSystem.class).process();
-				this.ecs.getSystem(DrawDecalSystem.class).process();
-				this.ecs.getSystem(CycleThroughModelsSystem.class).process();
-			/*}
+			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
+			this.ecs.getSystem(DrawDecalSystem.class).process();
+			this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 
-			if (ecs != null) {*/
-				batch2d.begin();
-				this.ecs.getSystem(DrawTextSystem.class).process();
-				batch2d.end();
-			//}
+			batch2d.begin();
+			this.ecs.getSystem(DrawTextSystem.class).process();
+			batch2d.end();
 
 			viewportData.frameBuffer.end();
 
@@ -220,7 +213,7 @@ public class Game implements IModule {
 		font_white.dispose(); 
 		font_black.dispose();
 		audio.dipose();
-		batch.dispose();
+		//todo batch.dispose();
 		batch2d.dispose();
 	}
 

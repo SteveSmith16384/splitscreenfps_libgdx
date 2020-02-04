@@ -11,6 +11,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.entities.ModelEntity;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class LoadMapDynamicallyLevel extends AbstractLevel {
@@ -29,9 +30,8 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2(0, 0);
+			this.startPositions[i] = new GridPoint2(i, 0);
 		}
-
 
 		this.map_width = 16;
 		this.map_height = 16;
@@ -40,20 +40,27 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare(false);
+				Floor floor = new Floor("", "heart.png", x, z, 1f, 1f);
+				game.ecs.addEntity(floor);
 			}
 		}
 
 		/*Wall wall = new Wall("heart.png", 10, 10, true);
-		game.ecs.addEntity(wall);
+		game.ecs.addEntity(wall);*/
 		
-		/*MyModel soldier = new MyModel("soldier", 3, 0, 3);
-		game.ecs.addEntity(soldier);*/
+		ModelEntity soldier = new ModelEntity("soldier", 3, 0, 3);
+		game.ecs.addEntity(soldier);
 
 	}
 
 
 	@Override
 	public void update(Game game, MapData world) {
+		//readFile();
+	}
+	
+	
+	private void readFile() {
 		FileHandle file = Gdx.files.internal("../../" + DATA_FILE);
 		if (file.exists()) {
 			long lm = file.lastModified();
@@ -105,8 +112,8 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 					float w = Float.parseFloat(tokens[4]);
 					float d = Float.parseFloat(tokens[5]);
 					String tex = tokens[6];
-					Floor wall = new Floor(name, tex, x, z, w, d);
-					game.ecs.addEntity(wall);
+					Floor floor = new Floor(name, tex, x, z, w, d);
+					game.ecs.addEntity(floor);
 					break;
 				}
 				case 3: // Model

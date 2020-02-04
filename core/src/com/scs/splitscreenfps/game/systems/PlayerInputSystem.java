@@ -3,11 +3,11 @@ package com.scs.splitscreenfps.game.systems;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.Game;
 
-public class InputSystem implements ISystem {
+public class PlayerInputSystem implements ISystem {
 
 	private Game game;
 	
-	public InputSystem(Game _game) {
+	public PlayerInputSystem(Game _game) {
 		game = _game;
 	}
 
@@ -20,9 +20,5 @@ public class InputSystem implements ISystem {
 				game.players[i].camera.update();
 			}
 		}
-
-		/*for (int i=0 ; i<viewports.length ; i++) {
-			this.viewports[i].camera.update();
-		}*/
 	}
 }

@@ -26,7 +26,7 @@ public class CollidesComponent {
 		
 		BoundingBox bbx = new BoundingBox();
 		instance.calculateBoundingBox(bbx);
-		bbx.mul(instance.transform);
+		bbx.mul(instance.transform); // Move bb to position
 		bb = new MyBoundingBox(bbx.min, bbx.max);
 	}
 	

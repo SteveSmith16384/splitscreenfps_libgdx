@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class CameraController {
@@ -78,7 +79,7 @@ public class CameraController {
 				camera.rotate(Vector3.Y, -rotSpeedX * input.getLookRight() * dt);
 			}
 		}
-
+		
 	}
 
 }

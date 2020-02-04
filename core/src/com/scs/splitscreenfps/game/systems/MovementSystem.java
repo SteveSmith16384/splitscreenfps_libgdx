@@ -9,6 +9,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
@@ -102,6 +103,13 @@ public class MovementSystem extends AbstractSystem {
 		}*/					
 		//}
 
+		if (resultX || resultZ) {
+			// Move model if it has one
+			HasModel hasModel = (HasModel)mover.getComponent(HasModel.class);
+			if (hasModel != null) {
+				hasModel.model.transform.setTranslation(position);
+			}
+		}
 		return resultX && resultZ;
 	}
 
