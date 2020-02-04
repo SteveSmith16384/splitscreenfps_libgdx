@@ -40,8 +40,8 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare(false);
-				Floor floor = new Floor("", "heart.png", x, z, 1f, 1f);
-				game.ecs.addEntity(floor);
+				//Floor floor = new Floor("", "heart.png", x, z, 1f, 1f);
+				//game.ecs.addEntity(floor);
 			}
 		}
 

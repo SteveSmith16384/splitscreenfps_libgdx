@@ -47,7 +47,7 @@ public class ViewportData {
 		camera.lookAt(11f, 0, 10f);
 		camera.near = 0.1f;
 		camera.far = 30f;
-		camera.update();
+		//camera.update();
 		
 		this.resize(full_screen, idx);
 	}
@@ -79,7 +79,7 @@ public class ViewportData {
 		
 		camera.viewportWidth = w;
 		camera.viewportHeight = h;
-		camera.update();
+		//camera.update();
 		
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);

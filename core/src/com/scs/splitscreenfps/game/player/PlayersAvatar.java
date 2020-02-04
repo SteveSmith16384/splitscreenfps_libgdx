@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
@@ -43,7 +44,6 @@ public class PlayersAvatar extends AbstractEntity {
 	private IInputMethod inputMethod;
 
 	public DecalBatch batch;
-	
 	private Quaternion qRot = new Quaternion();
 
 	public PlayersAvatar(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
@@ -72,17 +72,17 @@ public class PlayersAvatar extends AbstractEntity {
 			hasModel.playerViewId = idx;
 			this.addComponent(hasModel);
 
-			AnimationController animation = new AnimationController(instance);
-			//String id = model.animations.get(0).id;
-			//animation.animate(id, 200, 1f, null, 0.2f); // First anim
-			AnimatedComponent anim = new AnimatedComponent();
-			anim.animationController = animation;
-			this.addComponent(anim);
-			
 			AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
 			avatarAnim.idle_anim = "HumanArmature|Idle";
 			avatarAnim.walk_anim = "HumanArmature|Walking";			
 			this.addComponent(avatarAnim);
+
+			AnimationController animation = new AnimationController(instance);
+			//String id = model.animations.get(0).id;
+			//animation.animate(id, 200, 1f, null, 0.2f); // First anim
+			AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+			anim.animationController = animation;
+			this.addComponent(anim);
 		}
 
 
@@ -105,15 +105,29 @@ public class PlayersAvatar extends AbstractEntity {
 		checkMovementInput();
 		cameraController.update();
 
-		// Rotate model if it has one
+		// Rotate model to direction of camera
 		HasModel hasModel = (HasModel)getComponent(HasModel.class);
 		if (hasModel != null) {
-			//hasModel.model.transform.translate(position);
-			//Quaternion q = hasModel.model.transform.getRotation(qRot);
 			PositionData pos = (PositionData)getComponent(PositionData.class);
+			
 			hasModel.model.transform.setTranslation(pos.position);
-		}
 
+			//hasModel.model.transform.set(pos.position, Vector3.Y, this.camera.direction);
+			//hasModel.model.transform.setToLookAt(pos.position, camera.direction, Vector3.Y);
+
+			//Quaternion q = hasModel.model.transform.getRotation(qRot);
+			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
+			float cam_ang = v2.angle();
+			hasModel.model.transform.getRotation(qRot);
+			float model_ang = qRot.getAngleAround(Vector3.Y);
+			hasModel.model.transform.rotate(Vector3.Y, cam_ang-model_ang);
+			
+			//hasModel.model.transform.setToLookAt(direction, up).rotateRad(Vector3.Y, camera.direction);
+			
+			//hasModel.model.transform.setFromEulerAngles(20, 0, 0);
+			//hasModel.model.transform.setTranslation(pos.position);
+			//hasModel.model.calculateTransforms();
+		}
 	}
 
 
@@ -122,28 +136,27 @@ public class PlayersAvatar extends AbstractEntity {
 
 		this.movementData.offset.setZero();
 
-		//Movement
-		if (this.inputMethod.isForwardsPressed()) { // Gdx.input.isKeyPressed(Input.Keys.W)) {
+		if (this.inputMethod.isForwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
 			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
-		} else if (this.inputMethod.isBackwardsPressed()) { //if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+		} else if (this.inputMethod.isBackwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
 			this.movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
 		}
-		if (this.inputMethod.isStrafeLeftPressed()) { //if (Gdx.input.isKeyPressed(Input.Keys.A)){
+		if (this.inputMethod.isStrafeLeftPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
 			this.movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
-		} else if (this.inputMethod.isStrafeRightPressed()) { //if (Gdx.input.isKeyPressed(Input.Keys.D)){
+		} else if (this.inputMethod.isStrafeRightPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
 			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		}
 
 		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
-		
+
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
 		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
 		if (this.movementData.offset.len2() > 0) {

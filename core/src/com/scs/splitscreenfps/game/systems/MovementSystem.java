@@ -94,20 +94,11 @@ public class MovementSystem extends AbstractSystem {
 			position.y += offset.y;
 		}
 		
-		// Reset collision just in case it's got out of sync
-		//if (resultX || resultZ) {
-		/*CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
-		if (moverCC != null) {
-			moverCC.bb.getCenter(tmp);
-			tmp.add(offset);
-		}*/					
-		//}
-
 		if (resultX || resultZ) {
 			// Move model if it has one
 			HasModel hasModel = (HasModel)mover.getComponent(HasModel.class);
 			if (hasModel != null) {
-				hasModel.model.transform.setTranslation(position);
+				//todo -re-add hasModel.model.transform.setTranslation(position);
 			}
 		}
 		return resultX && resultZ;

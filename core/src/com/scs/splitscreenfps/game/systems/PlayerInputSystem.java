@@ -17,7 +17,6 @@ public class PlayerInputSystem implements ISystem {
 		for (int i=0 ; i<4 ; i++) {
 			if (game.players[i] != null) {
 				game.players[i].update();
-				game.players[i].camera.update();
 			}
 		}
 	}

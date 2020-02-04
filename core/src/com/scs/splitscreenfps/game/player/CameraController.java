@@ -79,6 +79,7 @@ public class CameraController {
 				camera.rotate(Vector3.Y, -rotSpeedX * input.getLookRight() * dt);
 			}
 		}
+		camera.update();
 		
 	}
 
