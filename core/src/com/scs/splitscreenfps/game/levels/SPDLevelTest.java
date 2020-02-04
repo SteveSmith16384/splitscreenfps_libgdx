@@ -2,10 +2,10 @@ package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.GridPoint2;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
+import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
@@ -79,6 +79,8 @@ public class SPDLevelTest extends AbstractLevel {
 						if (pixmap2 != null) {
 							Floor floor = new Floor("test", pixmap2, x, z, 1, 1);
 							game.ecs.addEntity(floor);
+							Ceiling ceiling = new Ceiling(pixmap2, x, z, 1, 1, 1f);
+							game.ecs.addEntity(ceiling);
 						} else {
 							Floor floor = new Floor("heart.png", "heart.png", x, z, 1, 1);
 							game.ecs.addEntity(floor);

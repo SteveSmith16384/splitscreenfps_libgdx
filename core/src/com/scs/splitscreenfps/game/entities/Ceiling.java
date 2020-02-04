@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -36,6 +37,36 @@ public class Ceiling extends AbstractEntity {
 		if (tile) {
 			mat.scl(new Vector2(map_width, map_height));
 		}
+		floor.meshes.get(0).transformUV(mat);
+
+		ModelInstance instance = new ModelInstance(floor);
+		instance.transform.translate(mapOffX, height, mapOffZ);
+		instance.transform.rotate(Vector3.X, 180);
+		instance.transform.translate(0, 0, -(float)map_width);
+		instance.calculateTransforms();
+
+		HasModel model = new HasModel(instance);
+		this.addComponent(model);
+	}
+
+
+	public Ceiling(Pixmap pixmap, int mapOffX, int mapOffZ, int map_width, int map_height, float height) {
+		super(Ceiling.class.getSimpleName());
+		
+		Texture tex = new Texture(pixmap);
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);
+		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
+
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model floor = modelBuilder.createRect(
+				0f, 0f, (float) map_height,
+				(float)map_width, 0f, (float)map_height,
+				(float)map_width, 0f, 0f,
+				0f,0f,0f,
+				1f,1f,1f,
+				white_material,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+		Matrix3 mat = new Matrix3();
 		floor.meshes.get(0).transformUV(mat);
 
 		ModelInstance instance = new ModelInstance(floor);
