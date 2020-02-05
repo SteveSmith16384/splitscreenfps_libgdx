@@ -120,8 +120,13 @@ public class PlayersAvatar extends AbstractEntity {
 			float cam_ang = v2.angle();
 			hasModel.model.transform.getRotation(qRot);
 			float model_ang = qRot.getAngleAround(Vector3.Y);
-			hasModel.model.transform.rotate(Vector3.Y, cam_ang-model_ang);
-			
+			float turn = cam_ang-model_ang;
+			Settings.p("turn=" + turn);
+			hasModel.model.transform.rotate(Vector3.Y, turn/20);
+
+			hasModel.model.transform.getRotation(qRot);
+			model_ang = qRot.getAngleAround(Vector3.Y);
+			Settings.p("new angle=" + model_ang);
 			//hasModel.model.transform.setToLookAt(direction, up).rotateRad(Vector3.Y, camera.direction);
 			
 			//hasModel.model.transform.setFromEulerAngles(20, 0, 0);
