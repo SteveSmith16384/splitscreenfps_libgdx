@@ -44,6 +44,7 @@ public class PickupSystem extends AbstractSystem {
 						cc.carrying = cr.collidedWith;
 						cr.collidedWith.hideComponent(CollidesComponent.class);
 						cr.collidedWith.hideComponent(HasDecal.class);
+						break;
 					}
 				}
 			} else {

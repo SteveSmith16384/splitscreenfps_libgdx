@@ -25,10 +25,12 @@ import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
+import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.MobAISystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
+import com.scs.splitscreenfps.game.systems.PickupSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 
@@ -95,6 +97,8 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
 		ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
+		ecs.addSystem(new PickupSystem(ecs, this));
+		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
 
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
@@ -137,6 +141,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
+		this.ecs.getSystem(PickupSystem.class).process();
 
 		gameLevel.update(this, mapData);
 
@@ -163,6 +168,7 @@ public class Game implements IModule {
 
 			batch2d.begin();
 			this.ecs.getSystem(DrawTextSystem.class).process();
+			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 			batch2d.end();
 
 			viewportData.frameBuffer.end();

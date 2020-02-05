@@ -46,6 +46,7 @@ public class MovementSystem extends AbstractSystem {
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
+			cc.bb_dirty = true;
 			cc.results.clear();
 		}
 

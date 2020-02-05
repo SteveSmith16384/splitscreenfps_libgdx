@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -39,7 +40,9 @@ public class EntityFactory {
         CollidesComponent cc = new CollidesComponent(false, .5f);
         entity.addComponent(cc);	
 		
-		Texture weaponTex = new Texture(Gdx.files.internal("heart.png"));		
+        entity.addComponent(new CanBeCarried());
+
+        Texture weaponTex = new Texture(Gdx.files.internal("heart.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setOrigin(sprite.getWidth()/2f, 0);
 		//weaponSprite.setScale(7.5f, 5f);
