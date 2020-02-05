@@ -56,7 +56,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 
 	@Override
 	public void update(Game game, MapData world) {
-		//readFile();
+		readFile();
 	}
 	
 	

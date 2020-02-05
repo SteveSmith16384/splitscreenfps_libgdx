@@ -69,7 +69,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 			ModelInstance instance = new ModelInstance(model);
 			instance.transform.scl(.002f);
-			//instance.transform.setToLookAt(new Vector3(1, 0, 0), Vector3.Y);
+			instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 			HasModel hasModel = new HasModel(instance);
 			hasModel.playerViewId = idx;
 			this.addComponent(hasModel);
@@ -114,30 +114,30 @@ public class PlayersAvatar extends AbstractEntity {
 
 			hasModel.model.transform.setTranslation(pos.position);
 
-			Settings.p("-------------------");
+			//Settings.p("-------------------");
 
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			float cam_ang = v2.angle();
 			if (cam_ang == 0) { // todo - remvoe this "if"
 				return; // dont process nonPC cams
 			}
-			Settings.p("cam_ang=" + cam_ang);
+			//Settings.p("cam_ang=" + cam_ang);
 
 			//int angle = (int) (player.transform.getRotation(new Quaternion()).getAxisAngle(axisVec) * axisVec.nor().y);
-			Quaternion q = hasModel.model.transform.getRotation(qRot);
+			/*Quaternion q = hasModel.model.transform.getRotation(qRot);
 			float model_ang2 = q.getAngleAround(Vector3.Y);
 			float model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
-			Settings.p("model_ang=" + model_ang);
+			Settings.p("model_ang=" + model_ang);*/
 
-			float turn = this.cameraController.camAngleChange;// .1f;//(cam_ang-model_ang);// % 360;
-			Settings.p("turn=" + turn);
+			float turn = this.cameraController.camAngleChange;
+			//Settings.p("turn=" + turn);
 			hasModel.model.transform.rotate(Vector3.Y, turn);
-			hasModel.model.calculateTransforms();
+			//hasModel.model.calculateTransforms(); // todo - remove?
 			
-			q = hasModel.model.transform.getRotation(qRot);
+			/*q = hasModel.model.transform.getRotation(qRot);
 			model_ang2 = q.getAngleAround(Vector3.Y);
 			model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
-			Settings.p("new model angle=" + model_ang);
+			Settings.p("new model angle=" + model_ang);*/
 
 			//hasModel.model.transform.setToLookAt(direction, up).rotateRad(Vector3.Y, camera.direction);
 
@@ -171,9 +171,17 @@ public class PlayersAvatar extends AbstractEntity {
 			tmpVector.y = 0;
 			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		}
+		
+		if (this.inputMethod.isPickupDropPressed()) {
+			CanCarry cc = (CanCarry)this.getComponent(CanCarry.class);
+			if (cc != null) {
+				cc.wantsToCarry = true;
+			}
+		}
 
 		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
 
+		// Animate and footstep sfx
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
 		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
 		if (this.movementData.offset.len2() > 0) {

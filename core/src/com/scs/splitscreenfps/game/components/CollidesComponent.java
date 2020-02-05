@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 
@@ -21,13 +22,19 @@ public class CollidesComponent {
 	}
 
 
+	public CollidesComponent(boolean _blocks, float rad) {
+		this.blocksMovement = _blocks;
+		bb = new MyBoundingBox(new Vector3(), rad, rad, rad);
+	}
+
+
 	public CollidesComponent(boolean _blocks, ModelInstance instance) {
 		this.blocksMovement = _blocks;
-		
+
 		BoundingBox bbx = new BoundingBox();
 		instance.calculateBoundingBox(bbx);
 		bbx.mul(instance.transform); // Move bb to position
 		bb = new MyBoundingBox(bbx.min, bbx.max);
 	}
-	
+
 }

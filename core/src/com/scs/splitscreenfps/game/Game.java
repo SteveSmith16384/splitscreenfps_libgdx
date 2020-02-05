@@ -12,11 +12,12 @@ import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.LoadMapDynamicallyLevel;
+import com.scs.splitscreenfps.game.levels.OpenRoomLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
@@ -26,9 +27,9 @@ import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.MobAISystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
+import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 
 public class Game implements IModule {
@@ -43,7 +44,7 @@ public class Game implements IModule {
 	public PlayersAvatar[] players;
 	public MapData mapData;
 	public BasicECS ecs;
-
+	public EntityFactory entityFactory = new EntityFactory();
 	private AbstractLevel gameLevel;
 	private DrawModelSystem drawModelSystem;
 
@@ -64,7 +65,7 @@ public class Game implements IModule {
 
 		this.createECS();
 
-		gameLevel = new LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
+		gameLevel = new OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
 		for (int i=0 ; i<4 ; i++) {

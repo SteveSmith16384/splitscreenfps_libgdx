@@ -4,7 +4,7 @@ import com.scs.basicecs.AbstractEntity;
 
 public class CanCarry {
 
-	public AbstractEntity carrying;
-	
+	public boolean wantsToCarry = false;
+	public AbstractEntity carrying;	
 
 }

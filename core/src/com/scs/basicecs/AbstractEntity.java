@@ -2,13 +2,14 @@ package com.scs.basicecs;
 
 import java.util.HashMap;
 
-public class AbstractEntity { // todo - make final?
+public class AbstractEntity {
 
 	private static int next_id = 0;
 
 	public int id;
 	public String name;
 	private HashMap<Class<?>, Object> components = new HashMap<Class<?>, Object>();
+	private HashMap<Class<?>, Object> hiddenComponents = new HashMap<Class<?>, Object>(); // For temporarily removing components, e.g. collision
 	private boolean markForRemoval = false;
 
 	public AbstractEntity(String _name) {
@@ -24,6 +25,16 @@ public class AbstractEntity { // todo - make final?
 
 	public void removeComponent(Object component) {
 		this.components.remove(component.getClass());
+	}
+
+
+	public void hideComponent(Object component) {
+		this.hiddenComponents.put(component.getClass(), this.components.remove(component.getClass()));
+	}
+
+
+	public void restoreComponent(Object component) {
+		this.components.put(component.getClass(), this.hiddenComponents.remove(component.getClass()));
 	}
 
 

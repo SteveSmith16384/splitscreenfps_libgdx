@@ -89,7 +89,7 @@ public class CameraController {
 		v2 = new Vector2(camera.direction.x, camera.direction.z);
 		float cam_ang2 = v2.angle();
 
-		this.camAngleChange = cam_ang2 - cam_ang;
+		this.camAngleChange = cam_ang - cam_ang2;
 
 	}
 
