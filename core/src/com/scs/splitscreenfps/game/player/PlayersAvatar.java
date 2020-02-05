@@ -45,6 +45,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 	public DecalBatch batch;
 	private Quaternion qRot = new Quaternion();
+	private Vector3 tmpV = new Vector3();
 
 	public PlayersAvatar(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(PlayersAvatar.class.getSimpleName() + "_" + idx);
@@ -68,6 +69,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 			ModelInstance instance = new ModelInstance(model);
 			instance.transform.scl(.002f);
+			//instance.transform.setToLookAt(new Vector3(1, 0, 0), Vector3.Y);
 			HasModel hasModel = new HasModel(instance);
 			hasModel.playerViewId = idx;
 			this.addComponent(hasModel);
@@ -109,26 +111,36 @@ public class PlayersAvatar extends AbstractEntity {
 		HasModel hasModel = (HasModel)getComponent(HasModel.class);
 		if (hasModel != null) {
 			PositionData pos = (PositionData)getComponent(PositionData.class);
-			
+
 			hasModel.model.transform.setTranslation(pos.position);
 
-			//hasModel.model.transform.set(pos.position, Vector3.Y, this.camera.direction);
-			//hasModel.model.transform.setToLookAt(pos.position, camera.direction, Vector3.Y);
+			Settings.p("-------------------");
 
-			//Quaternion q = hasModel.model.transform.getRotation(qRot);
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			float cam_ang = v2.angle();
-			hasModel.model.transform.getRotation(qRot);
-			float model_ang = qRot.getAngleAround(Vector3.Y);
-			float turn = cam_ang-model_ang;
-			Settings.p("turn=" + turn);
-			hasModel.model.transform.rotate(Vector3.Y, turn/20);
+			if (cam_ang == 0) { // todo - remvoe this "if"
+				return; // dont process nonPC cams
+			}
+			Settings.p("cam_ang=" + cam_ang);
 
-			hasModel.model.transform.getRotation(qRot);
-			model_ang = qRot.getAngleAround(Vector3.Y);
-			Settings.p("new angle=" + model_ang);
-			//hasModel.model.transform.setToLookAt(direction, up).rotateRad(Vector3.Y, camera.direction);
+			//int angle = (int) (player.transform.getRotation(new Quaternion()).getAxisAngle(axisVec) * axisVec.nor().y);
+			Quaternion q = hasModel.model.transform.getRotation(qRot);
+			float model_ang2 = q.getAngleAround(Vector3.Y);
+			float model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
+			Settings.p("model_ang=" + model_ang);
+
+			float turn = this.cameraController.camAngleChange;// .1f;//(cam_ang-model_ang);// % 360;
+			Settings.p("turn=" + turn);
+			hasModel.model.transform.rotate(Vector3.Y, turn);
+			hasModel.model.calculateTransforms();
 			
+			q = hasModel.model.transform.getRotation(qRot);
+			model_ang2 = q.getAngleAround(Vector3.Y);
+			model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
+			Settings.p("new model angle=" + model_ang);
+
+			//hasModel.model.transform.setToLookAt(direction, up).rotateRad(Vector3.Y, camera.direction);
+
 			//hasModel.model.transform.setFromEulerAngles(20, 0, 0);
 			//hasModel.model.transform.setTranslation(pos.position);
 			//hasModel.model.calculateTransforms();

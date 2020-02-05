@@ -3,6 +3,7 @@ package com.scs.splitscreenfps.game.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.input.IInputMethod;
@@ -25,6 +26,7 @@ public class CameraController {
 	};
 
 	private IInputMethod input;
+	public float camAngleChange = 0;
 
 	public CameraController(Camera cam, IInputMethod _input) {
 		camera = cam;
@@ -40,6 +42,9 @@ public class CameraController {
 
 	public void update() {
 		float dt = Gdx.graphics.getDeltaTime();
+
+		Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
+		float cam_ang = v2.angle();
 
 		if (this.input.isMouse()) {
 			if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
@@ -80,7 +85,12 @@ public class CameraController {
 			}
 		}
 		camera.update();
-		
+	
+		v2 = new Vector2(camera.direction.x, camera.direction.z);
+		float cam_ang2 = v2.angle();
+
+		this.camAngleChange = cam_ang2 - cam_ang;
+
 	}
 
 }

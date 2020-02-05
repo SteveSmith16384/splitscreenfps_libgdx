@@ -102,6 +102,10 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void processEntity(boolean shadows, AbstractEntity entity) {
+		/*todo - only draw if in frustum if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
+			return;
+		}*/
+
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
 		if (model.playerViewId != game.currentViewId) {
 			if (shadows) {

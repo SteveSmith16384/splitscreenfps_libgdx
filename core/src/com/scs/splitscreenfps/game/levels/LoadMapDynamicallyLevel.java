@@ -48,8 +48,8 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 		/*Wall wall = new Wall("heart.png", 10, 10, true);
 		game.ecs.addEntity(wall);*/
 		
-		ModelEntity soldier = new ModelEntity("soldier", 3, 0, 3);
-		game.ecs.addEntity(soldier);
+		//ModelEntity spider = new ModelEntity("soldier", 3, 0, 3);
+		//game.ecs.addEntity(spider);
 
 	}
 
