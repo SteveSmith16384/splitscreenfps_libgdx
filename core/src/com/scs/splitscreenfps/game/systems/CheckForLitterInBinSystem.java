@@ -29,9 +29,7 @@ public class CheckForLitterInBinSystem extends AbstractSystem {
 			AbstractEntity e = cr.collidedWith;
 			CombinesWithLitterComponent ic = (CombinesWithLitterComponent)e.getComponent(IsCollectable.class);
 			if (ic != null) {
-				// todo - what happens when collected?
-				Settings.p(e + " collected");
-				e.remove();
+				// todo
 			}
 		}
 	}

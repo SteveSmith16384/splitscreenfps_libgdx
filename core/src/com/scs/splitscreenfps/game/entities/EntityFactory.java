@@ -56,7 +56,7 @@ public class EntityFactory {
 		sprite.setPosition(100, 100);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite);
         entity.addComponent(hgsc);
-        //todo -re-add entity.hideComponent(hgsc); // Don't show it until picked up!
+        entity.hideComponent(hgsc); // Don't show it until picked up!
 		
 		return entity;	
 		

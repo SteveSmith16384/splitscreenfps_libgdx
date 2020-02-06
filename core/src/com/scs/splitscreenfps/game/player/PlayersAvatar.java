@@ -56,24 +56,107 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
-		this.addComponent(new CollidesComponent(false, new MyBoundingBox(positionData.position, .3f, Settings.PLAYER_HEIGHT/2, .3f)));
 
 		this.addComponent(new CanTagComponent());
-		
+
 		// Model stuff
-		this.addKnightComponents(idx);
+		//ModelInstance instance = this.addKnightComponents(idx);
+		//ModelInstance instance = this.addZombieComponents(idx);
+		//ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
+		ModelInstance instance = this.addSkeletonComponents(idx);
+
+		this.addComponent(new CollidesComponent(false, instance));
 
 		camera = _viewportData.camera;
 
 		cameraController = new CameraController(game, camera, inputMethod);
-
-		//ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
-		//batch = new DecalBatch(groupStrategy);
-
 	}
 
 
-	private void addKnightComponents(int idx) {
+	private ModelInstance addSkeletonComponents(int idx) {
+		AssetManager am = new AssetManager(); // todo - share
+		am.load("models/Skeleton.g3dj", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/Skeleton.g3dj");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.002f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel(instance);
+		hasModel.dontDrawInViewId = idx;
+		this.addComponent(hasModel);
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
+		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
+		this.addComponent(avatarAnim);
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		this.addComponent(anim);
+
+		return instance;
+	}
+
+
+	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
+		AssetManager am = new AssetManager(); // todo - share
+		am.load("models/Smooth_Male_Shirt.g3db", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/Smooth_Male_Shirt.g3db");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.002f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel(instance);
+		hasModel.dontDrawInViewId = idx;
+		this.addComponent(hasModel);
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "HumanArmature|Man_Idle";
+		avatarAnim.walk_anim = "HumanArmature|Man_Standing";
+		this.addComponent(avatarAnim);
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		this.addComponent(anim);
+
+		return instance;
+	}
+
+
+	// Model doesn't show
+	private ModelInstance addZombieComponents(int idx) {
+		AssetManager am = new AssetManager(); // todo - share
+		am.load("models/Zombie.g3db", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/Zombie.g3db");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.002f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		instance.calculateTransforms();
+		HasModel hasModel = new HasModel(instance);
+		hasModel.dontDrawInViewId = idx;
+		this.addComponent(hasModel);
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "Zombie|ZombieIdle";
+		avatarAnim.walk_anim = "Zombie|ZombieWalk"; // Zombie|ZombieRun			
+		this.addComponent(avatarAnim);
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		this.addComponent(anim);
+
+		return instance;
+	}
+
+
+	private ModelInstance addKnightComponents(int idx) {
 		AssetManager am = new AssetManager();
 		am.load("models/KnightCharacter.g3dj", Model.class);
 		am.finishLoading();
@@ -83,7 +166,7 @@ public class PlayersAvatar extends AbstractEntity {
 		instance.transform.scl(.002f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 		HasModel hasModel = new HasModel(instance);
-		hasModel.playerViewId = idx;
+		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 
 		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
@@ -91,12 +174,12 @@ public class PlayersAvatar extends AbstractEntity {
 		avatarAnim.walk_anim = "HumanArmature|Walking";			
 		this.addComponent(avatarAnim);
 
-
 		AnimationController animation = new AnimationController(instance);
 		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
 		anim.animationController = animation;
 		this.addComponent(anim);
 
+		return instance;
 	}
 
 

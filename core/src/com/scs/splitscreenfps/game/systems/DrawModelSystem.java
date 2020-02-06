@@ -59,7 +59,7 @@ public class DrawModelSystem extends AbstractSystem {
 		}*/
 
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
-		if (model.playerViewId != game.currentViewId) {
+		if (model.dontDrawInViewId != game.currentViewId) {
 			modelBatch.render(model.model, environment);
 		}
 	}

@@ -20,6 +20,7 @@ import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.OpenRoomLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
+import com.scs.splitscreenfps.game.systems.CheckForLitterInBinSystem;
 import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -33,6 +34,7 @@ import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PickupSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.TagSystem;
 
 public class Game implements IModule {
 
@@ -47,7 +49,7 @@ public class Game implements IModule {
 	public MapData mapData;
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
-	private AbstractLevel gameLevel;
+	private AbstractLevel currentLevel;
 	
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
@@ -70,7 +72,7 @@ public class Game implements IModule {
 			ecs.addEntity(players[i]);
 		}
 
-		gameLevel = new OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
+		currentLevel = new OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
 		/*for (int i=0 ; i<4 ; i++) {
@@ -102,7 +104,9 @@ public class Game implements IModule {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new PickupSystem(ecs, this));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
-
+		ecs.addSystem(new TagSystem(ecs));
+		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
+		
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 
@@ -111,12 +115,12 @@ public class Game implements IModule {
 
 
 	private void loadLevel() {
-		gameLevel.load();
+		currentLevel.load();
 
 		// Set start position of players
 		for (int idx=0 ; idx<4 ; idx++) {
 			PositionData posData = (PositionData)this.players[idx].getComponent(PositionData.class);
-			posData.position.set(gameLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, gameLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
+			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
 
 			// Move model if it has one
@@ -147,8 +151,10 @@ public class Game implements IModule {
 		this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupSystem.class).process();
-
-		gameLevel.update(this, mapData);
+		this.ecs.getSystem(TagSystem.class).process();
+		this.ecs.getSystem(CheckForLitterInBinSystem.class).process();
+		
+		currentLevel.update(this, mapData);
 
 		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
@@ -162,7 +168,7 @@ public class Game implements IModule {
 
 			//Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			this.gameLevel.setBackgroundColour();
+			this.currentLevel.setBackgroundColour();
 
 			this.drawModelSystem.process(viewportData.camera);
 
@@ -191,8 +197,7 @@ public class Game implements IModule {
 			if (players[currentViewId] != null) {
 				players[currentViewId].renderUI(batch2d, font_white);
 			}
-
-			gameLevel.renderUI(batch2d, font_white, font_black);
+			currentLevel.renderUI(batch2d, font_white, font_black);
 
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
