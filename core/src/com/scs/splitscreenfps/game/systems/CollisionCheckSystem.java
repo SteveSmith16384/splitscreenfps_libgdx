@@ -24,20 +24,34 @@ public class CollisionCheckSystem extends AbstractSystem {
 	}
 
 
+	private void setBB(AbstractEntity mover, float offX, float offZ) {
+		PositionData posData = (PositionData)mover.getComponent(PositionData.class);
+		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
+		moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
+		
+	}
+	
 	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ) {
 		CollisionResultsList cr = new CollisionResultsList();
 
 		// Move bounding box to correct position
-		PositionData posData = (PositionData)mover.getComponent(PositionData.class);
+		//PositionData posData = (PositionData)mover.getComponent(PositionData.class);
+		//CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
+		//moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
-		moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 
+		this.setBB(mover, offX, offZ);
+		
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
 			if (e != mover) {
 				CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
 				if (cc != null) {
+					if (cc.bb_dirty) {
+						setBB(e, 0, 0);
+						cc.bb_dirty = false;
+					}
 					if (moverCC.bb.intersects(cc.bb)) {
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 						if (cc.blocksMovement) {

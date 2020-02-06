@@ -29,11 +29,13 @@ public class AbstractEntity {
 
 
 	public void hideComponent(Object component) {
+		// todo - remove from system!
 		this.hiddenComponents.put(component.getClass(), this.components.remove(component.getClass()));
 	}
 
 
 	public void restoreComponent(Object component) {
+		// todo - add back to system!
 		this.components.put(component.getClass(), this.hiddenComponents.remove(component.getClass()));
 	}
 
