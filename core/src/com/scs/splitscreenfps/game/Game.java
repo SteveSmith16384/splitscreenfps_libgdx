@@ -59,8 +59,8 @@ public class Game implements IModule {
 		players = new PlayersAvatar[4];
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
-			IInputMethod input = i==0 ? new MouseAndKeyboardInputMethod() : new NoInputMethod();
-			players[i] = new PlayersAvatar(i, this.viewports[i], input);
+			IInputMethod input = i==0 ? new MouseAndKeyboardInputMethod() : new NoInputMethod(); // todo - this
+			players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
 		}
 
 		this.createECS();

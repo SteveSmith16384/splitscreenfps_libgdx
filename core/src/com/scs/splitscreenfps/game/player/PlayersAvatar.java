@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
@@ -34,6 +33,7 @@ public class PlayersAvatar extends AbstractEntity {
 	private static final float moveSpeed = 2f;
 	public static final float playerHeight = 0.4f;
 
+	private Game game;
 	public Camera camera;
 	public CameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
@@ -44,12 +44,13 @@ public class PlayersAvatar extends AbstractEntity {
 	private IInputMethod inputMethod;
 
 	public DecalBatch batch;
-	private Quaternion qRot = new Quaternion();
-	private Vector3 tmpV = new Vector3();
+	//private Quaternion qRot = new Quaternion();
+	//private Vector3 tmpV = new Vector3();
 
-	public PlayersAvatar(int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
+	public PlayersAvatar(Game _game, int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(PlayersAvatar.class.getSimpleName() + "_" + idx);
 
+		game = _game;
 		inputMethod = _inputMethod;
 
 		this.movementData = new MovementData(0.5f);
@@ -90,7 +91,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		camera = _viewportData.camera;
 
-		cameraController = new CameraController(camera, inputMethod);
+		cameraController = new CameraController(game, camera, inputMethod);
 
 		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
 		batch = new DecalBatch(groupStrategy);

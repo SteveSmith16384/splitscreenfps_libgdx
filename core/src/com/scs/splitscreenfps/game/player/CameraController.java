@@ -5,11 +5,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.PositionData;
 import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class CameraController {
 
+	private Game game;
 	private Camera camera;
 	private Vector3 tmp;
 
@@ -28,7 +31,8 @@ public class CameraController {
 	private IInputMethod input;
 	public float camAngleChange = 0;
 
-	public CameraController(Camera cam, IInputMethod _input) {
+	public CameraController(Game _game, Camera cam, IInputMethod _input) {
+		game = _game;
 		camera = cam;
 		input = _input;
 
@@ -64,6 +68,10 @@ public class CameraController {
 				}
 				camera.rotate(Vector3.Y, -cursorSpeed  * rx);
 			}
+		} else if (input instanceof NoInputMethod) {
+			// Look at player 1
+			PositionData posData = (PositionData)game.players[0].getComponent(PositionData.class);
+			camera.lookAt(posData.position);
 		} else {
 			//Rotation
 			if (input.getLookUp() > 0) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
