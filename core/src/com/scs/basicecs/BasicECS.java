@@ -25,6 +25,46 @@ public class BasicECS {
 		return this.systems.get(clazz);
 	}
 
+	
+	public void addComponentToSystems(AbstractEntity e, Object component) {
+		//e.addComponent(component);
+		
+		// Add to appropriate systems
+		for(ISystem isystem : this.systems.values()) {
+			if (isystem instanceof AbstractSystem) {
+				AbstractSystem system = (AbstractSystem)isystem;
+				Class<?> clazz = system.getComponentClass();
+				if (clazz != null) {
+					if (component.getClass() == clazz) {
+						if (system.entities.contains(e) == false) {
+							system.entities.add(e);
+						} else {
+							throw new RuntimeException("Entity " + e + " already exists in " + system);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+
+	public void removeComponentFromSystems(AbstractEntity e, Object component) {
+		// Remove from appropriate systems
+		for(ISystem isystem : this.systems.values()) {
+			if (isystem instanceof AbstractSystem) {
+				AbstractSystem system = (AbstractSystem)isystem;
+				Class<?> clazz = system.getComponentClass();
+				if (clazz != null) {
+					if (component.getClass() == clazz) {
+						system.entities.remove(e);
+					}
+				}
+			}
+		}
+	}
+	
+	
 
 	public void addAndRemoveEntities() {
 		// Remove any entities
@@ -55,7 +95,11 @@ public class BasicECS {
 					Class<?> clazz = system.getComponentClass();
 					if (clazz != null) {
 						if (e.getComponents().containsKey(clazz)) {
-							system.entities.add(e);
+							if (system.entities.contains(e) == false) {
+								system.entities.add(e);
+							} else {
+								// Entity might already exist since we add components to systems immediately
+							}
 						}
 					}
 				}

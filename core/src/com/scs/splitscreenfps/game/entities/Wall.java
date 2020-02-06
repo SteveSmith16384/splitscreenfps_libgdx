@@ -10,13 +10,14 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(String tex_filename, int mapPosX, int mapPosZ, boolean add_collision) {
-		super(Wall.class.getSimpleName());
+	public Wall(BasicECS ecs, String tex_filename, int mapPosX, int mapPosZ, boolean add_collision) {
+		super(ecs, Wall.class.getSimpleName());
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -38,8 +39,8 @@ public class Wall extends AbstractEntity {
 	}
 
 
-	public Wall(Pixmap pixmap, int mapPosX, int mapPosZ, boolean add_collision) {
-		super(Wall.class.getSimpleName());
+	public Wall(BasicECS ecs, Pixmap pixmap, int mapPosX, int mapPosZ, boolean add_collision) {
+		super(ecs, Wall.class.getSimpleName());
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(pixmap)));
 		ModelBuilder modelBuilder = new ModelBuilder();
@@ -61,8 +62,8 @@ public class Wall extends AbstractEntity {
 	}
 
 
-	public Wall(String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
-		super(name);
+	public Wall(BasicECS ecs, String name, String tex_filename, float posX, float posY, float posZ, float w, float h, float d, boolean add_collision) {
+		super(ecs, name);
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();

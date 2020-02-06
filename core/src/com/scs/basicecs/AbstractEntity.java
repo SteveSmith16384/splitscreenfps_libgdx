@@ -6,13 +6,16 @@ public class AbstractEntity {
 
 	private static int next_id = 0;
 
+	private BasicECS ecs;
+
 	public int id;
 	public String name;
 	private HashMap<Class<?>, Object> components = new HashMap<Class<?>, Object>();
 	private HashMap<Class<?>, Object> hiddenComponents = new HashMap<Class<?>, Object>(); // For temporarily removing components, e.g. collision
 	private boolean markForRemoval = false;
-
-	public AbstractEntity(String _name) {
+	
+	public AbstractEntity(BasicECS _ecs, String _name) {
+		ecs = _ecs;
 		this.id = next_id++;
 		this.name = _name;
 	}
@@ -20,23 +23,25 @@ public class AbstractEntity {
 
 	public void addComponent(Object component) {
 		this.components.put(component.getClass(), component);
+		ecs.addComponentToSystems(this, component);
 	}
 
 
 	public void removeComponent(Object component) {
 		this.components.remove(component.getClass());
+		ecs.removeComponentFromSystems(this, component);
 	}
 
 
 	public void hideComponent(Object component) {
-		// todo - remove from system!
 		this.hiddenComponents.put(component.getClass(), this.components.remove(component.getClass()));
+		ecs.removeComponentFromSystems(this, component);
 	}
 
 
 	public void restoreComponent(Object component) {
-		// todo - add back to system!
 		this.components.put(component.getClass(), this.hiddenComponents.remove(component.getClass()));
+		ecs.addComponentToSystems(this, component);
 	}
 
 

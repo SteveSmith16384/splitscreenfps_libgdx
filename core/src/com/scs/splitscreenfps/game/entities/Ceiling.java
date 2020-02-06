@@ -13,12 +13,13 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModel;
 
 public class Ceiling extends AbstractEntity {
 
-	public Ceiling(String tex_filename, int mapOffX, int mapOffZ, int map_width, int map_height, boolean tile, float height) {
-		super(Ceiling.class.getSimpleName());
+	public Ceiling(BasicECS ecs, String tex_filename, int mapOffX, int mapOffZ, int map_width, int map_height, boolean tile, float height) {
+		super(ecs, Ceiling.class.getSimpleName());
 		
 		Texture tex = new Texture(tex_filename);
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);
@@ -50,8 +51,8 @@ public class Ceiling extends AbstractEntity {
 	}
 
 
-	public Ceiling(Pixmap pixmap, int mapOffX, int mapOffZ, int map_width, int map_height, float height) {
-		super(Ceiling.class.getSimpleName());
+	public Ceiling(BasicECS ecs, Pixmap pixmap, int mapOffX, int mapOffZ, int map_width, int map_height, float height) {
+		super(ecs, Ceiling.class.getSimpleName());
 		
 		Texture tex = new Texture(pixmap);
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);

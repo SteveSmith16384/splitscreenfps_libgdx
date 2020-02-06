@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
@@ -14,13 +15,16 @@ import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.PositionData;
 
 public class EntityFactory {
+	
+	private BasicECS ecs;
 
-	public EntityFactory() {
+	public EntityFactory(BasicECS _ecs) {
+		this.ecs = _ecs;
 	}
 	
 	
 	public AbstractEntity createLitter(float map_x, float map_z) {
-		AbstractEntity entity = new AbstractEntity("Litter");
+		AbstractEntity entity = new AbstractEntity(ecs, "Litter");
 
 		PositionData posData = new PositionData((map_x)+(0.5f), (map_z)+(0.5f));
 		entity.addComponent(posData);
@@ -47,10 +51,12 @@ public class EntityFactory {
 		sprite.setOrigin(sprite.getWidth()/2f, 0);
 		//weaponSprite.setScale(7.5f, 5f);
 		//float scale = (float)Settings.WINDOW_WIDTH_PIXELS / (float)weaponTex.getWidth() / 3f;
-		sprite.setScale(1);
-		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
+		sprite.setScale(10);
+		//sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
+		sprite.setPosition(100, 100);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite);
-        entity.addComponent(hgsc);	
+        entity.addComponent(hgsc);
+        //todo -re-add entity.hideComponent(hgsc); // Don't show it until picked up!
 		
 		return entity;	
 		
@@ -58,7 +64,7 @@ public class EntityFactory {
 
 
 	public AbstractEntity createLitterBin(float map_x, float map_z) {
-		AbstractEntity entity = new AbstractEntity("LitterBin");
+		AbstractEntity entity = new AbstractEntity(ecs, "LitterBin");
 
 		PositionData posData = new PositionData((map_x)+(0.5f), (map_z)+(0.5f));
 		entity.addComponent(posData);

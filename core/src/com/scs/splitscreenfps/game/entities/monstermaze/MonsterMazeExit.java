@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Graphics;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -15,8 +16,8 @@ import ssmith.libgdx.MyBoundingBox;
 
 public class MonsterMazeExit extends AbstractEntity {
 
-	public MonsterMazeExit(int map_x, int map_y) {
-		super(MonsterMazeExit.class.getSimpleName());
+	public MonsterMazeExit(BasicECS ecs, int map_x, int map_y) {
+		super(ecs, MonsterMazeExit.class.getSimpleName());
 		
 		//PositionData posData = new PositionData((map_x*Game.UNIT)-(Game.UNIT/2), (map_y*Game.UNIT)-(Game.UNIT/2));
 		PositionData posData = new PositionData((map_x)+(0.5f), (map_y)+(0.5f));

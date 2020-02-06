@@ -2,14 +2,16 @@ package com.scs.splitscreenfps.game;
 
 import java.awt.Rectangle;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 //import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessing;
+import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 
 public class ViewportData {
 
@@ -17,6 +19,7 @@ public class ViewportData {
 	public Rectangle viewPos;
 	public FrameBuffer frameBuffer = null;
 	public PostProcessing post;
+	public DecalBatch decalBatch;
 
 	public ViewportData(boolean full_screen, int idx) {
 		int w = Gdx.graphics.getWidth()/2;
@@ -49,6 +52,9 @@ public class ViewportData {
 		camera.far = 30f;
 		//camera.update();
 		
+		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
+		decalBatch = new DecalBatch(groupStrategy);
+
 		this.resize(full_screen, idx);
 	}
 	
@@ -85,7 +91,7 @@ public class ViewportData {
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			//post = new PostProcessing(w, h);
+			post = new PostProcessing(w, h);
 		}
 	}
 	

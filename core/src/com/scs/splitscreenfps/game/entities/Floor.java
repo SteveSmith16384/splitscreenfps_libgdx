@@ -13,18 +13,19 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.HasModelCycle;
 
 public class Floor extends AbstractEntity {
 
-	public Floor(String tex_filename, int mapX, int mapZ, int map_width, int map_height, boolean tile) {
-		this(tex_filename, null, mapX, mapZ, map_width, map_height, tile);
+	public Floor(BasicECS ecs, String tex_filename, int mapX, int mapZ, int map_width, int map_height, boolean tile) {
+		this(ecs, tex_filename, null, mapX, mapZ, map_width, map_height, tile);
 	}
 
 
-	public Floor(String tex_filename1, String tex_filename2, int mapX, int mapZ, int map_width, int map_depth, boolean tile) {
-		super(Floor.class.getSimpleName());
+	public Floor(BasicECS ecs, String tex_filename1, String tex_filename2, int mapX, int mapZ, int map_width, int map_depth, boolean tile) {
+		super(ecs, Floor.class.getSimpleName());
 
 		HasModelCycle model_cycle = new HasModelCycle(.5f, 2);
 
@@ -90,8 +91,8 @@ public class Floor extends AbstractEntity {
 	}
 
 
-	public Floor(String name, String tex_filename1, float x, float z, float w, float d) {
-		super(name);
+	public Floor(BasicECS ecs, String name, String tex_filename1, float x, float z, float w, float d) {
+		super(ecs, name);
 
 		Texture tex = new Texture(tex_filename1);
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
@@ -119,8 +120,8 @@ public class Floor extends AbstractEntity {
 	}
 
 
-	public Floor(String name, Pixmap pixmap, float x, float z, float w, float d) {
-		super(name);
+	public Floor(BasicECS ecs, String name, Pixmap pixmap, float x, float z, float w, float d) {
+		super(ecs, name);
 
 		Texture tex = new Texture(pixmap);
 		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);

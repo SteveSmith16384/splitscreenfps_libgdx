@@ -8,9 +8,12 @@ public abstract class AbstractSystem implements ISystem {
 
 	protected BasicECS ecs;
 	protected List<AbstractEntity> entities;
+	private String name;
 
 	public AbstractSystem(BasicECS _ecs) {
 		this.ecs = _ecs;
+		
+		name = this.getClass().getSimpleName();
 
 		this.ecs.addSystem(this);
 
@@ -57,4 +60,9 @@ public abstract class AbstractSystem implements ISystem {
 	public void processEntity(AbstractEntity entity) {
 	}
 
+	
+	public String toString() {
+		return name; //super.toString();
+	}
+	
 }

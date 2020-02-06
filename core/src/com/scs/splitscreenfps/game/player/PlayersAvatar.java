@@ -19,6 +19,7 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CanCollect;
+import com.scs.splitscreenfps.game.components.CanTagComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -43,12 +44,8 @@ public class PlayersAvatar extends AbstractEntity {
 	private PositionData positionData;
 	private IInputMethod inputMethod;
 
-	public DecalBatch batch;
-	//private Quaternion qRot = new Quaternion();
-	//private Vector3 tmpV = new Vector3();
-
 	public PlayersAvatar(Game _game, int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
-		super(PlayersAvatar.class.getSimpleName() + "_" + idx);
+		super(_game.ecs, PlayersAvatar.class.getSimpleName() + "_" + idx);
 
 		game = _game;
 		inputMethod = _inputMethod;
@@ -61,40 +58,44 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new CanCarry());
 		this.addComponent(new CollidesComponent(false, new MyBoundingBox(positionData.position, .3f, Settings.PLAYER_HEIGHT/2, .3f)));
 
+		this.addComponent(new CanTagComponent());
+		
 		// Model stuff
-		{
-			AssetManager am = new AssetManager();
-			am.load("models/KnightCharacter.g3dj", Model.class);
-			am.finishLoading();
-			Model model = am.get("models/KnightCharacter.g3dj");
-
-			ModelInstance instance = new ModelInstance(model);
-			instance.transform.scl(.002f);
-			instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-			HasModel hasModel = new HasModel(instance);
-			hasModel.playerViewId = idx;
-			this.addComponent(hasModel);
-
-			AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-			avatarAnim.idle_anim = "HumanArmature|Idle";
-			avatarAnim.walk_anim = "HumanArmature|Walking";			
-			this.addComponent(avatarAnim);
-
-			AnimationController animation = new AnimationController(instance);
-			//String id = model.animations.get(0).id;
-			//animation.animate(id, 200, 1f, null, 0.2f); // First anim
-			AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
-			anim.animationController = animation;
-			this.addComponent(anim);
-		}
-
+		this.addKnightComponents(idx);
 
 		camera = _viewportData.camera;
 
 		cameraController = new CameraController(game, camera, inputMethod);
 
-		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
-		batch = new DecalBatch(groupStrategy);
+		//ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
+		//batch = new DecalBatch(groupStrategy);
+
+	}
+
+
+	private void addKnightComponents(int idx) {
+		AssetManager am = new AssetManager();
+		am.load("models/KnightCharacter.g3dj", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/KnightCharacter.g3dj");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.002f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel(instance);
+		hasModel.playerViewId = idx;
+		this.addComponent(hasModel);
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "HumanArmature|Idle";
+		avatarAnim.walk_anim = "HumanArmature|Walking";			
+		this.addComponent(avatarAnim);
+
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		this.addComponent(anim);
 
 	}
 
@@ -134,7 +135,7 @@ public class PlayersAvatar extends AbstractEntity {
 			//Settings.p("turn=" + turn);
 			hasModel.model.transform.rotate(Vector3.Y, turn);
 			//hasModel.model.calculateTransforms(); // todo - remove?
-			
+
 			/*q = hasModel.model.transform.getRotation(qRot);
 			model_ang2 = q.getAngleAround(Vector3.Y);
 			model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
@@ -172,7 +173,7 @@ public class PlayersAvatar extends AbstractEntity {
 			tmpVector.y = 0;
 			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		}
-		
+
 		if (this.inputMethod.isPickupDropPressed()) {
 			CanCarry cc = (CanCarry)this.getComponent(CanCarry.class);
 			if (cc != null) {

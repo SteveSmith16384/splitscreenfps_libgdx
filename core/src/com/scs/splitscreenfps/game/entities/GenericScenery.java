@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.PositionData;
@@ -14,8 +15,8 @@ import ssmith.libgdx.MyBoundingBox;
 
 public class GenericScenery extends AbstractEntity {
 
-	public GenericScenery(String name, String filename, int x, int y, boolean blocks_movement) {
-		super(name);
+	public GenericScenery(BasicECS ecs, String name, String filename, int x, int y, boolean blocks_movement) {
+		super(ecs, name);
 		
 		HasDecal hasDecal = new HasDecal();
 		Texture tex = new Texture(Gdx.files.internal(filename));

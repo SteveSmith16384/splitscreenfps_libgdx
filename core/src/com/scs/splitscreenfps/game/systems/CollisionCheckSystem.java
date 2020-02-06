@@ -24,9 +24,9 @@ public class CollisionCheckSystem extends AbstractSystem {
 	}
 
 
-	private void setBB(AbstractEntity mover, float offX, float offZ) {
+	private void setBB(AbstractEntity mover, CollidesComponent moverCC, float offX, float offZ) {
 		PositionData posData = (PositionData)mover.getComponent(PositionData.class);
-		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
+		//CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 		moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 		
 	}
@@ -40,7 +40,8 @@ public class CollisionCheckSystem extends AbstractSystem {
 		//moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 
-		this.setBB(mover, offX, offZ);
+		this.setBB(mover, moverCC, offX, offZ);
+		moverCC.bb_dirty = true; // So we move it back afterwards
 		
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
@@ -49,7 +50,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 				CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
 				if (cc != null) {
 					if (cc.bb_dirty) {
-						setBB(e, 0, 0);
+						setBB(e, cc, 0, 0);
 						cc.bb_dirty = false;
 					}
 					if (moverCC.bb.intersects(cc.bb)) {

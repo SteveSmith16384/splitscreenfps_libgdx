@@ -34,7 +34,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	public void process() {
 		int i = game.currentViewId;
 		Camera camera = game.players[i].camera;
-		DecalBatch batch = game.players[i].batch;
+		DecalBatch batch = game.viewports[i].decalBatch;
 
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {

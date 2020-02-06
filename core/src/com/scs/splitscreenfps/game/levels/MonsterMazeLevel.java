@@ -56,20 +56,20 @@ public class MonsterMazeLevel extends AbstractLevel {
 				game.mapData.map[x][z] = new MapSquare();
 				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {
-					Wall wall = new Wall("monstermaze/wall.png", x, z, false);
+					Wall wall = new Wall(game.ecs, "monstermaze/wall.png", x, z, false);
 					game.ecs.addEntity(wall);
 				}
 			}
 		}
 
 		PlayersAvatar target = game.players[NumberFunctions.rnd(0,  game.players.length-1)];
-		trex = new TRex(maze.middle_pos.x, maze.middle_pos.y, target);
+		trex = new TRex(game.ecs, maze.middle_pos.x, maze.middle_pos.y, target);
 		game.ecs.addEntity(trex);
 
-		MonsterMazeExit exit = new MonsterMazeExit(maze.end_pos.x, maze.end_pos.y);
+		MonsterMazeExit exit = new MonsterMazeExit(game.ecs, maze.end_pos.x, maze.end_pos.y);
 		game.ecs.addEntity(exit);
 
-		game.ecs.addEntity(new Floor("colours/white.png", 0, 0, map_width, map_height, false));
+		game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));
 	}
 
 	/*

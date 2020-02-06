@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.PositionData;
 
@@ -15,8 +16,8 @@ public class GenericWallScenery extends AbstractEntity {
 	
 	private static final float TINY = 0.01f;
 
-	public GenericWallScenery(String name, String filename, int x, int y, Side side) {
-		super(name);
+	public GenericWallScenery(BasicECS ecs, String name, String filename, int x, int y, Side side) {
+		super(ecs, name);
 		
         PositionData pos = new PositionData();
         pos.position = new Vector3(x, 0, y);

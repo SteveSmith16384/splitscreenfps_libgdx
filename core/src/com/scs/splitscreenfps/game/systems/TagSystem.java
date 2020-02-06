@@ -4,21 +4,21 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.CanTagComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.components.IsCollectable;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 
-public class CheckForLitterInBinSystem extends AbstractSystem {
+public class TagSystem extends AbstractSystem {
 
-	public CheckForLitterInBinSystem(BasicECS ecs) {
+	public TagSystem(BasicECS ecs) {
 		super(ecs);
 	}
 
 
 	@Override
 	public Class<?> getComponentClass() {
-		return CombinesWithLitterComponent.class;
+		return CanTagComponent.class;
 	}
 
 
@@ -27,13 +27,14 @@ public class CheckForLitterInBinSystem extends AbstractSystem {
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		for (CollisionResult cr : cc.results) {
 			AbstractEntity e = cr.collidedWith;
-			CombinesWithLitterComponent ic = (CombinesWithLitterComponent)e.getComponent(IsCollectable.class);
+			IsCollectable ic = (IsCollectable)e.getComponent(IsCollectable.class);
 			if (ic != null) {
 				// todo - what happens when collected?
 				Settings.p(e + " collected");
 				e.remove();
 			}
 		}
+
 	}
 
 }

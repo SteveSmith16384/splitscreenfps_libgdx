@@ -46,8 +46,10 @@ public class Game implements IModule {
 	public PlayersAvatar[] players;
 	public MapData mapData;
 	public BasicECS ecs;
-	public EntityFactory entityFactory = new EntityFactory();
+	public EntityFactory entityFactory;
 	private AbstractLevel gameLevel;
+	
+	// Specific systems 
 	private DrawModelSystem drawModelSystem;
 
 	public int currentViewId;
@@ -57,22 +59,23 @@ public class Game implements IModule {
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
 
+		this.createECS();
+
 		viewports = new ViewportData[4];
 		players = new PlayersAvatar[4];
 		for (int i=0 ; i<viewports.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
 			IInputMethod input = i==0 ? new MouseAndKeyboardInputMethod() : new NoInputMethod(); // todo - this
 			players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
+			ecs.addEntity(players[i]);
 		}
-
-		this.createECS();
 
 		gameLevel = new OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
-		for (int i=0 ; i<4 ; i++) {
+		/*for (int i=0 ; i<4 ; i++) {
 			ecs.addEntity(players[i]);
-		}
+		}*/
 
 	}
 
@@ -102,6 +105,8 @@ public class Game implements IModule {
 
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
+
+		entityFactory = new EntityFactory(ecs);
 	}
 
 
@@ -159,8 +164,7 @@ public class Game implements IModule {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			this.gameLevel.setBackgroundColour();
 
-			//this.drawModelSystem.process(true, viewportData.camera); Doesn't work.
-			this.drawModelSystem.process(false, viewportData.camera);
+			this.drawModelSystem.process(viewportData.camera);
 
 			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 			this.ecs.getSystem(DrawDecalSystem.class).process();

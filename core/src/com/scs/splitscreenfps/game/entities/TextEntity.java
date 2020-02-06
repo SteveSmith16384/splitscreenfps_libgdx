@@ -1,12 +1,13 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.DrawTextData;
 
 public class TextEntity extends AbstractEntity {
 
-	public TextEntity(String text, float _x, float _y, float _duration) {
-		super("Text");
+	public TextEntity(BasicECS ecs, String text, float _x, float _y, float _duration) {
+		super(ecs, "Text");
 
 		DrawTextData dtd = new DrawTextData();
 		dtd.text = text;
@@ -18,8 +19,8 @@ public class TextEntity extends AbstractEntity {
 	}
 
 
-	public TextEntity(String text, float _y, float _duration) {
-		super("Text");
+	public TextEntity(BasicECS ecs, String text, float _y, float _duration) {
+		super(ecs, "Text");
 
 		DrawTextData dtd = new DrawTextData();
 		dtd.text = text;

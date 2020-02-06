@@ -101,7 +101,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 					float h = Float.parseFloat(tokens[6]);
 					float d = Float.parseFloat(tokens[7]);
 					String tex = tokens[8];
-					Wall wall = new Wall(name, tex, x, y, z, w, h, d, true);
+					Wall wall = new Wall(game.ecs, name, tex, x, y, z, w, h, d, true);
 					game.ecs.addEntity(wall);
 					break;
 				}
@@ -112,7 +112,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 					float w = Float.parseFloat(tokens[4]);
 					float d = Float.parseFloat(tokens[5]);
 					String tex = tokens[6];
-					Floor floor = new Floor(name, tex, x, z, w, d);
+					Floor floor = new Floor(game.ecs,name, tex, x, z, w, d);
 					game.ecs.addEntity(floor);
 					break;
 				}

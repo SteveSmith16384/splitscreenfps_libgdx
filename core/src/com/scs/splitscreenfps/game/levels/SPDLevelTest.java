@@ -53,16 +53,16 @@ public class SPDLevelTest extends AbstractLevel {
 				if (game.mapData.map[x][z].blocked) {
 					Pixmap pixmap2 = this.getPixmap(tiles, x, z, idx);
 					if (pixmap2 != null) {
-						Wall wall = new Wall(pixmap2, x, z, false);
+						Wall wall = new Wall(game.ecs, pixmap2, x, z, false);
 						game.ecs.addEntity(wall);
 					} else if (sewer.map[idx] != 4) { // Ignore
-						Wall wall = new Wall("monstermaze/wall.png", x, z, false);
+						Wall wall = new Wall(game.ecs, "monstermaze/wall.png", x, z, false);
 						game.ecs.addEntity(wall);
 					}
 				} else {
 					switch (sewer.map[idx]) {
 					case Terrain.WATER: {
-						Floor floor = new Floor("shatteredpixeldungeon/water0.png", x, z, 1, 1, false);
+						Floor floor = new Floor(game.ecs, "shatteredpixeldungeon/water0.png", x, z, 1, 1, false);
 						game.ecs.addEntity(floor);
 						break;
 					}
@@ -78,12 +78,12 @@ public class SPDLevelTest extends AbstractLevel {
 
 						Pixmap pixmap2 = this.getPixmap(tiles, x, z, idx);
 						if (pixmap2 != null) {
-							Floor floor = new Floor("test", pixmap2, x, z, 1, 1);
+							Floor floor = new Floor(game.ecs, "test", pixmap2, x, z, 1, 1);
 							game.ecs.addEntity(floor);
-							Ceiling ceiling = new Ceiling(pixmap2, x, z, 1, 1, 1f);
+							Ceiling ceiling = new Ceiling(game.ecs, pixmap2, x, z, 1, 1, 1f);
 							game.ecs.addEntity(ceiling);
 						} else {
-							Floor floor = new Floor("heart.png", "heart.png", x, z, 1, 1);
+							Floor floor = new Floor(game.ecs, "heart.png", "heart.png", x, z, 1, 1);
 							game.ecs.addEntity(floor);
 						}
 						break;
@@ -95,7 +95,7 @@ public class SPDLevelTest extends AbstractLevel {
 					for (int i=0 ; i<this.startPositions.length ;i++) {
 						this.startPositions[i] = new GridPoint2(x, z);
 					}
-					ModelEntity soldier = new ModelEntity("soldier", x, 0, z); // todo - remove
+					ModelEntity soldier = new ModelEntity(game.ecs, "soldier", x, 0, z); // todo - remove
 					game.ecs.addEntity(soldier);
 				}
 
