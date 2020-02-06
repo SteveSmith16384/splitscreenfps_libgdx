@@ -68,8 +68,8 @@ public class MobAISystem extends AbstractSystem {
 			case MoveLikeRook:
 				if (ai.direction.len2() == 0) {
 					ai.direction = getRandomDirection();
-				} else if (movementData.hitWall) {
-					ai.direction = getRandomDirection();
+				/*} else if (movementData.hitWall) {
+					ai.direction = getRandomDirection();*/
 				} else if (ai.changeDirTimer <= 0) {
 					ai.changeDirTimer = 1;
 					if (Settings.random.nextInt(10) <= 1) {

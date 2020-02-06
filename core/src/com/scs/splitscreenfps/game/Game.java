@@ -53,7 +53,8 @@ public class Game implements IModule {
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
-
+	private TagSystem tagSystem;
+	
 	public int currentViewId;
 
 	public Game() {
@@ -104,9 +105,11 @@ public class Game implements IModule {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new PickupSystem(ecs, this));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
-		ecs.addSystem(new TagSystem(ecs, this));
 		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
 
+		tagSystem = new TagSystem(ecs, this);
+		ecs.addSystem(tagSystem);
+		
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 
@@ -151,7 +154,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupSystem.class).process();
-		this.ecs.getSystem(TagSystem.class).process();
+		tagSystem.process();
 		this.ecs.getSystem(CheckForLitterInBinSystem.class).process();
 
 		currentLevel.update(this, mapData);
@@ -168,7 +171,11 @@ public class Game implements IModule {
 			viewportData.frameBuffer.begin();
 
 			//this.currentLevel.setBackgroundColour();
-			Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
+			if (this.players[currentViewId] == tagSystem.currentIt) {
+				Gdx.gl.glClearColor(.7f, .9f, .7f, 1);
+			} else {
+				Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
+			}
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 			if (viewportData.post != null) {
