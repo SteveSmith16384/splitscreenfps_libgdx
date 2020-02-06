@@ -17,7 +17,7 @@ public class ViewportData {
 
 	public PerspectiveCamera camera;
 	public Rectangle viewPos;
-	public FrameBuffer frameBuffer = null;
+	public FrameBuffer frameBuffer;
 	public PostProcessing post;
 	public DecalBatch decalBatch;
 
@@ -85,13 +85,12 @@ public class ViewportData {
 		
 		camera.viewportWidth = w;
 		camera.viewportHeight = h;
-		//camera.update();
 		
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {
-			post = new PostProcessing(w, h);
+			//post = new PostProcessing(w, h);
 		}
 	}
 	

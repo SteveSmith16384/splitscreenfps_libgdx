@@ -7,7 +7,9 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
+import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
@@ -41,14 +43,16 @@ public class PickupSystem extends AbstractSystem {
 				for (CollisionResult cr : crl.results) {
 					CanBeCarried cbc = (CanBeCarried)cr.collidedWith.getComponent(CanBeCarried.class);
 					if (cbc != null) {
-						cc.carrying = cr.collidedWith;
 						cr.collidedWith.hideComponent(CollidesComponent.class);
 						cr.collidedWith.hideComponent(HasDecal.class);
+						cr.collidedWith.hideComponent(CombinesWithLitterComponent.class);
+						cr.collidedWith.restoreComponent(HasGuiSpriteComponent.class);
+						cc.carrying = cr.collidedWith;
 						break;
 					}
 				}
 			} else {
-				// Drop!
+				// Todo - Drop!
 			}
 		}
 	}

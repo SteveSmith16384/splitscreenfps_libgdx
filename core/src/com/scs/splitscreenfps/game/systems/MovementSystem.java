@@ -42,7 +42,7 @@ public class MovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		movementData.hitWall = false;
+		//movementData.hitWall = false;
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
@@ -55,9 +55,18 @@ public class MovementSystem extends AbstractSystem {
 			movementData.offset = auto.dir.cpy().scl(Gdx.graphics.getDeltaTime());
 		}
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
+			TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
+			if (tagSystem.currentIt == entity) {
+				if (System.currentTimeMillis() < tagSystem.lastTagTime + TagSystem.TAG_INTERVAL) {
+					return; // Frozen after being tagged
+				} else {
+					movementData.offset.scl(1.2f);
+				}
+			}
+			
 			boolean has_moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
 			if (!has_moved) {
-				movementData.hitWall = true;
+				//movementData.hitWall = true;
 				/*if (movementData.removeIfHitWall) {
 					entity.remove();
 					//Settings.p(entity + " removed");
@@ -91,15 +100,15 @@ public class MovementSystem extends AbstractSystem {
 			}
 		}
 
-		if (offset.y != 0) {
+		/*if (offset.y != 0) {
 			position.y += offset.y;
-		}
+		}*/
 		
 		if (resultX || resultZ) {
 			// Move model if it has one
 			HasModel hasModel = (HasModel)mover.getComponent(HasModel.class);
 			if (hasModel != null) {
-				//todo -re-add hasModel.model.transform.setTranslation(position);
+				hasModel.model.transform.setTranslation(position); // scs new
 			}
 		}
 		return resultX && resultZ;

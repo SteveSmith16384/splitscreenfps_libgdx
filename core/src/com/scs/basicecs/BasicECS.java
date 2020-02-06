@@ -35,7 +35,7 @@ public class BasicECS {
 				AbstractSystem system = (AbstractSystem)isystem;
 				Class<?> clazz = system.getComponentClass();
 				if (clazz != null) {
-					if (component.getClass() == clazz) {
+					if (component.equals(clazz)) {
 						if (system.entities.contains(e) == false) {
 							system.entities.add(e);
 						} else {
@@ -56,7 +56,7 @@ public class BasicECS {
 				AbstractSystem system = (AbstractSystem)isystem;
 				Class<?> clazz = system.getComponentClass();
 				if (clazz != null) {
-					if (component.getClass() == clazz) {
+					if (component.equals(clazz)) {
 						system.entities.remove(e);
 					}
 				}

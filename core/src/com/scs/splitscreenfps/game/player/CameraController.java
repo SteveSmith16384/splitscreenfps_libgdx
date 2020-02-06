@@ -71,7 +71,7 @@ public class CameraController {
 		} else if (input instanceof NoInputMethod) {
 			// Look at player 1
 			PositionData posData = (PositionData)game.players[0].getComponent(PositionData.class);
-			camera.lookAt(posData.position);
+			//todo camera.lookAt(posData.position);
 		} else {
 			//Rotation
 			if (input.getLookUp() > 0) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {

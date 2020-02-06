@@ -25,6 +25,9 @@ public class CheckForLitterInBinSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
+		if (cc == null) {
+			Settings.p("null!");
+		}
 		for (CollisionResult cr : cc.results) {
 			AbstractEntity e = cr.collidedWith;
 			CombinesWithLitterComponent ic = (CombinesWithLitterComponent)e.getComponent(IsCollectable.class);

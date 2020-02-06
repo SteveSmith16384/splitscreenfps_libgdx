@@ -1,6 +1,6 @@
 package com.scs.splitscreenfps.game.components;
 
-public class CanTagComponent {
+public class TagableComponent {
 
 	public float timeAsIt;
 }

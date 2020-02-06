@@ -7,27 +7,22 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CanCollect;
-import com.scs.splitscreenfps.game.components.CanTagComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionData;
-import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
+import com.scs.splitscreenfps.game.components.TagableComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-
-import ssmith.libgdx.MyBoundingBox;
 
 public class PlayersAvatar extends AbstractEntity {
 
@@ -57,7 +52,7 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
 
-		this.addComponent(new CanTagComponent());
+		this.addComponent(new TagableComponent());
 
 		// Model stuff
 		//ModelInstance instance = this.addKnightComponents(idx);
@@ -80,7 +75,7 @@ public class PlayersAvatar extends AbstractEntity {
 		Model model = am.get("models/Skeleton.g3dj");
 
 		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.002f);
+		instance.transform.scl(.0013f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 		HasModel hasModel = new HasModel(instance);
 		hasModel.dontDrawInViewId = idx;
@@ -203,32 +198,13 @@ public class PlayersAvatar extends AbstractEntity {
 
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			float cam_ang = v2.angle();
-			if (cam_ang == 0) { // todo - remvoe this "if"
+			/*if (cam_ang == 0) { // todo - remvoe this "if"
 				return; // dont process nonPC cams
-			}
+			}*/
 			//Settings.p("cam_ang=" + cam_ang);
 
-			//int angle = (int) (player.transform.getRotation(new Quaternion()).getAxisAngle(axisVec) * axisVec.nor().y);
-			/*Quaternion q = hasModel.model.transform.getRotation(qRot);
-			float model_ang2 = q.getAngleAround(Vector3.Y);
-			float model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
-			Settings.p("model_ang=" + model_ang);*/
-
 			float turn = this.cameraController.camAngleChange;
-			//Settings.p("turn=" + turn);
 			hasModel.model.transform.rotate(Vector3.Y, turn);
-			//hasModel.model.calculateTransforms(); // todo - remove?
-
-			/*q = hasModel.model.transform.getRotation(qRot);
-			model_ang2 = q.getAngleAround(Vector3.Y);
-			model_ang = q.getAxisAngle(tmpV) * tmpV.nor().y;
-			Settings.p("new model angle=" + model_ang);*/
-
-			//hasModel.model.transform.setToLookAt(direction, up).rotateRad(Vector3.Y, camera.direction);
-
-			//hasModel.model.transform.setFromEulerAngles(20, 0, 0);
-			//hasModel.model.transform.setTranslation(pos.position);
-			//hasModel.model.calculateTransforms();
 		}
 	}
 
@@ -285,32 +261,10 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 	}
 
+	
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
-		/*if (interactTarget != null) {
-			String str = interactTarget.getInteractText(this);
-			int w2 = str.length() * 8;
-			font.setColor(1,1,1,1);
-			font.draw(batch, str, Gdx.graphics.getWidth() / 2 - w2, Gdx.graphics.getHeight() / 2 + 50/8);
-		}*/
-
-		/*for (int i = 0; i < inventory.keys; i++) {
-			batch.draw(Game.art.items[0][0], 10 + i*50, Gdx.graphics.getHeight()-40, 48, 48);
-		}*/
-
-		//int sx = Gdx.graphics.getWidth()/2 - lives*18;
-		/*int sx = (int)this.viewportData.viewPos.x + (this.viewportData.viewPos.width/2) - (lives*18);
-		for (int i = 0; i < lives; i++) {
-			//batch.draw(heart, sx + i*36, Gdx.graphics.getHeight()-40, 32, 32);
-			batch.draw(heart, sx + i*36, this.viewportData.viewPos.y-40, 32, 32);
-		}
-
-		if (hurtTimer > 0 && (int)(hurtTimer*5)%2 == 0) {
-			batch.setColor(1,1,1,.25f);
-			//batch.draw(hurtTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			batch.draw(hurtTexture, this.viewportData.viewPos.x, this.viewportData.viewPos.y, this.viewportData.viewPos.width, this.viewportData.viewPos.height);
-			batch.setColor(1,1,1,1);
-		}*/
-
+		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
+		font.draw(batch, "Time tagged: " + (int)tc.timeAsIt, 10, game.viewports[this.id].viewPos.y-20);
 	}
 
 

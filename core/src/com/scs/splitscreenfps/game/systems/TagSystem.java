@@ -4,46 +4,64 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.CanTagComponent;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.TagableComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
+import com.scs.splitscreenfps.game.entities.TextEntity;
+
+import ssmith.lang.NumberFunctions;
 
 public class TagSystem extends AbstractSystem {
 
-	private static final long TAG_INTERVAL = 4000;
+	public static final long TAG_INTERVAL = 4000;
+	
+	private Game game;
 	
 	public AbstractEntity currentIt;
 	public long lastTagTime = 0;
 
-	public TagSystem(BasicECS ecs) {
+	public TagSystem(BasicECS ecs, Game _game) {
 		super(ecs);
+		
+		game = _game;
 	}
 
 
 	@Override
 	public Class<?> getComponentClass() {
-		return CanTagComponent.class;
+		return TagableComponent.class;
 	}
 
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
+		if (currentIt == null) {
+			// Choose random player
+			this.currentIt = game.players[NumberFunctions.rnd(0, 3)]; // todo - check num players
+		}
+
 		if (System.currentTimeMillis() < this.lastTagTime + TAG_INTERVAL) {
 			return;
 		}
+		
 		if (entity != this.currentIt) {
 			return;
 		}
-		CanTagComponent ctc = (CanTagComponent)entity.getComponent(CanTagComponent.class);
+		
+		TagableComponent ctc = (TagableComponent)entity.getComponent(TagableComponent.class);
 		ctc.timeAsIt += Gdx.graphics.getDeltaTime();
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		for (CollisionResult cr : cc.results) {
 			AbstractEntity e = cr.collidedWith;
-			CanTagComponent ic = (CanTagComponent)e.getComponent(CanTagComponent.class);
+			TagableComponent ic = (TagableComponent)e.getComponent(TagableComponent.class);
 			if (ic != null) {
 				this.currentIt = cr.collidedWith;
 				lastTagTime = System.currentTimeMillis();
+				// todo - change model
+				
+				game.ecs.addEntity(new TextEntity(ecs, "PLAYER TAGGED!", 50, 2));
 			}
 		}
 

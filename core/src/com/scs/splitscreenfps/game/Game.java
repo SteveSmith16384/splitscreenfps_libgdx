@@ -50,7 +50,7 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
-	
+
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
 
@@ -104,9 +104,9 @@ public class Game implements IModule {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new PickupSystem(ecs, this));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
-		ecs.addSystem(new TagSystem(ecs));
+		ecs.addSystem(new TagSystem(ecs, this));
 		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
-		
+
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 
@@ -153,11 +153,12 @@ public class Game implements IModule {
 		this.ecs.getSystem(PickupSystem.class).process();
 		this.ecs.getSystem(TagSystem.class).process();
 		this.ecs.getSystem(CheckForLitterInBinSystem.class).process();
-		
+
 		currentLevel.update(this, mapData);
 
 		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
+
 			if (viewportData.post != null) {
 				viewportData.post.update(Gdx.graphics.getDeltaTime());
 			}
@@ -166,47 +167,50 @@ public class Game implements IModule {
 
 			viewportData.frameBuffer.begin();
 
-			//Gdx.gl.glClearColor(0, 0, 0, 1);
+			//this.currentLevel.setBackgroundColour();
+			Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-			this.currentLevel.setBackgroundColour();
-
-			this.drawModelSystem.process(viewportData.camera);
-
-			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
-			this.ecs.getSystem(DrawDecalSystem.class).process();
-			this.ecs.getSystem(CycleThroughModelsSystem.class).process();
-
-			batch2d.begin();
-			this.ecs.getSystem(DrawTextSystem.class).process();
-			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
-			batch2d.end();
-
-			viewportData.frameBuffer.end();
 
 			if (viewportData.post != null) {
 				viewportData.post.begin();
 			}
+			
+			this.ecs.getSystem(CycleThroughModelsSystem.class).process();
+			this.drawModelSystem.process(viewportData.camera);
+			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
+			this.ecs.getSystem(DrawDecalSystem.class).process();
 
-			//Draw buffer and FPS
 			batch2d.begin();
+			this.ecs.getSystem(DrawTextSystem.class).process();
+			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
-			float c = 1.0f;
-			batch2d.setColor(c,c,c,1);
-			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+			font_white.draw(batch2d, "THIS IS A TEST", 10, 200);
+
+			currentLevel.renderUI(batch2d, font_white, font_black);
 
 			if (players[currentViewId] != null) {
 				players[currentViewId].renderUI(batch2d, font_white);
 			}
-			currentLevel.renderUI(batch2d, font_white, font_black);
+
+			batch2d.end();
+
+			if (viewportData.post != null) {
+				viewportData.post.end();
+			}
+
+			viewportData.frameBuffer.end();
+
+			//Draw buffer and FPS
+			batch2d.begin();
+
+			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}
 
 			batch2d.end();
-			if (viewportData.post != null) {
-				viewportData.post.end();
-			}
+
 		}
 	}
 
