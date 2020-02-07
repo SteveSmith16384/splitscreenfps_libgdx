@@ -251,5 +251,6 @@ public class Game implements IModule {
 	public void playerHasLost(int id) {
 		// todo
 	}
+
 }
 

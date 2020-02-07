@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 public class BillBoardFPS_Main extends ApplicationAdapter {
 
@@ -14,7 +15,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		current_module = new Game();
+		current_module = new PreGameScreen();//Game();
 	}
 
 
