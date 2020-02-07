@@ -23,27 +23,27 @@ public class AbstractEntity {
 
 	public void addComponent(Object component) {
 		this.components.put(component.getClass(), component);
-		ecs.addComponentToSystems(this, component);
+		ecs.addEntityToSystems(this, component.getClass());
 	}
 
 
 	public void removeComponent(Object component) {
 		this.components.remove(component.getClass());
-		ecs.removeComponentFromSystems(this, component);
+		ecs.removeEntityFromSystems(this, component.getClass());
 	}
 
 
 	public void hideComponent(Class clazz) {
 		Object component = this.components.remove(clazz);
 		this.hiddenComponents.put(clazz, component);
-		ecs.removeComponentFromSystems(this, component);
+		ecs.removeEntityFromSystems(this, clazz);
 	}
 
 
 	public void restoreComponent(Class clazz) {
 		Object component = this.hiddenComponents.remove(clazz);
 		this.components.put(clazz, component);
-		ecs.addComponentToSystems(this, component);
+		ecs.addEntityToSystems(this, clazz);
 	}
 
 

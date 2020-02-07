@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -56,6 +57,7 @@ public class Game implements IModule {
 	private TagSystem tagSystem;
 	
 	public int currentViewId;
+	public AssetManager assetManager = new AssetManager();
 
 	public Game() {
 		batch2d = new SpriteBatch();
@@ -240,7 +242,6 @@ public class Game implements IModule {
 		font_white.dispose(); 
 		font_black.dispose();
 		audio.dipose();
-		//todo batch.dispose();
 		batch2d.dispose();
 	}
 
@@ -251,5 +252,9 @@ public class Game implements IModule {
 		this.resizeViewports(true);
 	}
 
+	
+	public void playerHasLost(int id) {
+		// todo
+	}
 }
 

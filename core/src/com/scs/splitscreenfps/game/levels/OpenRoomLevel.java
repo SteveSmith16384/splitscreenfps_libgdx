@@ -39,10 +39,10 @@ public class OpenRoomLevel extends AbstractLevel {
 		//ModelEntity spider = new ModelEntity("soldier", 3, 0, 3);
 		//game.ecs.addEntity(spider);
 
-		AbstractEntity litter = game.entityFactory.createLitter(2,  2);
+		AbstractEntity litter = game.entityFactory.createLitter(0, 2,  2);
 		game.ecs.addEntity(litter);
 
-		AbstractEntity litter_bin = game.entityFactory.createLitterBin(4, 4);
+		AbstractEntity litter_bin = game.entityFactory.createLitterBin(0, 4, 4);
 		game.ecs.addEntity(litter_bin);
 	}
 

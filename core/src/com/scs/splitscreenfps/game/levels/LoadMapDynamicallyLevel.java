@@ -11,7 +11,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
-import com.scs.splitscreenfps.game.entities.ModelEntity;
 import com.scs.splitscreenfps.game.entities.Wall;
 
 public class LoadMapDynamicallyLevel extends AbstractLevel {
@@ -118,7 +117,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 				}
 				case 3: // Model
 				{
-					/*todo float x = Float.parseFloat(tokens[2]);
+					/*float x = Float.parseFloat(tokens[2]);
 					float y = Float.parseFloat(tokens[3]);
 					float z = Float.parseFloat(tokens[4]);
 					String tex = tokens[6];

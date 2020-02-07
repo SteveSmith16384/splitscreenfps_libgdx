@@ -5,7 +5,6 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 
 public class AnimationSystem extends AbstractSystem {
 

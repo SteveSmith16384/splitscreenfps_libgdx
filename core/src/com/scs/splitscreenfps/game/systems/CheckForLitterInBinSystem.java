@@ -33,6 +33,7 @@ public class CheckForLitterInBinSystem extends AbstractSystem {
 			CombinesWithLitterComponent ic = (CombinesWithLitterComponent)e.getComponent(IsCollectable.class);
 			if (ic != null) {
 				// todo
+				 // todo - match certain types of litter with certain types of bin
 			}
 		}
 	}

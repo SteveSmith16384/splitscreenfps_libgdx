@@ -12,4 +12,5 @@ public class AnimatedComponent {
 		animationController = _animationController;
 		new_animation = _new_animation;
 	}
+	
 }

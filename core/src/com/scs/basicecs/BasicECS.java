@@ -26,16 +26,16 @@ public class BasicECS {
 	}
 
 	
-	public void addComponentToSystems(AbstractEntity e, Object component) {
+	public void addEntityToSystems(AbstractEntity e, Class<?> component_class) {
 		//e.addComponent(component);
 		
 		// Add to appropriate systems
 		for(ISystem isystem : this.systems.values()) {
 			if (isystem instanceof AbstractSystem) {
 				AbstractSystem system = (AbstractSystem)isystem;
-				Class<?> clazz = system.getComponentClass();
-				if (clazz != null) {
-					if (component.equals(clazz)) {
+				Class<?> system_clazz = system.getComponentClass();
+				if (system_clazz != null) {
+					if (component_class.equals(system_clazz)) {
 						if (system.entities.contains(e) == false) {
 							system.entities.add(e);
 						} else {
@@ -49,14 +49,14 @@ public class BasicECS {
 	
 	
 
-	public void removeComponentFromSystems(AbstractEntity e, Object component) {
+	public void removeEntityFromSystems(AbstractEntity e, Class<?> component_class) {
 		// Remove from appropriate systems
 		for(ISystem isystem : this.systems.values()) {
 			if (isystem instanceof AbstractSystem) {
 				AbstractSystem system = (AbstractSystem)isystem;
-				Class<?> clazz = system.getComponentClass();
-				if (clazz != null) {
-					if (component.equals(clazz)) {
+				Class<?> system_clazz = system.getComponentClass();
+				if (system_clazz != null) {
+					if (component_class.equals(system_clazz)) {
 						system.entities.remove(e);
 					}
 				}

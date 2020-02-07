@@ -96,6 +96,8 @@ public class ViewportData {
 	
 	
 	public void dispose() {
+		decalBatch.dispose();
+		frameBuffer.dispose();
 		if (this.post != null) {
 			post.dispose();
 		}

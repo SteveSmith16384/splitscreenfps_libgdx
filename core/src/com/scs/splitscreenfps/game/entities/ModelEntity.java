@@ -7,16 +7,18 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 
 public class ModelEntity extends AbstractEntity {
 
-	public ModelEntity(BasicECS ecs, String name, float posX, float posY, float posZ) {
+	public ModelEntity(Game game, BasicECS ecs, String name, float posX, float posY, float posZ) {
 		super(ecs, name);
 
-		AssetManager am = new AssetManager();
+		AssetManager am = game.assetManager;
+
 		am.load("models/Spider.g3dj", Model.class);
 		am.finishLoading();
 		Model model = am.get("models/Spider.g3dj");

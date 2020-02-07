@@ -52,13 +52,15 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
 
-		this.addComponent(new TagableComponent());
+		TagableComponent taggable = new TagableComponent(idx);
+		addSkeletonForTagged(idx, taggable);
+		this.addComponent(taggable);
 
 		// Model stuff
 		//ModelInstance instance = this.addKnightComponents(idx);
 		//ModelInstance instance = this.addZombieComponents(idx);
-		//ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
-		ModelInstance instance = this.addSkeletonComponents(idx);
+		ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
+		//ModelInstance instance = this.addSkeletonComponents(idx);
 
 		this.addComponent(new CollidesComponent(false, instance));
 
@@ -68,8 +70,37 @@ public class PlayersAvatar extends AbstractEntity {
 	}
 
 
+	private ModelInstance addSkeletonForTagged(int idx, TagableComponent taggable) {
+		AssetManager am = game.assetManager;
+		
+		am.load("models/Skeleton.g3dj", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/Skeleton.g3dj");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.0013f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel(instance);
+		hasModel.dontDrawInViewId = idx;
+		taggable.hasModel = hasModel;
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
+		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
+		taggable.avatarAnim = avatarAnim;
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		taggable.animated = anim;
+
+		return instance;
+	}
+
+
 	private ModelInstance addSkeletonComponents(int idx) {
-		AssetManager am = new AssetManager(); // todo - share
+		AssetManager am = game.assetManager;
+
 		am.load("models/Skeleton.g3dj", Model.class);
 		am.finishLoading();
 		Model model = am.get("models/Skeleton.g3dj");
@@ -96,7 +127,8 @@ public class PlayersAvatar extends AbstractEntity {
 
 
 	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
-		AssetManager am = new AssetManager(); // todo - share
+		AssetManager am = game.assetManager;
+
 		am.load("models/Smooth_Male_Shirt.g3db", Model.class);
 		am.finishLoading();
 		Model model = am.get("models/Smooth_Male_Shirt.g3db");
@@ -124,7 +156,8 @@ public class PlayersAvatar extends AbstractEntity {
 
 	// Model doesn't show
 	private ModelInstance addZombieComponents(int idx) {
-		AssetManager am = new AssetManager(); // todo - share
+		AssetManager am = game.assetManager;
+
 		am.load("models/Zombie.g3db", Model.class);
 		am.finishLoading();
 		Model model = am.get("models/Zombie.g3db");
@@ -152,7 +185,8 @@ public class PlayersAvatar extends AbstractEntity {
 
 
 	private ModelInstance addKnightComponents(int idx) {
-		AssetManager am = new AssetManager();
+		AssetManager am = game.assetManager;
+
 		am.load("models/KnightCharacter.g3dj", Model.class);
 		am.finishLoading();
 		Model model = am.get("models/KnightCharacter.g3dj");
@@ -198,7 +232,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			float cam_ang = v2.angle();
-			/*if (cam_ang == 0) { // todo - remvoe this "if"
+			/*if (cam_ang == 0) {
 				return; // dont process nonPC cams
 			}*/
 			//Settings.p("cam_ang=" + cam_ang);
@@ -264,7 +298,7 @@ public class PlayersAvatar extends AbstractEntity {
 	
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		font.draw(batch, "Time tagged: " + (int)tc.timeAsIt, 10, game.viewports[this.id].viewPos.y-20);
+		font.draw(batch, "Time tagged: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y-20);
 	}
 
 

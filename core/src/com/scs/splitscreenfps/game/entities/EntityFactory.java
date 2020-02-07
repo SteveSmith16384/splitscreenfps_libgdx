@@ -23,7 +23,7 @@ public class EntityFactory {
 	}
 	
 	
-	public AbstractEntity createLitter(float map_x, float map_z) {
+	public AbstractEntity createLitter(int type, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Litter");
 
 		PositionData posData = new PositionData((map_x)+(0.5f), (map_z)+(0.5f));
@@ -39,7 +39,7 @@ public class EntityFactory {
         hasDecal.faceCameraTilted = true;        
         entity.addComponent(hasDecal);	
 		
-        entity.addComponent(new CombinesWithLitterComponent(true));
+        entity.addComponent(new CombinesWithLitterComponent(true, type));
         
         CollidesComponent cc = new CollidesComponent(false, .5f);
         entity.addComponent(cc);	
@@ -63,7 +63,7 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createLitterBin(float map_x, float map_z) {
+	public AbstractEntity createLitterBin(int type, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "LitterBin");
 
 		PositionData posData = new PositionData((map_x)+(0.5f), (map_z)+(0.5f));
@@ -79,7 +79,7 @@ public class EntityFactory {
         hasDecal.faceCameraTilted = true;        
         entity.addComponent(hasDecal);	
 		
-        entity.addComponent(new CombinesWithLitterComponent(false));
+        entity.addComponent(new CombinesWithLitterComponent(false, type));
 		
         CollidesComponent cc = new CollidesComponent(false, .5f);
         entity.addComponent(cc);	
