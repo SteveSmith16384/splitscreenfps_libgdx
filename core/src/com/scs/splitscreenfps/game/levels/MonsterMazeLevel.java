@@ -41,7 +41,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		this.map_width = 16;
 		this.map_height = 16;
 
-		game.mapData = new MapData(map_width, map_height);//.map = new MapSquare[map_width][map_height];
+		game.mapData = new MapData(map_width, map_height);
 
 		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
 

@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
@@ -27,7 +26,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 public class PlayersAvatar extends AbstractEntity {
 
 	private static final float moveSpeed = 1.5f;
-	public static final float playerHeight = 0.4f;
+	public static final float playerHeight = 0.26f;
 
 	private Game game;
 	public Camera camera;
@@ -62,7 +61,7 @@ public class PlayersAvatar extends AbstractEntity {
 		ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
-		this.addComponent(new CollidesComponent(false, instance));
+		this.addComponent(new CollidesComponent(false, .15f));
 
 		camera = _viewportData.camera;
 
@@ -78,9 +77,9 @@ public class PlayersAvatar extends AbstractEntity {
 		Model model = am.get("models/Skeleton.g3dj");
 
 		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.0013f);
+		instance.transform.scl(.0015f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel(instance);
+		HasModel hasModel = new HasModel("Skeleton", instance, -.3f);
 		hasModel.dontDrawInViewId = idx;
 		taggable.hasModel = hasModel;
 
@@ -97,7 +96,7 @@ public class PlayersAvatar extends AbstractEntity {
 		return instance;
 	}
 
-
+/*
 	private ModelInstance addSkeletonComponents(int idx) {
 		AssetManager am = game.assetManager;
 
@@ -124,7 +123,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		return instance;
 	}
-
+*/
 
 	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
 		AssetManager am = game.assetManager;
@@ -136,7 +135,7 @@ public class PlayersAvatar extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(model);
 		instance.transform.scl(.002f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel(instance);
+		HasModel hasModel = new HasModel("SmoothMale", instance, -.2f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 
@@ -155,7 +154,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 
 	// Model doesn't show
-	private ModelInstance addZombieComponents(int idx) {
+	/*private ModelInstance addZombieComponents(int idx) {
 		AssetManager am = game.assetManager;
 
 		am.load("models/Zombie.g3db", Model.class);
@@ -181,7 +180,7 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(anim);
 
 		return instance;
-	}
+	}*/
 
 
 	private ModelInstance addKnightComponents(int idx) {
@@ -194,7 +193,7 @@ public class PlayersAvatar extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(model);
 		instance.transform.scl(.002f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel(instance);
+		HasModel hasModel = new HasModel("Knight", instance, -.2f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 
@@ -226,12 +225,12 @@ public class PlayersAvatar extends AbstractEntity {
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 
-			hasModel.model.transform.setTranslation(pos.position);
+			hasModel.model.transform.setTranslation(pos.position.x, pos.position.y + hasModel.yOffset, pos.position.z);
 
 			//Settings.p("-------------------");
 
-			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-			float cam_ang = v2.angle();
+			//Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
+			//float cam_ang = v2.angle();
 			/*if (cam_ang == 0) {
 				return; // dont process nonPC cams
 			}*/

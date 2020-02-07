@@ -18,7 +18,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.OpenRoomLevel;
+import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CheckForLitterInBinSystem;
@@ -75,13 +75,8 @@ public class Game implements IModule {
 			ecs.addEntity(players[i]);
 		}
 
-		currentLevel = new OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//SPDLevelTest(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
+		currentLevel = new TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
-
-		/*for (int i=0 ; i<4 ; i++) {
-			ecs.addEntity(players[i]);
-		}*/
-
 	}
 
 

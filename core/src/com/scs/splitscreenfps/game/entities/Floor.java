@@ -54,7 +54,7 @@ public class Floor extends AbstractEntity {
 			//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 			//instance.calculateTransforms();
 
-			HasModel model = new HasModel(instance);
+			HasModel model = new HasModel("Floor", instance);
 			this.addComponent(model);
 
 			model_cycle.models[0] = instance;
@@ -115,7 +115,7 @@ public class Floor extends AbstractEntity {
 		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel("Floor", instance);
 		this.addComponent(model);
 	}
 
@@ -144,7 +144,7 @@ public class Floor extends AbstractEntity {
 		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel("Floor", instance);
 		this.addComponent(model);
 	}
 }

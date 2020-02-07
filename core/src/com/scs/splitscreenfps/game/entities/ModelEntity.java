@@ -28,7 +28,7 @@ public class ModelEntity extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
 		instance.transform.scl(.002f);
 		
-		HasModel hasModel = new HasModel(instance);
+		HasModel hasModel = new HasModel(name + "_model", instance);
 		this.addComponent(hasModel);
 		
 		AnimationController animation = new AnimationController(instance);

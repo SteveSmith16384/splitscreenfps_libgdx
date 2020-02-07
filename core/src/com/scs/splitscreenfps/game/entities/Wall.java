@@ -27,7 +27,7 @@ public class Wall extends AbstractEntity {
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
 		if (add_collision) {
@@ -50,7 +50,7 @@ public class Wall extends AbstractEntity {
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
 		if (add_collision) {
@@ -73,7 +73,7 @@ public class Wall extends AbstractEntity {
 		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
 		if (add_collision) {

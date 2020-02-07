@@ -34,15 +34,11 @@ public class MovementSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		if (entity.isMarkedForRemoval()) {
-			return;
-		}
 		if (collCheckSystem == null) {
 			this.collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		//movementData.hitWall = false;
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
@@ -64,14 +60,7 @@ public class MovementSystem extends AbstractSystem {
 				}
 			}
 			
-			boolean has_moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
-			if (!has_moved) {
-				//movementData.hitWall = true;
-				/*if (movementData.removeIfHitWall) {
-					entity.remove();
-					//Settings.p(entity + " removed");
-				}*/
-			}
+			this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
 		}
 	}
 
@@ -100,15 +89,11 @@ public class MovementSystem extends AbstractSystem {
 			}
 		}
 
-		/*if (offset.y != 0) {
-			position.y += offset.y;
-		}*/
-		
 		if (resultX || resultZ) {
 			// Move model if it has one
 			HasModel hasModel = (HasModel)mover.getComponent(HasModel.class);
 			if (hasModel != null) {
-				hasModel.model.transform.setTranslation(position); // scs new
+				hasModel.model.transform.setTranslation(position.x, position.y + hasModel.yOffset, position.z);
 			}
 		}
 		return resultX && resultZ;

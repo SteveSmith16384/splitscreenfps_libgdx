@@ -46,7 +46,7 @@ public class Ceiling extends AbstractEntity {
 		instance.transform.translate(0, 0, -(float)map_width);
 		instance.calculateTransforms();
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel("ceiling", instance);
 		this.addComponent(model);
 	}
 
@@ -76,7 +76,7 @@ public class Ceiling extends AbstractEntity {
 		instance.transform.translate(0, 0, -(float)map_width);
 		instance.calculateTransforms();
 
-		HasModel model = new HasModel(instance);
+		HasModel model = new HasModel("Ceiling", instance);
 		this.addComponent(model);
 	}
 

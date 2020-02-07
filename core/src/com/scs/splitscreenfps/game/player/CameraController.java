@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
@@ -70,7 +69,7 @@ public class CameraController {
 			}
 		} else if (input instanceof NoInputMethod) {
 			// Look at player 1
-			PositionComponent posData = (PositionComponent)game.players[0].getComponent(PositionComponent.class);
+			//PositionComponent posData = (PositionComponent)game.players[0].getComponent(PositionComponent.class);
 			//todo camera.lookAt(posData.position);
 		} else {
 			//Rotation
