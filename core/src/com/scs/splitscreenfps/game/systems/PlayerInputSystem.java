@@ -14,7 +14,7 @@ public class PlayerInputSystem implements ISystem {
 	
 	@Override
 	public void process() {
-		for (int i=0 ; i<4 ; i++) {
+		for (int i=0 ; i<game.players.length ; i++) {
 			if (game.players[i] != null) {
 				game.players[i].update();
 			}

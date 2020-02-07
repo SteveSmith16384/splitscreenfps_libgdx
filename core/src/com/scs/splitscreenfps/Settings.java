@@ -16,7 +16,7 @@ public class Settings {
 	public static final float CAMERA_HEIGHT_OFFSET = -.2f;
 	public static final int ENEMY_HEALTH = 3;
 	
-	public static final String TITLE ="Split-Screen FPS";
+	public static final String TITLE ="Touch-and-Go";
 
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);

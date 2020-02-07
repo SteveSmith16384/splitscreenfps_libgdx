@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
@@ -15,8 +17,6 @@ import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
-import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
@@ -59,7 +59,7 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
-	public Game() {
+	public Game(List<IInputMethod> inputs) {
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
@@ -67,10 +67,10 @@ public class Game implements IModule {
 		this.createECS();
 
 		viewports = new ViewportData[4];
-		players = new PlayersAvatar[4];
-		for (int i=0 ; i<viewports.length ; i++) {
+		players = new PlayersAvatar[inputs.size()];
+		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
-			IInputMethod input = i==0 ? new MouseAndKeyboardInputMethod() : new NoInputMethod(); // todo - this
+			IInputMethod input = inputs.get(i);// : new NoInputMethod();
 			players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
 			ecs.addEntity(players[i]);
 		}
@@ -118,7 +118,7 @@ public class Game implements IModule {
 		currentLevel.load();
 
 		// Set start position of players
-		for (int idx=0 ; idx<4 ; idx++) {
+		for (int idx=0 ; idx<players.length  ; idx++) {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
@@ -156,7 +156,7 @@ public class Game implements IModule {
 
 		currentLevel.update(this, mapData);
 
-		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
+		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
 
 			if (viewportData.post != null) {
@@ -227,7 +227,7 @@ public class Game implements IModule {
 
 	@Override
 	public void dispose() {
-		for (currentViewId=0 ; currentViewId<viewports.length ; currentViewId++) {
+		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}

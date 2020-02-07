@@ -11,16 +11,24 @@ import com.scs.splitscreenfps.pregame.PreGameScreen;
 public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	private IModule current_module;
+	public  IModule next_module;
 	private boolean toggleFullscreen = false, fullscreen = false;
 
 	@Override
 	public void create () {
-		current_module = new PreGameScreen();//Game();
+		current_module = new PreGameScreen(this);//Game();
 	}
 
 
 	@Override
 	public void render() {
+		if (next_module != null) {
+			this.current_module.dispose();
+			this.current_module = this.next_module;
+			this.next_module = null;
+		}
+		
+		
 		if (current_module != null) {
 			current_module.render();
 		}

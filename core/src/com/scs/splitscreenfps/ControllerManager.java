@@ -15,8 +15,6 @@ public class ControllerManager {
 
 	private long lastCheckTime;
 	
-	//private SDL2Controller c;
-
 	public ControllerManager() {
 	}
 
