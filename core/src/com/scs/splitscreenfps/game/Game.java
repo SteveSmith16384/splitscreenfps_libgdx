@@ -12,7 +12,7 @@ import com.scs.splitscreenfps.Audio;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.HasModel;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
@@ -32,7 +32,7 @@ import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.MobAISystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
-import com.scs.splitscreenfps.game.systems.PickupSystem;
+import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.TagSystem;
@@ -105,7 +105,7 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
 		ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
-		ecs.addSystem(new PickupSystem(ecs, this));
+		ecs.addSystem(new PickupDropSystem(ecs, this));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
 		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
 
@@ -124,7 +124,7 @@ public class Game implements IModule {
 
 		// Set start position of players
 		for (int idx=0 ; idx<4 ; idx++) {
-			PositionData posData = (PositionData)this.players[idx].getComponent(PositionData.class);
+			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
 
@@ -155,7 +155,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
-		this.ecs.getSystem(PickupSystem.class).process();
+		this.ecs.getSystem(PickupDropSystem.class).process();
 		tagSystem.process();
 		this.ecs.getSystem(CheckForLitterInBinSystem.class).process();
 

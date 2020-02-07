@@ -7,7 +7,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
@@ -25,7 +25,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 
 
 	private void setBB(AbstractEntity mover, CollidesComponent moverCC, float offX, float offZ) {
-		PositionData posData = (PositionData)mover.getComponent(PositionData.class);
+		PositionComponent posData = (PositionComponent)mover.getComponent(PositionComponent.class);
 		//CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 		moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 		
@@ -54,6 +54,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 						cc.bb_dirty = false;
 					}
 					if (moverCC.bb.intersects(cc.bb)) {
+						Settings.p(mover + " colliding with " + e);
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 						if (cc.blocksMovement) {
 							Settings.p("Blocked by " + e);

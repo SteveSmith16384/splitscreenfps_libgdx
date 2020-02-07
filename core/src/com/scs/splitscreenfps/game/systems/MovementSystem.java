@@ -11,7 +11,7 @@ import com.scs.splitscreenfps.game.components.AutoMove;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
 public class MovementSystem extends AbstractSystem {
@@ -80,7 +80,7 @@ public class MovementSystem extends AbstractSystem {
 	 * Returns true if entity moved successfully on BOTH axis.
 	 */
 	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter, CollidesComponent cc) {
-		PositionData pos = (PositionData)mover.getComponent(PositionData.class);
+		PositionComponent pos = (PositionComponent)mover.getComponent(PositionComponent.class);
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 

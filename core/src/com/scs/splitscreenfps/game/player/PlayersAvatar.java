@@ -20,13 +20,13 @@ import com.scs.splitscreenfps.game.components.CanCollect;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.TagableComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayersAvatar extends AbstractEntity {
 
-	private static final float moveSpeed = 2f;
+	private static final float moveSpeed = 1.5f;
 	public static final float playerHeight = 0.4f;
 
 	private Game game;
@@ -36,7 +36,7 @@ public class PlayersAvatar extends AbstractEntity {
 	private float footstepTimer;
 
 	private MovementData movementData;
-	private PositionData positionData;
+	private PositionComponent positionData;
 	private IInputMethod inputMethod;
 
 	public PlayersAvatar(Game _game, int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
@@ -47,7 +47,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		this.movementData = new MovementData(0.5f);
 		this.addComponent(movementData);
-		this.positionData = new PositionData(); // Centre of the player, but NOT where the camera is!
+		this.positionData = new PositionComponent(); // Centre of the player, but NOT where the camera is!
 		this.addComponent(positionData);
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
@@ -141,8 +141,8 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(hasModel);
 
 		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "HumanArmature|Man_Idle";
-		avatarAnim.walk_anim = "HumanArmature|Man_Standing";
+		avatarAnim.idle_anim = "HumanArmature|Man_Idle"; // Standing
+		avatarAnim.walk_anim = "HumanArmature|Man_Walk";
 		this.addComponent(avatarAnim);
 
 		AnimationController animation = new AnimationController(instance);
@@ -224,7 +224,7 @@ public class PlayersAvatar extends AbstractEntity {
 		// Rotate model to direction of camera
 		HasModel hasModel = (HasModel)getComponent(HasModel.class);
 		if (hasModel != null) {
-			PositionData pos = (PositionData)getComponent(PositionData.class);
+			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 
 			hasModel.model.transform.setTranslation(pos.position);
 
@@ -298,7 +298,7 @@ public class PlayersAvatar extends AbstractEntity {
 	
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		font.draw(batch, "Time tagged: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y-20);
+		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y-20);
 	}
 
 

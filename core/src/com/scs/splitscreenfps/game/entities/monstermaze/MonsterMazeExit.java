@@ -10,7 +10,7 @@ import com.scs.splitscreenfps.game.Graphics;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 import ssmith.libgdx.MyBoundingBox;
 
@@ -20,7 +20,7 @@ public class MonsterMazeExit extends AbstractEntity {
 		super(ecs, MonsterMazeExit.class.getSimpleName());
 		
 		//PositionData posData = new PositionData((map_x*Game.UNIT)-(Game.UNIT/2), (map_y*Game.UNIT)-(Game.UNIT/2));
-		PositionData posData = new PositionData((map_x)+(0.5f), (map_y)+(0.5f));
+		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_y)+(0.5f));
 		this.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();

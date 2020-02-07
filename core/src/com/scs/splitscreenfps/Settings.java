@@ -34,4 +34,10 @@ public class Settings {
 	public static final void p(String s) {
 		System.out.println(s);
 	}
+
+
+	public static final void pe(String s) {
+		System.err.println(s);
+	}
+
 }

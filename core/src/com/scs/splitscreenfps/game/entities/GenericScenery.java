@@ -9,7 +9,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 import ssmith.libgdx.MyBoundingBox;
 
@@ -33,7 +33,7 @@ public class GenericScenery extends AbstractEntity {
         	//md.blocksMovement = true;
             this.addComponent(md);*/
 
-            PositionData pos = new PositionData();
+            PositionComponent pos = new PositionComponent();
             pos.position = new Vector3(x+0.5f, -.2f, y+0.5f);
             this.addComponent(pos);
             

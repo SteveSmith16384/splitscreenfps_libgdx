@@ -13,7 +13,7 @@ import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.MovementData;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.MobAISystem.Mode;
 
@@ -24,7 +24,7 @@ public class TRex extends AbstractEntity {
     public TRex(BasicECS ecs, int x, int y, PlayersAvatar target) {
         super(ecs, TRex.class.getSimpleName());
 
-        PositionData pos = new PositionData();
+        PositionComponent pos = new PositionComponent();
         pos.position = new Vector3(x+0.5f, 0, y+0.5f);
         this.addComponent(pos);
         

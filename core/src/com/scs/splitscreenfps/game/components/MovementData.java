@@ -7,14 +7,12 @@ public class MovementData {
 
 	public Vector3 offset = new Vector3();
 	public float diameter; // For collisions against walls
-	//public boolean removeIfHitWall = false;
-	//public boolean hitWall = false;
 	
 	public MovementData(float _diameter) {
 		diameter = _diameter;
 		
 		if (diameter > 1) {
-			Settings.p("WARNING: Size is " + diameter);
+			Settings.pe("WARNING: Size is " + diameter);
 		}
 	}
 

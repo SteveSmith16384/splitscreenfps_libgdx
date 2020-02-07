@@ -5,6 +5,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
+import com.scs.splitscreenfps.game.entities.Floor;
 
 public class OpenRoomLevel extends AbstractLevel {
 
@@ -28,8 +29,8 @@ public class OpenRoomLevel extends AbstractLevel {
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare(false);
-				//Floor floor = new Floor("", "heart.png", x, z, 1f, 1f);
-				//game.ecs.addEntity(floor);
+				Floor floor = new Floor(game.ecs, "", "sf/floor0041.png", x, z, 1f, 1f);
+				game.ecs.addEntity(floor);
 			}
 		}
 

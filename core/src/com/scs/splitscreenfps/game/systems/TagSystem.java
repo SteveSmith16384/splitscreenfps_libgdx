@@ -46,7 +46,10 @@ public class TagSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity it_entity) {
 		if (currentIt == null) {
 			// Choose random player
-			this.currentIt = game.players[NumberFunctions.rnd(0, 3)]; // todo - check num players
+			this.currentIt = game.players[0];//NumberFunctions.rnd(0, 3)]; // todo - check num players
+
+			TagableComponent it2 = (TagableComponent)it_entity.getComponent(TagableComponent.class);
+			this.swapModel(it_entity, it2);
 		}
 
 		if (it_entity != this.currentIt) {
@@ -102,7 +105,7 @@ public class TagSystem extends AbstractSystem {
 
 		// Put other ones in
 		it_entity.addComponent(it_tagable.animated);
-		it_entity.addComponent(it_tagable);
+		it_entity.addComponent(it_tagable.avatarAnim);
 		it_entity.addComponent(it_tagable.hasModel);
 
 	}

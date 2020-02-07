@@ -3,17 +3,17 @@ package com.scs.splitscreenfps.game.components;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 
-public class PositionData {
+public class PositionComponent {
 
 	public Vector3 position; // Used to determine the centre of the bounding box for collisions!
 	public Vector3 originalPosition = new Vector3();
 
-	public PositionData() {
+	public PositionComponent() {
 		this.position = new Vector3();
 	}
 	
 	
-	public PositionData(float x, float z) {
+	public PositionComponent(float x, float z) {
 		this.position = new Vector3(x, 0, z);
 	}
 	

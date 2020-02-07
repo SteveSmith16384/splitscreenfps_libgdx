@@ -9,7 +9,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasAI;
 import com.scs.splitscreenfps.game.components.MovementData;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class MobAISystem extends AbstractSystem {
 
@@ -32,7 +32,7 @@ public class MobAISystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		PositionData pos = (PositionData)entity.getComponent(PositionData.class);
+		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		HasAI ai = (HasAI)entity.getComponent(HasAI.class);
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 		movementData.offset.x = 0;

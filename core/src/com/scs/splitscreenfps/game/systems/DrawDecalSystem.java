@@ -10,7 +10,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawDecalSystem extends AbstractSystem {
 
@@ -49,7 +49,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera, DecalBatch batch) {
 		HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
-		PositionData hasPosition = (PositionData)entity.getComponent(PositionData.class);
+		PositionComponent hasPosition = (PositionComponent)entity.getComponent(PositionComponent.class);
 		updateTransform(camera, hasDecal, hasPosition);
 
 		if(!camera.frustum.sphereInFrustum(hasPosition.position, 1f)) {
@@ -60,7 +60,7 @@ public class DrawDecalSystem extends AbstractSystem {
 	}
 
 
-	private void updateTransform(Camera cam, HasDecal hasDecal, PositionData pos) {
+	private void updateTransform(Camera cam, HasDecal hasDecal, PositionComponent pos) {
 		if(hasDecal.faceCamera) {
 			tmp.set(cam.direction).scl(-1);
 			if(!hasDecal.faceCameraTilted) {

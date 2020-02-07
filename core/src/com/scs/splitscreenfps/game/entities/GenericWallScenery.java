@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class GenericWallScenery extends AbstractEntity {
 	
@@ -19,7 +19,7 @@ public class GenericWallScenery extends AbstractEntity {
 	public GenericWallScenery(BasicECS ecs, String name, String filename, int x, int y, Side side) {
 		super(ecs, name);
 		
-        PositionData pos = new PositionData();
+        PositionComponent pos = new PositionComponent();
         pos.position = new Vector3(x, 0, y);
         this.addComponent(pos);
         

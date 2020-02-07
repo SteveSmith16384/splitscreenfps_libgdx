@@ -12,7 +12,7 @@ import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
-import com.scs.splitscreenfps.game.components.PositionData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class EntityFactory {
 	
@@ -26,7 +26,7 @@ public class EntityFactory {
 	public AbstractEntity createLitter(int type, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Litter");
 
-		PositionData posData = new PositionData((map_x)+(0.5f), (map_z)+(0.5f));
+		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
@@ -66,7 +66,7 @@ public class EntityFactory {
 	public AbstractEntity createLitterBin(int type, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "LitterBin");
 
-		PositionData posData = new PositionData((map_x)+(0.5f), (map_z)+(0.5f));
+		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
