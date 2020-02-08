@@ -54,15 +54,8 @@ public class PreGameScreen implements IModule {
 	@Override
 	public void render() {
 		controllerManager.checkForControllers();
-		
-		if (controllerManager.controllersAdded.size() > 0) {
-			this.appendToLog("Found " + controllerManager.controllersAdded.size() + " controllers");
-			for (Controller c : controllerManager.controllersAdded) {
-				// todo -check if players actually want to join 
-				this.inputs.add(new ControllerInputMethod(c));
-			}
-		}
-		
+		this.appendToLog("Found " + controllerManager.knownControllers.size() + " controllers");
+
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		frameBuffer.begin();
@@ -74,7 +67,7 @@ public class PreGameScreen implements IModule {
 		int y = Gdx.graphics.getHeight() - 20;
 		for (String s :this.log) {
 			font_white.draw(batch2d, s, 10, y);
-			y -= 30;
+			y -= 20;
 		}
 		batch2d.end();
 
@@ -90,7 +83,14 @@ public class PreGameScreen implements IModule {
 
 		batch2d.end();
 		
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+		if (Gdx.input.isKeyPressed(Keys.SPACE)) {			
+			if (controllerManager.knownControllers.size() > 0) {
+				for (Controller c : controllerManager.knownControllers) {
+					// todo -check if players actually want to join 
+					this.inputs.add(new ControllerInputMethod(c));
+				}
+			}
+			
 			main.next_module = new Game(inputs);
 		}
 	}

@@ -9,9 +9,9 @@ import com.badlogic.gdx.utils.Array;
 
 public class ControllerManager {
 
-	private List<Controller> knownControllers = new ArrayList<Controller>();
-	public List<Controller> controllersAdded = new ArrayList<Controller>();
-	public List<Controller> controllersRemoved = new ArrayList<Controller>();
+	public List<Controller> knownControllers = new ArrayList<Controller>();
+	private List<Controller> controllersAdded = new ArrayList<Controller>();
+	private List<Controller> controllersRemoved = new ArrayList<Controller>();
 
 	private long lastCheckTime;
 	

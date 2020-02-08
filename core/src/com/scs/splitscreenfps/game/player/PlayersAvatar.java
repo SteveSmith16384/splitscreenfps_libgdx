@@ -133,9 +133,9 @@ public class PlayersAvatar extends AbstractEntity {
 		Model model = am.get("models/Smooth_Male_Shirt.g3db");
 
 		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.002f);
+		instance.transform.scl(.0016f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("SmoothMale", instance, -.2f);
+		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 
@@ -297,7 +297,7 @@ public class PlayersAvatar extends AbstractEntity {
 	
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y-20);
+		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
 	}
 
 

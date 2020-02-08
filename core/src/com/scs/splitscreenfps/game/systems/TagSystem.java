@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
@@ -12,8 +13,6 @@ import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.TagableComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
-
-import ssmith.lang.NumberFunctions;
 
 /**
  * System for checking if one player has "tagged" another player.
@@ -74,6 +73,8 @@ public class TagSystem extends AbstractSystem {
 			AbstractEntity e = cr.collidedWith;
 			TagableComponent clean_tagable = (TagableComponent)e.getComponent(TagableComponent.class);
 			if (clean_tagable != null) {
+				Settings.p("Player " + clean_tagable.playerId + " tagged");
+				
 				// Change "it" player to normal
 				this.swapModel(it_entity, it_tagable);
 				// Change normal player to "it"
