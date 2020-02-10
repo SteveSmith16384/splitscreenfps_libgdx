@@ -27,7 +27,7 @@ public class TagSystem extends AbstractSystem {
 	private Game game;
 
 	public AbstractEntity currentIt;
-	public long lastTagTime = TAG_INTERVAL; // Can't move at start!
+	public long lastTagTime = System.currentTimeMillis(); // Can't move at start!
 
 	public TagSystem(BasicECS ecs, Game _game) {
 		super(ecs);
@@ -108,6 +108,11 @@ public class TagSystem extends AbstractSystem {
 		it_entity.addComponent(it_tagable.animated);
 		it_entity.addComponent(it_tagable.avatarAnim);
 		it_entity.addComponent(it_tagable.hasModel);
+		
+		
+		it_tagable.animated = tmp.animated;
+		it_tagable.avatarAnim = tmp.avatarAnim;
+		it_tagable.hasModel = tmp.hasModel;
 
 	}
 

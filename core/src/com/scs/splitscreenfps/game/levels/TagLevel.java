@@ -34,8 +34,8 @@ public class TagLevel extends AbstractLevel {
 
 
 	private void loadMapFromMazegen(Game game) {
-		this.map_width = 16;
-		this.map_height = 16;
+		this.map_width = 15 + game.players.length;
+		this.map_height = map_width;
 
 		game.mapData = new MapData(map_width, map_height);
 

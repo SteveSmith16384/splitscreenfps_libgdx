@@ -1,11 +1,17 @@
 package com.scs.splitscreenfps;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 public class BillBoardFPS_Main extends ApplicationAdapter {
@@ -16,7 +22,16 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		current_module = new PreGameScreen(this);//Game();
+		if (Settings.DEFAULT_4_PLAYERS) {
+			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
+			inputs.add(new MouseAndKeyboardInputMethod());
+			inputs.add(new NoInputMethod());
+			inputs.add(new NoInputMethod());
+			inputs.add(new NoInputMethod());
+			current_module = new Game(inputs);
+		} else {
+			current_module = new PreGameScreen(this);//Game();
+		}
 	}
 
 

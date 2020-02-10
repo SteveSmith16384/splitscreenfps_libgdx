@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -55,9 +56,12 @@ public class Game implements IModule {
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
 	private TagSystem tagSystem;
-	
+
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
+
+	private Texture green;
+
 
 	public Game(List<IInputMethod> inputs) {
 		batch2d = new SpriteBatch();
@@ -77,6 +81,8 @@ public class Game implements IModule {
 
 		currentLevel = new TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
+
+		green = new Texture(Gdx.files.internal("slime.jpg"));
 	}
 
 
@@ -106,7 +112,7 @@ public class Game implements IModule {
 
 		tagSystem = new TagSystem(ecs, this);
 		ecs.addSystem(tagSystem);
-		
+
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 
@@ -178,7 +184,7 @@ public class Game implements IModule {
 			if (viewportData.post != null) {
 				viewportData.post.begin();
 			}
-			
+
 			this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 			this.drawModelSystem.process(viewportData.camera);
 			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
@@ -208,7 +214,15 @@ public class Game implements IModule {
 			batch2d.begin();
 
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
-
+			if (this.tagSystem.currentIt.id == players[currentViewId].id) {
+				if (this.tagSystem.lastTagTime + TagSystem.TAG_INTERVAL > System.currentTimeMillis()) {
+					batch2d.setColor(1,1,1,1);
+				} else {
+					batch2d.setColor(1,1,1,.5f);
+				}
+				batch2d.draw(green, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+				batch2d.setColor(1,1,1,1f);
+			}
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}
@@ -231,9 +245,6 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
-		/*if (post != null) {
-			post.dispose();
-		}*/
 		font_white.dispose(); 
 		font_black.dispose();
 		audio.dipose();
@@ -247,7 +258,7 @@ public class Game implements IModule {
 		this.resizeViewports(true);
 	}
 
-	
+
 	public void playerHasLost(int id) {
 		// todo
 	}

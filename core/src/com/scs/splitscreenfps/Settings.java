@@ -8,8 +8,7 @@ public class Settings {
 	public static final boolean RELEASE_MODE = false;
 	
 	// Hacks
-	public static final boolean PLAYER_INVINCIBLE = !RELEASE_MODE && false;
-	public static final boolean TEST_FLOOR_SQ = !RELEASE_MODE && false;
+	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && true;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	
 	public static final float PLAYER_HEIGHT = .7f;
