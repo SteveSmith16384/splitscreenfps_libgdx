@@ -6,11 +6,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Audio;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.HasModel;
@@ -42,24 +45,38 @@ public class Game implements IModule {
 	public static final Graphics art = new Graphics();
 	public static final Audio audio = new Audio();
 
+	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
 	private final BitmapFont font_white, font_black;
 	public final ViewportData[] viewports;
 
 	public PlayersAvatar[] players;
+	private List<IInputMethod> inputs;
 	public MapData mapData;
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
+	
+	private int game_stage;
+	private long restartTime;
+	private AbstractEntity loser;
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
 	private TagSystem tagSystem;
-	
+
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
-	public Game(List<IInputMethod> inputs) {
+	private Texture green;
+
+
+	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
+		main = _main;
+		inputs = _inputs;
+		
+		game_stage = 0;
+		
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
@@ -77,6 +94,8 @@ public class Game implements IModule {
 
 		currentLevel = new TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
+
+		green = new Texture(Gdx.files.internal("slime.jpg"));
 	}
 
 
@@ -106,7 +125,7 @@ public class Game implements IModule {
 
 		tagSystem = new TagSystem(ecs, this);
 		ecs.addSystem(tagSystem);
-		
+
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 
@@ -143,6 +162,12 @@ public class Game implements IModule {
 
 	@Override
 	public void render() {
+		if (this.game_stage == 1) {
+			if (this.restartTime < System.currentTimeMillis()) {
+				this.main.next_module = new Game(main, this.inputs);
+			}
+		}
+		
 		this.ecs.getSystem(RemoveAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
@@ -178,7 +203,7 @@ public class Game implements IModule {
 			if (viewportData.post != null) {
 				viewportData.post.begin();
 			}
-			
+
 			this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 			this.drawModelSystem.process(viewportData.camera);
 			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
@@ -188,8 +213,14 @@ public class Game implements IModule {
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
-			font_white.draw(batch2d, "THIS IS A TEST", 10, 200);
-
+			if (this.game_stage == 1) {
+				if (this.loser == this.players[this.currentViewId]) {
+					font_white.draw(batch2d, "YOU HAVE LOST!", 10, 200);
+				} else {
+					font_white.draw(batch2d, "You have survived!", 10, 200);
+				}
+			}
+			
 			currentLevel.renderUI(batch2d, font_white, font_black);
 
 			if (players[currentViewId] != null) {
@@ -208,7 +239,16 @@ public class Game implements IModule {
 			batch2d.begin();
 
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
-
+			// Draw slime
+			if (this.tagSystem.currentIt.id == players[currentViewId].id) {
+				if (this.tagSystem.lastTagTime + TagSystem.TAG_INTERVAL > System.currentTimeMillis()) {
+					batch2d.setColor(1,1,1,1);
+				} else {
+					batch2d.setColor(1,1,1,.5f);
+				}
+				batch2d.draw(green, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+				batch2d.setColor(1,1,1,1f);
+			}
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}
@@ -231,9 +271,6 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
-		/*if (post != null) {
-			post.dispose();
-		}*/
 		font_white.dispose(); 
 		font_black.dispose();
 		audio.dipose();
@@ -247,9 +284,12 @@ public class Game implements IModule {
 		this.resizeViewports(true);
 	}
 
-	
-	public void playerHasLost(int id) {
-		// todo
+
+	public void playerHasLost(AbstractEntity avatar) {
+		this.game_stage = 1;
+		this.ecs.removeSystem(TagSystem.class);
+		this.restartTime = System.currentTimeMillis() + 5000;
+		this.loser = avatar;
 	}
 
 }

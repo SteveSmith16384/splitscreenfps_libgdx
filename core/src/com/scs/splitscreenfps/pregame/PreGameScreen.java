@@ -31,26 +31,26 @@ public class PreGameScreen implements IModule {
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
 	private List<IInputMethod> inputs = new ArrayList<IInputMethod>();
-	
+
 	public PreGameScreen(BillBoardFPS_Main _main) {
 		super();
-		
+
 		main = _main;
-		
+
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
-		
+
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-		
+
 		this.appendToLog("Welcome to " + Settings.TITLE);
 		this.appendToLog("Looking for controllers...");
-		
+
 		this.inputs.add(new MouseAndKeyboardInputMethod());
 	}
 
-	
+
 	@Override
 	public void render() {
 		controllerManager.checkForControllers();
@@ -82,7 +82,7 @@ public class PreGameScreen implements IModule {
 		}
 
 		batch2d.end();
-		
+
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {			
 			if (controllerManager.knownControllers.size() > 0) {
 				for (Controller c : controllerManager.knownControllers) {
@@ -90,12 +90,12 @@ public class PreGameScreen implements IModule {
 					this.inputs.add(new ControllerInputMethod(c));
 				}
 			}
-			
-			main.next_module = new Game(inputs);
+
+			main.next_module = new Game(main, inputs);
 		}
 	}
 
-	
+
 	@Override
 	public void dispose() {
 		this.batch2d.dispose();
@@ -103,20 +103,20 @@ public class PreGameScreen implements IModule {
 		this.font_black.dispose();
 		this.font_white.dispose();
 	}
-	
+
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
 
 	}
 
-	
+
 	@Override
 	public void resize(int w, int h) {
 
 	}
-	
-	
+
+
 	private void appendToLog(String s) {
 		this.log.add(s);
 		while (log.size() > 20) {

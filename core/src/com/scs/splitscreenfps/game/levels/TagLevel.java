@@ -34,16 +34,16 @@ public class TagLevel extends AbstractLevel {
 
 
 	private void loadMapFromMazegen(Game game) {
-		this.map_width = 16;
-		this.map_height = 16;
+		this.map_width = 15 + game.players.length;
+		this.map_height = map_width;
 
 		game.mapData = new MapData(map_width, map_height);
 
 		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
 
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2(maze.start_pos);
-			this.startPositions[i].x += i; // Offset them slightly
+			this.startPositions[i] = maze.getStartPos();//new GridPoint2(maze.start_pos);
+			//this.startPositions[i].x += i; // Offset them slightly
 		}
 
 		for (int z=0 ; z<map_height ; z++) {
