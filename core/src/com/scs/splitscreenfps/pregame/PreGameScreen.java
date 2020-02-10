@@ -91,7 +91,7 @@ public class PreGameScreen implements IModule {
 		batch2d.end();
 		
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			main.next_module = new Game(inputs);
+			main.next_module = new Game(main, inputs);
 		}
 	}
 

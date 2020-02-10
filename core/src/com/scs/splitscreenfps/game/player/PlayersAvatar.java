@@ -51,7 +51,7 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
 
-		TagableComponent taggable = new TagableComponent(idx);
+		TagableComponent taggable = new TagableComponent(this);
 		addSkeletonForTagged(idx, taggable);
 		this.addComponent(taggable);
 
@@ -134,7 +134,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		ModelInstance instance = new ModelInstance(model);
 		instance.transform.scl(.002f);
-		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		//instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 		HasModel hasModel = new HasModel("SmoothMale", instance, -.2f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);

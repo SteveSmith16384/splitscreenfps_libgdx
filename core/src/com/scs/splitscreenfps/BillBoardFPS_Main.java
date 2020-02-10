@@ -28,7 +28,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			inputs.add(new NoInputMethod());
 			inputs.add(new NoInputMethod());
 			inputs.add(new NoInputMethod());
-			current_module = new Game(inputs);
+			current_module = new Game(this, inputs);
 		} else {
 			current_module = new PreGameScreen(this);//Game();
 		}

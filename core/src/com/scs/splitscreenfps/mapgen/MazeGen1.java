@@ -5,6 +5,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.math.GridPoint2;
 
+import ssmith.lang.NumberFunctions;
+
 public class MazeGen1 {
 
 	private static final char PASSAGE_CHAR = '.';
@@ -107,4 +109,16 @@ public class MazeGen1 {
 		b.append( '\n' );
 		return b.toString();
 	}
+	
+	
+	public GridPoint2 getStartPos() {
+		while (true) {
+			int x = NumberFunctions.rnd(0,  this.width);
+			int y = NumberFunctions.rnd(0,  this.height);
+			if (map[x][y] == PASSAGE) {
+				return new GridPoint2(x, y);
+			}
+		}
+	}
+	
 }

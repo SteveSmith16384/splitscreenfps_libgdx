@@ -20,6 +20,10 @@ public class BasicECS {
 	}
 
 
+	public void removeSystem(Class<?> clazz) {
+		this.systems.remove(clazz);
+	}
+
 
 	public ISystem getSystem(Class<?> clazz) {
 		return this.systems.get(clazz);

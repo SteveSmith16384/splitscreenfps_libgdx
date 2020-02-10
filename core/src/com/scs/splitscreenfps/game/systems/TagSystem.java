@@ -94,7 +94,7 @@ public class TagSystem extends AbstractSystem {
 		AnimatedComponent animatedComponent = (AnimatedComponent)it_entity.getComponent(AnimatedComponent.class);
 
 		// Store current
-		TagableComponent tmp = new TagableComponent(-1); // temp for swapping vars
+		TagableComponent tmp = new TagableComponent(null); // temp for swapping vars
 		tmp.animated = animatedComponent;
 		tmp.avatarAnim = animatedForAvatarComponent;
 		tmp.hasModel = hasModel;
