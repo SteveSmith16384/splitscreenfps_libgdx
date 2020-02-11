@@ -11,6 +11,7 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class CameraController {
 
+	private static final float MIN_AXIS = 0.1f;
 	private Game game;
 	private Camera camera;
 	private Vector3 tmp;
@@ -73,21 +74,21 @@ public class CameraController {
 			//todo camera.lookAt(posData.position);
 		} else {
 			//Rotation
-			if (input.getLookUp() > 0) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			if (input.getLookUp() > MIN_AXIS) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 				if(camera.direction.y < 0.95) {
 					tmp.set(camera.direction).crs(camera.up).nor();
 					camera.rotate(tmp, rotSpeedY * input.getLookUp() * dt);
 				}
 
-			} else if (input.getLookDown() > 0) { // Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			} else if (input.getLookDown() > MIN_AXIS) { // Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 				if(camera.direction.y>-0.95) {
 					tmp.set(camera.direction).crs(camera.up).nor();
 					camera.rotate(tmp, -rotSpeedY * input.getLookDown() * dt);
 				}
 			}
-			if (input.getLookLeft() > 0) {//Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			if (input.getLookLeft() > MIN_AXIS) {//Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				camera.rotate(Vector3.Y, rotSpeedX * input.getLookLeft() * dt);
-			} else if (input.getLookRight() > 0) {
+			} else if (input.getLookRight() > MIN_AXIS) {
 				camera.rotate(Vector3.Y, -rotSpeedX * input.getLookRight() * dt);
 			}
 		}

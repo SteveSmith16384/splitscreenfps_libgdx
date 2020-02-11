@@ -64,13 +64,15 @@ public class PreGameScreen implements IModule {
 		int y = Gdx.graphics.getHeight() - 20;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
 		for (Controller c : allControllers) {
-			StringBuilder str = new StringBuilder("Controller " + c.getName());
+			//StringBuilder str = new StringBuilder("Controller " + c.getName());
+			font_white.draw(batch2d, "Controller " + c.getName(), 10, y);
+
 			if (this.controllerManager.isControllerInGame(c)) {
-				str.append(" (IN GAME!)");
+				font_white.draw(batch2d, "IN GAME!", 10, y-10);
 			} else {
-				str.append(" (not in game)!");
+				font_white.draw(batch2d, "Not in game", 10, y-10);
 			}
-			font_white.draw(batch2d, str.toString(), 10, y);
+			//font_white.draw(batch2d, str.toString(), 10, y);
 			y -= 20;
 		}
 		
@@ -80,8 +82,10 @@ public class PreGameScreen implements IModule {
 			y -= 20;
 		}
 
-		font_white.draw(batch2d, "PRESS SPACE TO START!", 10, y);
-
+		if (this.controllerManager.getAllControllers().size >= 1) {
+			font_white.draw(batch2d, "PRESS SPACE TO START!", 10, y);
+		}
+		
 		batch2d.end();
 
 		frameBuffer.end();

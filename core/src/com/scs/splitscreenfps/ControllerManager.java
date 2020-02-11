@@ -98,7 +98,7 @@ public class ControllerManager implements ControllerListener {
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		if (buttonCode == 1) {
+		if (buttonCode == 0) {
 			synchronized (inGameControllers) {
 				if (this.inGameControllers.contains(controller) == false) {
 					this.inGameControllers.add(controller);

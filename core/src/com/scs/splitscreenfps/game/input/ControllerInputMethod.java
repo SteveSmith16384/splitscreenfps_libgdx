@@ -17,7 +17,7 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isBackwardsPressed() {
-		return controller.getAxis(1) > -0.5f;
+		return controller.getAxis(1) > 0.5f;
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isStrafeRightPressed() {
-		return controller.getAxis(0) > -0.5f;
+		return controller.getAxis(0) > 0.5f;
 	}
 
 	@Override
@@ -42,22 +42,22 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public float getLookLeft() {
-		return controller.getAxis(2);
-	}
-
-	@Override
-	public float getLookRight() {
 		return -controller.getAxis(2);
 	}
 
 	@Override
+	public float getLookRight() {
+		return controller.getAxis(2);
+	}
+
+	@Override
 	public float getLookUp() {
-		return controller.getAxis(3);
+		return -controller.getAxis(3);
 	}
 
 	@Override
 	public float getLookDown() {
-		return -controller.getAxis(3);
+		return controller.getAxis(3);
 	}
 
 }
