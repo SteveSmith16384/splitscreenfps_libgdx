@@ -45,7 +45,7 @@ public class EntityFactory {
 		entity.addComponent(posData);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(map_x+SIZE/2, SIZE/2, map_z+SIZE/2));
-		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
+		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 		instance.transform.rotate(Vector3.Y, NumberFunctions.rnd(0, 90));
 
 		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);

@@ -28,7 +28,7 @@ public class CameraController {
 	};
 
 	private IInputMethod input;
-	public float camAngleChange = 0;
+	//public float camAngleChange = 0;
 
 	public CameraController(Game _game, Camera cam, IInputMethod _input) {
 		game = _game;
@@ -46,8 +46,8 @@ public class CameraController {
 	public void update() {
 		float dt = Gdx.graphics.getDeltaTime();
 
-		Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-		float cam_ang = v2.angle();
+		//Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
+		//float cam_ang = v2.angle();
 
 		if (this.input.isMouse()) {
 			if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
@@ -93,10 +93,10 @@ public class CameraController {
 		}
 		camera.update();
 	
-		v2 = new Vector2(camera.direction.x, camera.direction.z);
+		/*v2 = new Vector2(camera.direction.x, camera.direction.z);
 		float cam_ang2 = v2.angle();
 
-		this.camAngleChange = cam_ang - cam_ang2;
+		this.camAngleChange = cam_ang - cam_ang2;*/
 
 	}
 

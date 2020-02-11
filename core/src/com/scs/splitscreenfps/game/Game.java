@@ -142,11 +142,10 @@ public class Game implements IModule {
 			players[idx].update();
 
 			// Move model if it has one
-			HasModel hasModel = (HasModel)this.players[idx].getComponent(HasModel.class);
+			/*HasModel hasModel = (HasModel)this.players[idx].getComponent(HasModel.class);
 			if (hasModel != null) {
-				//hasModel.model.transform.setToWorld(posData.position); todo 
 				hasModel.model.transform.setTranslation(posData.position);
-			}
+			}*/
 
 			ViewportData viewport = this.viewports[idx];
 			Camera camera = viewport.camera;
@@ -223,6 +222,15 @@ public class Game implements IModule {
 				players[currentViewId].renderUI(batch2d, font_white);
 			}
 
+			if (Settings.TEST_SCREEN_COORDS) {
+				font_white.draw(batch2d, "TL", 20, 20);
+				font_white.draw(batch2d, "50", 50, 50);
+				font_white.draw(batch2d, "150", 150, 150);
+				font_white.draw(batch2d, "TR", Settings.LOGICAL_WIDTH_PIXELS-20, 20);
+				font_white.draw(batch2d, "BL", 10, Settings.LOGICAL_HEIGHT_PIXELS-20);
+				font_white.draw(batch2d, "BR", Settings.LOGICAL_WIDTH_PIXELS-20, Settings.LOGICAL_HEIGHT_PIXELS-20);
+			}
+
 			batch2d.end();
 
 			if (viewportData.post != null) {
@@ -244,12 +252,6 @@ public class Game implements IModule {
 				}
 				batch2d.draw(slime, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 				batch2d.setColor(1,1,1,1f);
-			}
-			if (Settings.TEST_SCREEN_COORDS) {
-				font_white.draw(batch2d, "TL", 20, 20);
-				font_white.draw(batch2d, "TR", Settings.LOGICAL_WIDTH_PIXELS-20, 20);
-				font_white.draw(batch2d, "BL", 10, Settings.LOGICAL_HEIGHT_PIXELS-20);
-				font_white.draw(batch2d, "BR", Settings.LOGICAL_WIDTH_PIXELS-20, Settings.LOGICAL_HEIGHT_PIXELS-20);
 			}
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);

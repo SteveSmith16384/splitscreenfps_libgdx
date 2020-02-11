@@ -194,7 +194,7 @@ public class PlayersAvatar extends AbstractEntity {
 		return instance;
 	}*/
 
-
+/*
 	private ModelInstance addKnightComponents(int idx) {
 		AssetManager am = game.assetManager;
 
@@ -221,7 +221,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		return instance;
 	}
-
+*/
 
 	public Vector3 getPosition() {
 		return this.positionData.position;
@@ -244,9 +244,8 @@ public class PlayersAvatar extends AbstractEntity {
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			pos.angle = v2.angle();
 			//Settings.p("cam_ang=" + cam_ang);
-
-			float turn = this.cameraController.camAngleChange;
-			hasModel.model.transform.rotate(Vector3.Y, turn);
+			//float turn = this.cameraController.camAngleChange;
+			//hasModel.model.transform.rotate(Vector3.Y, turn);
 		}
 	}
 

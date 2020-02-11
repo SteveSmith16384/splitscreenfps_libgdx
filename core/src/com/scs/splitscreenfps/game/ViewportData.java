@@ -87,7 +87,8 @@ public class ViewportData {
 		camera.viewportWidth = w;
 		camera.viewportHeight = h;
 		
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {

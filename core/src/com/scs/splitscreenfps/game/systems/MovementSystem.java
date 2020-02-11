@@ -18,7 +18,7 @@ public class MovementSystem extends AbstractSystem {
 
 	private Game game;
 	private CollisionCheckSystem collCheckSystem;
-	
+
 	public MovementSystem(Game _game, BasicECS ecs) {
 		super(ecs);
 
@@ -39,7 +39,7 @@ public class MovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		
+
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
 			cc.bb_dirty = true;
@@ -52,14 +52,16 @@ public class MovementSystem extends AbstractSystem {
 		}
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
-			if (tagSystem.currentIt == entity) {
-				if (System.currentTimeMillis() < tagSystem.lastTagTime + TagSystem.TAG_INTERVAL) {
-					return; // Frozen after being tagged
-				} else {
-					movementData.offset.scl(1.2f);
+			if (tagSystem != null) { // Gets removed at end of game
+				if (tagSystem.currentIt == entity) {
+					if (System.currentTimeMillis() < tagSystem.lastTagTime + TagSystem.TAG_INTERVAL) {
+						return; // Frozen after being tagged
+					} else {
+						movementData.offset.scl(1.2f);
+					}
 				}
 			}
-			
+
 			this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
 		}
 	}
@@ -89,13 +91,13 @@ public class MovementSystem extends AbstractSystem {
 			}
 		}
 
-		if (resultX || resultZ) {
+		/*if (resultX || resultZ) {
 			// Move model if it has one
 			HasModel hasModel = (HasModel)mover.getComponent(HasModel.class);
 			if (hasModel != null) {
 				hasModel.model.transform.setTranslation(position.x, position.y + hasModel.yOffset, position.z);
 			}
-		}
+		}*/
 		return resultX && resultZ;
 	}
 
