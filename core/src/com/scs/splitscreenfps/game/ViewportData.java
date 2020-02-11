@@ -51,7 +51,7 @@ public class ViewportData {
 		camera.lookAt(11f, 0, 10f);
 		camera.near = 0.1f;
 		camera.far = 30f;
-		//camera.update();
+		camera.update();
 		
 		ShadedGroupStrategy groupStrategy = new ShadedGroupStrategy(camera);
 		decalBatch = new DecalBatch(groupStrategy);
@@ -87,8 +87,8 @@ public class ViewportData {
 		camera.viewportWidth = w;
 		camera.viewportHeight = h;
 		
-		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, true);
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {

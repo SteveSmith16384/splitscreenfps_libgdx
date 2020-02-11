@@ -30,6 +30,13 @@ public class BasicECS {
 	}
 
 	
+	public void processSystem(Class<?> clazz) {
+		ISystem system = this.getSystem(clazz);
+		if (system != null) {
+			system.process();
+		}
+	}
+	
 	public void addEntityToSystems(AbstractEntity e, Class<?> component_class) {
 		//e.addComponent(component);
 		

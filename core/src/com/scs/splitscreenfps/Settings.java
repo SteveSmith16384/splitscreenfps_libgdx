@@ -23,7 +23,7 @@ public class Settings {
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
 	// Logical size of viewport
-	public static final int LOGICAL_WIDTH_PIXELS = 640;
+	public static final int LOGICAL_WIDTH_PIXELS = 320;//640;
 	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	
 	public static Random random = new Random();

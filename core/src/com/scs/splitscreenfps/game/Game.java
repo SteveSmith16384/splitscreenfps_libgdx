@@ -4,19 +4,16 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Audio;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
@@ -147,14 +144,12 @@ public class Game implements IModule {
 				hasModel.model.transform.setTranslation(posData.position);
 			}*/
 
-			ViewportData viewport = this.viewports[idx];
+			/*ViewportData viewport = this.viewports[idx]; scs newly removed
 			Camera camera = viewport.camera;
 			camera.position.set(posData.position);
 			camera.position.y += Settings.CAMERA_HEIGHT_OFFSET;
-			//camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
-			//this.viewports[0].camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
 
-			camera.update();
+			camera.update();*/
 		}
 	}
 
@@ -164,6 +159,7 @@ public class Game implements IModule {
 		if (this.game_stage == 1) {
 			if (this.restartTime < System.currentTimeMillis()) {
 				this.main.next_module = new Game(main, this.inputs);
+				return;
 			}
 		}
 
@@ -175,7 +171,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();
-		tagSystem.process();
+		this.ecs.processSystem(TagSystem.class);
 		this.ecs.getSystem(CheckForLitterInBinSystem.class).process();
 
 		currentLevel.update(this, mapData);
@@ -208,6 +204,7 @@ public class Game implements IModule {
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
+			font_white.draw(batch2d, "Screen " + this.currentViewId, 10, 250);
 			if (this.game_stage == 1) {
 				if (this.loser == this.players[this.currentViewId]) {
 					font_white.draw(batch2d, "YOU HAVE LOST!", 10, 200);
@@ -243,6 +240,7 @@ public class Game implements IModule {
 			batch2d.begin();
 
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+			
 			// Draw slime
 			if (this.tagSystem.currentIt.id == players[currentViewId].id) {
 				if (this.tagSystem.lastTagTime + TagSystem.TAG_INTERVAL > System.currentTimeMillis()) {
@@ -253,6 +251,7 @@ public class Game implements IModule {
 				batch2d.draw(slime, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 				batch2d.setColor(1,1,1,1f);
 			}
+			
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}

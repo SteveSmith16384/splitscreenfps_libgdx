@@ -68,6 +68,9 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
+		/*if (entity.name == "Crate") {
+			int dfgdfg = 345;
+		}*/
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
 		if (model.dontDrawInViewId != game.currentViewId) {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
@@ -76,8 +79,8 @@ public class DrawModelSystem extends AbstractSystem {
 				tmpOffset.set(position);
 				tmpOffset.y += model.yOffset;
 				model.model.transform.setToTranslation(tmpOffset);//.x, position.y + model.yOffset, position.z);
-				model.model.transform.scl(.0016f);
-				model.model.transform.rotate(Vector3.Y, posData.angle+90); // todo - move 90 to setting
+				model.model.transform.scl(model.scale);//.0016f);
+				model.model.transform.rotate(Vector3.Y, posData.angle+model.angleOffset);
 				tmp.set(position);
 			} else {
 				model.model.transform.getTranslation(tmp);

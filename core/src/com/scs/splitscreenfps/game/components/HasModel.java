@@ -7,16 +7,20 @@ public class HasModel {
 	public String name;
 	public ModelInstance model;
 	public float yOffset;
+	public int angleOffset;
+	public float scale;
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
 	
 	public HasModel(String name, ModelInstance _model) {
-		this(name, _model, 0);
+		this(name, _model, 0, 0, 1);
 	}
 	
-	public HasModel(String _name, ModelInstance _model, float _yOffset) {
+	public HasModel(String _name, ModelInstance _model, float _yOffset, int _angleOffset, float _scale) {
+		name = _name;
 		model = _model;
 		yOffset = _yOffset;
-		name = _name;
+		angleOffset = _angleOffset;
+		scale = _scale;
 	}
 
 	

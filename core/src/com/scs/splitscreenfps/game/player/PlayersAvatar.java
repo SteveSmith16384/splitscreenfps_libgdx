@@ -80,7 +80,7 @@ public class PlayersAvatar extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(model);
 		instance.transform.scl(.0015f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("Skeleton", instance, -.3f);
+		HasModel hasModel = new HasModel("Skeleton", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
 		taggable.hasModel = hasModel;
 
@@ -144,9 +144,9 @@ public class PlayersAvatar extends AbstractEntity {
 		ang = q.getAngleAround(Vector3.Y);
 		*/
 		
-		instance.transform.scl(.0016f);
-		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f);
+		//instance.transform.scl(.0016f);
+		//instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f, 90, 0.0016f);
 
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
@@ -242,7 +242,7 @@ public class PlayersAvatar extends AbstractEntity {
 			//Settings.p("-------------------");
 
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-			pos.angle = v2.angle();
+			pos.angle = -v2.angle();
 			//Settings.p("cam_ang=" + cam_ang);
 			//float turn = this.cameraController.camAngleChange;
 			//hasModel.model.transform.rotate(Vector3.Y, turn);
