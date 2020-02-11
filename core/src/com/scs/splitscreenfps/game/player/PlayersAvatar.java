@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
@@ -133,9 +134,20 @@ public class PlayersAvatar extends AbstractEntity {
 		Model model = am.get("models/Smooth_Male_Shirt.g3db");
 
 		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.002f);
-		//instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("SmoothMale", instance, -.2f);
+
+		/*
+		Quaternion q = new Quaternion();
+		instance.transform.getRotation(q);
+		float ang = q.getAngleAround(Vector3.Y);
+		instance.transform.rotate(Vector3.Y, 100);
+		instance.transform.getRotation(q);
+		ang = q.getAngleAround(Vector3.Y);
+		*/
+		
+		instance.transform.scl(.0016f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f);
+
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 
@@ -285,7 +297,7 @@ public class PlayersAvatar extends AbstractEntity {
 			footstepTimer += Gdx.graphics.getDeltaTime();
 			if (footstepTimer > 0.45f) {
 				footstepTimer -= 0.45f;
-				Game.audio.play("step");
+				//Game.audio.play("step");
 			}
 		} else {
 			if (anim != null) {
@@ -297,7 +309,7 @@ public class PlayersAvatar extends AbstractEntity {
 	
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y-20);
+		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
 	}
 
 

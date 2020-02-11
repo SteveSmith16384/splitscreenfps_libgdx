@@ -99,7 +99,7 @@ public class Game implements IModule {
 
 
 	public void resizeViewports(boolean full_screen) {
-		for (int i=0 ; i<viewports.length ; i++) {
+		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i].resize(full_screen, i);
 		}
 	}

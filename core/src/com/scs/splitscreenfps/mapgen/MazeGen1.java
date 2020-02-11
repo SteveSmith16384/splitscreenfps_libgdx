@@ -113,8 +113,8 @@ public class MazeGen1 {
 	
 	public GridPoint2 getStartPos() {
 		while (true) {
-			int x = NumberFunctions.rnd(0,  this.width);
-			int y = NumberFunctions.rnd(0,  this.height);
+			int x = NumberFunctions.rnd(0,  this.width-1);
+			int y = NumberFunctions.rnd(0,  this.height-1);
 			if (map[x][y] == PASSAGE) {
 				return new GridPoint2(x, y);
 			}
