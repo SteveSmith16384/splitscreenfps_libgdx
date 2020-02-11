@@ -56,7 +56,7 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
-	
+
 	private int game_stage;
 	private long restartTime;
 	private AbstractEntity loser;
@@ -73,9 +73,9 @@ public class Game implements IModule {
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
-		
+
 		game_stage = 0;
-		
+
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
@@ -144,6 +144,7 @@ public class Game implements IModule {
 			// Move model if it has one
 			HasModel hasModel = (HasModel)this.players[idx].getComponent(HasModel.class);
 			if (hasModel != null) {
+				//hasModel.model.transform.setToWorld(posData.position); todo 
 				hasModel.model.transform.setTranslation(posData.position);
 			}
 
@@ -151,7 +152,7 @@ public class Game implements IModule {
 			Camera camera = viewport.camera;
 			camera.position.set(posData.position);
 			camera.position.y += Settings.CAMERA_HEIGHT_OFFSET;
-			camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
+			//camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
 			//this.viewports[0].camera.rotate(Vector3.Y, (float)Math.toDegrees(Math.atan2(camera.direction.z, camera.direction.x)));
 
 			camera.update();
@@ -166,7 +167,7 @@ public class Game implements IModule {
 				this.main.next_module = new Game(main, this.inputs);
 			}
 		}
-		
+
 		this.ecs.getSystem(RemoveAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
@@ -192,11 +193,7 @@ public class Game implements IModule {
 			viewportData.frameBuffer.begin();
 
 			//this.currentLevel.setBackgroundColour();
-			if (this.players[currentViewId] == tagSystem.currentIt) {
-				Gdx.gl.glClearColor(.7f, .9f, .7f, 1);
-			} else {
-				Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
-			}
+			Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 			if (viewportData.post != null) {
@@ -219,7 +216,7 @@ public class Game implements IModule {
 					font_white.draw(batch2d, "You have survived!", 10, 200);
 				}
 			}
-			
+
 			currentLevel.renderUI(batch2d, font_white, font_black);
 
 			if (players[currentViewId] != null) {

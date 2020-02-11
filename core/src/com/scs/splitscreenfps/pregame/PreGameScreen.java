@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.utils.Array;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.ControllerManager;
 import com.scs.splitscreenfps.IModule;
@@ -25,12 +26,11 @@ import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 public class PreGameScreen implements IModule {
 
 	private SpriteBatch batch2d;
-	private final BitmapFont font_white, font_black;
-	private ControllerManager controllerManager = new ControllerManager();
+	private final BitmapFont font_white;
+	private ControllerManager controllerManager = new ControllerManager(null);
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
-	private List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 
 	public PreGameScreen(BillBoardFPS_Main _main) {
 		super();
@@ -39,7 +39,6 @@ public class PreGameScreen implements IModule {
 
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
-		font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
 
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -47,28 +46,42 @@ public class PreGameScreen implements IModule {
 		this.appendToLog("Welcome to " + Settings.TITLE);
 		this.appendToLog("Looking for controllers...");
 
-		this.inputs.add(new MouseAndKeyboardInputMethod());
 	}
 
 
 	@Override
 	public void render() {
 		controllerManager.checkForControllers();
-		this.appendToLog("Found " + controllerManager.knownControllers.size() + " controllers");
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		frameBuffer.begin();
 
-		Gdx.gl.glClearColor(.9f, .9f, .9f, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		batch2d.begin();
 		int y = Gdx.graphics.getHeight() - 20;
+		Array<Controller> allControllers = this.controllerManager.getAllControllers();
+		for (Controller c : allControllers) {
+			StringBuilder str = new StringBuilder("Controller " + c.getName());
+			if (this.controllerManager.isControllerInGame(c)) {
+				str.append(" (IN GAME!)");
+			} else {
+				str.append(" (not in game)!");
+			}
+			font_white.draw(batch2d, str.toString(), 10, y);
+			y -= 20;
+		}
+		
+		y = Gdx.graphics.getHeight() - 220;
 		for (String s :this.log) {
 			font_white.draw(batch2d, s, 10, y);
 			y -= 20;
 		}
+
+		font_white.draw(batch2d, "PRESS SPACE TO START!", 10, y);
+
 		batch2d.end();
 
 		frameBuffer.end();
@@ -83,13 +96,12 @@ public class PreGameScreen implements IModule {
 
 		batch2d.end();
 
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {			
-			if (controllerManager.knownControllers.size() > 0) {
-				for (Controller c : controllerManager.knownControllers) {
-					// todo -check if players actually want to join 
-					this.inputs.add(new ControllerInputMethod(c));
+		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
+			inputs.add(new MouseAndKeyboardInputMethod());
+				for (Controller c : controllerManager.getInGameControllers()) {
+					inputs.add(new ControllerInputMethod(c));
 				}
-			}
 
 			main.next_module = new Game(main, inputs);
 		}
@@ -100,7 +112,6 @@ public class PreGameScreen implements IModule {
 	public void dispose() {
 		this.batch2d.dispose();
 		this.frameBuffer.dispose();
-		this.font_black.dispose();
 		this.font_white.dispose();
 	}
 

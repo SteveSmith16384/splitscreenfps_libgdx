@@ -25,7 +25,6 @@ public class Wall extends AbstractEntity {
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, 0.5f, mapPosZ+0.5f));
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
-		//instance.calculateTransforms();
 
 		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);

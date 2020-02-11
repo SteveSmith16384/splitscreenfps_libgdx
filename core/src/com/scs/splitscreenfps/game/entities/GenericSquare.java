@@ -14,15 +14,15 @@ import com.scs.splitscreenfps.game.components.HasModel;
 
 public class GenericSquare extends AbstractEntity {
 
-	private static Model floor;
+	//private static Model floor;
 	
 	public GenericSquare(BasicECS ecs, int map_x, int map_y, String filename) {
 		super(ecs, GenericSquare.class.getSimpleName());
 
-		if (floor == null) {
+		//if (floor == null) {
 			Material material = new Material(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal(filename))));		
 			ModelBuilder modelBuilder = new ModelBuilder();
-			floor = modelBuilder.createRect(
+			Model floor = modelBuilder.createRect(
 					0f, 0f, 1,
 					1, 0f, 1f,
 					1f, 0f, 0f,
@@ -30,12 +30,12 @@ public class GenericSquare extends AbstractEntity {
 					1f, 1f,1f,
 					material,
 					VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-		}
+		//}
 		
 		ModelInstance instance = new ModelInstance(floor);
 		//instance.transform.translate((map_x*Game.UNIT)-(Game.UNIT/2), 0.1f, (map_y*Game.UNIT)-(Game.UNIT/2));
-		instance.transform.translate(map_x, 0.1f, map_y);
-		instance.calculateTransforms();
+		instance.transform.translate(map_x, 0.05f, map_y); // Raise it slightly
+		//instance.calculateTransforms();
 		this.addComponent(new HasModel(this.getClass().getSimpleName(), instance));
 
 	}

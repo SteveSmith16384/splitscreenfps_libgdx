@@ -2,9 +2,16 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
@@ -12,6 +19,7 @@ import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
+import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class EntityFactory {
@@ -23,6 +31,52 @@ public class EntityFactory {
 	}
 	
 	
+	public AbstractEntity createCrate(float map_x, float map_z) {
+		float SIZE = 0.3f;
+		AbstractEntity entity = new AbstractEntity(ecs, "Crate");
+
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("sf/crate.png")));
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model box_model = modelBuilder.createBox(SIZE, SIZE, SIZE, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(map_x+SIZE/2,SIZE/2, map_z+SIZE/2));
+		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
+
+		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
+		entity.addComponent(model);
+
+        CollidesComponent cc = new CollidesComponent(true, instance);
+        entity.addComponent(cc);	
+
+		return entity;	
+		
+	}
+
+
+	public AbstractEntity createDoor(float map_x, float map_z, boolean rot90) {
+		AbstractEntity entity = new AbstractEntity(ecs, "Door");
+
+		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
+		entity.addComponent(posData);
+
+		HasDecal hasDecal = new HasDecal();
+		Texture tex = new Texture(Gdx.files.internal("sf/door1.jpg"));
+		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
+        hasDecal.decal = Decal.newDecal(tr, true);
+        hasDecal.decal.setScale(1f / tr.getRegionWidth());
+        hasDecal.decal.setPosition(posData.position);
+        hasDecal.faceCamera = false;
+        hasDecal.faceCameraTilted = true;        
+        entity.addComponent(hasDecal);	
+		
+        CollidesComponent cc = new CollidesComponent(true, .5f);
+        entity.addComponent(cc);	
+		
+		return entity;	
+		
+	}
+
+
 	public AbstractEntity createLitter(int type, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Litter");
 
@@ -36,7 +90,7 @@ public class EntityFactory {
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
-        hasDecal.faceCameraTilted = true;        
+        hasDecal.faceCameraTilted = true;
         entity.addComponent(hasDecal);	
 		
         entity.addComponent(new CombinesWithLitterComponent(true, type));

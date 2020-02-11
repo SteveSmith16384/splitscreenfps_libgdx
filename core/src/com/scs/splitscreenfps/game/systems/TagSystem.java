@@ -14,6 +14,8 @@ import com.scs.splitscreenfps.game.components.TagableComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
+import ssmith.lang.NumberFunctions;
+
 /**
  * System for checking if one player has "tagged" another player.
  * @author StephenCS
@@ -45,7 +47,7 @@ public class TagSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity it_entity) {
 		if (currentIt == null) {
 			// Choose random player
-			this.currentIt = game.players[0];//NumberFunctions.rnd(0, 3)]; // todo - check num players
+			this.currentIt = game.players[NumberFunctions.rnd(0, 3)]; // todo - check num players
 
 			TagableComponent it2 = (TagableComponent)it_entity.getComponent(TagableComponent.class);
 			this.swapModel(it_entity, it2);
