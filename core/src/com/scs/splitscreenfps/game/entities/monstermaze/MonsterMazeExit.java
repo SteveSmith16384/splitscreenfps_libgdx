@@ -30,7 +30,7 @@ public class MonsterMazeExit extends AbstractEntity {
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
-        hasDecal.faceCameraTilted = true;        
+        hasDecal.dontLockYAxis = true;        
         this.addComponent(hasDecal);
 
         HasDecalCycle cycle = new HasDecalCycle(.5f, 2);

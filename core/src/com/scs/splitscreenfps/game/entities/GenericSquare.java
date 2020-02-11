@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.scs.basicecs.AbstractEntity;
@@ -20,7 +21,10 @@ public class GenericSquare extends AbstractEntity {
 		super(ecs, GenericSquare.class.getSimpleName());
 
 		//if (floor == null) {
-			Material material = new Material(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal(filename))));		
+		BlendingAttribute blendingAttribute = new BlendingAttribute();
+		blendingAttribute.opacity = 1f;
+		
+		Material material = new Material(TextureAttribute.createDiffuse(new Texture(Gdx.files.internal(filename))), blendingAttribute);		
 			ModelBuilder modelBuilder = new ModelBuilder();
 			Model floor = modelBuilder.createRect(
 					0f, 0f, 1,

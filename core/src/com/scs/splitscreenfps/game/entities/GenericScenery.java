@@ -25,7 +25,7 @@ public class GenericScenery extends AbstractEntity {
         hasDecal.decal.setScale(1f / tr.getRegionWidth() / 2);
         hasDecal.decal.setPosition(new Vector3(x, -.5f, y));
         hasDecal.faceCamera = true;
-        hasDecal.faceCameraTilted = true;        
+        hasDecal.dontLockYAxis = true;        
         this.addComponent(hasDecal);
         
         if (blocks_movement) {

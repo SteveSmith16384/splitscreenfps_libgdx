@@ -245,6 +245,12 @@ public class Game implements IModule {
 				batch2d.draw(slime, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 				batch2d.setColor(1,1,1,1f);
 			}
+			if (Settings.TEST_SCREEN_COORDS) {
+				font_white.draw(batch2d, "TL", 20, 20);
+				font_white.draw(batch2d, "TR", Settings.LOGICAL_WIDTH_PIXELS-20, 20);
+				font_white.draw(batch2d, "BL", 10, Settings.LOGICAL_HEIGHT_PIXELS-20);
+				font_white.draw(batch2d, "BR", Settings.LOGICAL_WIDTH_PIXELS-20, Settings.LOGICAL_HEIGHT_PIXELS-20);
+			}
 			if (Settings.SHOW_FPS) {
 				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}

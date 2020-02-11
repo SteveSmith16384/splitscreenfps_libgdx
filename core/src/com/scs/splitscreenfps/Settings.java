@@ -8,6 +8,7 @@ public class Settings {
 	public static final boolean RELEASE_MODE = false;
 	
 	// Hacks
+	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && true;
 	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && true;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	
@@ -20,6 +21,7 @@ public class Settings {
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
+	// Logical size of viewport
 	public static final int LOGICAL_WIDTH_PIXELS = 640;
 	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	

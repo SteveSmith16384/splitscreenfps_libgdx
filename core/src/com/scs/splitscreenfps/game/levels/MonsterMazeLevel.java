@@ -54,7 +54,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 				game.mapData.map[x][z] = new MapSquare();
 				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {
-					Wall wall = new Wall(game.ecs, "monstermaze/wall.png", x, z, false);
+					Wall wall = new Wall(game.ecs, "monstermaze/wall.png", x, 0, z, false);
 					game.ecs.addEntity(wall);
 				}
 			}

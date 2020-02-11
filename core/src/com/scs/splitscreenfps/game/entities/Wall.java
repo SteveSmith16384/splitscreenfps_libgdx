@@ -16,14 +16,14 @@ import com.scs.splitscreenfps.game.components.HasModel;
 
 public class Wall extends AbstractEntity {
 
-	public Wall(BasicECS ecs, String tex_filename, int mapPosX, int mapPosZ, boolean add_collision) {
+	public Wall(BasicECS ecs, String tex_filename, int mapPosX, float yPos, int mapPosZ, boolean add_collision) {
 		super(ecs, Wall.class.getSimpleName());
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, 0.5f, mapPosZ+0.5f));
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, yPos+0.5f, mapPosZ+0.5f));
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 
 		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);

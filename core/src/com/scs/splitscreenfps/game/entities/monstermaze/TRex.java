@@ -34,7 +34,7 @@ public class TRex extends AbstractEntity {
         hasDecal.decal = Decal.newDecal(tr, true);
         hasDecal.decal.setScale(1f / tr.getRegionWidth()); // Scale to sq size by default
         hasDecal.faceCamera = true;
-        hasDecal.faceCameraTilted = true;        
+        hasDecal.dontLockYAxis = true;        
         this.addComponent(hasDecal);
         
         HasDecalCycle cycle = new HasDecalCycle(.8f, 2);

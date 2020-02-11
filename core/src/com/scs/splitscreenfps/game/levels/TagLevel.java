@@ -57,11 +57,12 @@ public class TagLevel extends AbstractLevel {
 						Ceiling ceiling= new Ceiling(game.ecs, "sf/corridor.jpg", x, z, 1, 1, false, 1f);
 						game.ecs.addEntity(ceiling);
 					} else {
-						Wall wall = new Wall(game.ecs, "sf/spacewall2.png", x, z, false);
+						Wall wall = new Wall(game.ecs, "sf/spacewall2.png", x, 0, z, false);
 						game.ecs.addEntity(wall);
 					}
 				} else {
-					Floor floor = new Floor(game.ecs, "", "sf/floor3.jpg", x, z, 1f, 1f);
+					//Floor floor = new Floor(game.ecs, "", "sf/floor3.jpg", x, z, 1f, 1f);
+					Wall floor = new Wall(game.ecs, "sf/floor3.jpg", x, -1, z, false);
 					game.ecs.addEntity(floor);
 
 					int rnd = NumberFunctions.rnd(1,  5);
@@ -72,7 +73,9 @@ public class TagLevel extends AbstractLevel {
 						//AbstractEntity door = game.entityFactory.createDoor(x, z, false);
 						//game.ecs.addEntity(door);
 					} else if (rnd == 3) {
-						AbstractEntity crate = game.entityFactory.createCrate(x, z);
+						float offX = NumberFunctions.rndFloat(0,  .5f);
+						float offZ = NumberFunctions.rndFloat(0,  .5f);
+						AbstractEntity crate = game.entityFactory.createCrate(x+offX, z+offZ);
 						game.ecs.addEntity(crate);
 					}
 

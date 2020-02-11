@@ -22,6 +22,8 @@ import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
+import ssmith.lang.NumberFunctions;
+
 public class EntityFactory {
 	
 	private BasicECS ecs;
@@ -39,8 +41,12 @@ public class EntityFactory {
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(SIZE, SIZE, SIZE, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		ModelInstance instance = new ModelInstance(box_model, new Vector3(map_x+SIZE/2,SIZE/2, map_z+SIZE/2));
+		PositionComponent posData = new PositionComponent(map_x+(SIZE/2), map_z+(SIZE/2));
+		entity.addComponent(posData);
+
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(map_x+SIZE/2, SIZE/2, map_z+SIZE/2));
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
+		instance.transform.rotate(Vector3.Y, NumberFunctions.rnd(0, 90));
 
 		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
 		entity.addComponent(model);
@@ -66,7 +72,7 @@ public class EntityFactory {
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = false;
-        hasDecal.faceCameraTilted = true;        
+        hasDecal.dontLockYAxis = false;        
         entity.addComponent(hasDecal);	
 		
         CollidesComponent cc = new CollidesComponent(true, .5f);
@@ -90,7 +96,7 @@ public class EntityFactory {
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
-        hasDecal.faceCameraTilted = true;
+        hasDecal.dontLockYAxis = true;
         entity.addComponent(hasDecal);	
 		
         entity.addComponent(new CombinesWithLitterComponent(true, type));
@@ -130,7 +136,7 @@ public class EntityFactory {
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
-        hasDecal.faceCameraTilted = true;        
+        hasDecal.dontLockYAxis = true;        
         entity.addComponent(hasDecal);	
 		
         entity.addComponent(new CombinesWithLitterComponent(false, type));

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PositionComponent {
 
 	public Vector3 position; // Used to determine the centre of the bounding box for collisions!
+	public float angle;
 	public Vector3 originalPosition = new Vector3();
 
 	public PositionComponent() {

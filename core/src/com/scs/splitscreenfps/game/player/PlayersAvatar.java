@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
@@ -237,15 +237,12 @@ public class PlayersAvatar extends AbstractEntity {
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 
-			hasModel.model.transform.setTranslation(pos.position.x, pos.position.y + hasModel.yOffset, pos.position.z);
+			//hasModel.model.transform.setTranslation(pos.position.x, pos.position.y + hasModel.yOffset, pos.position.z);
 
 			//Settings.p("-------------------");
 
-			//Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-			//float cam_ang = v2.angle();
-			/*if (cam_ang == 0) {
-				return; // dont process nonPC cams
-			}*/
+			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
+			pos.angle = v2.angle();
 			//Settings.p("cam_ang=" + cam_ang);
 
 			float turn = this.cameraController.camAngleChange;
@@ -309,7 +306,8 @@ public class PlayersAvatar extends AbstractEntity {
 	
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
+		//font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
+		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, 20);
 	}
 
 

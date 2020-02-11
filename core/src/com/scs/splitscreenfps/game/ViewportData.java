@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 //import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessing;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 
 public class ViewportData {
@@ -86,7 +87,7 @@ public class ViewportData {
 		camera.viewportWidth = w;
 		camera.viewportHeight = h;
 		
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, w, h, true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Settings.LOGICAL_WIDTH_PIXELS, Settings.LOGICAL_HEIGHT_PIXELS, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		if (Gdx.app.getType() != ApplicationType.WebGL) {
