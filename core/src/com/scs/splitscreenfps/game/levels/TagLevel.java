@@ -51,8 +51,19 @@ public class TagLevel extends AbstractLevel {
 			this.startPositions[i] = maze.getStartPos();
 		}
 
-		for (int z=0 ; z<map_height ; z++) {
-			for (int x=0 ; x<map_width ; x++) {
+		for (int z=-1 ; z<=map_height ; z++) {
+			for (int x=-1 ; x<=map_width ; x++) {
+				if (x == -1 || z == -1 || x == map_width || z == map_height) {
+					Wall wall = new Wall(game.ecs, "sf/spacewall2.png", x, 0, z, false);
+					game.ecs.addEntity(wall);
+
+					// underground floor
+					Wall floor = new Wall(game.ecs, "sf/floor3.jpg", x, -1, z, false);
+					game.ecs.addEntity(floor);
+
+					continue;
+				}
+				
 				game.mapData.map[x][z] = new MapSquare();
 				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {

@@ -47,9 +47,8 @@ public class TagSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity it_entity) {
 		if (currentIt == null) {
 			// Choose random player
-			this.currentIt = game.players[NumberFunctions.rnd(0, 3)]; // todo - check num players
-
-			TagableComponent it2 = (TagableComponent)it_entity.getComponent(TagableComponent.class);
+			this.currentIt = game.players[NumberFunctions.rnd(0, game.players.length-1)];
+			TagableComponent it2 = (TagableComponent)currentIt.getComponent(TagableComponent.class);
 			this.swapModel(it_entity, it2);
 		}
 
@@ -75,7 +74,7 @@ public class TagSystem extends AbstractSystem {
 			AbstractEntity e = cr.collidedWith;
 			TagableComponent clean_tagable = (TagableComponent)e.getComponent(TagableComponent.class);
 			if (clean_tagable != null) {
-				Settings.p("Player " + clean_tagable.playerId + " tagged");
+				Settings.p("Player " + clean_tagable.playerId + " tagged!");
 				
 				// Change "it" player to normal
 				this.swapModel(it_entity, it_tagable);
@@ -92,6 +91,8 @@ public class TagSystem extends AbstractSystem {
 
 	
 	private void swapModel(AbstractEntity it_entity, TagableComponent it_tagable) {
+		Settings.p("Swapping model of player #" + it_tagable.playerId);
+
 		HasModel hasModel = (HasModel)it_entity.getComponent(HasModel.class);
 		AnimatedForAvatarComponent animatedForAvatarComponent = (AnimatedForAvatarComponent)it_entity.getComponent(AnimatedForAvatarComponent.class);
 		AnimatedComponent animatedComponent = (AnimatedComponent)it_entity.getComponent(AnimatedComponent.class);
