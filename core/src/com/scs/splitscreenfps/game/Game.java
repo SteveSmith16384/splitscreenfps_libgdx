@@ -68,8 +68,7 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
-	private Texture green;
-
+	private Texture slime;
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -95,7 +94,7 @@ public class Game implements IModule {
 		currentLevel = new TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
-		green = new Texture(Gdx.files.internal("slime.jpg"));
+		slime = new Texture(Gdx.files.internal("slime.jpg"));
 	}
 
 
@@ -246,7 +245,7 @@ public class Game implements IModule {
 				} else {
 					batch2d.setColor(1,1,1,.5f);
 				}
-				batch2d.draw(green, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+				batch2d.draw(slime, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 				batch2d.setColor(1,1,1,1f);
 			}
 			if (Settings.SHOW_FPS) {
