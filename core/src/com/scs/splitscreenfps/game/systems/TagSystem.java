@@ -24,7 +24,7 @@ import ssmith.lang.NumberFunctions;
  */
 public class TagSystem extends AbstractSystem {
 
-	public static final long TAG_INTERVAL = 4000;
+	public static final long TAG_INTERVAL = 10000;
 
 	private Game game;
 
@@ -48,9 +48,9 @@ public class TagSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity it_entity) {
 		if (currentIt == null) {
 			// Choose random player
-			this.currentIt = game.players[NumberFunctions.rnd(0, game.players.length-1)];
+			this.currentIt = game.players[0];// todo NumberFunctions.rnd(0, game.players.length-1)];
 			TagableComponent it2 = (TagableComponent)currentIt.getComponent(TagableComponent.class);
-			this.swapModel(it_entity, it2);
+			this.swapModel(it2);
 		}
 
 		if (it_entity != this.currentIt) {
@@ -67,7 +67,7 @@ public class TagSystem extends AbstractSystem {
 		
 		// Check for winner
 		if (it_tagable.timeLeftAsIt <= 0) {
-			game.playerHasLost(it_tagable.playerId);
+			game.playerHasLost(it_tagable.player);
 		}
 
 		CollidesComponent cc = (CollidesComponent)it_entity.getComponent(CollidesComponent.class);
@@ -75,12 +75,12 @@ public class TagSystem extends AbstractSystem {
 			AbstractEntity e = cr.collidedWith;
 			TagableComponent clean_tagable = (TagableComponent)e.getComponent(TagableComponent.class);
 			if (clean_tagable != null) {
-				Settings.p("Player " + clean_tagable.playerId + " tagged!");
+				Settings.p("Player " + clean_tagable.player + " tagged!");
 				
 				// Change "it" player to normal
-				this.swapModel(it_entity, it_tagable);
+				this.swapModel(it_tagable);
 				// Change normal player to "it"
-				this.swapModel(e, clean_tagable);
+				this.swapModel(clean_tagable);
 
 				this.currentIt = cr.collidedWith;
 				lastTagTime = System.currentTimeMillis();
@@ -89,24 +89,24 @@ public class TagSystem extends AbstractSystem {
 				
 				MovementData movementData = (MovementData)this.currentIt.getComponent(MovementData.class);
 				movementData.frozenUntil = System.currentTimeMillis() + TAG_INTERVAL;
-						
 			}
 		}
 	}
 
 	
-	private void swapModel(AbstractEntity it_entity, TagableComponent it_tagable) {
-		Settings.p("Swapping model of player #" + it_tagable.playerId);
+	private void swapModel(TagableComponent it_tagable) {
+		Settings.p("Swapping model of player #" + it_tagable.player);
 
+		AbstractEntity it_entity = it_tagable.player;
 		HasModel hasModel = (HasModel)it_entity.getComponent(HasModel.class);
 		AnimatedForAvatarComponent animatedForAvatarComponent = (AnimatedForAvatarComponent)it_entity.getComponent(AnimatedForAvatarComponent.class);
 		AnimatedComponent animatedComponent = (AnimatedComponent)it_entity.getComponent(AnimatedComponent.class);
 
 		// Store current
 		TagableComponent tmp = new TagableComponent(null); // temp for swapping vars
-		tmp.animated = animatedComponent;
-		tmp.avatarAnim = animatedForAvatarComponent;
-		tmp.hasModel = hasModel;
+		tmp.storedAnimated = animatedComponent;
+		tmp.storedAvatarAnim = animatedForAvatarComponent;
+		tmp.storedHasModel = hasModel;
 
 		// Remove current
 		it_entity.removeComponent(HasModel.class);
@@ -114,14 +114,16 @@ public class TagSystem extends AbstractSystem {
 		it_entity.removeComponent(AnimatedComponent.class);
 
 		// Put other ones in
-		it_entity.addComponent(it_tagable.animated);
-		it_entity.addComponent(it_tagable.avatarAnim);
-		it_entity.addComponent(it_tagable.hasModel);
-		
-		
-		it_tagable.animated = tmp.animated;
-		it_tagable.avatarAnim = tmp.avatarAnim;
-		it_tagable.hasModel = tmp.hasModel;
+		it_entity.addComponent(it_tagable.storedAnimated);
+		it_entity.addComponent(it_tagable.storedAvatarAnim);
+		it_entity.addComponent(it_tagable.storedHasModel);
+				
+		it_tagable.storedAnimated = tmp.storedAnimated;
+		it_tagable.storedAvatarAnim = tmp.storedAvatarAnim;
+		it_tagable.storedHasModel = tmp.storedHasModel;
+
+		HasModel xxx = (HasModel)it_entity.getComponent(HasModel.class);
+		Settings.p("Model is now " + xxx.name);
 
 	}
 

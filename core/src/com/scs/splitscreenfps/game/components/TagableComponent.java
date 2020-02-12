@@ -6,14 +6,14 @@ public class TagableComponent {
 
 	public float timeLeftAsIt = 100; // When down to 0, game over!
 	
-	public AbstractEntity playerId;
+	public AbstractEntity player;
 	
 	// Fields for when swapping models
-	public HasModel hasModel;
-	public AnimatedForAvatarComponent avatarAnim;
-	public AnimatedComponent animated;
+	public HasModel storedHasModel;
+	public AnimatedForAvatarComponent storedAvatarAnim;
+	public AnimatedComponent storedAnimated;
 	
 	public TagableComponent(AbstractEntity _playerId) {
-		playerId = _playerId;
+		player = _playerId;
 	}
 }

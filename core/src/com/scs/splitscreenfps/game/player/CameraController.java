@@ -10,7 +10,8 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class CameraController {
 
-	private static final float MIN_AXIS = 0.1f;
+	private static final float MIN_AXIS = 0.2f;
+	
 	private Game game;
 	private Camera camera;
 	private Vector3 tmp;

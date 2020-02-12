@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
@@ -28,7 +29,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 public class PlayersAvatar extends AbstractEntity {
 
 	private static final float moveSpeed = 1.5f;
-	public static final float playerHeight = 0.52f;
+	//public static final float playerHeight = 0.52f;
 
 	private Game game;
 	public Camera camera;
@@ -63,7 +64,7 @@ public class PlayersAvatar extends AbstractEntity {
 		ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
-		this.addComponent(new CollidesComponent(false, .3f, playerHeight, .3f));
+		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 		
 		this.addComponent(new CanBeHarmedComponent());
 
@@ -85,17 +86,17 @@ public class PlayersAvatar extends AbstractEntity {
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 		HasModel hasModel = new HasModel("Skeleton", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
-		taggable.hasModel = hasModel;
+		taggable.storedHasModel = hasModel;
 
 		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
 		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
 		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
-		taggable.avatarAnim = avatarAnim;
+		taggable.storedAvatarAnim = avatarAnim;
 
 		AnimationController animation = new AnimationController(instance);
 		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
 		anim.animationController = animation;
-		taggable.animated = anim;
+		taggable.storedAnimated = anim;
 
 		return instance;
 	}
@@ -266,7 +267,7 @@ public class PlayersAvatar extends AbstractEntity {
 			}
 		}
 
-		camera.position.set(getPosition().x, getPosition().y + (playerHeight/2), getPosition().z);
+		camera.position.set(getPosition().x, getPosition().y + (Settings.PLAYER_HEIGHT/2), getPosition().z);
 
 		// Animate and footstep sfx
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
