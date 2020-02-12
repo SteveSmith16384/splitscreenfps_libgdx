@@ -5,7 +5,6 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -20,11 +19,9 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
-import com.scs.splitscreenfps.game.levels.TagLevel;
+import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
-import com.scs.splitscreenfps.game.systems.CheckForLitterInBinSystem;
-import com.scs.splitscreenfps.game.systems.CollectionSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
@@ -32,9 +29,8 @@ import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
 import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
-import com.scs.splitscreenfps.game.systems.MobAISystem;
+import com.scs.splitscreenfps.game.systems.MoveAStarSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
-import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.TagSystem;
@@ -62,7 +58,6 @@ public class Game implements IModule {
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
-	//private TagSystem tagSystem;
 
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
@@ -74,8 +69,6 @@ public class Game implements IModule {
 		game_stage = 0;
 
 		batch2d = new SpriteBatch();
-		//font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
-		//font_black = new BitmapFont(Gdx.files.internal("font/spectrum1black.fnt"));
 		this.loadFonts();
 
 		this.createECS();
@@ -89,7 +82,7 @@ public class Game implements IModule {
 			ecs.addEntity(players[i]);
 		}
 
-		currentLevel = new TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
+		currentLevel = new MonsterMazeLevel(this);//TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//
 		loadLevel();
 		this.currentLevel.addSystems(ecs);
 	}
@@ -125,6 +118,7 @@ public class Game implements IModule {
 		//ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
+		ecs.addSystem(new MoveAStarSystem(ecs, this));
 
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
@@ -170,6 +164,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(RemoveAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
+		this.ecs.getSystem(MoveAStarSystem.class).process();
 		//this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		//this.ecs.getSystem(CollectionSystem.class).process();

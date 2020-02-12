@@ -34,6 +34,8 @@
  */
 package ssmith.astar;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.math.GridPoint2;
 
 /**
@@ -48,9 +50,10 @@ public class AStar_LibGDX {
 	private PriorityList open;
 	private boolean[][] checked;
 	private int start_x, start_z, end_x, end_z, max_dist;
-	private volatile boolean finding_path = false;
-	private volatile boolean failed = false;
-	private volatile WayPoints route = new WayPoints();
+	//private boolean finding_path = false;
+	private boolean failed = false;
+	//private WayPoints route = new WayPoints();
+	private ArrayList<GridPoint2> route = new ArrayList<GridPoint2>();
 	private boolean can_timeout = false;
 	private long max_dur, timeout_time;
 	//public volatile static int tot_threads=0; // How many concurrent instances are there?
@@ -61,6 +64,10 @@ public class AStar_LibGDX {
 		this(intface);
 		can_timeout = true;
 		max_dur = max_duration;
+
+		if (max_duration <= 0) {
+			throw new RuntimeException("Invalid max duration");
+		}
 	}
 
 	public AStar_LibGDX(IAStarMapInterface intface) {
@@ -72,8 +79,8 @@ public class AStar_LibGDX {
 		strmap = new String[w][h];
 	}
 
-	public void findPath(int start_x, int start_z, int targ_x, int targ_z) {
-		findPath(start_x, start_z, targ_x, targ_z, -1);
+	public ArrayList<GridPoint2> findPath(int start_x, int start_z, int targ_x, int targ_z) {
+		return findPath(start_x, start_z, targ_x, targ_z, -1);
 
 	}
 
@@ -88,28 +95,24 @@ public class AStar_LibGDX {
 	 * @param thread - Run in a thread (otherwise block until finished).
 	 * 
 	 */
-	public void findPath(int start_x, int start_z, int targ_x, int targ_z, int max_dist) {
+	public ArrayList<GridPoint2> findPath(int start_x, int start_z, int targ_x, int targ_z, int max_dist) {
 		if (this.can_timeout) {
 			timeout_time = System.currentTimeMillis() + max_dur; 
 		}
 
-		if (finding_path) {
-			System.err.println("Trying to find path concurrently!");
-		}
 		//System.out.println("Finding path from " + start_x + "," + start_z + " to " + targ_x+ "," + targ_z + ".");
-		route = new WayPoints();
-		this.finding_path = true;
+		route = new ArrayList<GridPoint2>();
 		this.start_x = start_x;
 		this.start_z = start_z;
 		this.end_x = targ_x;
 		this.end_z = targ_z;
 		this.max_dist = max_dist;
 
-		run();
+		/*return run();
 	}
 
 
-	public void run() {
+	public ArrayList<GridPoint2> run() {*/
 		//System.out.println("Tot A* threads:" + this.tot_threads);
 
 		int w = map_interface.getMapWidth();
@@ -128,7 +131,6 @@ public class AStar_LibGDX {
 		open = new PriorityList();
 		checked = new boolean[w][h];
 
-
 		// Now find the path
 		Node node = new Node(start_x, start_z);
 		map[start_x][start_z] = node;
@@ -138,6 +140,7 @@ public class AStar_LibGDX {
 		while (node.x != end_x || node.z != end_z) {
 			if (can_timeout) {
 				if (System.currentTimeMillis() > this.timeout_time) {
+					System.err.println("A* Timed Out");
 					this.failed = true;
 					break;
 				}
@@ -157,8 +160,8 @@ public class AStar_LibGDX {
 			} else {
 				// Cannot get to the destination!
 				failed = true;
-				//System.out.println("Cannot get from " + start_x + "," + start_z + " to " + end_x + "," + end_z);
-				route = new WayPoints();
+				System.out.println("Cannot get from " + start_x + "," + start_z + " to " + end_x + "," + end_z);
+				route = new ArrayList<GridPoint2>();
 				break;
 			}
 		}
@@ -174,23 +177,21 @@ public class AStar_LibGDX {
 		strmap[start_x][start_z] = "S";
 		strmap[end_x][end_z] = "F";
 		//showMap();
-
-		this.finding_path = false;
 		//System.out.println("Finished finding path. (threads:" + this.tot_threads + ")");
+
+		return route;
 	}
 
-	public boolean isFindingPath() {
-		return this.finding_path;
-	}
 
 	public boolean wasSuccessful() {
 		return this.failed == false;
 	}
 
-	public WayPoints getRoute() {
+	/*
+	public ArrayList<GridPoint2> getRoute() {
 		return this.route;
 	}
-
+	 */
 	/**
 	 * Draw the map and route.
 	 *

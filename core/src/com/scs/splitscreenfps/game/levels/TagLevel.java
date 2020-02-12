@@ -21,7 +21,7 @@ import ssmith.lang.NumberFunctions;
 
 public class TagLevel extends AbstractLevel {
 
-	private Texture slime; // todo - move to player render
+	private Texture slime;
 
 	public TagLevel(Game _game) {
 		super(_game);
@@ -33,7 +33,6 @@ public class TagLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		loadMapFromMazegen(game);
-
 	}
 
 
@@ -52,10 +51,6 @@ public class TagLevel extends AbstractLevel {
 		game.mapData = new MapData(map_width, map_height);
 
 		MazeGen1 maze = new MazeGen1(map_width, map_height, map_width/2);
-
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = maze.getStartPos();
-		}
 
 		for (int z=-1 ; z<=map_height ; z++) {
 			for (int x=-1 ; x<=map_width ; x++) {
@@ -112,6 +107,10 @@ public class TagLevel extends AbstractLevel {
 				}
 
 			}
+		}
+
+		for (int i=0 ; i<this.startPositions.length ;i++) {
+			this.startPositions[i] = game.mapData.getRandomFloorPos();
 		}
 
 		//game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));

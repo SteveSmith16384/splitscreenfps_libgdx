@@ -26,7 +26,7 @@ public class AnimationSystem extends AbstractSystem {
 		if (anim.new_animation != null) {
 			if (anim.current_animation != anim.new_animation) {
 				anim.current_animation = anim.new_animation;
-				anim.animationController.animate(anim.current_animation, -1, 1.2f, null, 0f);
+				anim.animationController.animate(anim.current_animation, -1, 2f, null, 0f); // todo - move anim speed to model data
 			}
 		}		
 		anim.animationController.update(Gdx.graphics.getDeltaTime());

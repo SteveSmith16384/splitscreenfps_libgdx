@@ -9,7 +9,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;

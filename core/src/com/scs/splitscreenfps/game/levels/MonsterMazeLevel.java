@@ -10,10 +10,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
-import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
-
-import ssmith.lang.NumberFunctions;
 
 public class MonsterMazeLevel extends AbstractLevel {
 
@@ -47,10 +44,6 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		MazeGen1 maze = new MazeGen1(map_width, map_height, map_width/2);
 
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = maze.getStartPos();
-		}
-
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
 				game.mapData.map[x][z] = new MapSquare();
@@ -62,8 +55,11 @@ public class MonsterMazeLevel extends AbstractLevel {
 			}
 		}
 
-		PlayersAvatar target = game.players[NumberFunctions.rnd(0,  game.players.length-1)];
-		trex = new TRex(game.ecs, maze.middle_pos.x, maze.middle_pos.y, target);
+		for (int i=0 ; i<this.startPositions.length ;i++) {
+			this.startPositions[i] = maze.start_pos;//game.mapData.getStartPos();
+		}
+
+		trex = new TRex(game.ecs, maze.middle_pos.x, maze.middle_pos.y);
 		game.ecs.addEntity(trex);
 
 		MonsterMazeExit exit = new MonsterMazeExit(game.ecs, maze.end_pos.x, maze.end_pos.y);

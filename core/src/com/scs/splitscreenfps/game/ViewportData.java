@@ -8,10 +8,8 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
-//import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.bitfire.postprocessing.PostProcessing;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.decals.ShadedGroupStrategy;
 
 public class ViewportData {

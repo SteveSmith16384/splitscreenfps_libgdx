@@ -9,19 +9,16 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Graphics;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasAI;
+import com.scs.splitscreenfps.game.components.HarmsPlayerComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
+import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.player.PlayersAvatar;
-import com.scs.splitscreenfps.game.systems.MobAISystem.Mode;
-
-import ssmith.libgdx.MyBoundingBox;
 
 public class TRex extends AbstractEntity {
 
-    public TRex(BasicECS ecs, int x, int y, PlayersAvatar target) {
+    public TRex(BasicECS ecs, int x, int y) {
         super(ecs, TRex.class.getSimpleName());
 
         PositionComponent pos = new PositionComponent();
@@ -42,14 +39,16 @@ public class TRex extends AbstractEntity {
         cycle.decals[1] = Graphics.DecalHelper("monstermaze/trex2.png", 1f);
         this.addComponent(cycle);
         
-        HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, 7f, target);
-        this.addComponent(ai);
+        //HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, 7f, target);
+        //this.addComponent(ai);
+        MoveAStarComponent astar = new MoveAStarComponent(.1f, false);
+        this.addComponent(astar);       
         
         this.addComponent(new MovementData(.85f));
 
-        //this.addComponent(new HarmsPlayer(1));
+        this.addComponent(new HarmsPlayerComponent());
         
-        this.addComponent(new CollidesComponent(true, new MyBoundingBox(pos.position, .3f, .3f, .3f)));
+        this.addComponent(new CollidesComponent(true, .3f, .3f, .3f));
 
     }
     

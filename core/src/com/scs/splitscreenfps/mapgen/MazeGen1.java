@@ -5,8 +5,6 @@ import java.util.Random;
 
 import com.badlogic.gdx.math.GridPoint2;
 
-import ssmith.lang.NumberFunctions;
-
 public class MazeGen1 {
 
 	private static final char PASSAGE_CHAR = '.';
@@ -98,7 +96,7 @@ public class MazeGen1 {
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		final StringBuffer b = new StringBuffer();
 		for ( int y = 0; y < height; y++ ){
 			for ( int x = 0; x < width; x++ ) {
@@ -110,7 +108,7 @@ public class MazeGen1 {
 		return b.toString();
 	}
 	
-	
+/*	
 	public GridPoint2 getStartPos() {
 		while (true) {
 			int x = NumberFunctions.rnd(0,  this.width-1);
@@ -120,5 +118,5 @@ public class MazeGen1 {
 			}
 		}
 	}
-	
+	*/
 }

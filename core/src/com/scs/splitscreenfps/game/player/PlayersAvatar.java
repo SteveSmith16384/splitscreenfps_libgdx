@@ -135,15 +135,6 @@ public class PlayersAvatar extends AbstractEntity {
 
 		ModelInstance instance = new ModelInstance(model);
 
-		/*
-		Quaternion q = new Quaternion();
-		instance.transform.getRotation(q);
-		float ang = q.getAngleAround(Vector3.Y);
-		instance.transform.rotate(Vector3.Y, 100);
-		instance.transform.getRotation(q);
-		ang = q.getAngleAround(Vector3.Y);
-		*/
-		
 		//instance.transform.scl(.0016f);
 		//instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f, 90, 0.0016f);

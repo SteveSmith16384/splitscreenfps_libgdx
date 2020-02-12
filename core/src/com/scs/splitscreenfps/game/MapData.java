@@ -1,9 +1,13 @@
 package com.scs.splitscreenfps.game;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.data.MapSquare;
 
-public class MapData {
+import ssmith.astar.IAStarMapInterface;
+import ssmith.lang.NumberFunctions;
+
+public class MapData implements IAStarMapInterface {
 
 	public static final int NOTHING = 0;
 	public static final int WALL = 1;
@@ -133,6 +137,43 @@ public class MapData {
 
 	public MapSquare getMapSquareAt(Vector3 vec) {
 		return getMapSquareAt((int)((vec.x)+0.5f), (int)((vec.z)+0.5f));
+	}
+
+
+	public GridPoint2 getRandomFloorPos() {
+		while (true) {
+			int x = NumberFunctions.rnd(0,  this.getMapWidth()-1);
+			int y = NumberFunctions.rnd(0,  this.getMapHeight()-1);
+			if (map[x][y].blocked == false) {
+				return new GridPoint2(x, y);
+			}
+		}
+	}
+	
+
+	//--- A Star
+
+	@Override
+	public int getMapWidth() {
+		return map.length;
+	}
+
+
+	@Override
+	public int getMapHeight() {
+		return map[0].length;
+	}
+
+
+	@Override
+	public boolean isMapSquareTraversable(int x, int z) {
+		return this.map[x][z].blocked == false;
+	}
+
+
+	@Override
+	public float getMapSquareDifficulty(int x, int z) {
+		return 1;
 	}
 
 
