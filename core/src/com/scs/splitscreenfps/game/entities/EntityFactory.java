@@ -37,11 +37,11 @@ public class EntityFactory {
 		float SIZE = 0.3f;
 		AbstractEntity entity = new AbstractEntity(ecs, "Crate");
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("sf/crate.png")));
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("tag/scifi_crate.jpg")));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(SIZE, SIZE, SIZE, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		PositionComponent posData = new PositionComponent(map_x+(SIZE/2), map_z+(SIZE/2));
+		PositionComponent posData = new PositionComponent(map_x+(SIZE/2), SIZE/2, map_z+(SIZE/2));
 		entity.addComponent(posData);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(map_x+SIZE/2, SIZE/2, map_z+SIZE/2));
@@ -49,7 +49,7 @@ public class EntityFactory {
 		//instance.transform.rotate(Vector3.Y, NumberFunctions.rnd(0, 90));
 
 		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
-		model.yOffset += SIZE/2;
+		//model.yOffset += SIZE/2;
 		model.angleOffset = NumberFunctions.rnd(0, 90);
 		entity.addComponent(model);
 

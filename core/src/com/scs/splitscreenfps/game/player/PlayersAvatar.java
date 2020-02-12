@@ -27,7 +27,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 public class PlayersAvatar extends AbstractEntity {
 
 	private static final float moveSpeed = 1.5f;
-	public static final float playerHeight = 0.26f;
+	public static final float playerHeight = 0.52f;
 
 	private Game game;
 	public Camera camera;
@@ -62,7 +62,7 @@ public class PlayersAvatar extends AbstractEntity {
 		ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
-		this.addComponent(new CollidesComponent(false, .15f)); // todo - make y 0-height
+		this.addComponent(new CollidesComponent(false, .3f, playerHeight, .3f));
 
 		camera = _viewportData.camera;
 
@@ -280,7 +280,7 @@ public class PlayersAvatar extends AbstractEntity {
 			}
 		}
 
-		camera.position.set(getPosition().x, getPosition().y + playerHeight, getPosition().z);
+		camera.position.set(getPosition().x, getPosition().y + (playerHeight/2), getPosition().z);
 
 		// Animate and footstep sfx
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);

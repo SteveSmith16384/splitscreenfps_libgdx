@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -26,7 +28,7 @@ import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 public class PreGameScreen implements IModule {
 
 	private SpriteBatch batch2d;
-	private final BitmapFont font_white;
+	private BitmapFont font_white;
 	private ControllerManager controllerManager = new ControllerManager(null);
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
@@ -43,11 +45,22 @@ public class PreGameScreen implements IModule {
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
+		loadFonts();
+		
 		this.appendToLog("Welcome to " + Settings.TITLE);
 		this.appendToLog("Looking for controllers...");
 
 	}
 
+
+	private void loadFonts() {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 12;
+		font_white = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+	}
+	
 
 	@Override
 	public void render() {

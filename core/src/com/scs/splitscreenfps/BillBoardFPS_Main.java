@@ -21,7 +21,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	private boolean toggleFullscreen = false, fullscreen = false;
 
 	@Override
-	public void create () {
+	public void create() {
 		if (Settings.DEFAULT_4_PLAYERS) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
@@ -33,8 +33,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			current_module = new PreGameScreen(this);//Game();
 		}
 	}
-
-
+	
+	
 	@Override
 	public void render() {
 		if (next_module != null) {

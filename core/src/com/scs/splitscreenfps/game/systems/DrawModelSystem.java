@@ -50,16 +50,12 @@ public class DrawModelSystem extends AbstractSystem {
 	public void process(Camera cam) {
 		this.modelBatch.begin(cam);
 
-		//Gdx.gl.glEnable(GL20.GL_BLEND); // scs todo - do I need this?
-		//Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			this.processEntity(entity, cam);
 		}
 
-		//Gdx.gl.glDisable(GL20.GL_BLEND);
 
 		this.modelBatch.end();
 
@@ -85,7 +81,7 @@ public class DrawModelSystem extends AbstractSystem {
 			} else {
 				model.model.transform.getTranslation(tmp);
 			}
-			//todo - only draw if in frustum 
+			// Only draw if in frustum 
 			if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
 				return;
 			}

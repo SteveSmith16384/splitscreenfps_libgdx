@@ -26,8 +26,6 @@ public class CollisionCheckSystem extends AbstractSystem {
 
 	private void setBB(AbstractEntity mover, CollidesComponent moverCC, float offX, float offZ) {
 		PositionComponent posData = (PositionComponent)mover.getComponent(PositionComponent.class);
-		//CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
-		// todo - add model yOffset!
 		moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 		
 	}
@@ -50,14 +48,14 @@ public class CollisionCheckSystem extends AbstractSystem {
 			if (e != mover) {
 				CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
 				if (cc != null) {
-					if (e.name == "Crate") {
-						int dfgdfg = 345;
-					}
+					/*if (e.name == "Crate") {
+						Settings.p("");
+					}*/
 					if (cc.bb_dirty) {
 						setBB(e, cc, 0, 0);
 						cc.bb_dirty = false;
 					}
-					if (moverCC.bb.intersects(cc.bb)) { // todo - box cc height wrong
+					if (moverCC.bb.intersects(cc.bb)) {
 						//Settings.p(mover + " collided with " + e);
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 						/*if (cc.blocksMovement) {

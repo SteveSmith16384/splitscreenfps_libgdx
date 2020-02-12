@@ -65,7 +65,7 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
-	private Texture slime;
+	private Texture slime; // todo - move to player render
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -91,7 +91,7 @@ public class Game implements IModule {
 		currentLevel = new TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//MonsterMazeLevel(this);
 		loadLevel();
 
-		slime = new Texture(Gdx.files.internal("slime.jpg"));
+		slime = new Texture(Gdx.files.internal("tag/slime.jpg"));
 	}
 
 

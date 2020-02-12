@@ -29,6 +29,12 @@ public class CollidesComponent {
 	}
 
 
+	public CollidesComponent(boolean _blocks, float w, float h, float d) {
+		this.blocksMovement = _blocks;
+		bb = new MyBoundingBox(w, h, d);
+	}
+
+
 	public CollidesComponent(boolean _blocks, ModelInstance instance) {
 		this.blocksMovement = _blocks;
 

@@ -129,6 +129,11 @@ public class MyBoundingBox implements Serializable {
 	}
 
 	
+	public MyBoundingBox(float w, float h, float d) {
+		this (new Vector3(-w/2, -h/2, -d/2), new Vector3(w/2, +h/2, d/2));
+	}
+
+	
 	/** Constructs the new bounding box using the given minimum and maximum vector.
 	 *
 	 * @param minimum The minimum vector
