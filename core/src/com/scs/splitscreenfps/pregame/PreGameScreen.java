@@ -82,7 +82,7 @@ public class PreGameScreen implements IModule {
 			y -= 20;
 		}
 
-		if (this.controllerManager.getAllControllers().size >= 1) {
+		if (this.controllerManager.getInGameControllers().size() >= 1) {
 			font_white.draw(batch2d, "PRESS SPACE TO START!", 10, y);
 		}
 		

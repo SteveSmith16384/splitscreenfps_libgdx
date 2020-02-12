@@ -49,6 +49,7 @@ public class EntityFactory {
 		//instance.transform.rotate(Vector3.Y, NumberFunctions.rnd(0, 90));
 
 		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
+		model.yOffset += SIZE/2;
 		model.angleOffset = NumberFunctions.rnd(0, 90);
 		entity.addComponent(model);
 

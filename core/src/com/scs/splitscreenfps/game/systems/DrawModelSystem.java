@@ -68,9 +68,9 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
-		/*if (entity.name == "Crate") {
+		if (entity.name == "Crate") {
 			int dfgdfg = 345;
-		}*/
+		}
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
 		if (model.dontDrawInViewId != game.currentViewId) {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
