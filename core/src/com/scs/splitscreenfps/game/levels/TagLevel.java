@@ -1,26 +1,32 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.systems.TagSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 import ssmith.lang.NumberFunctions;
 
 public class TagLevel extends AbstractLevel {
 
-	private Game game;
+	private Texture slime; // todo - move to player render
 
 	public TagLevel(Game _game) {
-		super();
+		super(_game);
 
-		game = _game;
+		slime = new Texture(Gdx.files.internal("tag/slime.jpg"));
 	}
 
 
@@ -32,7 +38,7 @@ public class TagLevel extends AbstractLevel {
 
 
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 
 
@@ -45,7 +51,7 @@ public class TagLevel extends AbstractLevel {
 
 		game.mapData = new MapData(map_width, map_height);
 
-		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
+		MazeGen1 maze = new MazeGen1(map_width, map_height, map_width/2);
 
 		for (int i=0 ; i<this.startPositions.length ;i++) {
 			this.startPositions[i] = maze.getStartPos();
@@ -63,7 +69,7 @@ public class TagLevel extends AbstractLevel {
 
 					continue;
 				}
-				
+
 				game.mapData.map[x][z] = new MapSquare();
 				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {
@@ -111,5 +117,37 @@ public class TagLevel extends AbstractLevel {
 		//game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));
 	}
 
+
+	@Override
+	public void addSystems(BasicECS ecs) {
+		TagSystem tagSystem = new TagSystem(ecs, game);
+		ecs.addSystem(tagSystem);
+	}
+
+
+	@Override
+	public void update(MapData world) {
+		game.ecs.processSystem(TagSystem.class);
+	}
+
+
+	@Override
+	public void renderUI(SpriteBatch batch2d, BitmapFont font_white, ViewportData viewportData) {
+		// Draw slime
+		TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
+		if (tagSystem != null) {
+			if (tagSystem.currentIt.id == game.players[game.currentViewId].id) {
+				if (tagSystem.lastTagTime + TagSystem.TAG_INTERVAL > System.currentTimeMillis()) {
+					batch2d.setColor(1, 1, 1 ,1);
+				} else {
+					batch2d.setColor(1, 1, 1, 0.5f);
+				}
+				//batch2d.draw(slime, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
+				batch2d.draw(slime, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+				batch2d.setColor(1, 1, 1, 1f);
+			}
+		}
+
+	}
 
 }

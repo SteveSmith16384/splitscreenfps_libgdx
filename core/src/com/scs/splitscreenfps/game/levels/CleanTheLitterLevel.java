@@ -1,21 +1,20 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.systems.CheckForLitterInBinSystem;
+import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 public class CleanTheLitterLevel extends AbstractLevel {
 
-	private Game game;
-
 	public CleanTheLitterLevel(Game _game) {
-		super();
-		
-		game = _game;
-	}
+		super(_game);
+			}
 
 
 	public void setBackgroundColour() {
@@ -57,6 +56,21 @@ public class CleanTheLitterLevel extends AbstractLevel {
 		}
 
 		//game.ecs.addEntity(new Floor("colours/white.png", map_width, map_height, false));
+	}
+
+
+	@Override
+	public void addSystems(BasicECS ecs) {
+		ecs.addSystem(new PickupDropSystem(ecs, game));
+		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
+		
+	}
+
+
+	@Override
+	public void update(MapData world) {
+		game.ecs.getSystem(PickupDropSystem.class).process();
+		game.ecs.getSystem(CheckForLitterInBinSystem.class).process();
 	}
 
 }

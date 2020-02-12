@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
@@ -18,11 +19,10 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 	private static final String DATA_FILE = "leveldata/test_level.csv";
 	private static final String ENAME = "TEST_";
 
-	private Game game;
 	private long lastFileTime = -1;
 
 	public LoadMapDynamicallyLevel(Game _game) {
-		game = _game;
+		super(_game);
 	}
 
 
@@ -54,7 +54,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 
 
 	@Override
-	public void update(Game game, MapData world) {
+	public void update(MapData world) {
 		readFile();
 	}
 	
@@ -128,6 +128,12 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 				}
 			}
 		}
+	}
+
+
+	@Override
+	public void addSystems(BasicECS ecs) {
+		
 	}
 
 }

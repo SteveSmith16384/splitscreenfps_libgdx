@@ -68,7 +68,7 @@ public abstract class AbstractSystem implements ISystem {
 
 	
 	public String toString() {
-		return name; //super.toString();
+		return name;
 	}
 	
 }

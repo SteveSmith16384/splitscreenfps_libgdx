@@ -1,6 +1,8 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
@@ -16,12 +18,9 @@ import ssmith.lang.NumberFunctions;
 public class MonsterMazeLevel extends AbstractLevel {
 
 	private TRex trex;
-	private Game game;
 
 	public MonsterMazeLevel(Game _game) {
-		super();
-		
-		game = _game;
+		super(_game);
 	}
 
 
@@ -38,15 +37,18 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 
 	private void loadMapFromMazegen(Game game) {
-		this.map_width = 16;
-		this.map_height = 16;
+		this.map_width = 15 + game.players.length;
+		if (Settings.SMALL_MAP) {
+			this.map_width = 9;
+		}
+		this.map_height = map_width;
 
 		game.mapData = new MapData(map_width, map_height);
 
-		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
+		MazeGen1 maze = new MazeGen1(map_width, map_height, map_width/2);
 
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = maze.start_pos;
+			this.startPositions[i] = maze.getStartPos();
 		}
 
 		for (int z=0 ; z<map_height ; z++) {
@@ -70,41 +72,17 @@ public class MonsterMazeLevel extends AbstractLevel {
 		game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));
 	}
 
-	/*
-	private void loadTestMap(Game game) {
-		this.map_width = 5;
-		this.map_height = 5;
 
-		Game.world.world = new WorldSquare[map_width][map_height];
-
-		this.playerStartMapX = 1;
-		this.playerStartMapY = 1;
-
-		for (int z=0 ; z<map_height ; z++) {
-			for (int x=0 ; x<map_width ; x++) {
-				int type = World.NOTHING;
-				Game.world.world[x][z] = new WorldSquare();
-				if (x == 0 || z == 0 || x >= map_width-1 || z >= map_height-1) {
-					type = World.WALL;
-					Wall wall = new Wall("monstermaze/wall.png", x, z);
-					game.ecs.addEntity(wall);
-				} else if (x == 2 && z == 2) {
-					type = World.WALL;
-					Wall wall = new Wall("monstermaze/wall.png", x, z);
-					game.ecs.addEntity(wall);
-				} else if (x == 3 && z == 1) {
-					trex = new TRex(x, z);
-					game.ecs.addEntity(trex);
-				} else if (x == 3 && z == 3) {
-					MonsterMazeExit exit = new MonsterMazeExit(x, z);
-					game.ecs.addEntity(exit);
-				}
-
-				Game.world.world[x][z].blocked = type == World.WALL;
-			}
-		}
+	@Override
+	public void addSystems(BasicECS ecs) {
+		// TODO Auto-generated method stub
+		
 	}
-	 */
 
+
+	@Override
+	public void update(MapData world) {
+		
+	}
 
 }

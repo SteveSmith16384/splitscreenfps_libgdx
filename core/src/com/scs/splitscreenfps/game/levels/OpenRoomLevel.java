@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
@@ -9,10 +10,8 @@ import com.scs.splitscreenfps.game.entities.Floor;
 
 public class OpenRoomLevel extends AbstractLevel {
 
-	private Game game;
-
 	public OpenRoomLevel(Game _game) {
-		game = _game;
+		super(_game);
 	}
 
 
@@ -45,6 +44,18 @@ public class OpenRoomLevel extends AbstractLevel {
 
 		AbstractEntity litter_bin = game.entityFactory.createLitterBin(0, 4, 4);
 		game.ecs.addEntity(litter_bin);
+	}
+
+
+	@Override
+	public void addSystems(BasicECS ecs) {
+		
+	}
+
+
+	@Override
+	public void update(MapData world) {
+		
 	}
 
 }

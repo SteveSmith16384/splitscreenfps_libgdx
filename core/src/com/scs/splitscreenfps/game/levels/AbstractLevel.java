@@ -4,16 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
+import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.ViewportData;
 
 public abstract class AbstractLevel {
 
+	protected Game game;
 	protected int map_width;
 	protected int map_height;
 	protected GridPoint2 startPositions[] = new GridPoint2[4];
 	
-	public AbstractLevel() {
+	public AbstractLevel(Game _game) {
+		game = _game;
 	}
 	
 	public void setBackgroundColour() {
@@ -22,9 +26,11 @@ public abstract class AbstractLevel {
 
 	public abstract void load();
 	
-	public void update(Game game, MapData world) {};
+	public abstract void addSystems(BasicECS ecs);
+
+	public abstract void update(MapData world);
 	
-	public void renderUI(SpriteBatch batch, BitmapFont font_white, BitmapFont font_black) {}
+	public void renderUI(SpriteBatch batch, BitmapFont font_white, ViewportData viewportData) {}
 
 	public GridPoint2 getPlayerStartMap(int idx) {
 		return this.startPositions[idx];

@@ -42,7 +42,8 @@ public class PreGameScreen implements IModule {
 		batch2d = new SpriteBatch();
 		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
 
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		loadFonts();
@@ -87,6 +88,9 @@ public class PreGameScreen implements IModule {
 			}
 			//font_white.draw(batch2d, str.toString(), 10, y);
 			y -= 20;
+		}
+		if (allControllers.size == 0) {
+			font_white.draw(batch2d, "No Controllers Found", 10, y);
 		}
 		
 		y = Gdx.graphics.getHeight() - 220;
