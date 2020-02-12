@@ -9,9 +9,21 @@ public abstract class AbstractSystem implements ISystem {
 	protected BasicECS ecs;
 	protected List<AbstractEntity> entities;
 	private String name;
+	protected Class<?> component_class;
 
 	public AbstractSystem(BasicECS _ecs) {
+		this(_ecs, null);
+	}
+	
+	
+	/**
+	 * 
+	 * @param _ecs
+	 * @param _component_class The component that this system is interested in.
+	 */
+	public AbstractSystem(BasicECS _ecs,  Class<?> _component_class) {
 		this.ecs = _ecs;
+		component_class = _component_class;
 		
 		name = this.getClass().getSimpleName();
 
@@ -24,12 +36,11 @@ public abstract class AbstractSystem implements ISystem {
 
 
 	/**
-	 * Override if this system should only deal with entities that have a specific component.
 	 * Note to future self: Do NOT change this to handle multiple component types.  If that is
 	 * needed, create a separate system!
 	 */
-	public Class<?> getComponentClass() {
-		return null;
+	public Class<?> getComponentClass() { // todo - make final when sure it works
+		return component_class;
 	}
 
 

@@ -50,7 +50,10 @@ public class MovementSystem extends AbstractSystem {
 			movementData.offset = auto.dir.cpy().scl(Gdx.graphics.getDeltaTime());
 		}
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-			TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
+			if (movementData.frozenUntil > System.currentTimeMillis()) {
+				return;
+			}
+			/*TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
 			if (tagSystem != null) { // Gets removed at end of game
 				if (tagSystem.currentIt == entity) {
 					if (System.currentTimeMillis() < tagSystem.lastTagTime + TagSystem.TAG_INTERVAL) {
@@ -59,7 +62,7 @@ public class MovementSystem extends AbstractSystem {
 						movementData.offset.scl(1.2f);
 					}
 				}
-			}
+			}*/
 
 			this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
 		}

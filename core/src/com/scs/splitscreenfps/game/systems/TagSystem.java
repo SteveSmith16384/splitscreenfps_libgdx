@@ -10,6 +10,7 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.TagableComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -85,6 +86,10 @@ public class TagSystem extends AbstractSystem {
 				lastTagTime = System.currentTimeMillis();
 
 				game.ecs.addEntity(new TextEntity(ecs, "PLAYER TAGGED!", 50, 2));
+				
+				MovementData movementData = (MovementData)this.currentIt.getComponent(MovementData.class);
+				movementData.frozenUntil = System.currentTimeMillis() + TAG_INTERVAL;
+						
 			}
 		}
 	}

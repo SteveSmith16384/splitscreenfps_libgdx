@@ -15,6 +15,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
+import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CanCollect;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
@@ -63,6 +64,8 @@ public class PlayersAvatar extends AbstractEntity {
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
 		this.addComponent(new CollidesComponent(false, .3f, playerHeight, .3f));
+		
+		this.addComponent(new CanBeHarmedComponent());
 
 		camera = _viewportData.camera;
 
@@ -226,16 +229,8 @@ public class PlayersAvatar extends AbstractEntity {
 		HasModel hasModel = (HasModel)getComponent(HasModel.class);
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
-
-			//hasModel.model.transform.setTranslation(pos.position.x, pos.position.y + hasModel.yOffset, pos.position.z);
-
-			//Settings.p("-------------------");
-
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			pos.angle = -v2.angle();
-			//Settings.p("cam_ang=" + cam_ang);
-			//float turn = this.cameraController.camAngleChange;
-			//hasModel.model.transform.rotate(Vector3.Y, turn);
 		}
 	}
 
