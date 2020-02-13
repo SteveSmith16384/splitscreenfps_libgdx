@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Graphics;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HarmsPlayerComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -15,6 +14,8 @@ import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+
+import ssmith.libgdx.GraphicsHelper;
 
 public class TRex extends AbstractEntity {
 
@@ -36,7 +37,7 @@ public class TRex extends AbstractEntity {
         
         HasDecalCycle cycle = new HasDecalCycle(.8f, 2);
         cycle.decals[0] = hasDecal.decal;
-        cycle.decals[1] = Graphics.DecalHelper("monstermaze/trex2.png", 1f);
+        cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
         this.addComponent(cycle);
         
         //HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, 7f, target);

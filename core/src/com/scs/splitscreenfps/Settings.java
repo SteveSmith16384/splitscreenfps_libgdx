@@ -10,12 +10,10 @@ public class Settings {
 	// Hacks
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
-	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && true;
-	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
+	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && false;
+	public static final boolean SHOW_FPS = !RELEASE_MODE && true;
 	
 	public static final float PLAYER_HEIGHT = 0.52f;
-	//public static final float CAMERA_HEIGHT_OFFSET = -.2f;
-	//public static final int ENEMY_HEALTH = 3;
 	
 	public static final String TITLE ="Touch-and-Go";
 
@@ -23,8 +21,8 @@ public class Settings {
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
 	// Logical size of viewport
-	public static final int LOGICAL_WIDTH_PIXELS = 320;//640;
-	public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
+	//public static final int LOGICAL_WIDTH_PIXELS = 320;//640;
+	//public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	
 	public static Random random = new Random();
 

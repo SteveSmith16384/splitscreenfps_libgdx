@@ -14,17 +14,17 @@ public class ControllerManager implements ControllerListener {
 
 	private List<Controller> inGameControllers = new ArrayList<Controller>();
 	private Array<Controller> allControllers = new Array<Controller>();
-	//private List<Controller> controllersAdded = new ArrayList<Controller>();
-	//private List<Controller> controllersRemoved = new ArrayList<Controller>();
 
-	//private IControllerListener listener;
+	private int max_controllers;
 	private long lastCheckTime;
 
-	public ControllerManager(ControllerListener listener) {
-		Controllers.addListener(this);
+	public ControllerManager(ControllerListener listener, int _max_controllers) {
 		if (listener != null) {
 			Controllers.addListener(listener);
 		}
+		max_controllers = _max_controllers;
+		
+		Controllers.addListener(this);
 	}
 
 
@@ -53,31 +53,7 @@ public class ControllerManager implements ControllerListener {
 		synchronized (allControllers) {
 			allControllers = Controllers.getControllers();
 		}
-		/*Array<Controller> controllers = Controllers.getControllers();
-		for (Controller controller : controllers) {
-			if (knownControllers.contains(controller) == false) {
-				knownControllers.add(controller);
-				//if (controller.getName().toLowerCase().indexOf("keyboard") < 0) {
-					controllersAdded.add(controller);
-				//}
-				//p("Controller added: " + controller);
-			}
-		}
 
-		// Removed controllers
-		/*for (Controller knownController : this.knownControllers) {
-			boolean found = false; 
-			for (Controller controller : controllers) {
-				if (controller == knownController) {
-					found = true;
-					break;
-				}
-			}
-			if (found == false) {
-				this.knownControllers.remove(knownController);
-				this.controllersRemoved.add(knownController);
-			}
-		}*/
 	}
 
 
@@ -100,8 +76,12 @@ public class ControllerManager implements ControllerListener {
 	public boolean buttonDown(Controller controller, int buttonCode) {
 		if (buttonCode == 0) {
 			synchronized (inGameControllers) {
-				if (this.inGameControllers.contains(controller) == false) {
-					this.inGameControllers.add(controller);
+				if (this.inGameControllers.size() < this.max_controllers) {
+					if (this.inGameControllers.contains(controller) == false) {
+						this.inGameControllers.add(controller);
+					}
+				} else {
+					System.err.println("maximum controllers reached");
 				}
 			}
 		}

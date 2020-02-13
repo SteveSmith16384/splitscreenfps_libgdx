@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Audio;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
@@ -22,6 +21,7 @@ import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
+import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
@@ -36,9 +36,6 @@ import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.TagSystem;
 
 public class Game implements IModule {
-
-	public static final Graphics art = new Graphics();
-	public static final Audio audio = new Audio();
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
@@ -65,6 +62,8 @@ public class Game implements IModule {
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
+		
+		BillBoardFPS_Main.audio.startMusic("audio/Heroic Demise (New).mp3");
 
 		game_stage = 0;
 
@@ -263,7 +262,6 @@ public class Game implements IModule {
 			viewportData.dispose();
 		}
 		font.dispose(); 
-		audio.dipose();
 		batch2d.dispose();
 	}
 

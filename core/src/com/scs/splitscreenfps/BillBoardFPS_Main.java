@@ -12,9 +12,15 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
+import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
 
+import ssmith.libgdx.GraphicsHelper;
+
 public class BillBoardFPS_Main extends ApplicationAdapter {
+
+	public static final GraphicsHelper art = new GraphicsHelper();
+	public static final AudioSystem audio = new AudioSystem();
 
 	private IModule current_module;
 	public  IModule next_module;
@@ -33,8 +39,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			current_module = new PreGameScreen(this);//Game();
 		}
 	}
-	
-	
+
+
 	@Override
 	public void render() {
 		if (next_module != null) {
@@ -42,13 +48,13 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			this.current_module = this.next_module;
 			this.next_module = null;
 		}
-		
-		
+
+
 		if (current_module != null) {
 			current_module.render();
 		}
 
-		Game.audio.update();
+		audio.update();
 
 		if (Gdx.input.isKeyPressed(Keys.F1)) {
 			if (Gdx.app.getType() == ApplicationType.WebGL) {
@@ -98,7 +104,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		if (current_module != null) {
 			current_module.dispose();
 		}
+		audio.dipose();
 	}
-	
+
 }
 

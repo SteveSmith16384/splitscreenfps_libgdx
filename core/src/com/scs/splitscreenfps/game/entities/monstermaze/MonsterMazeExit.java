@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Graphics;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
+import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.MyBoundingBox;
 
 public class MonsterMazeExit extends AbstractEntity {
@@ -35,7 +35,7 @@ public class MonsterMazeExit extends AbstractEntity {
 
         HasDecalCycle cycle = new HasDecalCycle(.5f, 2);
         cycle.decals[0] = hasDecal.decal;
-        cycle.decals[1] = Graphics.DecalHelper("monstermaze/exit2.png", 1f);
+        cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/exit2.png", 1f);
         this.addComponent(cycle);
         
 		//this.addComponent(new CompletesLevelData());

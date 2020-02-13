@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
@@ -76,6 +77,8 @@ public class TagSystem extends AbstractSystem {
 			TagableComponent clean_tagable = (TagableComponent)e.getComponent(TagableComponent.class);
 			if (clean_tagable != null) {
 				Settings.p("Player " + clean_tagable.player + " tagged!");
+				
+				BillBoardFPS_Main.audio.play("audio/impactsplat01.mp3.flac");
 				
 				// Change "it" player to normal
 				this.swapModel(it_tagable);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -28,39 +29,52 @@ import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 public class PreGameScreen implements IModule {
 
 	private SpriteBatch batch2d;
-	private BitmapFont font_white;
-	private ControllerManager controllerManager = new ControllerManager(null);
+	private BitmapFont font;
+	private ControllerManager controllerManager = new ControllerManager(null, 3);
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
-
+	private Sprite logo;
+	
 	public PreGameScreen(BillBoardFPS_Main _main) {
 		super();
 
 		main = _main;
 
 		batch2d = new SpriteBatch();
-		font_white = new BitmapFont(Gdx.files.internal("font/spectrum1white.fnt"));
+		//font_white = new BitmapFont(Gdx.files.internal("fonts/spectrum1white.fnt"));
 
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-		loadFonts();
+		loadAssetsForResize();
 		
 		this.appendToLog("Welcome to " + Settings.TITLE);
 		this.appendToLog("Looking for controllers...");
-
+		if (Settings.RELEASE_MODE == false) {
+			this.appendToLog("WARNING! Game in debug mode!");
+		}
+		
 	}
 
 
-	private void loadFonts() {
+	private void loadAssetsForResize() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferWidth()/23;
-		font_white = generator.generateFont(parameter); // font size 12 pixels
+		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
+		Settings.p("Font size=" + parameter.size);
+		font = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
-	}
+
+        Texture logoTex = new Texture(Gdx.files.internal("tag/tag_logo.png"));		
+		logo = new Sprite(logoTex);
+		//logo.scale((Gdx.graphics.getBackBufferWidth() / logo.getWidth()) / 2);
+		//logo.setOrigin(logo.getWidth()/2, logo.getHeight()/2);
+		//logo.setPosition(Gdx.graphics.getBackBufferWidth()/2, Gdx.graphics.getBackBufferHeight()/2);
+		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+		logo.setColor(.2f, .2f, .2f,  1);
+}
 	
 
 	@Override
@@ -75,32 +89,35 @@ public class PreGameScreen implements IModule {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		batch2d.begin();
-		int y = Gdx.graphics.getHeight() - 20;
+		
+		logo.draw(batch2d);
+		
+		font.setColor(1f,  1f,  1f,  1f);
+		
+		int y = Gdx.graphics.getHeight() - (int)this.font.getLineHeight()*5;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
 		for (Controller c : allControllers) {
-			//StringBuilder str = new StringBuilder("Controller " + c.getName());
-			font_white.draw(batch2d, "Controller " + c.getName(), 10, y);
+			font.draw(batch2d, "Controller " + c.getName(), 10, y);
 
 			if (this.controllerManager.isControllerInGame(c)) {
-				font_white.draw(batch2d, "IN GAME!", 10, y-10);
+				font.draw(batch2d, "IN GAME!", 10, y-10);
 			} else {
-				font_white.draw(batch2d, "Not in game", 10, y-10);
+				font.draw(batch2d, "Not in game", 10, y-10);
 			}
-			//font_white.draw(batch2d, str.toString(), 10, y);
-			y -= 20;
+			y -= this.font.getLineHeight();
 		}
 		if (allControllers.size == 0) {
-			font_white.draw(batch2d, "No Controllers Found", 10, y);
+			font.draw(batch2d, "No Controllers Found", 10, y);
 		}
 		
-		y = Gdx.graphics.getHeight() - 220;
+		y = Gdx.graphics.getHeight()/2;// - 220;
 		for (String s :this.log) {
-			font_white.draw(batch2d, s, 10, y);
+			font.draw(batch2d, s, 10, y);
 			y -= 20;
 		}
 
 		if (this.controllerManager.getInGameControllers().size() >= 1) {
-			font_white.draw(batch2d, "PRESS SPACE TO START!", 10, y);
+			font.draw(batch2d, "PRESS SPACE TO START!", 10, y);
 		}
 		
 		batch2d.end();
@@ -112,7 +129,7 @@ public class PreGameScreen implements IModule {
 		batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 
 		if (Settings.SHOW_FPS) {
-			font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
+			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
 		}
 
 		batch2d.end();
@@ -133,19 +150,19 @@ public class PreGameScreen implements IModule {
 	public void dispose() {
 		this.batch2d.dispose();
 		this.frameBuffer.dispose();
-		this.font_white.dispose();
+		this.font.dispose();
 	}
 
 
 	@Override
 	public void setFullScreen(boolean fullscreen) {
-
+		batch2d.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 
 	@Override
 	public void resize(int w, int h) {
-
+		this.loadAssetsForResize();
 	}
 
 
