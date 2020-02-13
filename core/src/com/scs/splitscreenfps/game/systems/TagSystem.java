@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -43,7 +44,7 @@ public class TagSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity it_entity) {
 		if (currentIt == null) {
 			// Choose random player
-			this.currentIt = game.players[0];// todo NumberFunctions.rnd(0, game.players.length-1)];
+			this.currentIt = game.players[NumberFunctions.rnd(0, game.players.length-1)];
 			TagableComponent it2 = (TagableComponent)currentIt.getComponent(TagableComponent.class);
 			this.swapModel(it2);
 		}
@@ -83,7 +84,7 @@ public class TagSystem extends AbstractSystem {
 				this.currentIt = cr.collidedWith;
 				lastTagTime = System.currentTimeMillis();
 
-				game.ecs.addEntity(new TextEntity(ecs, "PLAYER TAGGED!", 50, 2));
+				game.ecs.addEntity(new TextEntity(ecs, "YOU HAVE BEEN INFECTED", 50, 2, new Color(1, 1f, 0, 1)));
 				
 				MovementData movementData = (MovementData)this.currentIt.getComponent(MovementData.class);
 				movementData.frozenUntil = System.currentTimeMillis() + TAG_INTERVAL;

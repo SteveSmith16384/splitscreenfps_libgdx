@@ -11,19 +11,13 @@ import com.scs.splitscreenfps.game.components.DrawTextData;
 public class DrawTextSystem extends AbstractSystem {
 
 	private SpriteBatch batch2d;
-	private BitmapFont font_white;
+	private BitmapFont font;
 
-	public DrawTextSystem(BasicECS ecs, SpriteBatch _batch2d, BitmapFont _font_white) {
-		super(ecs);
+	public DrawTextSystem(BasicECS ecs, SpriteBatch _batch2d, BitmapFont _font) {
+		super(ecs, DrawTextData.class);
 
 		batch2d = _batch2d;
-		font_white = _font_white;
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return DrawTextData.class;
+		font = _font;
 	}
 
 
@@ -40,7 +34,8 @@ public class DrawTextSystem extends AbstractSystem {
 				dtd.x = Gdx.graphics.getWidth() / 2 - len;
 			}
 
-			font_white.draw(batch2d, dtd.text, dtd.x, dtd.y);
+			font.setColor(dtd.colour);
+			font.draw(batch2d, dtd.text, dtd.x, dtd.y);
 		}
 
 	}

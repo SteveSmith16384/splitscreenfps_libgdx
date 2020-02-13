@@ -49,7 +49,8 @@ public class AStar_LibGDX {
 	private Node map[][];
 	private PriorityList open;
 	private boolean[][] checked;
-	private int start_x, start_z, end_x, end_z, max_dist;
+	//private int start_x, start_z, end_x, end_z, max_dist;
+	private int end_x, end_z;
 	//private boolean finding_path = false;
 	private boolean failed = false;
 	//private WayPoints route = new WayPoints();
@@ -102,11 +103,11 @@ public class AStar_LibGDX {
 
 		//System.out.println("Finding path from " + start_x + "," + start_z + " to " + targ_x+ "," + targ_z + ".");
 		route = new ArrayList<GridPoint2>();
-		this.start_x = start_x;
-		this.start_z = start_z;
+		//this.start_x = start_x;
+		//this.start_z = start_z;
 		this.end_x = targ_x;
 		this.end_z = targ_z;
-		this.max_dist = max_dist;
+		//this.max_dist = max_dist;
 
 		/*return run();
 	}

@@ -9,8 +9,10 @@ public class CollisionResultsList {
 	public boolean blocksMovement = false; // Do any of the collisions block our movement?
 
 	public void AddCollisionResult(CollisionResult r) {
-		this.results.add(r);
-		this.blocksMovement = r.blocksMovement || this.blocksMovement;
+		if (this.results.contains(r) == false) { // Prevent registering the same collision twice
+			this.results.add(r);
+			this.blocksMovement = r.blocksMovement || this.blocksMovement;
+		}
 	}
 
 }

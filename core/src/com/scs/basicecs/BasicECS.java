@@ -37,9 +37,11 @@ public class BasicECS {
 		}
 	}
 	
+	
+	/**
+	 * Do not call this directly.  It should only be called by an AbstractEntity.
+	 */
 	public void addEntityToSystems(AbstractEntity e, Class<?> component_class) {
-		//e.addComponent(component);
-		
 		// Add to appropriate systems
 		for(ISystem isystem : this.systems.values()) {
 			if (isystem instanceof AbstractSystem) {

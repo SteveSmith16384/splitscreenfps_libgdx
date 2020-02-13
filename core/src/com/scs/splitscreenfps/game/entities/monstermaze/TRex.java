@@ -49,7 +49,7 @@ public class TRex extends AbstractEntity {
 
         this.addComponent(new TRexHarmsPlayerComponent());
         
-        this.addComponent(new CollidesComponent(true, .3f, .3f, .3f));
+        this.addComponent(new CollidesComponent(false, .3f, .3f, .3f));
 
     }
     

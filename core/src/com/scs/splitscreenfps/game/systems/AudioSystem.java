@@ -10,8 +10,7 @@ public class AudioSystem {
 
 	private Music music;
 	private HashMap<String, Sound> sounds; 
-	private float musicVolume;
-
+	//private float musicVolume;
 
 	public AudioSystem() {
 		sounds = new HashMap<String, Sound>();
@@ -40,8 +39,8 @@ public class AudioSystem {
 		music = Gdx.audio.newMusic(Gdx.files.internal(filename));//orbital_colossus.mp3"));
 		music.setLooping(true);
 		music.play();
-		music.setVolume(0f);
-		musicVolume = 0f;
+		music.setVolume(1f);
+		//musicVolume = 0f;
 		//}
 	}
 

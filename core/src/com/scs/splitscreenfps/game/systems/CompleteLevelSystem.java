@@ -30,7 +30,8 @@ public class CompleteLevelSystem extends AbstractSystem {
 			CanCompleteLevelComponent ccl = (CanCompleteLevelComponent)e.getComponent(CanCompleteLevelComponent.class);
 			if (ccl != null) {
 				game.ecs.removeSystem(CompleteLevelSystem.class);
-				// todo
+				game.playerHasWon(e);
+				break;
 			}
 		}
 		

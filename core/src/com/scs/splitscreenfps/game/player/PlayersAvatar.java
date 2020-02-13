@@ -62,7 +62,7 @@ public class PlayersAvatar extends AbstractEntity {
 		// Model stuff
 		//ModelInstance instance = this.addKnightComponents(idx);
 		//ModelInstance instance = this.addZombieComponents(idx);
-		ModelInstance instance = this.addSmooth_Male_ShirtComponents(idx);
+		this.addSmooth_Male_ShirtComponents(idx);
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
