@@ -42,7 +42,7 @@ public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	private BitmapFont font_white;
+	private BitmapFont font;
 	public final ViewportData[] viewports;
 
 	public PlayersAvatar[] players;
@@ -91,8 +91,8 @@ public class Game implements IModule {
 	private void loadFonts() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 12;
-		font_white = generator.generateFont(parameter); // font size 12 pixels
+		parameter.size = Gdx.graphics.getBackBufferWidth()/20;
+		font = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 	
@@ -114,7 +114,7 @@ public class Game implements IModule {
 		//ecs.addSystem(new MobAISystem(this, ecs));
 		ecs.addSystem(new MovementSystem(this, ecs));
 		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
-		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font_white));
+		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font));
 		//ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
@@ -200,28 +200,30 @@ public class Game implements IModule {
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
-			font_white.draw(batch2d, "Screen " + this.currentViewId, 10, 250);
+			//font_white.draw(batch2d, "Screen " + this.currentViewId, 10, 250);
 			if (this.game_stage == 1) {
 				if (this.loser == this.players[this.currentViewId]) {
-					font_white.draw(batch2d, "YOU HAVE LOST!", 10, 200);
+					font.setColor(0, 1, 0, 1);
+					font.draw(batch2d, "YOU HAVE LOST!", 10, Gdx.graphics.getBackBufferHeight()/2);
 				} else {
-					font_white.draw(batch2d, "You have survived!", 10, 200);
+					font.setColor(0, 1, 1, 1);
+					font.draw(batch2d, "You have survived!", 10, Gdx.graphics.getBackBufferHeight()/2);
 				}
 			}
 
-			currentLevel.renderUI(batch2d, font_white, viewports[currentViewId]);
+			currentLevel.renderUI(batch2d, font, viewports[currentViewId]);
 
 			if (players[currentViewId] != null) {
-				players[currentViewId].renderUI(batch2d, font_white);
+				players[currentViewId].renderUI(batch2d, font);
 			}
 
 			if (Settings.TEST_SCREEN_COORDS) {
-				font_white.draw(batch2d, "TL", 20, 20);
-				font_white.draw(batch2d, "50", 50, 50);
-				font_white.draw(batch2d, "150", 150, 150);
-				font_white.draw(batch2d, "TR", Settings.LOGICAL_WIDTH_PIXELS-20, 20);
-				font_white.draw(batch2d, "BL", 10, Settings.LOGICAL_HEIGHT_PIXELS-20);
-				font_white.draw(batch2d, "BR", Settings.LOGICAL_WIDTH_PIXELS-20, Settings.LOGICAL_HEIGHT_PIXELS-20);
+				font.draw(batch2d, "TL", 20, 20);
+				font.draw(batch2d, "50", 50, 50);
+				font.draw(batch2d, "150", 150, 150);
+				font.draw(batch2d, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
+				font.draw(batch2d, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
+				font.draw(batch2d, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
 			}
 
 			batch2d.end();
@@ -238,7 +240,7 @@ public class Game implements IModule {
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 			
 			if (Settings.SHOW_FPS) {
-				font_white.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
+				font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}
 
 			batch2d.end();
@@ -249,6 +251,7 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
+		this.loadFonts();
 		//this.resizeViewports(false);
 	}
 
@@ -259,7 +262,7 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
-		font_white.dispose(); 
+		font.dispose(); 
 		audio.dipose();
 		batch2d.dispose();
 	}

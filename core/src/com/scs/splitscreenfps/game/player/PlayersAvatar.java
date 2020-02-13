@@ -292,7 +292,11 @@ public class PlayersAvatar extends AbstractEntity {
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
 		//font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
-		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, 20);
+		if (tc.timeLeftAsIt < 20) {
+			font.setColor(1, 0, 0, 1);
+		}
+		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
+		font.setColor(1, 1, 1 ,1);
 	}
 
 

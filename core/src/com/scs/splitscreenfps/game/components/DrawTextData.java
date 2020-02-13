@@ -6,7 +6,7 @@ public class DrawTextData {
 	public String text;
 	public float drawUntil;
 	public boolean centre_x;
-	
+	// todo - dont colour
 	public DrawTextData() {
 
 	}

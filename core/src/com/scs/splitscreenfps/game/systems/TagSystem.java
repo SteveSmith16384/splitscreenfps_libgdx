@@ -24,7 +24,7 @@ import ssmith.lang.NumberFunctions;
  */
 public class TagSystem extends AbstractSystem {
 
-	public static final long TAG_INTERVAL = 10000;
+	public static final long TAG_INTERVAL = 4000;
 
 	private Game game;
 

@@ -57,7 +57,7 @@ public class PreGameScreen implements IModule {
 	private void loadFonts() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 12;
+		parameter.size = Gdx.graphics.getBackBufferWidth()/23;
 		font_white = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
