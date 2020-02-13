@@ -54,7 +54,7 @@ public class OpenRoomLevel extends AbstractLevel {
 
 
 	@Override
-	public void update(MapData world) {
+	public void update() {
 		
 	}
 

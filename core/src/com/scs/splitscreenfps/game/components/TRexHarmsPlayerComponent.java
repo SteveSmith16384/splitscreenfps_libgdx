@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.components;
 
-public class CanBeHarmedComponent {
-
+public class TRexHarmsPlayerComponent {
 
 }

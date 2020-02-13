@@ -19,6 +19,7 @@ import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CanCollect;
+import com.scs.splitscreenfps.game.components.CanCompleteLevelComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -65,8 +66,9 @@ public class PlayersAvatar extends AbstractEntity {
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
-		
+
 		this.addComponent(new CanBeHarmedComponent());
+		this.addComponent(new CanCompleteLevelComponent());
 
 		camera = _viewportData.camera;
 
@@ -76,7 +78,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 	private ModelInstance addSkeletonForTagged(int idx, TagableComponent taggable) {
 		AssetManager am = game.assetManager;
-		
+
 		am.load("models/Skeleton.g3dj", Model.class);
 		am.finishLoading();
 		Model model = am.get("models/Skeleton.g3dj");
@@ -101,7 +103,7 @@ public class PlayersAvatar extends AbstractEntity {
 		return instance;
 	}
 
-/*
+	/*
 	private ModelInstance addSkeletonComponents(int idx) {
 		AssetManager am = game.assetManager;
 
@@ -128,7 +130,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		return instance;
 	}
-*/
+	 */
 
 	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
 		AssetManager am = game.assetManager;
@@ -188,7 +190,7 @@ public class PlayersAvatar extends AbstractEntity {
 		return instance;
 	}*/
 
-/*
+	/*
 	private ModelInstance addKnightComponents(int idx) {
 		AssetManager am = game.assetManager;
 
@@ -215,7 +217,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		return instance;
 	}
-*/
+	 */
 
 	public Vector3 getPosition() {
 		return this.positionData.position;
@@ -288,17 +290,18 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 	}
 
-	
+
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		//font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
-		if (tc.timeLeftAsIt < 20) {
-			font.setColor(1, 0, 0, 1);
+		if (tc != null) {
+			//font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
+			if (tc.timeLeftAsIt < 20) {
+				font.setColor(1, 0, 0, 1);
+			}
+			font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
+			font.setColor(1, 1, 1 ,1);
 		}
-		font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
-		font.setColor(1, 1, 1 ,1);
 	}
-
 
 }
 

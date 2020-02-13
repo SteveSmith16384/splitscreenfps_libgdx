@@ -33,15 +33,9 @@ public class TagSystem extends AbstractSystem {
 	public long lastTagTime = System.currentTimeMillis(); // Can't move at start!
 
 	public TagSystem(BasicECS ecs, Game _game) {
-		super(ecs);
+		super(ecs, TagableComponent.class);
 
 		game = _game;
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return TagableComponent.class;
 	}
 
 
@@ -68,6 +62,7 @@ public class TagSystem extends AbstractSystem {
 		
 		// Check for winner
 		if (it_tagable.timeLeftAsIt <= 0) {
+			this.ecs.removeSystem(TagSystem.class);
 			game.playerHasLost(it_tagable.player);
 		}
 

@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -7,8 +8,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -21,8 +20,8 @@ import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
-import com.scs.splitscreenfps.game.systems.AudioSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
+import com.scs.splitscreenfps.game.systems.CompleteLevelSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
@@ -33,13 +32,12 @@ import com.scs.splitscreenfps.game.systems.MoveAStarSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
-import com.scs.splitscreenfps.game.systems.TagSystem;
 
 public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	private BitmapFont font;
+	public BitmapFont font;
 	public final ViewportData[] viewports;
 
 	public PlayersAvatar[] players;
@@ -51,7 +49,7 @@ public class Game implements IModule {
 
 	private int game_stage;
 	private long restartTime;
-	private AbstractEntity loser;
+	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
@@ -68,7 +66,6 @@ public class Game implements IModule {
 		game_stage = 0;
 
 		batch2d = new SpriteBatch();
-		this.loadFonts();
 
 		this.createECS();
 
@@ -83,16 +80,19 @@ public class Game implements IModule {
 
 		currentLevel = new TagLevel(this);//MonsterMazeLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//
 		loadLevel();
+		this.loadAssetsForRescale();
+		
 		this.currentLevel.addSystems(ecs);
 	}
 
 
-	private void loadFonts() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
+	private void loadAssetsForRescale() {
+		/*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferWidth()/20;
 		font = generator.generateFont(parameter); // font size 12 pixels
-		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!*/
+		this.currentLevel.loadAssets();
 	}
 	
 
@@ -118,7 +118,7 @@ public class Game implements IModule {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
 		ecs.addSystem(new MoveAStarSystem(ecs, this));
-
+		ecs.addSystem(new CompleteLevelSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 		
@@ -168,8 +168,9 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		//this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
-
-		currentLevel.update(mapData);
+		this.ecs.getSystem(CompleteLevelSystem.class).process();
+		
+		currentLevel.update();
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
 			ViewportData viewportData = this.viewports[currentViewId];
@@ -201,12 +202,12 @@ public class Game implements IModule {
 
 			//font_white.draw(batch2d, "Screen " + this.currentViewId, 10, 250);
 			if (this.game_stage == 1) {
-				if (this.loser == this.players[this.currentViewId]) {
+				if (this.losers.contains(this.players[this.currentViewId])) {
 					font.setColor(0, 1, 0, 1);
 					font.draw(batch2d, "YOU HAVE LOST!", 10, Gdx.graphics.getBackBufferHeight()/2);
 				} else {
 					font.setColor(0, 1, 1, 1);
-					font.draw(batch2d, "You have survived!", 10, Gdx.graphics.getBackBufferHeight()/2);
+					font.draw(batch2d, "YOU HAVE WON!", 10, Gdx.graphics.getBackBufferHeight()/2);
 				}
 			}
 
@@ -250,7 +251,7 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
-		this.loadFonts();
+		this.loadAssetsForRescale();
 		//this.resizeViewports(false);
 	}
 
@@ -275,10 +276,19 @@ public class Game implements IModule {
 
 	public void playerHasLost(AbstractEntity avatar) {
 		this.game_stage = 1;
-		this.ecs.removeSystem(TagSystem.class);
 		this.restartTime = System.currentTimeMillis() + 5000;
-		this.loser = avatar;
+		this.losers.add(avatar);
 	}
 
+
+	public void playerHasWon(AbstractEntity winner) {
+		this.game_stage = 1;
+		this.restartTime = System.currentTimeMillis() + 5000;
+		for(AbstractEntity player : this.players) {
+			if (player != winner) {
+				this.losers.add(player);
+			}
+		}
+	}
 }
 

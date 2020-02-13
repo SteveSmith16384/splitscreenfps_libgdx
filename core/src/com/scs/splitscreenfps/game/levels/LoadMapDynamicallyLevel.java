@@ -54,7 +54,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 
 
 	@Override
-	public void update(MapData world) {
+	public void update() {
 		readFile();
 	}
 	

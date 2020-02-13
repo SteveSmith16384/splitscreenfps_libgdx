@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HarmsPlayerComponent;
+import com.scs.splitscreenfps.game.components.TRexHarmsPlayerComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
@@ -42,12 +42,12 @@ public class TRex extends AbstractEntity {
         
         //HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, 7f, target);
         //this.addComponent(ai);
-        MoveAStarComponent astar = new MoveAStarComponent(.1f, false);
+        MoveAStarComponent astar = new MoveAStarComponent(.002f, false);
         this.addComponent(astar);       
         
         this.addComponent(new MovementData(.85f));
 
-        this.addComponent(new HarmsPlayerComponent());
+        this.addComponent(new TRexHarmsPlayerComponent());
         
         this.addComponent(new CollidesComponent(true, .3f, .3f, .3f));
 

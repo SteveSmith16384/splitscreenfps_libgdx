@@ -125,7 +125,7 @@ public class TagLevel extends AbstractLevel {
 
 
 	@Override
-	public void update(MapData world) {
+	public void update() {
 		game.ecs.processSystem(TagSystem.class);
 	}
 

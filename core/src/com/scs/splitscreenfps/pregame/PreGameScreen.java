@@ -42,10 +42,9 @@ public class PreGameScreen implements IModule {
 		main = _main;
 
 		batch2d = new SpriteBatch();
-		//font_white = new BitmapFont(Gdx.files.internal("fonts/spectrum1white.fnt"));
 
 		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 512, 512, true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 1024, 1024, true);
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		loadAssetsForResize();
@@ -113,7 +112,7 @@ public class PreGameScreen implements IModule {
 		y = Gdx.graphics.getHeight()/2;// - 220;
 		for (String s :this.log) {
 			font.draw(batch2d, s, 10, y);
-			y -= 20;
+			y -= this.font.getLineHeight();
 		}
 
 		if (this.controllerManager.getInGameControllers().size() >= 1) {

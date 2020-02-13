@@ -1,6 +1,8 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
@@ -10,6 +12,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
+import com.scs.splitscreenfps.game.systems.TRexHarmsPlayerSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 public class MonsterMazeLevel extends AbstractLevel {
@@ -28,6 +31,16 @@ public class MonsterMazeLevel extends AbstractLevel {
 	}
 
 
+	public void loadAssets() {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/zx_spectrum-7.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
+		//Settings.p("Font size=" + parameter.size);
+		game.font = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+	}
+	
+	
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 	}
@@ -71,14 +84,15 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		// TODO Auto-generated method stub
+		game.ecs.addSystem(new TRexHarmsPlayerSystem(game.ecs, this.startPositions[0].x, this.startPositions[0].y));
 		
 	}
 
 
 	@Override
-	public void update(MapData world) {
-		
+	public void update() {
+		game.ecs.processSystem(TRexHarmsPlayerSystem.class);
+
 	}
 
 }

@@ -68,7 +68,7 @@ public class CleanTheLitterLevel extends AbstractLevel {
 
 
 	@Override
-	public void update(MapData world) {
+	public void update() {
 		game.ecs.getSystem(PickupDropSystem.class).process();
 		game.ecs.getSystem(CheckForLitterInBinSystem.class).process();
 	}
