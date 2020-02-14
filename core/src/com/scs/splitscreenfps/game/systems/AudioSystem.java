@@ -56,7 +56,7 @@ public class AudioSystem {
 		if (sounds.containsKey(name)) {
 			sounds.get(name).play();
 		} else {
-			String filename = "audio/" + name;// + ".wav";
+			String filename = name;// + ".wav";
 			if (filename.indexOf(".") < 0) {
 				filename = filename + ".wav";
 			}

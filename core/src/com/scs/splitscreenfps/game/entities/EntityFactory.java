@@ -197,9 +197,9 @@ public class EntityFactory {
 		sprite.setOrigin(sprite.getWidth()/2f, 0);
 		//weaponSprite.setScale(7.5f, 5f);
 		//float scale = (float)Settings.WINDOW_WIDTH_PIXELS / (float)weaponTex.getWidth() / 3f;
-		sprite.setScale(10);
-		//sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
-		sprite.setPosition(100, 100);		
+		sprite.setScale(3);
+		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
+		//sprite.setPosition(100, 100);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED);
         entity.addComponent(hgsc);
         entity.hideComponent(HasGuiSpriteComponent.class); // Don't show it until picked up!

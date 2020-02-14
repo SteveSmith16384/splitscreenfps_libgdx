@@ -48,7 +48,7 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new MovementData(0.5f));
 		this.addComponent(new PositionComponent());
 		//this.addComponent(new CanCollectComponent());
-		this.addComponent(new CanCarry());
+		this.addComponent(new CanCarry(idx));
 
 		TagableComponent taggable = new TagableComponent(this);
 		addSkeletonForTagged(idx, taggable);

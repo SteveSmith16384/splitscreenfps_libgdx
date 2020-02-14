@@ -48,6 +48,9 @@ public class PickupDropSystem extends AbstractSystem {
 						cr.collidedWith.hideComponent(HasDecal.class);
 						cr.collidedWith.hideComponent(CombinesWithLitterComponent.class);
 						cr.collidedWith.restoreComponent(HasGuiSpriteComponent.class);
+						
+						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)cr.collidedWith.getComponent(HasGuiSpriteComponent.class);
+						hgsc.onlyViewId = cc.viewId;
 						cc.carrying = cr.collidedWith;
 						break;
 					}

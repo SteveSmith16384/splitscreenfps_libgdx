@@ -31,6 +31,7 @@ import com.scs.splitscreenfps.game.systems.DrawModelSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.MoveAStarSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
+import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.pregame.PreGameScreen;
@@ -127,6 +128,7 @@ public class Game implements IModule {
 		ecs.addSystem(new MoveAStarSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
+		ecs.addSystem(new PickupDropSystem(ecs, this));
 
 		entityFactory = new EntityFactory(ecs);
 	}
@@ -171,6 +173,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		//this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
+		this.ecs.getSystem(PickupDropSystem.class).process();
 
 		currentLevel.update();
 

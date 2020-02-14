@@ -61,7 +61,6 @@ public class CleanTheLitterLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new PickupDropSystem(ecs, game));
 		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
 		
 	}
@@ -69,7 +68,6 @@ public class CleanTheLitterLevel extends AbstractLevel {
 
 	@Override
 	public void update() {
-		game.ecs.getSystem(PickupDropSystem.class).process();
 		game.ecs.getSystem(CheckForLitterInBinSystem.class).process();
 	}
 

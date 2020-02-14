@@ -12,7 +12,7 @@ public class Settings {
 	public static final int CURRENT_MODE = MODE_MM;
 	
 	// Hacks
-	public static final boolean TEST_FILTER = !RELEASE_MODE && true;
+	public static final boolean TEST_FILTER = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && true;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && true;
