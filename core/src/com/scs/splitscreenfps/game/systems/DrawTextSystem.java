@@ -1,23 +1,23 @@
 package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextData;
 
 public class DrawTextSystem extends AbstractSystem {
 
+	private Game game;
 	private SpriteBatch batch2d;
-	private BitmapFont font;
 
-	public DrawTextSystem(BasicECS ecs, SpriteBatch _batch2d, BitmapFont _font) {
+	public DrawTextSystem(BasicECS ecs, Game _game, SpriteBatch _batch2d) {
 		super(ecs, DrawTextData.class);
 
+		game = _game;
 		batch2d = _batch2d;
-		font = _font;
 	}
 
 
@@ -34,8 +34,8 @@ public class DrawTextSystem extends AbstractSystem {
 				dtd.x = Gdx.graphics.getWidth() / 2 - len;
 			}
 
-			font.setColor(dtd.colour);
-			font.draw(batch2d, dtd.text, dtd.x, dtd.y);
+			game.font.setColor(dtd.colour);
+			game.font.draw(batch2d, dtd.text, dtd.x, dtd.y);
 		}
 
 	}

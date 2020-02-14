@@ -31,7 +31,7 @@ import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.MoveAStarSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
-import com.scs.splitscreenfps.game.systems.RemoveAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 
 public class Game implements IModule {
 
@@ -112,11 +112,11 @@ public class Game implements IModule {
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
 		//ecs.addSystem(new MobAISystem(this, ecs));
 		ecs.addSystem(new MovementSystem(this, ecs));
-		ecs.addSystem(new RemoveAfterTimeSystem(ecs));
-		ecs.addSystem(new DrawTextSystem(ecs, batch2d, font));
+		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
+		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
 		//ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
-		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this.batch2d));
+		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new MoveAStarSystem(ecs, this));
 		ecs.addSystem(new CompleteLevelSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
@@ -134,19 +134,11 @@ public class Game implements IModule {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
-
-			// Move model if it has one
-			/*HasModel hasModel = (HasModel)this.players[idx].getComponent(HasModel.class);
-			if (hasModel != null) {
-				hasModel.model.transform.setTranslation(posData.position);
-			}*/
-
-			/*ViewportData viewport = this.viewports[idx]; scs newly removed
-			Camera camera = viewport.camera;
-			camera.position.set(posData.position);
-			camera.position.y += Settings.CAMERA_HEIGHT_OFFSET;
-
-			camera.update();*/
+		}
+		
+		if (Settings.TEST_FILTER) {
+			AbstractEntity filter = this.entityFactory.createRedFilter(3);
+			ecs.addEntity(filter);
 		}
 	}
 
@@ -160,7 +152,7 @@ public class Game implements IModule {
 			}
 		}
 
-		this.ecs.getSystem(RemoveAfterTimeSystem.class).process();
+		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MoveAStarSystem.class).process();

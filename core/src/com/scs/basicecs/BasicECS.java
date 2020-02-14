@@ -39,9 +39,9 @@ public class BasicECS {
 	
 	
 	/**
-	 * Do not call this directly.  It should only be called by an AbstractEntity.
+	 * Do not call this directly.  It will be called automatically by AbstractEntity.
 	 */
-	public void addEntityToSystems(AbstractEntity e, Class<?> component_class) {
+	protected void addEntityToSystems(AbstractEntity e, Class<?> component_class) {
 		// Add to appropriate systems
 		for(ISystem isystem : this.systems.values()) {
 			if (isystem instanceof AbstractSystem) {
@@ -61,8 +61,10 @@ public class BasicECS {
 	}
 	
 	
-
-	public void removeEntityFromSystems(AbstractEntity e, Class<?> component_class) {
+	/**
+	 * Do not call this directly.  It will be called automatically by AbstractEntity.
+	 */
+	protected void removeEntityFromSystems(AbstractEntity e, Class<?> component_class) {
 		// Remove from appropriate systems
 		for(ISystem isystem : this.systems.values()) {
 			if (isystem instanceof AbstractSystem) {
@@ -78,7 +80,9 @@ public class BasicECS {
 	}
 	
 	
-
+	/**
+	 * Call this in your main loop to avoid concurrency errors.
+	 */
 	public void addAndRemoveEntities() {
 		// Remove any entities
 		for (int i = this.entities.size()-1 ; i >= 0; i--) {
@@ -134,7 +138,7 @@ public class BasicECS {
 	}
 
 
-	public Iterator<AbstractEntity> getIterator() {
+	public Iterator<AbstractEntity> getEntityIterator() {
 		return this.entities.iterator();
 	}
 

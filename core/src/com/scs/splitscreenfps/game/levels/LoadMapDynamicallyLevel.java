@@ -79,7 +79,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 			if (s.length() > 0 && s.startsWith("#") == false) {
 				String tokens[] = s.split("\t");
 				String name = ENAME + tokens[0];
-				Iterator<AbstractEntity> it = game.ecs.getIterator();
+				Iterator<AbstractEntity> it = game.ecs.getEntityIterator();
 				while (it.hasNext()) {
 					AbstractEntity entity = it.next();
 					if (entity.name.equalsIgnoreCase(name)) {

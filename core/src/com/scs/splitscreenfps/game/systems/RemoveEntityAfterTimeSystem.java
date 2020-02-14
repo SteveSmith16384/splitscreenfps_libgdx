@@ -4,32 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.RemoveAfterTimeData;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
-public class RemoveAfterTimeSystem extends AbstractSystem {
+public class RemoveEntityAfterTimeSystem extends AbstractSystem {
 
-	public RemoveAfterTimeSystem(BasicECS ecs) {
-		super(ecs);
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return RemoveAfterTimeData.class;
+	public RemoveEntityAfterTimeSystem(BasicECS ecs) {
+		super(ecs, RemoveEntityAfterTimeComponent.class);
 	}
 
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		RemoveAfterTimeData hdc = (RemoveAfterTimeData)entity.getComponent(RemoveAfterTimeData.class);
+		RemoveEntityAfterTimeComponent hdc = (RemoveEntityAfterTimeComponent)entity.getComponent(RemoveEntityAfterTimeComponent.class);
 
 		float dt = Gdx.graphics.getDeltaTime();
 
-		hdc.timeRemaining -= dt;
-		if(hdc.timeRemaining <= 0) {
+		hdc.timeRemaining_secs -= dt;
+		if(hdc.timeRemaining_secs <= 0) {
 			entity.remove();
 		}
 	}
-
 
 }

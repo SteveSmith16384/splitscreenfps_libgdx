@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -16,11 +17,14 @@ import com.scs.splitscreenfps.game.entities.TextEntity;
 
 public class TRexHarmsPlayerSystem extends AbstractSystem {
 
+	private Game game;
 	private long last_harm_done;
 	private int startX, startY;
 	
-	public TRexHarmsPlayerSystem(BasicECS ecs, int _startX, int _startY) {
+	public TRexHarmsPlayerSystem(BasicECS ecs, Game _game, int _startX, int _startY) {
 		super(ecs, TRexHarmsPlayerComponent.class);
+		
+		game = _game;
 		
 		startX = _startX;
 		startY = _startY;
@@ -44,6 +48,10 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 
 				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 3000, new Color(1, 0, 0, 1));
 				ecs.addEntity(te);
+				
+				//TRexHarmsPlayerComponent thp = (TRexHarmsPlayerComponent)e.getComponent(TRexHarmsPlayerComponent.class);
+				AbstractEntity redfilter = game.entityFactory.createRedFilter(ic.playerId);
+				ecs.addEntity(redfilter);
 				
 				// Freeze t-rex for a bit
 				MovementData movementData = (MovementData)entity.getComponent(MovementData.class);

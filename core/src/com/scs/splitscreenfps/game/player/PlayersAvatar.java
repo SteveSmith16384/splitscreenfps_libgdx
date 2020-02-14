@@ -30,16 +30,13 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 public class PlayersAvatar extends AbstractEntity {
 
 	private static final float moveSpeed = 1.5f;
-	//public static final float playerHeight = 0.52f;
 
 	private Game game;
 	public Camera camera;
 	public CameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
-	private float footstepTimer;
+	//private float footstepTimer;
 
-	private MovementData movementData;
-	private PositionComponent positionData;
 	private IInputMethod inputMethod;
 
 	public PlayersAvatar(Game _game, int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
@@ -48,10 +45,8 @@ public class PlayersAvatar extends AbstractEntity {
 		game = _game;
 		inputMethod = _inputMethod;
 
-		this.movementData = new MovementData(0.5f);
-		this.addComponent(movementData);
-		this.positionData = new PositionComponent(); // Centre of the player, but NOT where the camera is!
-		this.addComponent(positionData);
+		this.addComponent(new MovementData(0.5f));
+		this.addComponent(new PositionComponent());
 		this.addComponent(new CanCollect());
 		this.addComponent(new CanCarry());
 
@@ -67,7 +62,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 
-		this.addComponent(new CanBeHarmedComponent());
+		this.addComponent(new CanBeHarmedComponent(idx));
 		this.addComponent(new CanCompleteLevelComponent());
 
 		camera = _viewportData.camera;
@@ -218,11 +213,11 @@ public class PlayersAvatar extends AbstractEntity {
 		return instance;
 	}
 	 */
-
+/*
 	public Vector3 getPosition() {
 		return this.positionData.position;
 	}
-
+*/
 
 	public void update() {
 		checkMovementInput();
@@ -241,25 +236,26 @@ public class PlayersAvatar extends AbstractEntity {
 	private void checkMovementInput() {
 		float delta = Gdx.graphics.getDeltaTime();
 
-		this.movementData.offset.setZero();
+		MovementData movementData = (MovementData)this.getComponent(MovementData.class);
+		movementData.offset.setZero();
 
 		if (this.inputMethod.isForwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		} else if (this.inputMethod.isBackwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			this.movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
 		}
 		if (this.inputMethod.isStrafeLeftPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			this.movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
 		} else if (this.inputMethod.isStrafeRightPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			this.movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
 		}
 
 		if (this.inputMethod.isPickupDropPressed()) {
@@ -269,20 +265,21 @@ public class PlayersAvatar extends AbstractEntity {
 			}
 		}
 
-		camera.position.set(getPosition().x, getPosition().y + (Settings.PLAYER_HEIGHT/2), getPosition().z);
+		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
+		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2), posData.position.z);
 
 		// Animate and footstep sfx
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
 		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
-		if (this.movementData.offset.len2() > 0) {
+		if (movementData.offset.len2() > 0) {
 			if (anim != null) {
 				anim.new_animation = avatarAnim.walk_anim;
 			}
-			footstepTimer += Gdx.graphics.getDeltaTime();
+			/*footstepTimer += Gdx.graphics.getDeltaTime();
 			if (footstepTimer > 0.45f) {
 				footstepTimer -= 0.45f;
 				//Game.audio.play("step");
-			}
+			}*/
 		} else {
 			if (anim != null) {
 				anim.new_animation = avatarAnim.idle_anim;

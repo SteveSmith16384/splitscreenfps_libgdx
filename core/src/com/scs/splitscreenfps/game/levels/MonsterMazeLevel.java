@@ -83,7 +83,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		game.ecs.addSystem(new TRexHarmsPlayerSystem(game.ecs, this.startPositions[0].x, this.startPositions[0].y));
+		game.ecs.addSystem(new TRexHarmsPlayerSystem(game.ecs, game, this.startPositions[0].x, this.startPositions[0].y));
 		
 	}
 

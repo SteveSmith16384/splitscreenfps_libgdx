@@ -41,7 +41,7 @@ public class MobAISystem extends AbstractSystem {
 
 		ai.changeDirTimer -= Gdx.graphics.getDeltaTime();
 		ai.can_see_player = false;
-
+/*
 		if (ai.player.getPosition().dst2(pos.position) < ai.moveRange*ai.moveRange) { //&& Game.world.canSee(pos.position, Game.player.getPosition())) {
 			ai.can_see_player = game.mapData.canSee(pos.position, ai.player.getPosition());
 			switch (ai.mode) {
@@ -68,8 +68,6 @@ public class MobAISystem extends AbstractSystem {
 			case MoveLikeRook:
 				if (ai.direction.len2() == 0) {
 					ai.direction = getRandomDirection();
-				/*} else if (movementData.hitWall) {
-					ai.direction = getRandomDirection();*/
 				} else if (ai.changeDirTimer <= 0) {
 					ai.changeDirTimer = 1;
 					if (Settings.random.nextInt(10) <= 1) {
@@ -85,7 +83,7 @@ public class MobAISystem extends AbstractSystem {
 				throw new RuntimeException("Unknown AI type: " + ai.mode);
 			}
 
-		}
+		}*/
 
 	}
 

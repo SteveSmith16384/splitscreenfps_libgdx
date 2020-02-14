@@ -21,6 +21,7 @@ import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 import ssmith.lang.NumberFunctions;
 
@@ -116,7 +117,7 @@ public class EntityFactory {
 		sprite.setScale(10);
 		//sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
 		sprite.setPosition(100, 100);		
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite);
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED);
         entity.addComponent(hgsc);
         entity.hideComponent(HasGuiSpriteComponent.class); // Don't show it until picked up!
 		
@@ -149,4 +150,29 @@ public class EntityFactory {
 		return entity;	
 		
 	}
+
+
+	public AbstractEntity createRedFilter(int viewId) {
+		AbstractEntity entity = new AbstractEntity(ecs, "RedFilter");
+
+        Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		
+		Sprite sprite = new Sprite(weaponTex);
+		//sprite.setSize(rect.width, rect.height);
+		sprite.setSize(Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
+		//sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
+		//sprite.setPosition(rect.x, rect.y);
+		sprite.setColor(1, 0, 0, .5f);
+		
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_FILTER);
+        entity.addComponent(hgsc);
+        hgsc.onlyViewId = viewId;
+        
+        RemoveEntityAfterTimeComponent rat = new RemoveEntityAfterTimeComponent(3);
+        entity.addComponent(rat);
+		
+		return entity;	
+		
+	}
+
+
 }

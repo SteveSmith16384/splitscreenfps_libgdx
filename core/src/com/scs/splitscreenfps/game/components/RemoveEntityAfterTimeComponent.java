@@ -1,11 +1,11 @@
 package com.scs.splitscreenfps.game.components;
 
-public class RemoveAfterTimeData {
+public class RemoveEntityAfterTimeComponent {
 
-	public float timeRemaining;
+	public float timeRemaining_secs;
 	
-	public RemoveAfterTimeData(float time) {
-		this.timeRemaining = time;
+	public RemoveEntityAfterTimeComponent(float seconds) {
+		this.timeRemaining_secs = seconds;
 	}
 
 }

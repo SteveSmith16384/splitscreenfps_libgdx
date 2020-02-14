@@ -35,7 +35,7 @@ public class PreGameScreen implements IModule {
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
 	private Sprite logo;
-	
+
 	public PreGameScreen(BillBoardFPS_Main _main) {
 		super();
 
@@ -48,13 +48,13 @@ public class PreGameScreen implements IModule {
 		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
 		loadAssetsForResize();
-		
+
 		this.appendToLog("Welcome to " + Settings.TITLE);
 		this.appendToLog("Looking for controllers...");
 		if (Settings.RELEASE_MODE == false) {
 			this.appendToLog("WARNING! Game in debug mode!");
 		}
-		
+
 	}
 
 
@@ -66,15 +66,12 @@ public class PreGameScreen implements IModule {
 		font = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-        Texture logoTex = new Texture(Gdx.files.internal("tag/tag_logo.png"));		
+		Texture logoTex = new Texture(Gdx.files.internal("tag/tag_logo.png"));		
 		logo = new Sprite(logoTex);
-		//logo.scale((Gdx.graphics.getBackBufferWidth() / logo.getWidth()) / 2);
-		//logo.setOrigin(logo.getWidth()/2, logo.getHeight()/2);
-		//logo.setPosition(Gdx.graphics.getBackBufferWidth()/2, Gdx.graphics.getBackBufferHeight()/2);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		logo.setColor(.2f, .2f, .2f,  1);
-}
-	
+	}
+
 
 	@Override
 	public void render() {
@@ -88,11 +85,11 @@ public class PreGameScreen implements IModule {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		batch2d.begin();
-		
+
 		logo.draw(batch2d);
-		
+
 		font.setColor(1f,  1f,  1f,  1f);
-		
+
 		int y = Gdx.graphics.getHeight() - (int)this.font.getLineHeight()*5;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
 		for (Controller c : allControllers) {
@@ -108,7 +105,7 @@ public class PreGameScreen implements IModule {
 		if (allControllers.size == 0) {
 			font.draw(batch2d, "No Controllers Found", 10, y);
 		}
-		
+
 		y = Gdx.graphics.getHeight()/2;// - 220;
 		for (String s :this.log) {
 			font.draw(batch2d, s, 10, y);
@@ -118,7 +115,7 @@ public class PreGameScreen implements IModule {
 		if (this.controllerManager.getInGameControllers().size() >= 1) {
 			font.draw(batch2d, "PRESS SPACE TO START!", 10, y);
 		}
-		
+
 		batch2d.end();
 
 		frameBuffer.end();
@@ -136,9 +133,9 @@ public class PreGameScreen implements IModule {
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
-				for (Controller c : controllerManager.getInGameControllers()) {
-					inputs.add(new ControllerInputMethod(c));
-				}
+			for (Controller c : controllerManager.getInGameControllers()) {
+				inputs.add(new ControllerInputMethod(c));
+			}
 
 			main.next_module = new Game(main, inputs);
 		}

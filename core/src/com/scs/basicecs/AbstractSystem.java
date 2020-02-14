@@ -52,7 +52,7 @@ public abstract class AbstractSystem implements ISystem {
 	// Override if required to run against specific entities specified by getComponentClass()
 	public void process() {
 		if (this.entities == null) {
-			Iterator<AbstractEntity> it = ecs.getIterator();
+			Iterator<AbstractEntity> it = ecs.getEntityIterator();
 			while (it.hasNext()) {
 				AbstractEntity entity = it.next();
 				if (entity.isMarkedForRemoval()) {
