@@ -66,7 +66,19 @@ public class PreGameScreen implements IModule {
 		font = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		Texture logoTex = new Texture(Gdx.files.internal("tag/tag_logo.png"));		
+		String filename = "";
+		switch (Settings.CURRENT_MODE) {
+		case Settings.MODE_TAG:
+			filename = "tag/tag_logo.png";
+			break;
+		case Settings.MODE_MM:
+			filename = "mm/mm_logo.png";
+			break;
+		default:
+			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
+		}
+
+		Texture logoTex = new Texture(Gdx.files.internal(filename));		
 		logo = new Sprite(logoTex);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		logo.setColor(.2f, .2f, .2f,  1);
@@ -75,6 +87,10 @@ public class PreGameScreen implements IModule {
 
 	@Override
 	public void render() {
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
+		
 		controllerManager.checkForControllers();
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

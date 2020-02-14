@@ -88,6 +88,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			}
 			this.current_module.setFullScreen(fullscreen);
 		}
+		
 	}
 
 

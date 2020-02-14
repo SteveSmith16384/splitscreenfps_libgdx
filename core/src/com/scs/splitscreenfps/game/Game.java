@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,6 +19,7 @@ import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
+import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
@@ -32,6 +34,7 @@ import com.scs.splitscreenfps.game.systems.MoveAStarSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 public class Game implements IModule {
 
@@ -60,7 +63,7 @@ public class Game implements IModule {
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
-		
+
 		BillBoardFPS_Main.audio.startMusic("audio/Heroic Demise (New).mp3");
 
 		game_stage = 0;
@@ -78,10 +81,20 @@ public class Game implements IModule {
 			ecs.addEntity(players[i]);
 		}
 
-		currentLevel = new MonsterMazeLevel(this);//TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//
+		switch (Settings.CURRENT_MODE) {
+		case Settings.MODE_TAG:
+			currentLevel = new TagLevel(this);
+			break;
+		case Settings.MODE_MM:
+			currentLevel = new MonsterMazeLevel(this);
+			break;
+		default:
+			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
+		}
+		//currentLevel = new MonsterMazeLevel(this);//TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//
 		loadLevel();
 		this.loadAssetsForRescale();
-		
+
 		this.currentLevel.addSystems(ecs);
 	}
 
@@ -94,7 +107,7 @@ public class Game implements IModule {
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!*/
 		this.currentLevel.loadAssets();
 	}
-	
+
 
 	public void resizeViewports(boolean full_screen) {
 		for (int i=0 ; i<players.length ; i++) {
@@ -121,7 +134,7 @@ public class Game implements IModule {
 		ecs.addSystem(new CompleteLevelSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
-		
+
 		entityFactory = new EntityFactory(ecs);
 	}
 
@@ -135,7 +148,7 @@ public class Game implements IModule {
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
 		}
-		
+
 		if (Settings.TEST_FILTER) {
 			AbstractEntity filter = this.entityFactory.createRedFilter(3);
 			ecs.addEntity(filter);
@@ -145,6 +158,11 @@ public class Game implements IModule {
 
 	@Override
 	public void render() {
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			this.main.next_module = new PreGameScreen(main);
+			return;
+		}
+		
 		if (this.game_stage == 1) {
 			if (this.restartTime < System.currentTimeMillis()) {
 				this.main.next_module = new Game(main, this.inputs);
@@ -161,7 +179,7 @@ public class Game implements IModule {
 		//this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.processSystem(CompleteLevelSystem.class);
-		
+
 		currentLevel.update();
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
@@ -230,7 +248,7 @@ public class Game implements IModule {
 			batch2d.begin();
 
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
-			
+
 			if (Settings.SHOW_FPS) {
 				font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			}

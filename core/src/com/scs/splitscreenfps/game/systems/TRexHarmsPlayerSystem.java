@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
@@ -14,6 +15,8 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.TRexHarmsPlayerComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
+
+import ssmith.lang.NumberFunctions;
 
 public class TRexHarmsPlayerSystem extends AbstractSystem {
 
@@ -56,6 +59,8 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				// Freeze t-rex for a bit
 				MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 				movementData.frozenUntil = System.currentTimeMillis() + 4000;
+				
+				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
 				
 				last_harm_done = System.currentTimeMillis();
 			}
