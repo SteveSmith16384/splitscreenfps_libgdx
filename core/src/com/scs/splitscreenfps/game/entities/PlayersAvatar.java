@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.player;
+package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -12,19 +12,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.CameraController;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarry;
-import com.scs.splitscreenfps.game.components.CanCollect;
-import com.scs.splitscreenfps.game.components.CanCompleteLevelComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.TagableComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
+import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayersAvatar extends AbstractEntity {
@@ -47,7 +47,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		this.addComponent(new MovementData(0.5f));
 		this.addComponent(new PositionComponent());
-		this.addComponent(new CanCollect());
+		//this.addComponent(new CanCollectComponent());
 		this.addComponent(new CanCarry());
 
 		TagableComponent taggable = new TagableComponent(this);
@@ -63,7 +63,7 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 
 		this.addComponent(new CanBeHarmedComponent(idx));
-		this.addComponent(new CanCompleteLevelComponent());
+		this.addComponent(new CanUseMonsterMazeExitComponent());
 
 		camera = _viewportData.camera;
 
@@ -262,6 +262,11 @@ public class PlayersAvatar extends AbstractEntity {
 			CanCarry cc = (CanCarry)this.getComponent(CanCarry.class);
 			if (cc != null) {
 				cc.wantsToCarry = true;
+			}
+		} else {
+			CanCarry cc = (CanCarry)this.getComponent(CanCarry.class);
+			if (cc != null) {
+				cc.wantsToCarry = false;
 			}
 		}
 

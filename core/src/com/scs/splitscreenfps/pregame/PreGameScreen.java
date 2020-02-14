@@ -72,7 +72,7 @@ public class PreGameScreen implements IModule {
 			filename = "tag/tag_logo.png";
 			break;
 		case Settings.MODE_MM:
-			filename = "mm/mm_logo.png";
+			filename = "monstermaze/monstermaze_logo.png";
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);

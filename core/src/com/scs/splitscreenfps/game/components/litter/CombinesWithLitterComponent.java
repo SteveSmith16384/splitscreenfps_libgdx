@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.components;
+package com.scs.splitscreenfps.game.components.litter;
 
 public class CombinesWithLitterComponent {
 	

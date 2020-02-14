@@ -14,7 +14,7 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
-import com.scs.splitscreenfps.game.systems.TagSystem;
+import com.scs.splitscreenfps.game.systems.tag.TagSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 import ssmith.lang.NumberFunctions;

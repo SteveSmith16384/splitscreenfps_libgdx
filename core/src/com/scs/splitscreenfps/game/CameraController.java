@@ -1,10 +1,9 @@
-package com.scs.splitscreenfps.game.player;
+package com.scs.splitscreenfps.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
@@ -29,7 +28,6 @@ public class CameraController {
 	};
 
 	private IInputMethod input;
-	//public float camAngleChange = 0;
 
 	public CameraController(Game _game, Camera cam, IInputMethod _input) {
 		game = _game;

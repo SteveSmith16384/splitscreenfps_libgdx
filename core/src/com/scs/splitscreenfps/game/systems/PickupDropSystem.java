@@ -8,10 +8,10 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.litter.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
@@ -35,16 +35,14 @@ public class PickupDropSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		CanCarry cc = (CanCarry)entity.getComponent(CanCarry.class);
-		if (cc.wantsToCarry) {
-			cc.wantsToCarry = false;
-
-			if (cc.carrying == null) {
-				CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
-
-				CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);
-				for (CollisionResult cr : crl.results) {
-					CanBeCarried cbc = (CanBeCarried)cr.collidedWith.getComponent(CanBeCarried.class);
-					if (cbc != null) {
+		if (cc.carrying == null) {
+			CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
+			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);
+			for (CollisionResult cr : crl.results) {
+				CanBeCarried cbc = (CanBeCarried)cr.collidedWith.getComponent(CanBeCarried.class);
+				if (cbc != null) {
+					if (cc.wantsToCarry || cbc.auto_pickedup) {
+						//cc.wantsToCarry = false;
 						Settings.p(cr.collidedWith + " picked up");
 						cr.collidedWith.hideComponent(CollidesComponent.class);
 						cr.collidedWith.hideComponent(HasDecal.class);
@@ -54,24 +52,23 @@ public class PickupDropSystem extends AbstractSystem {
 						break;
 					}
 				}
-			} else {
-				// Drop!
-				CanBeCarried cbc = (CanBeCarried)cc.carrying.getComponent(CanBeCarried.class);
-				if (cbc != null) {
-					Settings.p(cc.carrying + " dropped");
-					cc.carrying.restoreComponent(CollidesComponent.class);
-					cc.carrying.restoreComponent(HasDecal.class);
-					cc.carrying.restoreComponent(CombinesWithLitterComponent.class);
-					cc.carrying.hideComponent(HasGuiSpriteComponent.class);
-					
-					// Set position
-					PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
-					PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
-					pos.originalPosition.set(carrierPos.originalPosition);
-					
-					cc.carrying = null;
-				}
 			}
+		} else {
+			// Drop!
+			/*todo CanBeCarried cbc = (CanBeCarried)cc.carrying.getComponent(CanBeCarried.class);
+			if (cbc != null) {
+				Settings.p(cc.carrying + " dropped");
+				cc.carrying.restoreComponent(CollidesComponent.class);
+				cc.carrying.restoreComponent(HasDecal.class);
+				cc.carrying.restoreComponent(CombinesWithLitterComponent.class);
+				cc.carrying.hideComponent(HasGuiSpriteComponent.class);
+
+				// Set position
+				PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
+				PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
+				pos.originalPosition.set(carrierPos.originalPosition);
+
+				cc.carrying = null;*/
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.systems;
+package com.scs.splitscreenfps.game.systems.monstermaze;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,7 +12,7 @@ import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.TRexHarmsPlayerComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.TRexHarmsPlayerComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
@@ -45,6 +45,10 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 			AbstractEntity e = cr.collidedWith;
 			CanBeHarmedComponent ic = (CanBeHarmedComponent)e.getComponent(CanBeHarmedComponent.class);
 			if (ic != null) {
+				// Drop key
+				//todo CanCollectComponent ccc = (CanCollectComponent)entity.getComponent(CanCollectComponent.class);
+				//ccc.items_collected.clear();
+				
 				// Move player back to start
 				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 				posData.position.set(startX + 0.5f, Settings.PLAYER_HEIGHT/2, startY + 0.5f); // Start in middle of square

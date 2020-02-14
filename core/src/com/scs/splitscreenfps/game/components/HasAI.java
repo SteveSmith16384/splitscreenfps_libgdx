@@ -1,7 +1,7 @@
 package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.math.Vector3;
-import com.scs.splitscreenfps.game.player.PlayersAvatar;
+import com.scs.splitscreenfps.game.entities.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.MobAISystem.Mode;
 
 public class HasAI {

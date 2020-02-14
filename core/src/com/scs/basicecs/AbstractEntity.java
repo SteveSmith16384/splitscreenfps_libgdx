@@ -23,7 +23,9 @@ public class AbstractEntity {
 
 	public void addComponent(Object component) {
 		this.components.put(component.getClass(), component);
-		ecs.addEntityToSystems(this, component.getClass());
+		if (this.ecs.containsEntity(this)) { // Don't add to system if entity hasn't been added to main list yet
+			ecs.addEntityToSystems(this, component.getClass());
+		}
 	}
 
 

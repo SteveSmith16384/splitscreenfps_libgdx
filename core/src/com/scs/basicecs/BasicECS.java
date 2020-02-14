@@ -8,7 +8,7 @@ import java.util.List;
 public class BasicECS {
 
 	private HashMap<Class<?>, ISystem> systems = new HashMap<Class<?>, ISystem>();
-	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>();
+	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>(); // todo - make hashmap?
 	private List<AbstractEntity> to_add_entities = new ArrayList<AbstractEntity>();
 
 	public BasicECS() {
@@ -148,6 +148,11 @@ public class BasicECS {
 			e.remove();
 		}
 		this.to_add_entities.clear();
+	}
+	
+	
+	public boolean containsEntity(AbstractEntity e) {
+		return this.entities.contains(e);
 	}
 
 }

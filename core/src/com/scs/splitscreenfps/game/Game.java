@@ -16,14 +16,13 @@ import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
+import com.scs.splitscreenfps.game.entities.PlayersAvatar;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
-import com.scs.splitscreenfps.game.player.PlayersAvatar;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
-import com.scs.splitscreenfps.game.systems.CompleteLevelSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
 import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
@@ -76,7 +75,7 @@ public class Game implements IModule {
 		players = new PlayersAvatar[inputs.size()];
 		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
-			IInputMethod input = inputs.get(i);// : new NoInputMethod();
+			IInputMethod input = inputs.get(i);
 			players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
 			ecs.addEntity(players[i]);
 		}
@@ -100,11 +99,6 @@ public class Game implements IModule {
 
 
 	private void loadAssetsForRescale() {
-		/*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferWidth()/20;
-		font = generator.generateFont(parameter); // font size 12 pixels
-		generator.dispose(); // don't forget to dispose to avoid memory leaks!*/
 		this.currentLevel.loadAssets();
 	}
 
@@ -131,7 +125,6 @@ public class Game implements IModule {
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new MoveAStarSystem(ecs, this));
-		ecs.addSystem(new CompleteLevelSystem(ecs, this));
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 
@@ -178,7 +171,6 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		//this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
-		this.ecs.processSystem(CompleteLevelSystem.class);
 
 		currentLevel.update();
 

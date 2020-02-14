@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.systems;
+package com.scs.splitscreenfps.game.systems.tag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -13,7 +13,7 @@ import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
-import com.scs.splitscreenfps.game.components.TagableComponent;
+import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
