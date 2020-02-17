@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 public class HasGuiSpriteComponent {
 	
@@ -9,11 +10,13 @@ public class HasGuiSpriteComponent {
 	public static final int Z_NORMAL = 0;
 
 	public Sprite sprite;
+	public Rectangle scale;
 	public int onlyViewId = -1;
 	public int zOrder;
 
-	public HasGuiSpriteComponent(Sprite _sprite, int _zOrder) {
+	public HasGuiSpriteComponent(Sprite _sprite, int _zOrder, Rectangle _scale) {
 		sprite = _sprite;
+		scale = _scale;
 		zOrder = _zOrder;
 	}
 

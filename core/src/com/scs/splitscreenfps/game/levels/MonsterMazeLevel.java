@@ -11,17 +11,19 @@ import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
 import com.scs.splitscreenfps.game.systems.monstermaze.MonsterGrowlsSystem;
 import com.scs.splitscreenfps.game.systems.monstermaze.MonsterMazeExitSystem;
+import com.scs.splitscreenfps.game.systems.monstermaze.RegenKeySystem;
 import com.scs.splitscreenfps.game.systems.monstermaze.TRexHarmsPlayerSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 public class MonsterMazeLevel extends AbstractLevel {
-	
-	public static final String KEY_NAME = "Key";
 
+	private MazeGen1 maze;
+	
 	public MonsterMazeLevel(Game _game) {
 		super(_game);
 	}
@@ -38,6 +40,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/5;
 		game.font = generator.generateFont(parameter);
+		game.font.setColor(0f, 0f, 0f, 1f);
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 	
@@ -56,7 +59,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		game.mapData = new MapData(map_width, map_height);
 
-		MazeGen1 maze = new MazeGen1(map_width, map_height, map_width/2);
+		maze = new MazeGen1(map_width, map_height, map_width/2);
 
 		for (int z=0 ; z<map_height ; z++) {
 			for (int x=0 ; x<map_width ; x++) {
@@ -76,8 +79,8 @@ public class MonsterMazeLevel extends AbstractLevel {
 		TRex trex = new TRex(game.ecs, maze.middle_pos.x, maze.middle_pos.y);
 		game.ecs.addEntity(trex);
 		
-		AbstractEntity key = game.entityFactory.createKey(maze.middle_pos.x, maze.middle_pos.y);
-		game.ecs.addEntity(key);
+		//AbstractEntity key = MonsterMazeEntityFactory.createKey(game.ecs, maze.middle_pos.x, maze.middle_pos.y);
+		//game.ecs.addEntity(key);
 
 		MonsterMazeExit exit = new MonsterMazeExit(game.ecs, maze.end_pos.x, maze.end_pos.y);
 		game.ecs.addEntity(exit);
@@ -91,7 +94,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		game.ecs.addSystem(new TRexHarmsPlayerSystem(game.ecs, game, this.startPositions[0].x, this.startPositions[0].y));
 		game.ecs.addSystem(new MonsterMazeExitSystem(ecs, game));
 		game.ecs.addSystem(new MonsterGrowlsSystem());
-		
+		game.ecs.addSystem(new RegenKeySystem(ecs, this));
 	}
 
 
@@ -100,7 +103,14 @@ public class MonsterMazeLevel extends AbstractLevel {
 		game.ecs.processSystem(TRexHarmsPlayerSystem.class);
 		game.ecs.processSystem(MonsterMazeExitSystem.class);
 		game.ecs.processSystem(MonsterGrowlsSystem.class);
+		game.ecs.processSystem(RegenKeySystem.class);
 
 	}
 
+	
+	public void createKey() {
+		AbstractEntity key = MonsterMazeEntityFactory.createKey(game.ecs, maze.middle_pos.x, maze.middle_pos.y);
+		game.ecs.addEntity(key);		
+	}
+	
 }

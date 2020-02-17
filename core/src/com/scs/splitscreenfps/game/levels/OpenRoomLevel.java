@@ -7,6 +7,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.entities.litter.LitterEntityFactory;
 
 public class OpenRoomLevel extends AbstractLevel {
 
@@ -39,10 +40,10 @@ public class OpenRoomLevel extends AbstractLevel {
 		//ModelEntity spider = new ModelEntity("soldier", 3, 0, 3);
 		//game.ecs.addEntity(spider);
 
-		AbstractEntity litter = game.entityFactory.createLitter(0, 2,  2);
+		AbstractEntity litter = LitterEntityFactory.createLitter(game.ecs, 0, 2,  2);
 		game.ecs.addEntity(litter);
 
-		AbstractEntity litter_bin = game.entityFactory.createLitterBin(0, 4, 4);
+		AbstractEntity litter_bin = LitterEntityFactory.createLitterBin(game.ecs, 0, 4, 4);
 		game.ecs.addEntity(litter_bin);
 	}
 

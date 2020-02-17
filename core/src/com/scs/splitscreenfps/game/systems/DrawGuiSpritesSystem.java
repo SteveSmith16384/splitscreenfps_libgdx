@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -54,12 +56,13 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 	}
 
 	
-	public void rescaleSprites(float scale) {
+	public void rescaleSprites() {
 		Iterator<AbstractEntity> it = this.entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)entity.getComponent(HasGuiSpriteComponent.class);
-			hgsc.sprite.scale(scale);
+			Sprite sprite = hgsc.sprite;
+			sprite.setBounds(hgsc.scale.x * Gdx.graphics.getWidth(), hgsc.scale.y * Gdx.graphics.getHeight(), hgsc.scale.width * Gdx.graphics.getWidth(), hgsc.scale.width * Gdx.graphics.getHeight());
 		}
 
 	}

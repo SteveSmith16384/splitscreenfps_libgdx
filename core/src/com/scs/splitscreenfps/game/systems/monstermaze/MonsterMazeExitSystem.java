@@ -7,6 +7,7 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanCarry;
 import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeExitComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
@@ -33,10 +34,14 @@ public class MonsterMazeExitSystem extends AbstractSystem {
 			if (ccl != null) {
 				CanCarry cc = (CanCarry)e.getComponent(CanCarry.class);
 				if (cc != null) {
-					if (cc.carrying != null && cc.carrying.name == MonsterMazeLevel.KEY_NAME) {
-						game.ecs.removeSystem(MonsterMazeExitSystem.class);
-						game.playerHasWon(e);
-						return;
+					if (cc.carrying != null) {
+						MonsterMazeKeyComponent key = (MonsterMazeKeyComponent)cc.carrying.getComponent(MonsterMazeKeyComponent.class);
+						if (key != null) {
+							game.ecs.removeSystem(MonsterMazeExitSystem.class);
+							game.ecs.removeSystem(RegenKeySystem.class);
+							game.playerHasWon(e);
+							return;
+						}
 					}
 				}
 				// todo - show text "You need the key"

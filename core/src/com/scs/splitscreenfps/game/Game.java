@@ -49,7 +49,7 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
-	private int prev_width;
+	//private int prev_width;
 	
 	private int game_stage;
 	private long restartTime;
@@ -100,10 +100,10 @@ public class Game implements IModule {
 	}
 
 
-	private void loadAssetsForRescale(float scale) {
+	private void loadAssetsForRescale() {
 		this.currentLevel.loadAssets();
 		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);
-		sys.rescaleSprites(scale);
+		sys.rescaleSprites();
 	}
 
 
@@ -259,10 +259,10 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
-		float scale = w / prev_width;
-		this.loadAssetsForRescale(scale);
+		//float scale = w / prev_width;
+		this.loadAssetsForRescale();
 		//this.resizeViewports(false);
-		this.prev_width = w;
+		//this.prev_width = w;
 	}
 
 
