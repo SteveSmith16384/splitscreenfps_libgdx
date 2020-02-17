@@ -49,7 +49,6 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
-	//private int prev_width;
 	
 	private int game_stage;
 	private long restartTime;

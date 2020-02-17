@@ -18,7 +18,7 @@ import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
-import com.scs.splitscreenfps.game.components.CanCarry;
+import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -48,7 +48,7 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new MovementData(0.5f));
 		this.addComponent(new PositionComponent());
 		//this.addComponent(new CanCollectComponent());
-		this.addComponent(new CanCarry(idx));
+		this.addComponent(new CanCarryComponent(idx));
 
 		// Todo - only add if playing tag
 		TagableComponent taggable = new TagableComponent(this);
@@ -260,12 +260,12 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 
 		if (this.inputMethod.isPickupDropPressed()) {
-			CanCarry cc = (CanCarry)this.getComponent(CanCarry.class);
+			CanCarryComponent cc = (CanCarryComponent)this.getComponent(CanCarryComponent.class);
 			if (cc != null) {
 				cc.wantsToCarry = true;
 			}
 		} else {
-			CanCarry cc = (CanCarry)this.getComponent(CanCarry.class);
+			CanCarryComponent cc = (CanCarryComponent)this.getComponent(CanCarryComponent.class);
 			if (cc != null) {
 				cc.wantsToCarry = false;
 			}

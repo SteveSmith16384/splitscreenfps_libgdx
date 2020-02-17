@@ -9,6 +9,7 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
+import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -46,8 +47,10 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 			CanBeHarmedComponent ic = (CanBeHarmedComponent)e.getComponent(CanBeHarmedComponent.class);
 			if (ic != null) {
 				// Drop key
-				//todo CanCollectComponent ccc = (CanCollectComponent)entity.getComponent(CanCollectComponent.class);
-				//ccc.items_collected.clear();
+				CanCarryComponent ccc = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
+				if (ccc.carrying != null) {
+					ccc.carrying.remove();
+				}
 				
 				// Move player back to start
 				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
@@ -56,7 +59,6 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 3000, new Color(1, 0, 0, 1));
 				ecs.addEntity(te);
 				
-				//TRexHarmsPlayerComponent thp = (TRexHarmsPlayerComponent)e.getComponent(TRexHarmsPlayerComponent.class);
 				AbstractEntity redfilter = game.entityFactory.createRedFilter(ic.playerId);
 				ecs.addEntity(redfilter);
 				

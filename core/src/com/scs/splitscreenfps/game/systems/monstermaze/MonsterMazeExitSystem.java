@@ -4,7 +4,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.CanCarry;
+import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeExitComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponent;
@@ -32,7 +32,7 @@ public class MonsterMazeExitSystem extends AbstractSystem {
 			AbstractEntity e = cr.collidedWith;
 			CanUseMonsterMazeExitComponent ccl = (CanUseMonsterMazeExitComponent)e.getComponent(CanUseMonsterMazeExitComponent.class);
 			if (ccl != null) {
-				CanCarry cc = (CanCarry)e.getComponent(CanCarry.class);
+				CanCarryComponent cc = (CanCarryComponent)e.getComponent(CanCarryComponent.class);
 				if (cc != null) {
 					if (cc.carrying != null) {
 						MonsterMazeKeyComponent key = (MonsterMazeKeyComponent)cc.carrying.getComponent(MonsterMazeKeyComponent.class);

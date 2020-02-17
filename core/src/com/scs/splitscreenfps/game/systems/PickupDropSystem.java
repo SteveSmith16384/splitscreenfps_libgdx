@@ -6,7 +6,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
-import com.scs.splitscreenfps.game.components.CanCarry;
+import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
@@ -28,13 +28,13 @@ public class PickupDropSystem extends AbstractSystem {
 
 	@Override
 	public Class<?> getComponentClass() {
-		return CanCarry.class;
+		return CanCarryComponent.class;
 	}
 
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		CanCarry cc = (CanCarry)entity.getComponent(CanCarry.class);
+		CanCarryComponent cc = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
 		if (cc.carrying == null) {
 			CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
 			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);

@@ -132,6 +132,10 @@ public class BasicECS {
 		this.to_add_entities.add(e);
 	}
 
+	
+	public void removeEntity(AbstractEntity e) {
+		e.remove();
+	}
 
 	public AbstractEntity get(int i) {
 		return this.entities.get(i);
