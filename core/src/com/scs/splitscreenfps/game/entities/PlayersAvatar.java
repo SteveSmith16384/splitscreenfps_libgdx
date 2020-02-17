@@ -63,10 +63,30 @@ public class PlayersAvatar extends AbstractEntity {
 	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
 		AssetManager am = game.assetManager;
 
-		am.load("models/Smooth_Male_Shirt.g3db", Model.class);
-		am.finishLoading();
-		Model model = am.get("models/Smooth_Male_Shirt.g3db");
+		Model model = null;
 
+		switch (idx) {
+		case 0:
+			am.load("models/Smooth_Male_Shirt.g3db", Model.class);
+			am.finishLoading();
+			model = am.get("models/Smooth_Male_Shirt.g3db");
+			break;
+		case 1:
+			am.load("models/Male_Casual.g3db", Model.class);
+			am.finishLoading();
+			model = am.get("models/Male_Casual.g3db");
+			break;
+		case 2:
+			am.load("models/Male_LongSleeve.g3db", Model.class);
+			am.finishLoading();
+			model = am.get("models/Male_LongSleeve.g3db");
+			break;
+		case 3:
+			am.load("models/Male_Shirt.g3db", Model.class);
+			am.finishLoading();
+			model = am.get("models/Male_Shirt.g3db");
+			break;
+		}
 		ModelInstance instance = new ModelInstance(model);
 
 		//instance.transform.scl(.0016f);
@@ -148,8 +168,8 @@ public class PlayersAvatar extends AbstractEntity {
 				Settings.p("Blocked!");
 			}
 		}
-		
-		
+
+
 		// Animate and footstep sfx
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
 		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
@@ -169,7 +189,7 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 	}
 
-/*
+	/*
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
 		/*TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
 		if (tc != null) {
@@ -182,6 +202,6 @@ public class PlayersAvatar extends AbstractEntity {
 			font.setColor(1, 1, 1 ,1);
 		}
 	}
-*/
+	 */
 }
 

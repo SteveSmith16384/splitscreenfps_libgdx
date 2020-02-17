@@ -1,9 +1,11 @@
 # Split-Screen FPS
+A 1-4 player split-screen FPS engine and games.
 
 
 ## Controls
 W, A S, D for keyboard & mouse player.
 Tested with PS4 controllers.
+
 
 ## Credits
 * Designed and programmed by Stephen Carlyle-Smith https://twitter.com/stephencsmith
