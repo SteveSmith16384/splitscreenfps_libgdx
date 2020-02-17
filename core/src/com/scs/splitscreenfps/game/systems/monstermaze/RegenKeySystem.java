@@ -7,7 +7,6 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponent;
-import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 
 public class RegenKeySystem extends AbstractSystem {

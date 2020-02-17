@@ -15,16 +15,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
-import com.scs.splitscreenfps.game.components.litter.CombinesWithLitterComponent;
-import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponent;
-import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 
 import ssmith.lang.NumberFunctions;
 

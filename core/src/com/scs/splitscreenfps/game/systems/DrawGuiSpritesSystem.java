@@ -38,13 +38,18 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		HasGuiSpriteComponent hgs = (HasGuiSpriteComponent)entity.getComponent(HasGuiSpriteComponent.class);
-		if (hgs.onlyViewId >= 0) {
-			if (hgs.onlyViewId != game.currentViewId) {
+		HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)entity.getComponent(HasGuiSpriteComponent.class);
+		if (hgsc.onlyViewId >= 0) {
+			if (hgsc.onlyViewId != game.currentViewId) {
 				return;
 			}
 		}
-		hgs.sprite.draw(batch2d);
+		if (hgsc.dirty) {
+			Sprite sprite = hgsc.sprite;
+			sprite.setBounds(hgsc.scale.x * Gdx.graphics.getWidth(), hgsc.scale.y * Gdx.graphics.getHeight(), hgsc.scale.width * Gdx.graphics.getWidth(), hgsc.scale.width * Gdx.graphics.getHeight());
+			hgsc.dirty = false;
+		}
+		hgsc.sprite.draw(batch2d);
 	}
 
 
@@ -61,8 +66,7 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)entity.getComponent(HasGuiSpriteComponent.class);
-			Sprite sprite = hgsc.sprite;
-			sprite.setBounds(hgsc.scale.x * Gdx.graphics.getWidth(), hgsc.scale.y * Gdx.graphics.getHeight(), hgsc.scale.width * Gdx.graphics.getWidth(), hgsc.scale.width * Gdx.graphics.getHeight());
+			hgsc.dirty = true;
 		}
 
 	}

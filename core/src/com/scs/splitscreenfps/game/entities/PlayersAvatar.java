@@ -3,8 +3,6 @@ package com.scs.splitscreenfps.game.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
@@ -24,7 +22,6 @@ import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
-import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayersAvatar extends AbstractEntity {
@@ -47,19 +44,10 @@ public class PlayersAvatar extends AbstractEntity {
 
 		this.addComponent(new MovementData(0.5f));
 		this.addComponent(new PositionComponent());
-		//this.addComponent(new CanCollectComponent());
 		this.addComponent(new CanCarryComponent(playerIdx));
 
-		// Todo - only add if playing tag
-		TagableComponent taggable = new TagableComponent(this, playerIdx);
-		addSkeletonForTagged(playerIdx, taggable);
-		this.addComponent(taggable);
-
 		// Model stuff
-		//ModelInstance instance = this.addKnightComponents(idx);
-		//ModelInstance instance = this.addZombieComponents(idx);
 		this.addSmooth_Male_ShirtComponents(playerIdx);
-		//ModelInstance instance = this.addSkeletonComponents(idx);
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 
@@ -71,62 +59,6 @@ public class PlayersAvatar extends AbstractEntity {
 		cameraController = new CameraController(game, camera, inputMethod);
 	}
 
-
-	private ModelInstance addSkeletonForTagged(int idx, TagableComponent taggable) {
-		AssetManager am = game.assetManager;
-
-		am.load("models/Skeleton.g3dj", Model.class);
-		am.finishLoading();
-		Model model = am.get("models/Skeleton.g3dj");
-
-		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.0015f);
-		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("Skeleton", instance, -.3f, 90, 0.0016f);
-		hasModel.dontDrawInViewId = idx;
-		taggable.storedHasModel = hasModel;
-
-		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
-		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
-		taggable.storedAvatarAnim = avatarAnim;
-
-		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
-		anim.animationController = animation;
-		taggable.storedAnimated = anim;
-
-		return instance;
-	}
-
-	/*
-	private ModelInstance addSkeletonComponents(int idx) {
-		AssetManager am = game.assetManager;
-
-		am.load("models/Skeleton.g3dj", Model.class);
-		am.finishLoading();
-		Model model = am.get("models/Skeleton.g3dj");
-
-		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.0013f);
-		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel(instance);
-		hasModel.dontDrawInViewId = idx;
-		this.addComponent(hasModel);
-
-		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
-		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
-		this.addComponent(avatarAnim);
-
-		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
-		anim.animationController = animation;
-		this.addComponent(anim);
-
-		return instance;
-	}
-	 */
 
 	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
 		AssetManager am = game.assetManager;
@@ -156,69 +88,6 @@ public class PlayersAvatar extends AbstractEntity {
 		return instance;
 	}
 
-
-	// Model doesn't show
-	/*private ModelInstance addZombieComponents(int idx) {
-		AssetManager am = game.assetManager;
-
-		am.load("models/Zombie.g3db", Model.class);
-		am.finishLoading();
-		Model model = am.get("models/Zombie.g3db");
-
-		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.002f);
-		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		instance.calculateTransforms();
-		HasModel hasModel = new HasModel(instance);
-		hasModel.dontDrawInViewId = idx;
-		this.addComponent(hasModel);
-
-		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "Zombie|ZombieIdle";
-		avatarAnim.walk_anim = "Zombie|ZombieWalk"; // Zombie|ZombieRun			
-		this.addComponent(avatarAnim);
-
-		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
-		anim.animationController = animation;
-		this.addComponent(anim);
-
-		return instance;
-	}*/
-
-	/*
-	private ModelInstance addKnightComponents(int idx) {
-		AssetManager am = game.assetManager;
-
-		am.load("models/KnightCharacter.g3dj", Model.class);
-		am.finishLoading();
-		Model model = am.get("models/KnightCharacter.g3dj");
-
-		ModelInstance instance = new ModelInstance(model);
-		instance.transform.scl(.002f);
-		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("Knight", instance, -.2f);
-		hasModel.dontDrawInViewId = idx;
-		this.addComponent(hasModel);
-
-		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "HumanArmature|Idle";
-		avatarAnim.walk_anim = "HumanArmature|Walking";			
-		this.addComponent(avatarAnim);
-
-		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
-		anim.animationController = animation;
-		this.addComponent(anim);
-
-		return instance;
-	}
-	 */
-/*
-	public Vector3 getPosition() {
-		return this.positionData.position;
-	}
-*/
 
 	public void update() {
 		checkMovementInput();
@@ -274,6 +143,13 @@ public class PlayersAvatar extends AbstractEntity {
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2), posData.position.z);
 
+		if (Settings.TEST_START_IN_WALL) {
+			if (game.mapData.isMapSquareTraversable((int)posData.position.x, (int)posData.position.z) == false) {
+				Settings.p("Blocked!");
+			}
+		}
+		
+		
 		// Animate and footstep sfx
 		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
 		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
@@ -293,11 +169,10 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 	}
 
-
+/*
 	public void renderUI(SpriteBatch batch, BitmapFont font) {
-		TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
+		/*TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
 		if (tc != null) {
-			//font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
 			if (tc.timeLeftAsIt < 20) {
 				font.setColor(1, 0, 0, 1);
 			} else {
@@ -307,6 +182,6 @@ public class PlayersAvatar extends AbstractEntity {
 			font.setColor(1, 1, 1 ,1);
 		}
 	}
-
+*/
 }
 

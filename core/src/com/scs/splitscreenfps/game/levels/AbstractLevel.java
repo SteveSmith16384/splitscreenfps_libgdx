@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.GridPoint2;
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.ViewportData;
 
 public abstract class AbstractLevel {
 
@@ -40,11 +40,13 @@ public abstract class AbstractLevel {
 
 	public abstract void load();
 	
+	public void setupAvatars(AbstractEntity player, int playerIdx) {}
+	
 	public abstract void addSystems(BasicECS ecs);
 
 	public abstract void update();
 	
-	public void renderUI(SpriteBatch batch, BitmapFont font_white, ViewportData viewportData) {}
+	public void renderUI(SpriteBatch batch, BitmapFont font_white, int viewIndex) {}
 
 	public GridPoint2 getPlayerStartMap(int idx) {
 		return this.startPositions[idx];

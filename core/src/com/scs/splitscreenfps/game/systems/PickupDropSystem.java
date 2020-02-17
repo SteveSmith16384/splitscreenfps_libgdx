@@ -10,7 +10,6 @@ import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
-import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.litter.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
@@ -39,15 +38,16 @@ public class PickupDropSystem extends AbstractSystem {
 			CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
 			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);
 			for (CollisionResult cr : crl.results) {
-				CanBeCarried cbc = (CanBeCarried)cr.collidedWith.getComponent(CanBeCarried.class);
+				AbstractEntity key = cr.collidedWith;
+				CanBeCarried cbc = (CanBeCarried)key.getComponent(CanBeCarried.class);
 				if (cbc != null) {
 					if (cc.wantsToCarry || cbc.auto_pickedup) {
 						//cc.wantsToCarry = false;
 						Settings.p(cr.collidedWith + " picked up");
-						cr.collidedWith.hideComponent(CollidesComponent.class);
-						cr.collidedWith.hideComponent(HasDecal.class);
-						cr.collidedWith.hideComponent(CombinesWithLitterComponent.class);
-						cr.collidedWith.restoreComponent(HasGuiSpriteComponent.class);
+						key.hideComponent(CollidesComponent.class);
+						key.hideComponent(HasDecal.class);
+						key.hideComponent(CombinesWithLitterComponent.class);
+						key.restoreComponent(HasGuiSpriteComponent.class);
 						
 						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)cr.collidedWith.getComponent(HasGuiSpriteComponent.class);
 						hgsc.onlyViewId = cc.viewId;

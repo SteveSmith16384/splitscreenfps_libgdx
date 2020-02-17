@@ -10,6 +10,7 @@ public class HasGuiSpriteComponent {
 	public static final int Z_NORMAL = 0;
 
 	public Sprite sprite;
+	public boolean dirty = true;
 	public Rectangle scale;
 	public int onlyViewId = -1;
 	public int zOrder;

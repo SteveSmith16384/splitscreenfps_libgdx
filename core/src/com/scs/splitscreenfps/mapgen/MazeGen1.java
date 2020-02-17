@@ -92,7 +92,7 @@ public class MazeGen1 {
 			}
 		}
 
-		//System.out.println(this.toString());
+		System.out.println(this.toString());
 	}
 
 	@Override

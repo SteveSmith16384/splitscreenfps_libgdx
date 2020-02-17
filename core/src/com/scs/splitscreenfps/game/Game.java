@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +18,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
@@ -49,7 +51,7 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
-	
+
 	private int game_stage;
 	private long restartTime;
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
@@ -67,9 +69,7 @@ public class Game implements IModule {
 		BillBoardFPS_Main.audio.startMusic("audio/Heroic Demise (New).mp3");
 
 		game_stage = 0;
-
 		batch2d = new SpriteBatch();
-
 		this.createECS();
 
 		viewports = new ViewportData[4];
@@ -93,9 +93,13 @@ public class Game implements IModule {
 		}
 
 		loadLevel();
-		//todo - is this needed? this.loadAssetsForRescale();
+		this.loadAssetsForRescale(); // Need this to load font
 
 		this.currentLevel.addSystems(ecs);
+
+		for (int i=0 ; i<players.length ; i++) {
+			this.currentLevel.setupAvatars(this.players[i], i);
+		}
 	}
 
 
@@ -158,7 +162,7 @@ public class Game implements IModule {
 			this.main.next_module = new PreGameScreen(main);
 			return;
 		}
-		
+
 		if (this.game_stage == 1) {
 			if (this.restartTime < System.currentTimeMillis()) {
 				this.main.next_module = new Game(main, this.inputs);
@@ -206,7 +210,7 @@ public class Game implements IModule {
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 
 			//font_white.draw(batch2d, "Screen " + this.currentViewId, 10, 250);
-			if (this.game_stage == 1) {
+			/*if (this.game_stage == 1) {
 				if (this.losers.contains(this.players[this.currentViewId])) {
 					font.setColor(0, 1, 0, 1);
 					font.draw(batch2d, "YOU HAVE LOST!", 10, Gdx.graphics.getBackBufferHeight()/2);
@@ -214,13 +218,13 @@ public class Game implements IModule {
 					font.setColor(0, 1, 1, 1);
 					font.draw(batch2d, "YOU HAVE WON!", 10, Gdx.graphics.getBackBufferHeight()/2);
 				}
-			}
+			}*/
 
-			currentLevel.renderUI(batch2d, font, viewports[currentViewId]);
+			currentLevel.renderUI(batch2d, font, currentViewId);
 
-			if (players[currentViewId] != null) {
+			/*if (players[currentViewId] != null) {
 				players[currentViewId].renderUI(batch2d, font);
-			}
+			}*/
 
 			if (Settings.TEST_SCREEN_COORDS) {
 				font.draw(batch2d, "TL", 20, 20);
@@ -241,11 +245,11 @@ public class Game implements IModule {
 
 			//Draw buffer and FPS
 			batch2d.begin();
-
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
-
 			if (Settings.SHOW_FPS) {
-				font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
+				if (font != null) {
+					font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
+				}
 			}
 
 			batch2d.end();
@@ -282,21 +286,44 @@ public class Game implements IModule {
 
 
 	public void playerHasLost(AbstractEntity avatar) {
-		this.game_stage = 1;
-		this.restartTime = System.currentTimeMillis() + 5000;
+		if (this.game_stage != 0) {
+			return;
+		}
+
+		this.losers.clear();
 		this.losers.add(avatar);
+		loadWinLoseText();
 	}
 
 
 	public void playerHasWon(AbstractEntity winner) {
-		this.game_stage = 1;
-		this.restartTime = System.currentTimeMillis() + 5000;
+		if (this.game_stage != 0) {
+			return;
+		}
+
+		this.losers.clear();
 		for(AbstractEntity player : this.players) {
 			if (player != winner) {
 				this.losers.add(player);
 			}
 		}
+		loadWinLoseText();
 	}
-	
+
+
+	private void loadWinLoseText() {
+		for (int i=0 ; i<this.players.length ; i++) {
+			if (this.losers.contains(this.players[i])) {
+				TextEntity te = new TextEntity(ecs, "YOU HAVE LOST!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 0, 1, 1), i);
+				ecs.addEntity(te);
+			} else {
+				TextEntity te = new TextEntity(ecs, "YOU HAVE WON!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 1, 0, 1), i);
+				ecs.addEntity(te);
+			}
+		}
+		this.game_stage = 1;
+		this.restartTime = System.currentTimeMillis() + 5000;
+	}
+
 }
 

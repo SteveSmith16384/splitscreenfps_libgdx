@@ -40,6 +40,11 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 		if (System.currentTimeMillis() < this.last_harm_done + 4000) {
 			return;
 		}
+
+		if (Settings.TEST_START_IN_WALL) {
+			this.game.playerHasWon(game.players[0]);
+		}
+		
 		//TRexHarmsPlayerComponent hpc = (TRexHarmsPlayerComponent)entity.getComponent(TRexHarmsPlayerComponent.class);
 		CollidesComponent cc = (CollidesComponent)trex.getComponent(CollidesComponent.class);
 		for (CollisionResult cr : cc.results) {
@@ -50,6 +55,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				CanCarryComponent ccc = (CanCarryComponent)player.getComponent(CanCarryComponent.class);
 				if (ccc.carrying != null) {
 					ccc.carrying.remove();
+					ccc.carrying = null;
 				}
 				
 				// Move player back to start
@@ -69,6 +75,8 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
 				
 				last_harm_done = System.currentTimeMillis();
+				
+				break;
 			}
 		}
 	}

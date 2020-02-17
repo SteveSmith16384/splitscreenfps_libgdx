@@ -1,15 +1,23 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.ViewportData;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
+import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
@@ -35,6 +43,71 @@ public class TagLevel extends AbstractLevel {
 		loadMapFromMazegen(game);
 	}
 
+
+	public void setupAvatars(AbstractEntity player, int playerIdx) {
+		TagableComponent taggable = new TagableComponent(player, playerIdx);
+		player.addComponent(taggable);
+		addSkeletonForTagged(playerIdx, taggable);
+
+
+	}
+	
+	
+	private ModelInstance addSkeletonForTagged(int idx, TagableComponent taggable) {
+		AssetManager am = game.assetManager;
+
+		am.load("models/Skeleton.g3dj", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/Skeleton.g3dj");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.0015f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel("Skeleton", instance, -.3f, 90, 0.0016f);
+		hasModel.dontDrawInViewId = idx;
+		taggable.storedHasModel = hasModel;
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
+		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
+		taggable.storedAvatarAnim = avatarAnim;
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		taggable.storedAnimated = anim;
+
+		return instance;
+	}
+
+	/*
+	private ModelInstance addSkeletonComponents(int idx) {
+		AssetManager am = game.assetManager;
+
+		am.load("models/Skeleton.g3dj", Model.class);
+		am.finishLoading();
+		Model model = am.get("models/Skeleton.g3dj");
+
+		ModelInstance instance = new ModelInstance(model);
+		instance.transform.scl(.0013f);
+		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
+		HasModel hasModel = new HasModel(instance);
+		hasModel.dontDrawInViewId = idx;
+		this.addComponent(hasModel);
+
+		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
+		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
+		this.addComponent(avatarAnim);
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		anim.animationController = animation;
+		this.addComponent(anim);
+
+		return instance;
+	}
+	 */
 
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -131,7 +204,7 @@ public class TagLevel extends AbstractLevel {
 
 
 	@Override
-	public void renderUI(SpriteBatch batch2d, BitmapFont font_white, ViewportData viewportData) {
+	public void renderUI(SpriteBatch batch2d, BitmapFont font, int viewIndex) {
 		// Draw slime
 		TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
 		if (tagSystem != null) {
@@ -147,6 +220,19 @@ public class TagLevel extends AbstractLevel {
 			}
 		}
 
+		//if (font != null) {
+		AbstractEntity playerAvatar = game.players[viewIndex];
+		TagableComponent tc = (TagableComponent)playerAvatar.getComponent(TagableComponent.class);
+		if (tc != null) {
+			if (tc.timeLeftAsIt < 20) {
+				font.setColor(1, 0, 0, 1);
+			} else {
+				font.setColor(0, 0, 0, 1);
+			}
+			font.draw(batch2d, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
+			font.setColor(1, 1, 1 ,1);
+		}
+		//}
 	}
 
 }

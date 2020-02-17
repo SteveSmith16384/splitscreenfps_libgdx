@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -33,8 +34,11 @@ public class DrawTextSystem extends AbstractSystem {
 			entity.remove();
 		} else {
 			if (dtd.centre_x && dtd.x < 0) {
-				int len = dtd.text.length() * 8;
-				dtd.x = Gdx.graphics.getWidth() / 2 - len;
+				//int len = dtd.text.length() * 11;
+				GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
+				layout.setText(game.font, dtd.text);
+				float len = layout.width;// contains the width of the current set text
+				dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
 			}
 
 			game.font.setColor(dtd.colour);

@@ -13,7 +13,6 @@ import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponen
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
 import com.scs.splitscreenfps.game.entities.TextEntity;
-import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 
 public class MonsterMazeExitSystem extends AbstractSystem {
