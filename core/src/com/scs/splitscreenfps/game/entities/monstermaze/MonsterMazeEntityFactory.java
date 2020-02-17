@@ -31,7 +31,7 @@ public class MonsterMazeEntityFactory {
 		Texture tex = new Texture(Gdx.files.internal("monstermaze/key.png"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
-        hasDecal.decal.setScale(1f / tr.getRegionWidth());
+        hasDecal.decal.setScale(1f / tr.getRegionWidth() / 2f);
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
         hasDecal.dontLockYAxis = true;

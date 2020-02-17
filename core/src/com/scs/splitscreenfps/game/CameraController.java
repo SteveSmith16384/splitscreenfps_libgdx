@@ -43,8 +43,6 @@ public class CameraController {
 	}
 
 	public void update() {
-		float dt = Gdx.graphics.getDeltaTime();
-
 		//Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 		//float cam_ang = v2.angle();
 
@@ -72,6 +70,8 @@ public class CameraController {
 			//camera.lookAt(posData.position);
 		} else {
 			//Rotation
+			float dt = Gdx.graphics.getDeltaTime();
+
 			if (input.getLookUp() > MIN_AXIS) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 				if(camera.direction.y < 0.95) {
 					tmp.set(camera.direction).crs(camera.up).nor();

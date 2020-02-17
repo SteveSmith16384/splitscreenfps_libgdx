@@ -113,11 +113,11 @@ public class PreGameScreen implements IModule {
 			font.draw(batch2d, "Controller " + c.getName(), 10, y);
 
 			if (this.controllerManager.isControllerInGame(c)) {
-				font.draw(batch2d, "IN GAME!", 10, y-10);
+				font.draw(batch2d, "IN GAME!", 10, y-this.font.getLineHeight());
 			} else {
-				font.draw(batch2d, "Not in game", 10, y-10);
+				font.draw(batch2d, "Not in game", 10, y-this.font.getLineHeight());
 			}
-			y -= this.font.getLineHeight();
+			y -= this.font.getLineHeight()*2;
 		}
 		if (allControllers.size == 0) {
 			font.draw(batch2d, "No Controllers Found", 10, y);

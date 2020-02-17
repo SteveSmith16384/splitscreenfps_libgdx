@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AutoMove;
@@ -12,6 +13,7 @@ import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
+import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
 
 public class MovementSystem extends AbstractSystem {
 
@@ -47,8 +49,13 @@ public class MovementSystem extends AbstractSystem {
 
 		AutoMove auto = (AutoMove)entity.getComponent(AutoMove.class);
 		if (auto != null) {
-			movementData.offset = auto.dir.cpy().scl(Gdx.graphics.getDeltaTime());
+			movementData.offset = auto.dir.cpy();//.scl(Gdx.graphics.getDeltaTime());
 		}
+		movementData.offset.scl(Gdx.graphics.getDeltaTime());
+		/*if (entity.name.equals(TRex.class.getSimpleName())) {
+			Settings.p("Move dist=" + movementData.offset.len());
+		}*/
+
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil > System.currentTimeMillis()) {
 				return;

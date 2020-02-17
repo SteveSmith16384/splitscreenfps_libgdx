@@ -124,7 +124,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 
 	private void checkMovementInput() {
-		float delta = Gdx.graphics.getDeltaTime();
+		float delta = 1f;//Gdx.graphics.getDeltaTime(); todo - remove
 
 		MovementData movementData = (MovementData)this.getComponent(MovementData.class);
 		movementData.offset.setZero();

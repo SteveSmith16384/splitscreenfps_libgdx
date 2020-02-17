@@ -40,10 +40,8 @@ public class TRex extends AbstractEntity {
         cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
         this.addComponent(cycle);
         
-        //HasAI ai = new HasAI(Mode.GoForPlayerIfClose, 1.5f, 7f, target);
-        //this.addComponent(ai);
-        MoveAStarComponent astar = new MoveAStarComponent(.002f, false);
-        this.addComponent(astar);       
+        MoveAStarComponent astar = new MoveAStarComponent(1.6f, false);
+        this.addComponent(astar);
         
         this.addComponent(new MovementData(.85f));
 
