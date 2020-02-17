@@ -30,7 +30,6 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			this.processEntity(entity);
-			//return;
 		}
 	}
 
@@ -54,4 +53,14 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 		return im0.zOrder - im1.zOrder;
 	}
 
+	
+	public void rescaleSprites(float scale) {
+		Iterator<AbstractEntity> it = this.entities.iterator();
+		while (it.hasNext()) {
+			AbstractEntity entity = it.next();
+			HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)entity.getComponent(HasGuiSpriteComponent.class);
+			hgsc.sprite.scale(scale);
+		}
+
+	}
 }

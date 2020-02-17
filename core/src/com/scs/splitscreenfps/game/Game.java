@@ -49,7 +49,8 @@ public class Game implements IModule {
 	public BasicECS ecs;
 	public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
-
+	private int prev_width;
+	
 	private int game_stage;
 	private long restartTime;
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
@@ -93,14 +94,16 @@ public class Game implements IModule {
 		}
 		//currentLevel = new MonsterMazeLevel(this);//TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//
 		loadLevel();
-		this.loadAssetsForRescale();
+		//todo this.loadAssetsForRescale(Gdx.);
 
 		this.currentLevel.addSystems(ecs);
 	}
 
 
-	private void loadAssetsForRescale() {
+	private void loadAssetsForRescale(float scale) {
 		this.currentLevel.loadAssets();
+		DrawGuiSpritesSystem sys = (DrawGuiSpritesSystem)this.ecs.getSystem(DrawGuiSpritesSystem.class);
+		sys.rescaleSprites(scale);
 	}
 
 
@@ -256,8 +259,10 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
-		this.loadAssetsForRescale();
+		float scale = w / prev_width;
+		this.loadAssetsForRescale(scale);
 		//this.resizeViewports(false);
+		this.prev_width = w;
 	}
 
 
@@ -295,5 +300,6 @@ public class Game implements IModule {
 			}
 		}
 	}
+	
 }
 

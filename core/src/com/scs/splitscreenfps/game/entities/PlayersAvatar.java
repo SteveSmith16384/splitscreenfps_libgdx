@@ -50,6 +50,7 @@ public class PlayersAvatar extends AbstractEntity {
 		//this.addComponent(new CanCollectComponent());
 		this.addComponent(new CanCarry(idx));
 
+		// Todo - only add if playing tag
 		TagableComponent taggable = new TagableComponent(this);
 		addSkeletonForTagged(idx, taggable);
 		this.addComponent(taggable);
