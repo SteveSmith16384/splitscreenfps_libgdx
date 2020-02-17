@@ -35,6 +35,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 	}
 
 
+	@Override
 	public void loadAssets() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/zx_spectrum-7.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -45,6 +46,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 	}
 	
 	
+	@Override
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 	}

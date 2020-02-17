@@ -13,9 +13,10 @@ public class CleanTheLitterLevel extends AbstractLevel {
 
 	public CleanTheLitterLevel(Game _game) {
 		super(_game);
-			}
+	}
 
 
+	@Override
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 	}
@@ -61,7 +62,7 @@ public class CleanTheLitterLevel extends AbstractLevel {
 	@Override
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new CheckForLitterInBinSystem(ecs));
-		
+
 	}
 
 

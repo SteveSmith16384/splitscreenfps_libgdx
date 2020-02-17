@@ -1,11 +1,8 @@
 package com.scs.splitscreenfps.game.data;
 
-import com.scs.basicecs.AbstractEntity;
-
 public class MapSquare {
 
 	public boolean blocked = false;
-	public AbstractEntity wall;
 	
 	public MapSquare() {
 

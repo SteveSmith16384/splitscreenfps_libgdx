@@ -10,8 +10,6 @@ public class AbstractDungeon implements IAStarMapInterface {
 
 	public SqType map[][];
 	protected ArrayList<Point> doors = new ArrayList<Point>();
-	//public ArrayList<Point> random_deploy_squares = new ArrayList<Point>();
-	//public int[] num_deploy_squares = new int[5];
 
 	public enum SqType {NOTHING, WALL, FLOOR, DOOR_EW, DOOR_NS, COMPUTER;}
 

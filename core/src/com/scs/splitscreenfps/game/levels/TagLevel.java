@@ -44,6 +44,7 @@ public class TagLevel extends AbstractLevel {
 	}
 
 
+	@Override
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
 		TagableComponent taggable = new TagableComponent(player, playerIdx);
 		player.addComponent(taggable);
@@ -51,8 +52,8 @@ public class TagLevel extends AbstractLevel {
 
 
 	}
-	
-	
+
+
 	private ModelInstance addSkeletonForTagged(int idx, TagableComponent taggable) {
 		AssetManager am = game.assetManager;
 
@@ -109,6 +110,7 @@ public class TagLevel extends AbstractLevel {
 	}
 	 */
 
+	@Override
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
@@ -220,7 +222,6 @@ public class TagLevel extends AbstractLevel {
 			}
 		}
 
-		//if (font != null) {
 		AbstractEntity playerAvatar = game.players[viewIndex];
 		TagableComponent tc = (TagableComponent)playerAvatar.getComponent(TagableComponent.class);
 		if (tc != null) {
@@ -232,7 +233,6 @@ public class TagLevel extends AbstractLevel {
 			font.draw(batch2d, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
 			font.setColor(1, 1, 1 ,1);
 		}
-		//}
 	}
 
 }

@@ -10,16 +10,16 @@ public class DungeonGen1 extends AbstractDungeon {
 
 	public ArrayList<GridPoint2> centres = new ArrayList<GridPoint2>();
 
-	private int MAX_ROOM_SIZE;
+	private int maxRoomSize;
 	
 	public static void main(String args[])  {
 		new DungeonGen1(30, 10, 5, 1);
 	}
 
-	public DungeonGen1(int size, int rooms, int _MAX_ROOM_SIZE, int cpus) {
+	public DungeonGen1(int size, int rooms, int _maxRoomSize, int cpus) {
 		super(size);
 
-		MAX_ROOM_SIZE = _MAX_ROOM_SIZE;
+		maxRoomSize = _maxRoomSize;
 		
 		int attempts = 0;
 		while (true) {
@@ -33,17 +33,17 @@ public class DungeonGen1 extends AbstractDungeon {
 			centres.clear();
 
 			for (int r=1 ; r<=rooms ; r++) {
-				int x = NumberFunctions.rnd(2, size-MAX_ROOM_SIZE-3);
-				int y = NumberFunctions.rnd(2, size-MAX_ROOM_SIZE-3);
-				int w = NumberFunctions.rnd(2, MAX_ROOM_SIZE);
-				int h = NumberFunctions.rnd(2, MAX_ROOM_SIZE);
+				int x = NumberFunctions.rnd(2, size-maxRoomSize-3);
+				int y = NumberFunctions.rnd(2, size-maxRoomSize-3);
+				int w = NumberFunctions.rnd(2, maxRoomSize);
+				int h = NumberFunctions.rnd(2, maxRoomSize);
 
 				// Loop until we find an empty area
 				while (super.isThereARoomAt(x, y, w, h) == true) {
-					x = NumberFunctions.rnd(2, size-MAX_ROOM_SIZE-3);
-					y = NumberFunctions.rnd(2, size-MAX_ROOM_SIZE-3);
-					w = NumberFunctions.rnd(2, MAX_ROOM_SIZE);
-					h = NumberFunctions.rnd(2, MAX_ROOM_SIZE);
+					x = NumberFunctions.rnd(2, size-maxRoomSize-3);
+					y = NumberFunctions.rnd(2, size-maxRoomSize-3);
+					w = NumberFunctions.rnd(2, maxRoomSize);
+					h = NumberFunctions.rnd(2, maxRoomSize);
 
 					// Check if we've run out of time
 					/*if (int_check.hitInterval()) {

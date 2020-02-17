@@ -21,6 +21,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
@@ -87,6 +88,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_MM:
 			currentLevel = new MonsterMazeLevel(this);
+			break;
+		case Settings.MODE_DUNGEON:
+			currentLevel = new DungeonLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
