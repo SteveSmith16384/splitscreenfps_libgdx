@@ -6,8 +6,9 @@ public class DrawTextData {
 
 	public float x, y;
 	public String text;
-	public float drawUntil;
+	public float drawTimeRemaining;
 	public boolean centre_x;
 	public Color colour;
+	public int drawOnViewId = -1;
 
 }

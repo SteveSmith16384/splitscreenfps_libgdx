@@ -36,34 +36,34 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 
 
 	@Override
-	public void processEntity(AbstractEntity entity) {
+	public void processEntity(AbstractEntity trex) {
 		if (System.currentTimeMillis() < this.last_harm_done + 4000) {
 			return;
 		}
 		//TRexHarmsPlayerComponent hpc = (TRexHarmsPlayerComponent)entity.getComponent(TRexHarmsPlayerComponent.class);
-		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
+		CollidesComponent cc = (CollidesComponent)trex.getComponent(CollidesComponent.class);
 		for (CollisionResult cr : cc.results) {
-			AbstractEntity e = cr.collidedWith;
-			CanBeHarmedComponent ic = (CanBeHarmedComponent)e.getComponent(CanBeHarmedComponent.class);
+			AbstractEntity player = cr.collidedWith;
+			CanBeHarmedComponent ic = (CanBeHarmedComponent)player.getComponent(CanBeHarmedComponent.class);
 			if (ic != null) {
 				// Drop key
-				CanCarryComponent ccc = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
+				CanCarryComponent ccc = (CanCarryComponent)player.getComponent(CanCarryComponent.class);
 				if (ccc.carrying != null) {
 					ccc.carrying.remove();
 				}
 				
 				// Move player back to start
-				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
+				PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 				posData.position.set(startX + 0.5f, Settings.PLAYER_HEIGHT/2, startY + 0.5f); // Start in middle of square
 
-				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 3000, new Color(1, 0, 0, 1));
+				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 0, 0, 1), ic.playerId);
 				ecs.addEntity(te);
 				
 				AbstractEntity redfilter = game.entityFactory.createRedFilter(ic.playerId);
 				ecs.addEntity(redfilter);
 				
 				// Freeze t-rex for a bit
-				MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
+				MovementData movementData = (MovementData)trex.getComponent(MovementData.class);
 				movementData.frozenUntil = System.currentTimeMillis() + 4000;
 				
 				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");

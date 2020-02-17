@@ -24,9 +24,12 @@ public class DrawTextSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		DrawTextData dtd = (DrawTextData)entity.getComponent(DrawTextData.class);
-
-		dtd.drawUntil -= Gdx.graphics.getDeltaTime();
-		if (dtd.drawUntil <= 0) {
+		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != game.currentViewId) {
+			return;
+		}
+		
+		dtd.drawTimeRemaining -= Gdx.graphics.getDeltaTime();
+		if (dtd.drawTimeRemaining <= 0) {
 			entity.remove();
 		} else {
 			if (dtd.centre_x && dtd.x < 0) {

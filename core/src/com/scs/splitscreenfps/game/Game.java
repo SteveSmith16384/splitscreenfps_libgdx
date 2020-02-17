@@ -91,9 +91,9 @@ public class Game implements IModule {
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
 		}
-		//currentLevel = new MonsterMazeLevel(this);//TagLevel(this);//OpenRoomLevel(this); //LoadMapDynamicallyLevel(this);//CleanTheLitterLevel(this);//
+
 		loadLevel();
-		//todo this.loadAssetsForRescale(Gdx.);
+		//todo - is this needed? this.loadAssetsForRescale();
 
 		this.currentLevel.addSystems(ecs);
 	}
@@ -124,7 +124,6 @@ public class Game implements IModule {
 		ecs.addSystem(new MovementSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
-		//ecs.addSystem(new CollectionSystem(ecs));
 		ecs.addSystem(new AnimationSystem(ecs));
 		ecs.addSystem(new DrawGuiSpritesSystem(ecs, this, this.batch2d));
 		ecs.addSystem(new MoveAStarSystem(ecs, this));
@@ -173,7 +172,6 @@ public class Game implements IModule {
 		this.ecs.getSystem(MoveAStarSystem.class).process();
 		//this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
-		//this.ecs.getSystem(CollectionSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();
 

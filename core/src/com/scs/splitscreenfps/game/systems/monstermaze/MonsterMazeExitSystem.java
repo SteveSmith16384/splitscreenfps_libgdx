@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.systems.monstermaze;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -10,6 +12,7 @@ import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeExitCompone
 import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 
@@ -29,22 +32,25 @@ public class MonsterMazeExitSystem extends AbstractSystem {
 		CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);		
 		CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);
 		for (CollisionResult cr : crl.results) {
-			AbstractEntity e = cr.collidedWith;
-			CanUseMonsterMazeExitComponent ccl = (CanUseMonsterMazeExitComponent)e.getComponent(CanUseMonsterMazeExitComponent.class);
-			if (ccl != null) {
-				CanCarryComponent cc = (CanCarryComponent)e.getComponent(CanCarryComponent.class);
+			AbstractEntity player = cr.collidedWith;
+			CanUseMonsterMazeExitComponent cumme = (CanUseMonsterMazeExitComponent)player.getComponent(CanUseMonsterMazeExitComponent.class);
+			if (cumme != null) {
+				CanCarryComponent cc = (CanCarryComponent)player.getComponent(CanCarryComponent.class);
 				if (cc != null) {
 					if (cc.carrying != null) {
 						MonsterMazeKeyComponent key = (MonsterMazeKeyComponent)cc.carrying.getComponent(MonsterMazeKeyComponent.class);
 						if (key != null) {
 							game.ecs.removeSystem(MonsterMazeExitSystem.class);
-							game.ecs.removeSystem(RegenKeySystem.class);
-							game.playerHasWon(e);
+							game.ecs.removeSystem(MonsterMazeExitSystem.class);
+							game.ecs.removeSystem(TRexHarmsPlayerSystem.class);
+							game.playerHasWon(player);
 							return;
 						}
 					}
 				}
-				// todo - show text "You need the key"
+				TextEntity te = new TextEntity(ecs, "YOU NEED THE KEY!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 1, 0, 1), cumme.playerIdx);
+				ecs.addEntity(te);
+				
 			}
 		}
 	}

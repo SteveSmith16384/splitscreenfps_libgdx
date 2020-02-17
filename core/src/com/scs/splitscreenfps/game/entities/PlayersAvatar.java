@@ -39,8 +39,8 @@ public class PlayersAvatar extends AbstractEntity {
 
 	private IInputMethod inputMethod;
 
-	public PlayersAvatar(Game _game, int idx, ViewportData _viewportData, IInputMethod _inputMethod) {
-		super(_game.ecs, PlayersAvatar.class.getSimpleName() + "_" + idx);
+	public PlayersAvatar(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+		super(_game.ecs, PlayersAvatar.class.getSimpleName() + "_" + playerIdx);
 
 		game = _game;
 		inputMethod = _inputMethod;
@@ -48,23 +48,23 @@ public class PlayersAvatar extends AbstractEntity {
 		this.addComponent(new MovementData(0.5f));
 		this.addComponent(new PositionComponent());
 		//this.addComponent(new CanCollectComponent());
-		this.addComponent(new CanCarryComponent(idx));
+		this.addComponent(new CanCarryComponent(playerIdx));
 
 		// Todo - only add if playing tag
-		TagableComponent taggable = new TagableComponent(this);
-		addSkeletonForTagged(idx, taggable);
+		TagableComponent taggable = new TagableComponent(this, playerIdx);
+		addSkeletonForTagged(playerIdx, taggable);
 		this.addComponent(taggable);
 
 		// Model stuff
 		//ModelInstance instance = this.addKnightComponents(idx);
 		//ModelInstance instance = this.addZombieComponents(idx);
-		this.addSmooth_Male_ShirtComponents(idx);
+		this.addSmooth_Male_ShirtComponents(playerIdx);
 		//ModelInstance instance = this.addSkeletonComponents(idx);
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 
-		this.addComponent(new CanBeHarmedComponent(idx));
-		this.addComponent(new CanUseMonsterMazeExitComponent());
+		this.addComponent(new CanBeHarmedComponent(playerIdx));
+		this.addComponent(new CanUseMonsterMazeExitComponent(playerIdx));
 
 		camera = _viewportData.camera;
 
@@ -300,6 +300,8 @@ public class PlayersAvatar extends AbstractEntity {
 			//font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.viewports[this.id].viewPos.y+20);
 			if (tc.timeLeftAsIt < 20) {
 				font.setColor(1, 0, 0, 1);
+			} else {
+				font.setColor(0, 0, 0, 1);
 			}
 			font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
 			font.setColor(1, 1, 1 ,1);

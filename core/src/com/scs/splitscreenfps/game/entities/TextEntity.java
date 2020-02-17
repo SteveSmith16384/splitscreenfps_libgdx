@@ -7,21 +7,21 @@ import com.scs.splitscreenfps.game.components.DrawTextData;
 
 public class TextEntity extends AbstractEntity {
 
-	public TextEntity(BasicECS ecs, String text, float _x, float _y, float _duration, Color col) {
+	public TextEntity(BasicECS ecs, String text, float _x, float _y, float _duration, Color col, int _viewId) {
 		super(ecs, "Text");
 
 		DrawTextData dtd = new DrawTextData();
 		dtd.text = text;
 		dtd.x = _x;
 		dtd.y = _y;
-		dtd.drawUntil = _duration;
+		dtd.drawTimeRemaining = _duration;
 		dtd.colour = col;
 
 		this.addComponent(dtd);
 	}
 
 
-	public TextEntity(BasicECS ecs, String text, float _y, float _duration, Color col) {
+	public TextEntity(BasicECS ecs, String text, float _y, float _duration_secs, Color col, int _viewId) {
 		super(ecs, "Text");
 
 		DrawTextData dtd = new DrawTextData();
@@ -29,8 +29,9 @@ public class TextEntity extends AbstractEntity {
 		dtd.centre_x = true;
 		dtd.x = -1;
 		dtd.y = _y;
-		dtd.drawUntil = _duration;
+		dtd.drawTimeRemaining = _duration_secs;
 		dtd.colour = col;
+		dtd.drawOnViewId = _viewId;
 
 		this.addComponent(dtd);
 	}
