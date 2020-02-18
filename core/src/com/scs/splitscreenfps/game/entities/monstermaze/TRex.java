@@ -14,7 +14,6 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
@@ -78,11 +77,11 @@ public class TRex extends AbstractEntity {
 		Model model = am.get("farm/models/Cow.g3db");
 		ModelInstance instance = new ModelInstance(model);
 
-		HasModel hasModel = new HasModel("Cow", instance, -0.3f, 0, 0.0016f);
+		HasModel hasModel = new HasModel("Cow", instance, -0.3f, -90, 0.0016f);
 		this.addComponent(hasModel);
 
 		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, "Armature|WalkSlow");
+		AnimatedComponent anim = new AnimatedComponent(animation, "Armature|WalkSlow", "Armature|Idle");
 		anim.animationController = animation;
 		this.addComponent(anim);
 	}

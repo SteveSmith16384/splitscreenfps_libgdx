@@ -7,6 +7,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AutoMove;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -47,32 +48,26 @@ public class MovementSystem extends AbstractSystem {
 
 		AutoMove auto = (AutoMove)entity.getComponent(AutoMove.class);
 		if (auto != null) {
-			movementData.offset = auto.dir.cpy();//.scl(Gdx.graphics.getDeltaTime());
+			movementData.offset = auto.dir.cpy();
 		}
 		movementData.offset.scl(Gdx.graphics.getDeltaTime());
-		/*if (entity.name.equals(TRex.class.getSimpleName())) {
-			Settings.p("Move dist=" + movementData.offset.len());
-		}*/
 
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
-			if (movementData.frozenUntil > System.currentTimeMillis()) {
-				return;
+			if (movementData.frozenUntil < System.currentTimeMillis()) {
+				this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
 			}
-			/*TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
-			if (tagSystem != null) { // Gets removed at end of game
-				if (tagSystem.currentIt == entity) {
-					if (System.currentTimeMillis() < tagSystem.lastTagTime + TagSystem.TAG_INTERVAL) {
-						return; // Frozen after being tagged
-					} else {
-						movementData.offset.scl(1.2f);
-					}
-				}
-			}*/
+		}
 
-			this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+		// Animate
+		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
+		if (anim != null) {
+			if (movementData.offset.len2() > 0) {
+				anim.new_animation = anim.walk_anim_name;
+			} else {
+				anim.new_animation = anim.idle_anim_name;
+			}
 		}
 	}
-
 
 	/**
 	 * Returns true if entity moved successfully on BOTH axis.
@@ -97,14 +92,6 @@ public class MovementSystem extends AbstractSystem {
 				resultZ = true;
 			}
 		}
-
-		/*if (resultX || resultZ) {
-			// Move model if it has one
-			HasModel hasModel = (HasModel)mover.getComponent(HasModel.class);
-			if (hasModel != null) {
-				hasModel.model.transform.setTranslation(position.x, position.y + hasModel.yOffset, position.z);
-			}
-		}*/
 		return resultX && resultZ;
 	}
 

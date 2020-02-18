@@ -45,7 +45,7 @@ public class MoveAStarSystem extends AbstractSystem {
 					float angle_required = v.angle();
 					if (Math.abs(angle_required - posdata.angle) > 5) {
 						float diff = angle_required - posdata.angle;
-						posdata.angle += diff/4;///20;
+						posdata.angle += (diff/250);
 					}
 					Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
 				}

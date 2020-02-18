@@ -163,7 +163,7 @@ public class MapData implements IAStarMapInterface {
 
 	@Override
 	public boolean isMapSquareTraversable(int x, int z) {
-		return this.map[x][z].blocked == false;
+		return this.map[x][z].blocked == false && map[x][z].spawn_point == false;
 	}
 
 

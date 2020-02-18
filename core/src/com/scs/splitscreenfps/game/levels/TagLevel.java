@@ -14,7 +14,6 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
@@ -67,13 +66,13 @@ public class TagLevel extends AbstractLevel {
 		hasModel.dontDrawInViewId = idx;
 		taggable.storedHasModel = hasModel;
 
-		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "SkeletonArmature|Skeleton_Idle";
-		avatarAnim.walk_anim = "SkeletonArmature|Skeleton_Running";
-		taggable.storedAvatarAnim = avatarAnim;
+		/*AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		avatarAnim.idle_anim = ;
+		avatarAnim.walk_anim = ;
+		taggable.storedAvatarAnim = avatarAnim;*/
 
 		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		AnimatedComponent anim = new AnimatedComponent(animation, "SkeletonArmature|Skeleton_Running", "SkeletonArmature|Skeleton_Idle");
 		anim.animationController = animation;
 		taggable.storedAnimated = anim;
 

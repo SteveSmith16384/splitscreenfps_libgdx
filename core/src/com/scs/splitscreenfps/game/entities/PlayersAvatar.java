@@ -13,7 +13,6 @@ import com.scs.splitscreenfps.game.CameraController;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.AnimatedForAvatarComponent;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
@@ -92,13 +91,13 @@ public class PlayersAvatar extends AbstractEntity {
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 
-		AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
+		/*AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
 		avatarAnim.idle_anim = "HumanArmature|Man_Idle"; // Standing
 		avatarAnim.walk_anim = "HumanArmature|Man_Walk";
-		this.addComponent(avatarAnim);
+		this.addComponent(avatarAnim);*/
 
 		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, avatarAnim.idle_anim);
+		AnimatedComponent anim = new AnimatedComponent(animation, "HumanArmature|Man_Walk", "HumanArmature|Man_Idle");
 		anim.animationController = animation;
 		this.addComponent(anim);
 
@@ -166,39 +165,18 @@ public class PlayersAvatar extends AbstractEntity {
 			}
 		}
 
-
-		// Animate and footstep sfx
-		AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
-		AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
+		// Animate
+		/*AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
+		//AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
 		if (movementData.offset.len2() > 0) {
 			if (anim != null) {
-				anim.new_animation = avatarAnim.walk_anim;
+				anim.new_animation = anim.walk_anim_name;
 			}
-			/*footstepTimer += Gdx.graphics.getDeltaTime();
-			if (footstepTimer > 0.45f) {
-				footstepTimer -= 0.45f;
-				//Game.audio.play("step");
-			}*/
 		} else {
 			if (anim != null) {
-				anim.new_animation = avatarAnim.idle_anim;
+				anim.new_animation = anim.idle_anim_name;
 			}
-		}
+		}*/
 	}
-
-	/*
-	public void renderUI(SpriteBatch batch, BitmapFont font) {
-		/*TagableComponent tc = (TagableComponent)this.getComponent(TagableComponent.class);
-		if (tc != null) {
-			if (tc.timeLeftAsIt < 20) {
-				font.setColor(1, 0, 0, 1);
-			} else {
-				font.setColor(0, 0, 0, 1);
-			}
-			font.draw(batch, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
-			font.setColor(1, 1, 1 ,1);
-		}
-	}
-	 */
 }
 

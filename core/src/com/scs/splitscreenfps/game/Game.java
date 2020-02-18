@@ -66,21 +66,6 @@ public class Game implements IModule {
 		main = _main;
 		inputs = _inputs;
 		
-		
-		// todo - remvoe this
-		/*Vector2 v = new Vector2(0, 1);
-		Settings.p(""+v.angle());
-		v = new Vector2(0, -1);
-		Settings.p(""+v.angle());
-		v = new Vector2(0, -2);
-		Settings.p(""+v.angle());
-		v = new Vector2(-1, -2);
-		Settings.p(""+v.angle());
-		v = new Vector2(-2, -2);
-		Settings.p(""+v.angle());*/
-
-		/////////////
-
 		BillBoardFPS_Main.audio.startMusic("audio/Heroic Demise (New).mp3");
 
 		game_stage = 0;

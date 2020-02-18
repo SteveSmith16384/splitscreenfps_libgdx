@@ -23,7 +23,7 @@ public class AnimationSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 
-		if (anim.new_animation != null) {
+		if (anim.new_animation != null && anim.new_animation.length() > 0) {
 			if (anim.current_animation != anim.new_animation) {
 				anim.current_animation = anim.new_animation;
 				anim.animationController.animate(anim.current_animation, -1, 2f, null, 0f); // todo - move anim speed to model data

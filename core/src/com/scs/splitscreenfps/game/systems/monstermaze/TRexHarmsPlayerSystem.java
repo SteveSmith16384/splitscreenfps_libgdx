@@ -8,6 +8,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
@@ -71,6 +72,11 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				// Freeze t-rex for a bit
 				MovementData movementData = (MovementData)trex.getComponent(MovementData.class);
 				movementData.frozenUntil = System.currentTimeMillis() + 4000;
+				
+				AnimatedComponent anim = (AnimatedComponent)trex.getComponent(AnimatedComponent.class);
+				if (anim != null) {
+					anim.new_animation = anim.idle_anim_name; 
+				}
 				
 				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
 				
