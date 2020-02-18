@@ -23,6 +23,7 @@ public class Settings {
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
 	
 	public static final float PLAYER_HEIGHT = 0.52f;
+	public static final float CAM_OFFSET = 0.14f;
 	
 	public static final String TITLE ="Split-Screen Multiplayer";
 

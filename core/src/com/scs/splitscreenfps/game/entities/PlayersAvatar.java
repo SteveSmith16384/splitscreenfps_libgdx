@@ -157,7 +157,7 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
-		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2), posData.position.z);
+		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 
 		if (Settings.TEST_START_IN_WALL) {
 			if (game.mapData.isMapSquareTraversable((int)posData.position.x, (int)posData.position.z) == false) {
