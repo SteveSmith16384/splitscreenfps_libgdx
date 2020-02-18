@@ -29,7 +29,7 @@ public class DrawTextSystem extends AbstractSystem {
 		if (dtd.drawOnViewId >= 0 && dtd.drawOnViewId != game.currentViewId) {
 			return;
 		}
-		
+
 		dtd.timeRemaining -= Gdx.graphics.getDeltaTime();
 		if (dtd.timeRemaining <= 0) {
 			entity.remove();
@@ -45,8 +45,8 @@ public class DrawTextSystem extends AbstractSystem {
 			case 3:
 				font = game.font_small;
 				break;
-				default:
-					throw new RuntimeException("Todo");
+			default:
+				throw new RuntimeException("Todo");
 			}
 			if (dtd.centre_x && dtd.x < 0) {
 				GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member

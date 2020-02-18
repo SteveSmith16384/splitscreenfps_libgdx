@@ -11,6 +11,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 
 public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<AbstractEntity> {
@@ -46,7 +47,14 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 		}
 		if (hgsc.dirty) {
 			Sprite sprite = hgsc.sprite;
-			sprite.setBounds(hgsc.scale.x * Gdx.graphics.getWidth(), hgsc.scale.y * Gdx.graphics.getHeight(), hgsc.scale.width * Gdx.graphics.getWidth(), hgsc.scale.width * Gdx.graphics.getHeight());
+			sprite.setBounds(hgsc.scale.x * (Gdx.graphics.getWidth()), hgsc.scale.y * (Gdx.graphics.getHeight()), hgsc.scale.width * (Gdx.graphics.getWidth()), hgsc.scale.width * (Gdx.graphics.getHeight()));
+
+			//sprite.setBounds(50, 50, 50, 50);
+			
+			//ViewportData v = game.viewports[game.currentViewId];
+			//sprite.setBounds(hgsc.scale.x * v.viewPos.width, hgsc.scale.y * v.viewPos.height, hgsc.scale.width * v.viewPos.width, hgsc.scale.width * v.viewPos.height);
+
+			//sprite.setBounds(10, 10, Gdx.graphics.getWidth()-20, Gdx.graphics.getHeight()-20); // Fits perfectly over viewport!
 			hgsc.dirty = false;
 		}
 		hgsc.sprite.draw(batch2d);
