@@ -62,7 +62,7 @@ public class PreGameScreen implements IModule {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
-		Settings.p("Font size=" + parameter.size);
+		//Settings.p("Font size=" + parameter.size);
 		font = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
@@ -75,7 +75,6 @@ public class PreGameScreen implements IModule {
 			filename = "monstermaze/monstermaze_logo.png";
 			break;
 		default:
-			//throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
 			Settings.pe("Unknown mode for logo: " + Settings.CURRENT_MODE);
 		}
 

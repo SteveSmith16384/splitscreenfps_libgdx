@@ -126,7 +126,7 @@ public class MapData implements IAStarMapInterface {
 	}
 
 
-	public MapSquare getMapSquareAt(float x, float y) {
+	private MapSquare getMapSquareAt(float x, float y) {
 		return getMapSquareAt((int)(x+0.5f), (int)(y+0.5f));
 	}
 

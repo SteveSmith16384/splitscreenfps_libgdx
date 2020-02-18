@@ -49,13 +49,13 @@ public class TRex extends AbstractEntity {
 			cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
 			this.addComponent(cycle);
 
-			MoveAStarComponent astar = new MoveAStarComponent(1.6f, false);
+			MoveAStarComponent astar = new MoveAStarComponent(1.7f, false);
 			this.addComponent(astar);
 
 		} else {
 			loadCow(game);
 			
-			MoveAStarComponent astar = new MoveAStarComponent(1.6f, true);
+			MoveAStarComponent astar = new MoveAStarComponent(1.7f, true);
 			this.addComponent(astar);
 		}
 

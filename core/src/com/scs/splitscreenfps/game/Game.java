@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -22,6 +21,8 @@ import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.DungeonLevel;
+import com.scs.splitscreenfps.game.levels.FTLLevel;
+import com.scs.splitscreenfps.game.levels.FarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
@@ -90,6 +91,12 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_DUNGEON:
 			currentLevel = new DungeonLevel(this);
+			break;
+		case Settings.MODE_FARM:
+			currentLevel = new FarmLevel(this);
+			break;
+		case Settings.MODE_FTL:
+			currentLevel = new FTLLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);

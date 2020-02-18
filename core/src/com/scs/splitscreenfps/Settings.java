@@ -7,6 +7,8 @@ public class Settings {
 	public static final int MODE_TAG = 1;
 	public static final int MODE_MM = 2;
 	public static final int MODE_DUNGEON = 3;
+	public static final int MODE_FARM = 4;
+	public static final int MODE_FTL = 5;
 	
 	public static final int CURRENT_MODE = MODE_MM;
 	public static final String VERSION = "1.01";
@@ -14,10 +16,9 @@ public class Settings {
 	
 	// Hacks
 	public static final boolean TEST_ALT_TREX = !RELEASE_MODE && true;
-	public static final boolean SMALL_MAP = !RELEASE_MODE && true;
-	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && true;
+	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
+	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && false;
 	public static final boolean TEST_START_IN_WALL = !RELEASE_MODE && false;
-	//public static final boolean TEST_FILTER = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
 	

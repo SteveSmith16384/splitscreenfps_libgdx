@@ -5,6 +5,8 @@ A 1-4 player split-screen FPS engine and games.
 ## Controls
 W, A S, D for keyboard & mouse player.
 Tested with PS4 controllers.
+F1 - Toggle full Screen
+F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
 
 
 ## Credits

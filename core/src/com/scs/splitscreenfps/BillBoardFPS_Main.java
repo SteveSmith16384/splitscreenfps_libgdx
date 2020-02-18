@@ -76,9 +76,15 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			}
 			this.current_module.setFullScreen(fullscreen);
 		} else if (Gdx.input.isKeyJustPressed(Keys.F2)) {
-			int w = Gdx.graphics.getDisplayMode().width;
-			int h = Gdx.graphics.getDisplayMode().height;
-			Gdx.graphics.setWindowedMode(w, h);
+			if (fullscreen) {
+				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
+				fullscreen = false;
+			} else {
+				int w = Gdx.graphics.getDisplayMode().width;
+				int h = Gdx.graphics.getDisplayMode().height;
+				Gdx.graphics.setWindowedMode(w, h);
+				fullscreen = true;
+			}
 		} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			if (this.next_module instanceof PreGameScreen) {
 				System.exit(0);
