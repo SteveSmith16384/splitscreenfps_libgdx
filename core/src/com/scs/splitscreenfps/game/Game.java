@@ -151,10 +151,10 @@ public class Game implements IModule {
 			players[idx].update();
 		}
 
-		if (Settings.TEST_FILTER) {
+		/*if (Settings.TEST_FILTER) {
 			AbstractEntity filter = this.entityFactory.createRedFilter(3);
 			ecs.addEntity(filter);
-		}
+		}*/
 	}
 
 

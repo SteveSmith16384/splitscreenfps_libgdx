@@ -88,8 +88,6 @@ public class PlayersAvatar extends AbstractEntity {
 		}
 		ModelInstance instance = new ModelInstance(model);
 
-		//instance.transform.scl(.0016f);
-		//instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
 		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);

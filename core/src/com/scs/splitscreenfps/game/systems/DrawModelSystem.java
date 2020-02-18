@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -62,26 +63,33 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
-		/*if (entity.name == "Crate") {
-			int dfgdfg = 345;
+		/*if (entity.name.equals("TRex")) {
+			Settings.p("");
 		}*/
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
 		if (model.dontDrawInViewId != game.currentViewId) {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 			if (posData != null) {
+				
+				// Only draw if in frustum 
+				if (!camera.frustum.sphereInFrustum(posData.position, 1f)) {
+					return;
+				}
+
 				Vector3 position = posData.position;
 				tmpOffset.set(position);
 				tmpOffset.y += model.yOffset;
-				model.model.transform.setToTranslation(tmpOffset);//.x, position.y + model.yOffset, position.z);
+				model.model.transform.setToTranslation(tmpOffset);
 				model.model.transform.scl(model.scale);//.0016f);
 				model.model.transform.rotate(Vector3.Y, posData.angle+model.angleOffset);
-				tmp.set(position);
+				//tmp.set(position);
 			} else {
+				// Only draw if in frustum 
 				model.model.transform.getTranslation(tmp);
-			}
-			// Only draw if in frustum 
-			if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
-				return;
+				if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
+					return;
+				}
+
 			}
 			modelBatch.render(model.model, environment);
 		}

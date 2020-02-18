@@ -90,7 +90,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 			this.startPositions[i] = maze.start_pos;
 		}
 
-		TRex trex = new TRex(game.ecs, maze.middle_pos.x, maze.middle_pos.y);
+		TRex trex = new TRex(game, game.ecs, maze.middle_pos.x, maze.middle_pos.y);
 		game.ecs.addEntity(trex);
 		
 		//AbstractEntity key = MonsterMazeEntityFactory.createKey(game.ecs, maze.middle_pos.x, maze.middle_pos.y);
