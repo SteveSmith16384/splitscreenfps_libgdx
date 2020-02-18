@@ -86,6 +86,8 @@ public class MonsterMazeLevel extends AbstractLevel {
 			}
 		}
 
+		game.mapData.map[maze.start_pos.x][maze.start_pos.y].spawn_point = true;
+				
 		for (int i=0 ; i<this.startPositions.length ;i++) {
 			this.startPositions[i] = maze.start_pos;
 		}

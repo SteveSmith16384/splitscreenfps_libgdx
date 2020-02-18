@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -64,6 +65,21 @@ public class Game implements IModule {
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
+		
+		
+		// todo - remvoe this
+		/*Vector2 v = new Vector2(0, 1);
+		Settings.p(""+v.angle());
+		v = new Vector2(0, -1);
+		Settings.p(""+v.angle());
+		v = new Vector2(0, -2);
+		Settings.p(""+v.angle());
+		v = new Vector2(-1, -2);
+		Settings.p(""+v.angle());
+		v = new Vector2(-2, -2);
+		Settings.p(""+v.angle());*/
+
+		/////////////
 
 		BillBoardFPS_Main.audio.startMusic("audio/Heroic Demise (New).mp3");
 

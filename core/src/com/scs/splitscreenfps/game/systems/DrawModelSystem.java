@@ -30,7 +30,6 @@ public class DrawModelSystem extends AbstractSystem {
 		game = _game;
 
 		this.modelBatch = new ModelBatch();
-		//modelBatch.setBlendFunction(GL20.GL_ONE_MINUS_DST_ALPHA, GL20.GL_SRC_ALPHA)
 
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .4f, .4f, .4f, 1f));

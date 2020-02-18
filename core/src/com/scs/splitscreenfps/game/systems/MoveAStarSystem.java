@@ -1,10 +1,12 @@
 package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -14,19 +16,13 @@ import ssmith.astar.AStar_LibGDX;
 import ssmith.lang.GeometryFuncs;
 
 public class MoveAStarSystem extends AbstractSystem {
-	
+
 	private Game game;
 
 	public MoveAStarSystem(BasicECS ecs, Game _game) {
-		super(ecs);
-		
+		super(ecs, MoveAStarComponent.class);
+
 		game = _game;
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return MoveAStarComponent.class;
 	}
 
 
@@ -45,7 +41,13 @@ public class MoveAStarSystem extends AbstractSystem {
 				mac.route.remove(0);
 			} else {
 				if (mac.rotate) {
-					// todo
+					Vector2 v = new Vector2(destpos.x+.5f-posdata.position.x, destpos.y+.5f-posdata.position.z);
+					float angle_required = v.angle();
+					if (Math.abs(angle_required - posdata.angle) > 5) {
+						float diff = angle_required - posdata.angle;
+						posdata.angle += diff/4;///20;
+					}
+					Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
 				}
 				MovementData moveData = (MovementData)entity.getComponent(MovementData.class);
 				moveData.offset = new Vector3(destpos.x+.5f-posdata.position.x, 0, destpos.y+.5f-posdata.position.z);
@@ -53,5 +55,5 @@ public class MoveAStarSystem extends AbstractSystem {
 			}
 		}
 	}
-	
+
 }

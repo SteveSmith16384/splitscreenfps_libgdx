@@ -49,12 +49,16 @@ public class TRex extends AbstractEntity {
 			cycle.decals[0] = hasDecal.decal;
 			cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
 			this.addComponent(cycle);
+
+			MoveAStarComponent astar = new MoveAStarComponent(1.6f, false);
+			this.addComponent(astar);
+
 		} else {
 			loadCow(game);
+			
+			MoveAStarComponent astar = new MoveAStarComponent(1.6f, true);
+			this.addComponent(astar);
 		}
-
-		MoveAStarComponent astar = new MoveAStarComponent(1.6f, false);
-		this.addComponent(astar);
 
 		this.addComponent(new MovementData(.85f));
 
@@ -74,7 +78,7 @@ public class TRex extends AbstractEntity {
 		Model model = am.get("farm/models/Cow.g3db");
 		ModelInstance instance = new ModelInstance(model);
 
-		HasModel hasModel = new HasModel("Cow", instance, -0.3f, 90, 0.0016f);
+		HasModel hasModel = new HasModel("Cow", instance, -0.3f, 0, 0.0016f);
 		this.addComponent(hasModel);
 
 		AnimationController animation = new AnimationController(instance);

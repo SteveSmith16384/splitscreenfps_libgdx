@@ -9,10 +9,6 @@ import ssmith.lang.NumberFunctions;
 
 public class MapData implements IAStarMapInterface {
 
-	public static final int NOTHING = 0;
-	public static final int WALL = 1;
-	public static final int BLOCKED = 2;
-
 	private static final MapSquare BLOCKED_WALL = new MapSquare(true);
 
 	public MapSquare map[][];
@@ -144,7 +140,7 @@ public class MapData implements IAStarMapInterface {
 		while (true) {
 			int x = NumberFunctions.rnd(0,  this.getMapWidth()-1);
 			int y = NumberFunctions.rnd(0,  this.getMapHeight()-1);
-			if (map[x][y].blocked == false) {
+			if (map[x][y].blocked == false && map[x][y].spawn_point == false) {
 				return new GridPoint2(x, y);
 			}
 		}
