@@ -38,10 +38,22 @@ public class MonsterMazeLevel extends AbstractLevel {
 	@Override
 	public void loadAssets() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/zx_spectrum-7.ttf"));
+
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = Gdx.graphics.getBackBufferHeight()/5;
-		game.font = generator.generateFont(parameter);
-		game.font.setColor(0f, 0f, 0f, 1f);
+		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
+		//Settings.p("Font size=" + parameter.size);
+		game.font_small = generator.generateFont(parameter);
+		
+		parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/20;
+		//Settings.p("Font size=" + parameter.size);
+		game.font_med = generator.generateFont(parameter);
+		
+		parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
+		//Settings.p("Font size=" + parameter.size);
+		game.font_large = generator.generateFont(parameter);
+
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 	

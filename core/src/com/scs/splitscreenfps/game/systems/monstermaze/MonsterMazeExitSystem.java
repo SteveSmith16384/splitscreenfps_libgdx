@@ -47,7 +47,7 @@ public class MonsterMazeExitSystem extends AbstractSystem {
 						}
 					}
 				}
-				TextEntity te = new TextEntity(ecs, "YOU NEED THE KEY!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 1, 0, 1), cumme.playerIdx);
+				TextEntity te = new TextEntity(ecs, "YOU NEED THE KEY!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 1, 0, 1), cumme.playerIdx, 2);
 				ecs.addEntity(te);
 				
 			}

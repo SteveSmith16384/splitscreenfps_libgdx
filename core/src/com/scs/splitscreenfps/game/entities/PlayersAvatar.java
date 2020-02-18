@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -56,7 +55,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		camera = _viewportData.camera;
 
-		cameraController = new CameraController(game, camera, inputMethod);
+		cameraController = new CameraController(camera, inputMethod);
 	}
 
 

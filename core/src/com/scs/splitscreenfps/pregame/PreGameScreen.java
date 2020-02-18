@@ -88,10 +88,6 @@ public class PreGameScreen implements IModule {
 
 	@Override
 	public void render() {
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
-		
 		controllerManager.checkForControllers();
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

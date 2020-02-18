@@ -62,7 +62,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 				posData.position.set(startX + 0.5f, Settings.PLAYER_HEIGHT/2, startY + 0.5f); // Start in middle of square
 
-				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 0, 0, 1), ic.playerId);
+				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 0, 0, 1), ic.playerId, 2);
 				ecs.addEntity(te);
 				
 				AbstractEntity redfilter = game.entityFactory.createRedFilter(ic.playerId);

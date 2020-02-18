@@ -3,7 +3,6 @@ package com.scs.splitscreenfps;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
@@ -24,7 +23,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	private IModule current_module;
 	public  IModule next_module;
-	private boolean toggleFullscreen = false, fullscreen = false;
+	private boolean fullscreen = false;
 
 	@Override
 	public void create() {
@@ -56,18 +55,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 		audio.update();
 
-		if (Gdx.input.isKeyPressed(Keys.F1)) {
-			if (Gdx.app.getType() == ApplicationType.WebGL) {
-				if (!Gdx.graphics.isFullscreen()) {
-					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayModes()[0]);
-				}
-			} else {
-				toggleFullscreen = true;
-			}
-		}
-
-		if (this.toggleFullscreen) {
-			this.toggleFullscreen = false;
+		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			if (fullscreen) {
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
 				fullscreen = false;
@@ -87,8 +75,19 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 				fullscreen = true;
 			}
 			this.current_module.setFullScreen(fullscreen);
+		} else if (Gdx.input.isKeyJustPressed(Keys.F2)) {
+			int w = Gdx.graphics.getDisplayMode().width;
+			int h = Gdx.graphics.getDisplayMode().height;
+			Gdx.graphics.setWindowedMode(w, h);
+		} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			if (this.next_module instanceof PreGameScreen) {
+				System.exit(0);
+			} else {
+				this.next_module = new PreGameScreen(this);
+			}
 		}
-		
+
+
 	}
 
 

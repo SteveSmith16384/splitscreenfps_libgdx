@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -31,10 +30,22 @@ public abstract class AbstractLevel {
 	 */
 	public void loadAssets() {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
+		
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
 		//Settings.p("Font size=" + parameter.size);
-		game.font = generator.generateFont(parameter); // font size 12 pixels
+		game.font_small = generator.generateFont(parameter);
+		
+		parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/20;
+		//Settings.p("Font size=" + parameter.size);
+		game.font_med = generator.generateFont(parameter);
+		
+		parameter = new FreeTypeFontParameter();
+		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
+		//Settings.p("Font size=" + parameter.size);
+		game.font_large = generator.generateFont(parameter);
+		
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 
@@ -46,7 +57,7 @@ public abstract class AbstractLevel {
 
 	public abstract void update();
 	
-	public void renderUI(SpriteBatch batch, BitmapFont font_white, int viewIndex) {}
+	public void renderUI(SpriteBatch batch, int viewIndex) {}
 
 	public GridPoint2 getPlayerStartMap(int idx) {
 		return this.startPositions[idx];

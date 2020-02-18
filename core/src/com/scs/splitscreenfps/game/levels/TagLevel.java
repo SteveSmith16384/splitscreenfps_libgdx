@@ -3,7 +3,6 @@ package com.scs.splitscreenfps.game.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -206,7 +205,7 @@ public class TagLevel extends AbstractLevel {
 
 
 	@Override
-	public void renderUI(SpriteBatch batch2d, BitmapFont font, int viewIndex) {
+	public void renderUI(SpriteBatch batch2d, int viewIndex) {
 		// Draw slime
 		TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
 		if (tagSystem != null) {
@@ -226,12 +225,12 @@ public class TagLevel extends AbstractLevel {
 		TagableComponent tc = (TagableComponent)playerAvatar.getComponent(TagableComponent.class);
 		if (tc != null) {
 			if (tc.timeLeftAsIt < 20) {
-				font.setColor(1, 0, 0, 1);
+				game.font_med.setColor(1, 0, 0, 1);
 			} else {
-				font.setColor(0, 0, 0, 1);
+				game.font_med.setColor(0, 0, 0, 1);
 			}
-			font.draw(batch2d, "Time Left: " + (int)tc.timeLeftAsIt, 10, font.getLineHeight());
-			font.setColor(1, 1, 1 ,1);
+			game.font_med.draw(batch2d, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.font_med.getLineHeight());
+			//font.setColor(1, 1, 1 ,1);
 		}
 	}
 

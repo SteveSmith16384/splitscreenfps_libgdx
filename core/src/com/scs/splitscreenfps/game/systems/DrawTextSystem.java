@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
@@ -29,20 +30,33 @@ public class DrawTextSystem extends AbstractSystem {
 			return;
 		}
 		
-		dtd.drawTimeRemaining -= Gdx.graphics.getDeltaTime();
-		if (dtd.drawTimeRemaining <= 0) {
+		dtd.timeRemaining -= Gdx.graphics.getDeltaTime();
+		if (dtd.timeRemaining <= 0) {
 			entity.remove();
 		} else {
+			BitmapFont font = null;
+			switch (dtd.size) {
+			case 1:
+				font = game.font_large;
+				break;
+			case 2:
+				font = game.font_med;
+				break;
+			case 3:
+				font = game.font_small;
+				break;
+				default:
+					throw new RuntimeException("Todo");
+			}
 			if (dtd.centre_x && dtd.x < 0) {
-				//int len = dtd.text.length() * 11;
 				GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
-				layout.setText(game.font, dtd.text);
+				layout.setText(font, dtd.text);
 				float len = layout.width;// contains the width of the current set text
 				dtd.x = Gdx.graphics.getWidth() / 2 - len/2;
 			}
 
-			game.font.setColor(dtd.colour);
-			game.font.draw(batch2d, dtd.text, dtd.x, dtd.y);
+			font.setColor(dtd.colour);
+			font.draw(batch2d, dtd.text, dtd.x, dtd.y);
 		}
 
 	}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -37,13 +36,12 @@ import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
-import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	public BitmapFont font;
+	public BitmapFont font_small, font_med, font_large;
 	public final ViewportData[] viewports;
 
 	public PlayersAvatar[] players;
@@ -162,11 +160,6 @@ public class Game implements IModule {
 
 	@Override
 	public void render() {
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			this.main.next_module = new PreGameScreen(main);
-			return;
-		}
-
 		if (this.game_stage == 1) {
 			if (this.restartTime < System.currentTimeMillis()) {
 				this.main.next_module = new Game(main, this.inputs);
@@ -224,20 +217,20 @@ public class Game implements IModule {
 				}
 			}*/
 
-			currentLevel.renderUI(batch2d, font, currentViewId);
+			currentLevel.renderUI(batch2d, currentViewId);
 
 			/*if (players[currentViewId] != null) {
 				players[currentViewId].renderUI(batch2d, font);
 			}*/
 
-			if (Settings.TEST_SCREEN_COORDS) {
+			/*if (Settings.TEST_SCREEN_COORDS) {
 				font.draw(batch2d, "TL", 20, 20);
 				font.draw(batch2d, "50", 50, 50);
 				font.draw(batch2d, "150", 150, 150);
 				font.draw(batch2d, "TR", Gdx.graphics.getBackBufferWidth()-20, 20);
 				font.draw(batch2d, "BL", 10, Gdx.graphics.getBackBufferHeight()-20);
 				font.draw(batch2d, "BR", Gdx.graphics.getBackBufferWidth()-20, Gdx.graphics.getBackBufferHeight()-20);
-			}
+			}*/
 
 			batch2d.end();
 
@@ -251,8 +244,8 @@ public class Game implements IModule {
 			batch2d.begin();
 			batch2d.draw(viewportData.frameBuffer.getColorBufferTexture(), viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 			if (Settings.SHOW_FPS) {
-				if (font != null) {
-					font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 20);
+				if (font_small != null) {
+					font_small.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font_small.getLineHeight()*2);
 				}
 			}
 
@@ -277,7 +270,9 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
-		font.dispose(); 
+		font_small.dispose(); 
+		font_med.dispose(); 
+		font_large.dispose(); 
 		batch2d.dispose();
 	}
 
@@ -318,10 +313,10 @@ public class Game implements IModule {
 	private void loadWinLoseText() {
 		for (int i=0 ; i<this.players.length ; i++) {
 			if (this.losers.contains(this.players[i])) {
-				TextEntity te = new TextEntity(ecs, "YOU HAVE LOST!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 0, 1, 1), i);
+				TextEntity te = new TextEntity(ecs, "YOU HAVE LOST!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 0, 1, 1), i, 2);
 				ecs.addEntity(te);
 			} else {
-				TextEntity te = new TextEntity(ecs, "YOU HAVE WON!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 1, 0, 1), i);
+				TextEntity te = new TextEntity(ecs, "YOU HAVE WON!", Gdx.graphics.getBackBufferHeight()/2, 5, new Color(0, 1, 0, 1), i, 1);
 				ecs.addEntity(te);
 			}
 		}

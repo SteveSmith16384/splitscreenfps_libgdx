@@ -84,7 +84,7 @@ public class TagSystem extends AbstractSystem {
 				this.currentIt = cr.collidedWith;
 				lastTagTime = System.currentTimeMillis();
 
-				game.ecs.addEntity(new TextEntity(ecs, "YOU HAVE BEEN INFECTED", 50, 2, new Color(1, 1f, 0, 1), clean_tagable.playerIdx));
+				game.ecs.addEntity(new TextEntity(ecs, "YOU HAVE BEEN INFECTED", 50, 2, new Color(1, 1f, 0, 1), clean_tagable.playerIdx, 2));
 				
 				MovementData movementData = (MovementData)this.currentIt.getComponent(MovementData.class);
 				movementData.frozenUntil = System.currentTimeMillis() + TAG_INTERVAL;

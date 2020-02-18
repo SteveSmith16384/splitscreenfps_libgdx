@@ -11,7 +11,6 @@ public class CameraController {
 
 	private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	
-	private Game game;
 	private Camera camera;
 	private Vector3 tmp;
 
@@ -29,8 +28,7 @@ public class CameraController {
 
 	private IInputMethod input;
 
-	public CameraController(Game _game, Camera cam, IInputMethod _input) {
-		game = _game;
+	public CameraController(Camera cam, IInputMethod _input) {
 		camera = cam;
 		input = _input;
 
