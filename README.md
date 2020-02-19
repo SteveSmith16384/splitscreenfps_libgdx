@@ -12,8 +12,11 @@ F2 - Toggle full screen but still windowed (required if you want to record the s
 ## Credits
 * Designed and programmed by Stephen Carlyle-Smith https://twitter.com/stephencsmith
 * Uses the LibGDX game framework
+* Uses BasicECS from https://github.com/SteveSmith16384/BasicECS
 * Controller code from https://github.com/electronstudio/sdl2gdx
-* 3D Models by Quaternius https://twitter.com/quaternius
+* All 3D Models by Quaternius https://twitter.com/quaternius
 * Music by Matthew Pablo http://www.matthewpablo.com/ (Taken from https://opengameart.org/content/heroic-demise-updated-version)
 * Squishy sfx from https://opengameart.org/content/8-wet-squish-slurp-impacts
 * Farm animal sfx from https://opengameart.org/content/farm-animals
+* Monster growls from https://opengameart.org/content/large-monster
+* Scream from https://opengameart.org/content/aargh-male-screams

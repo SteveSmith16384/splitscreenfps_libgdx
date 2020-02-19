@@ -48,7 +48,7 @@ public class MoveAStarSystem extends AbstractSystem {
 						float diff = angle_required - posdata.angle;
 						posdata.angle += (diff/250);
 					}
-					Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
+					//Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
 				}
 				MovementData moveData = (MovementData)entity.getComponent(MovementData.class);
 				moveData.offset = new Vector3(destpos.x+.5f-posdata.position.x, 0, destpos.y+.5f-posdata.position.z);

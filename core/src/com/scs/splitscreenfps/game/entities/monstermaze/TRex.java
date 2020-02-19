@@ -55,7 +55,7 @@ public class TRex extends AbstractEntity {
 		} else {
 			loadCow(game);
 			
-			MoveAStarComponent astar = new MoveAStarComponent(1.7f, true);
+			MoveAStarComponent astar = new MoveAStarComponent(1.9f, true);
 			this.addComponent(astar);
 		}
 
