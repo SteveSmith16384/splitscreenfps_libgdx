@@ -23,7 +23,7 @@ public class DrawModelSystem extends AbstractSystem {
 	private Environment environment;
 	
 	private Vector3 tmpOffset = new Vector3();
-	private Vector3 tmp = new Vector3();
+	//private Vector3 tmp = new Vector3();
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs);

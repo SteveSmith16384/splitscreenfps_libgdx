@@ -11,7 +11,6 @@ public class HasModel {
 	public int angleOffset;
 	public float scale;
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
-	//public boolean alwaysDraw = false; // Otherwise, only draw if in frustum - todo - delete
 	public BoundingBox bb; // For checking if in frustum  
 	
 	public HasModel(String name, ModelInstance _model) {

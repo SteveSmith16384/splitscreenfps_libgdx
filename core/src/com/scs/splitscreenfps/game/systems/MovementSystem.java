@@ -39,7 +39,8 @@ public class MovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-
+		movementData.blocked_on_last_move = false;
+		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
 			cc.bb_dirty = true;
@@ -54,7 +55,8 @@ public class MovementSystem extends AbstractSystem {
 
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
-				this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+				boolean moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+				movementData.blocked_on_last_move = moved;
 			}
 		}
 
@@ -62,15 +64,15 @@ public class MovementSystem extends AbstractSystem {
 		AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
 		if (anim != null) {
 			if (movementData.offset.len2() > 0) {
-				anim.new_animation = anim.walk_anim_name;
+				anim.next_animation = anim.walk_anim_name;
 			} else {
-				anim.new_animation = anim.idle_anim_name;
+				anim.next_animation = anim.idle_anim_name;
 			}
 		}
 	}
 
 	/**
-	 * Returns true if entity moved successfully on BOTH axis.
+	 * Returns true if entity moved successfully on either axis.
 	 */
 	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter, CollidesComponent cc) {
 		PositionComponent pos = (PositionComponent)mover.getComponent(PositionComponent.class);
@@ -92,7 +94,7 @@ public class MovementSystem extends AbstractSystem {
 				resultZ = true;
 			}
 		}
-		return resultX && resultZ;
+		return resultX || resultZ;
 	}
 
 

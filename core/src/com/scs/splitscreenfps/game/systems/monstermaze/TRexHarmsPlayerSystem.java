@@ -70,7 +70,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				
 				AnimatedComponent anim = (AnimatedComponent)trex.getComponent(AnimatedComponent.class);
 				if (anim != null) {
-					anim.new_animation = anim.idle_anim_name; 
+					anim.next_animation = anim.idle_anim_name; 
 				}
 				
 				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
