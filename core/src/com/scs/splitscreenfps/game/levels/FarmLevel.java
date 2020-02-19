@@ -50,7 +50,7 @@ public class FarmLevel extends AbstractLevel {
 		AbstractEntity plant = FarmEntityFactory.createPlant(game, 3, 3);
 		game.ecs.addEntity(plant);
 
-		game.ecs.addEntity(new Floor(game.ecs, "farm/grass.png", 0, 0, map_width, map_height, true));
+		game.ecs.addEntity(new Floor(game.ecs, "farm/grass.jpg", 0, 0, map_width, map_height, true));
 	}
 
 	

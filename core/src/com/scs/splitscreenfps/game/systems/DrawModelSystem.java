@@ -8,10 +8,10 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -84,8 +84,13 @@ public class DrawModelSystem extends AbstractSystem {
 				//tmp.set(position);
 			} else {
 				// Only draw if in frustum 
-				model.model.transform.getTranslation(tmp);
-				if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
+				//model.model.transform.getTranslation(tmp);
+				if (model.bb == null) {
+					model.bb = new BoundingBox();
+					model.model.calculateBoundingBox(model.bb);
+				}
+				//if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
+				if (!camera.frustum.boundsInFrustum(model.bb)) {
 					return;
 				}
 
