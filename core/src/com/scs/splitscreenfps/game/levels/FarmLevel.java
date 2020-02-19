@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
@@ -9,10 +8,10 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
-import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.farm.FarmEntityFactory;
 import com.scs.splitscreenfps.game.systems.farm.GrowCropsSystem;
-import com.scs.splitscreenfps.mapgen.MazeGen1;
+
+import ssmith.libgdx.GridPoint2Static;
 
 public class FarmLevel extends AbstractLevel {
 
@@ -45,7 +44,7 @@ public class FarmLevel extends AbstractLevel {
 		}
 
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2(1, 1);
+			this.startPositions[i] = new GridPoint2Static(1, 1);
 		}
 
 		AbstractEntity plant = FarmEntityFactory.createPlant(game, 3, 3);

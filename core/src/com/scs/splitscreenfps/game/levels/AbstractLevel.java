@@ -9,12 +9,14 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 
+import ssmith.libgdx.GridPoint2Static;
+
 public abstract class AbstractLevel {
 
 	protected Game game;
 	protected int map_width;
 	protected int map_height;
-	protected GridPoint2 startPositions[] = new GridPoint2[4];
+	protected GridPoint2Static startPositions[] = new GridPoint2Static[4];
 	
 	public AbstractLevel(Game _game) {
 		game = _game;
@@ -59,7 +61,7 @@ public abstract class AbstractLevel {
 	
 	public void renderUI(SpriteBatch batch, int viewIndex) {}
 
-	public GridPoint2 getPlayerStartMap(int idx) {
+	public GridPoint2Static getPlayerStartMap(int idx) {
 		return this.startPositions[idx];
 	}
 	

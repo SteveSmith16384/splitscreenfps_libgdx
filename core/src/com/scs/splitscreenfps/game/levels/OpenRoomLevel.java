@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.levels;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
@@ -8,6 +7,8 @@ import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.litter.LitterEntityFactory;
+
+import ssmith.libgdx.GridPoint2Static;
 
 public class OpenRoomLevel extends AbstractLevel {
 
@@ -19,7 +20,7 @@ public class OpenRoomLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2(i, 0);
+			this.startPositions[i] = new GridPoint2Static(i, 0);
 		}
 
 		this.map_width = 16;

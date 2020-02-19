@@ -14,6 +14,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 
 import ssmith.astar.AStar_LibGDX;
 import ssmith.lang.GeometryFuncs;
+import ssmith.libgdx.GridPoint2Static;
 
 public class MoveAStarSystem extends AbstractSystem {
 
@@ -32,7 +33,7 @@ public class MoveAStarSystem extends AbstractSystem {
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (mac.route == null || mac.route.size() == 0) {
 			AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
-			GridPoint2 dest = game.mapData.getRandomFloorPos();
+			GridPoint2Static dest = game.mapData.getRandomFloorPos();
 			mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
 		} else {
 			GridPoint2 destpos = mac.route.get(0);

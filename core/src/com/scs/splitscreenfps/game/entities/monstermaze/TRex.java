@@ -49,7 +49,7 @@ public class TRex extends AbstractEntity {
 			cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
 			this.addComponent(cycle);
 
-			MoveAStarComponent astar = new MoveAStarComponent(1.7f, false);
+			MoveAStarComponent astar = new MoveAStarComponent(1.9f, false);
 			this.addComponent(astar);
 
 		} else {

@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
@@ -10,6 +9,8 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.mapgen.AbstractDungeon.SqType;
 import com.scs.splitscreenfps.mapgen.DungeonGen1;
+
+import ssmith.libgdx.GridPoint2Static;
 
 public class DungeonLevel extends AbstractLevel {
 
@@ -76,7 +77,7 @@ public class DungeonLevel extends AbstractLevel {
 		}
 
 		for (int i=0 ; i<this.startPositions.length ; i++) {
-			GridPoint2 pos = maze.centres.get(0);
+			GridPoint2Static pos = maze.centres.get(0);
 			this.startPositions[i] = pos;
 		}
 

@@ -134,7 +134,6 @@ public class Game implements IModule {
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
-		//ecs.addSystem(new MobAISystem(this, ecs));
 		ecs.addSystem(new MovementSystem(this, ecs));
 		ecs.addSystem(new RemoveEntityAfterTimeSystem(ecs));
 		ecs.addSystem(new DrawTextSystem(ecs, this, batch2d));
@@ -157,12 +156,14 @@ public class Game implements IModule {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
-		}
 
-		/*if (Settings.TEST_FILTER) {
-			AbstractEntity filter = this.entityFactory.createRedFilter(3);
-			ecs.addEntity(filter);
-		}*/
+			if (Settings.TEST_START_IN_WALL) {
+				if (mapData.map[(int)posData.position.x][(int)posData.position.z].blocked) {
+					Settings.p("Blocked!");
+				}
+			}
+
+		}
 	}
 
 
@@ -179,7 +180,6 @@ public class Game implements IModule {
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MoveAStarSystem.class).process();
-		//this.ecs.getSystem(MobAISystem.class).process();
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();
