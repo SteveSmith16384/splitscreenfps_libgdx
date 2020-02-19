@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.GridPoint2;
 
 import ssmith.lang.NumberFunctions;
+import ssmith.libgdx.GridPoint2Static;
 
 public class DungeonGen1 extends AbstractDungeon {
 
-	public ArrayList<GridPoint2> centres = new ArrayList<GridPoint2>();
+	public ArrayList<GridPoint2Static> centres = new ArrayList<GridPoint2Static>();
 
 	private int maxRoomSize;
 	
@@ -53,14 +54,14 @@ public class DungeonGen1 extends AbstractDungeon {
 				}
 				this.createRoomByTopLeft(x, y, w, h);
 				// Store the rooms for checking later
-				centres.add(new GridPoint2(x+(w/2), y+(h/2)));
+				centres.add(new GridPoint2Static(x+(w/2), y+(h/2)));
 			}
 
 			// Connect rooms
 			doors.clear();
 			for (int i=0 ; i<centres.size() ; i++) {
-				GridPoint2 start = centres.get(i);
-				GridPoint2 end = centres.get(NumberFunctions.rnd(0, centres.size()-1));
+				GridPoint2Static start = centres.get(i);
+				GridPoint2Static end = centres.get(NumberFunctions.rnd(0, centres.size()-1));
 				while (start == end) {
 					end = centres.get(NumberFunctions.rnd(0, centres.size()-1));
 				}

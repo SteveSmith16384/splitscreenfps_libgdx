@@ -110,12 +110,19 @@ public class PlayersAvatar extends AbstractEntity {
 		cameraController.update();
 
 		// Rotate model to direction of camera
-		HasModel hasModel = (HasModel)getComponent(HasModel.class);
+		HasModel hasModel = (HasModel)this.getComponent(HasModel.class);
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			pos.angle = -v2.angle();
+
+			if (Settings.TEST_START_IN_WALL) {
+				if (game.mapData.map[(int)pos.position.x][(int)pos.position.z].blocked) {
+					Settings.p("Blocked!");
+				}
+			}
 		}
+
 	}
 
 
@@ -159,24 +166,6 @@ public class PlayersAvatar extends AbstractEntity {
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 
-		if (Settings.TEST_START_IN_WALL) {
-			if (game.mapData.isMapSquareTraversable((int)posData.position.x, (int)posData.position.z) == false) {
-				Settings.p("Blocked!");
-			}
-		}
-
-		// Animate
-		/*AnimatedComponent anim = (AnimatedComponent)this.getComponent(AnimatedComponent.class);
-		//AnimatedForAvatarComponent avatarAnim = (AnimatedForAvatarComponent)this.getComponent(AnimatedForAvatarComponent.class);
-		if (movementData.offset.len2() > 0) {
-			if (anim != null) {
-				anim.new_animation = anim.walk_anim_name;
-			}
-		} else {
-			if (anim != null) {
-				anim.new_animation = anim.idle_anim_name;
-			}
-		}*/
 	}
 }
 

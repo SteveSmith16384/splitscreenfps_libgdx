@@ -11,13 +11,12 @@ import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 
 public class RegenKeySystem extends AbstractSystem {
 
-	//private Game game;
 	private MonsterMazeLevel level;
 	private long regen_time;
 
 	public RegenKeySystem(BasicECS ecs, MonsterMazeLevel _level) {
 		super(ecs, MonsterMazeKeyComponent.class);
-		//game = _game;
+
 		level = _level;
 	}
 
@@ -28,7 +27,7 @@ public class RegenKeySystem extends AbstractSystem {
 			return;
 		}
 
-		this.regen_time = System.currentTimeMillis() + 3000;
+		this.regen_time = System.currentTimeMillis() + 5000;
 
 		boolean found = false;
 

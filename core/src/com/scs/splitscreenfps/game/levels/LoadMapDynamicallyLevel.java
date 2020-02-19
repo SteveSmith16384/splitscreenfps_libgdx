@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.GridPoint2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
@@ -13,6 +12,8 @@ import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
+
+import ssmith.libgdx.GridPoint2Static;
 
 public class LoadMapDynamicallyLevel extends AbstractLevel {
 
@@ -29,7 +30,7 @@ public class LoadMapDynamicallyLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2(i, 0);
+			this.startPositions[i] = new GridPoint2Static(i, 0);
 		}
 
 		this.map_width = 16;

@@ -33,7 +33,7 @@ public class Wall extends AbstractEntity {
 			CollidesComponent cc = new CollidesComponent(true, instance);
 			this.addComponent(cc);
 		} else {
-			// Maybe uses mapData to check for collisions
+			// Probably uses mapData to check for collisions
 		}
 	}
 

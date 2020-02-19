@@ -24,15 +24,15 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 
 	private Game game;
 	private long last_harm_done;
-	private int startX, startY;
+	private int playerRespawnX, playerRespawnY;
 	
 	public TRexHarmsPlayerSystem(BasicECS ecs, Game _game, int _startX, int _startY) {
 		super(ecs, TRexHarmsPlayerComponent.class);
 		
 		game = _game;
 		
-		startX = _startX;
-		startY = _startY;
+		playerRespawnX = _startX;
+		playerRespawnY = _startY;
 	}
 
 
@@ -42,11 +42,6 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 			return;
 		}
 
-		if (Settings.TEST_START_IN_WALL) {
-			this.game.playerHasWon(game.players[0]);
-		}
-		
-		//TRexHarmsPlayerComponent hpc = (TRexHarmsPlayerComponent)entity.getComponent(TRexHarmsPlayerComponent.class);
 		CollidesComponent cc = (CollidesComponent)trex.getComponent(CollidesComponent.class);
 		for (CollisionResult cr : cc.results) {
 			AbstractEntity player = cr.collidedWith;
@@ -61,7 +56,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				
 				// Move player back to start
 				PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-				posData.position.set(startX + 0.5f, Settings.PLAYER_HEIGHT/2, startY + 0.5f); // Start in middle of square
+				posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
 
 				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 0, 0, 1), ic.playerId, 2);
 				ecs.addEntity(te);
@@ -75,7 +70,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				
 				AnimatedComponent anim = (AnimatedComponent)trex.getComponent(AnimatedComponent.class);
 				if (anim != null) {
-					anim.new_animation = anim.idle_anim_name; 
+					anim.next_animation = anim.idle_anim_name; 
 				}
 				
 				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");

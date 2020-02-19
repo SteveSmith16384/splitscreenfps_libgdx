@@ -38,12 +38,8 @@ public class MonsterMazeEntityFactory {
 		entity.addComponent(hasDecal);
 
 		Texture weaponTex = new Texture(Gdx.files.internal("monstermaze/key.png"));		
-		//Texture weaponTex = new Texture(Gdx.files.internal("colours/red.png"));		
 		Sprite sprite = new Sprite(weaponTex);
-		//sprite.setOrigin(sprite.getWidth()/2f, 0);
-		//sprite.setScale(3);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
-
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.4f, 0.1f, 0.2f, 0.3f));
 		entity.addComponent(hgsc);
 		entity.hideComponent(HasGuiSpriteComponent.class); // Don't show it until picked up!

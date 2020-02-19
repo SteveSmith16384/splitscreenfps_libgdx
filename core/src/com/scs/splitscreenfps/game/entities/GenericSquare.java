@@ -15,8 +15,6 @@ import com.scs.splitscreenfps.game.components.HasModel;
 
 public class GenericSquare extends AbstractEntity {
 
-	//private static Model floor;
-	
 	public GenericSquare(BasicECS ecs, int map_x, int map_y, String filename) {
 		super(ecs, GenericSquare.class.getSimpleName());
 

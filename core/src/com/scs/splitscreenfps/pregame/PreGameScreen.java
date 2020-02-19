@@ -59,6 +59,12 @@ public class PreGameScreen implements IModule {
 
 
 	private void loadAssetsForResize() {
+		batch2d = new SpriteBatch();
+
+		//frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+		frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 1024, 1024, true);
+		frameBuffer.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SHOWG.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
@@ -81,7 +87,7 @@ public class PreGameScreen implements IModule {
 		Texture logoTex = new Texture(Gdx.files.internal(filename));		
 		logo = new Sprite(logoTex);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-		logo.setColor(.2f, .2f, .2f,  1);
+		logo.setColor(0.4f, 0.4f, 0.4f, 1);
 	}
 
 

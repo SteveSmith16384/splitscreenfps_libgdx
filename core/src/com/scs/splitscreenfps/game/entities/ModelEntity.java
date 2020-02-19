@@ -32,7 +32,7 @@ public class ModelEntity extends AbstractEntity {
 		this.addComponent(hasModel);
 		
 		AnimationController animation = new AnimationController(instance);
-		String id = model.animations.get(0).id;
+		//String id = model.animations.get(0).id;
 		//animation.animate(id, 200, 1f, null, 0.2f); // First anim
 		AnimatedComponent anim = new AnimatedComponent(animation, "", "");
 		anim.animationController = animation;
