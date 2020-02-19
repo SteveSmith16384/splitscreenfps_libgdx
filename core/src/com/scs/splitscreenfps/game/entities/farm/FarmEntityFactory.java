@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.entities.farm;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.math.Vector2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
@@ -32,19 +33,18 @@ public class FarmEntityFactory {
 		plant.addComponent(hasModel);*/
 		
 		HasDecal hasDecal = new HasDecal();
-		//Texture tex = new Texture(Gdx.files.internal("farm/FarmingCrops16x16/Crop_Spritesheet.png"));
-		//TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
 		TextureRegion[][] trs = GraphicsHelper.createSheet("farm/FarmingCrops16x16/Crop_Spritesheet.png", 16, 16);
 		hasDecal.decal = Decal.newDecal(trs[0][0], true);
-		hasDecal.decal.setScale(1f / trs[0][0].getRegionWidth()); // Scale to sq size by default
+		//hasDecal.decal.setScale(3f / trs[0][0].getRegionWidth()); // Scale to sq size by default
 		hasDecal.faceCamera = true;
-		hasDecal.dontLockYAxis = true;        
+		hasDecal.dontLockYAxis = true;
+		hasDecal.decal.transformationOffset = new Vector2(0, -.35f); // todo - check
 		plant.addComponent(hasDecal);
 
 		CollidesComponent cc = new CollidesComponent(true, 0.1f);
 		plant.addComponent(cc);
 		
-		CanGrowComponent cgc = new CanGrowComponent(.1f, 100f);
+		CanGrowComponent cgc = new CanGrowComponent(.1f, .25f);
 		plant.addComponent(cgc);
 
 		return plant;
