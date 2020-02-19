@@ -99,26 +99,31 @@ public class PreGameScreen implements IModule {
 		batch2d.begin();
 
 		logo.draw(batch2d);
-
+		// todo - draw title of game
 		font.setColor(1f,  1f,  1f,  1f);
 
-		int y = Gdx.graphics.getHeight() - (int)this.font.getLineHeight()*5;
+		int y = Gdx.graphics.getHeight() - (int)this.font.getLineHeight()*1;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
 		for (Controller c : allControllers) {
+			font.setColor(1,  1,  1,  1);
 			font.draw(batch2d, "Controller " + c.getName(), 10, y);
 
 			if (this.controllerManager.isControllerInGame(c)) {
+				font.setColor(0,  1,  0,  1);
 				font.draw(batch2d, "IN GAME!", 10, y-this.font.getLineHeight());
 			} else {
+				font.setColor(1,  0,  0,  1);
 				font.draw(batch2d, "Not in game", 10, y-this.font.getLineHeight());
 			}
 			y -= this.font.getLineHeight()*2;
 		}
 		if (allControllers.size == 0) {
+			font.setColor(1,  1,  1,  1);
 			font.draw(batch2d, "No Controllers Found", 10, y);
 		}
 
-		y = Gdx.graphics.getHeight()/2;// - 220;
+		font.setColor(1,  1,  1,  1);
+		y = Gdx.graphics.getHeight()/3;// - 220;
 		for (String s :this.log) {
 			font.draw(batch2d, s, 10, y);
 			y -= this.font.getLineHeight();

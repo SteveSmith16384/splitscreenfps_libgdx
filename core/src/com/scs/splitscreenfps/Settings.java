@@ -16,8 +16,8 @@ public class Settings {
 	
 	// Hacks
 	public static final boolean TEST_ALT_TREX = !RELEASE_MODE && false;
-	public static final boolean SMALL_MAP = !RELEASE_MODE && true;
-	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && true;
+	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
+	public static final boolean DEFAULT_4_PLAYERS = !RELEASE_MODE && false;
 	public static final boolean TEST_START_IN_WALL = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;

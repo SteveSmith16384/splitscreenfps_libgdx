@@ -21,7 +21,7 @@ import com.scs.splitscreenfps.game.systems.monstermaze.TRexHarmsPlayerSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 public class MonsterMazeLevel extends AbstractLevel {
-
+	// todo - sometimes no exit, sometimes cant start!!
 	private MazeGen1 maze;
 	
 	public MonsterMazeLevel(Game _game) {
