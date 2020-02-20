@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.EvtCollision;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
@@ -29,7 +30,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 		
 	}
 	
-	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ) {
+	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ) { // todo - boolean to raise events
 		CollisionResultsList cr = new CollisionResultsList();
 
 		// Move bounding box to correct position
@@ -47,9 +48,6 @@ public class CollisionCheckSystem extends AbstractSystem {
 			if (e != mover) {
 				CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
 				if (cc != null) {
-					/*if (e.name == "Crate") {
-						Settings.p("");
-					}*/
 					if (cc.bb_dirty) {
 						setBB(e, cc, 0, 0);
 						cc.bb_dirty = false;
@@ -57,6 +55,12 @@ public class CollisionCheckSystem extends AbstractSystem {
 					if (moverCC.bb.intersects(cc.bb)) {
 						//Settings.p(mover + " collided with " + e);
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
+						
+						EvtCollision evt = new EvtCollision();
+						evt.movingEntity = mover;
+						evt.blockingEntity = e;
+						ecs.events.add(evt);
+						
 						/*if (cc.blocksMovement) {
 							Settings.p("Blocked by " + e);
 						}*/

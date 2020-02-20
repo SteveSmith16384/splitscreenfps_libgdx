@@ -12,6 +12,7 @@ import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.systems.DoorSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -39,7 +40,7 @@ public class FTLLevel extends AbstractLevel {
 		Floor floor = new Floor(game.ecs, "sf/corridor.jpg", 0, 0, map_width, map_height, true);
 		game.ecs.addEntity(floor);
 
-		Ceiling ceiling = new Ceiling(game.ecs, "sf/corridor.jpg", 0, 0, map_width, map_height, true, 1.1f);
+		Ceiling ceiling = new Ceiling(game.ecs, "sf/corridor.jpg", 0, 0, map_width, map_height, true, 1f);
 		game.ecs.addEntity(ceiling);
 
 		int row = 0;
@@ -93,12 +94,12 @@ public class FTLLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-
+		ecs.addSystem(new DoorSystem(ecs));
 	}
 
 	@Override
 	public void update() {
-
+		game.ecs.processSystem(DoorSystem.class);
 	}
 
 }

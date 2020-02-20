@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.DoorComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
@@ -53,7 +54,7 @@ public class EntityFactory {
 		entity.addComponent(model);
 
         CollidesComponent cc = new CollidesComponent(true, instance);
-        entity.addComponent(cc);	
+        entity.addComponent(cc);
 
 		return entity;	
 		
@@ -77,8 +78,12 @@ public class EntityFactory {
         entity.addComponent(hasDecal);	
 		
         CollidesComponent cc = new CollidesComponent(true, .5f);
-        entity.addComponent(cc);	
+        entity.addComponent(cc);
 		
+        DoorComponent dc = new DoorComponent();
+        dc.max_height = .9f;
+        entity.addComponent(dc);
+        
 		return entity;	
 		
 	}

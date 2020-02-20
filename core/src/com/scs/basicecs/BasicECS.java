@@ -10,7 +10,8 @@ public class BasicECS {
 	private HashMap<Class<?>, ISystem> systems = new HashMap<Class<?>, ISystem>();
 	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>();
 	private List<AbstractEntity> to_add_entities = new ArrayList<AbstractEntity>();
-
+	public List<AbstractEvent> events = new ArrayList<AbstractEvent>();
+	
 	public BasicECS() {
 	}
 
@@ -144,6 +145,24 @@ public class BasicECS {
 
 	public Iterator<AbstractEntity> getEntityIterator() {
 		return this.entities.iterator();
+	}
+
+	
+	public Iterator<AbstractEvent> getEventIterator() {
+		return this.events.iterator();
+	}
+	
+	
+	public List<AbstractEvent> getEvents(Class<? extends AbstractEvent> clazz) {
+		List<AbstractEvent> list = new ArrayList<AbstractEvent>();
+		Iterator<AbstractEvent> it = getEventIterator();
+		while (it.hasNext()) {
+			AbstractEvent evt = it.next();
+			if (evt.getClass().equals(clazz)) {
+				list.add(evt);
+			}
+		}
+		return list;
 	}
 
 	

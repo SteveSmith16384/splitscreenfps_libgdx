@@ -50,7 +50,6 @@ public class Game implements IModule {
 	private List<IInputMethod> inputs;
 	public MapData mapData;
 	public BasicECS ecs;
-	//public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
 
 	private int game_stage;
@@ -175,6 +174,7 @@ public class Game implements IModule {
 			}
 		}
 
+		this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
