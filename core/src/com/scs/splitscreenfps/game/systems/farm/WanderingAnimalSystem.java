@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game.systems.farm;
 
+import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -24,7 +25,7 @@ public class WanderingAnimalSystem extends AbstractSystem {
 			do {
 				wac.movementOffset.x = NumberFunctions.rndFloat(-1,  1);
 				wac.movementOffset.y = NumberFunctions.rndFloat(-1,  1);
-				wac.movementOffset.nor().scl(wac.speed);
+				wac.movementOffset.nor().scl(wac.speed); //  * Gdx.graphics.getDeltaTime()
 			} while (wac.movementOffset.len2() == 0);
 		}
 		

@@ -82,6 +82,7 @@ public class PreGameScreen implements IModule {
 			break;
 		default:
 			Settings.pe("Unknown mode for logo: " + Settings.CURRENT_MODE);
+			filename = "monstermaze/monstermaze_logo.png"; // default
 		}
 
 		Texture logoTex = new Texture(Gdx.files.internal(filename));		

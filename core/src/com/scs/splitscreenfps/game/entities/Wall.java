@@ -17,7 +17,7 @@ import com.scs.splitscreenfps.game.components.HasModel;
 public class Wall extends AbstractEntity {
 
 	public Wall(BasicECS ecs, String tex_filename, int mapPosX, float yPos, int mapPosZ, boolean add_collision) {
-		super(ecs, Wall.class.getSimpleName());
+		super(ecs, Wall.class.getSimpleName() + "_" + mapPosX + "_" + mapPosZ);
 		
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
 		ModelBuilder modelBuilder = new ModelBuilder();

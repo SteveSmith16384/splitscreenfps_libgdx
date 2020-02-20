@@ -46,13 +46,13 @@ public class FarmLevel extends AbstractLevel {
 		}
 
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2Static(i, i);
+			this.startPositions[i] = new GridPoint2Static(i+1, i+1);
 		}
 
 		AbstractEntity plant = FarmEntityFactory.createPlant(game, 3, 3);
 		game.ecs.addEntity(plant);
 
-		game.ecs.addEntity(new Cow(game, game.ecs, 5, 5));
+		game.ecs.addEntity(new Cow(game, game.ecs, map_width-2, map_height-2));
 
 		game.ecs.addEntity(new Floor(game.ecs, "farm/grass.jpg", 0, 0, map_width, map_height, true));
 	}

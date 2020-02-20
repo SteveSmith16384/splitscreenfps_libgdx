@@ -57,7 +57,7 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 			//sprite.setBounds(10, 10, Gdx.graphics.getWidth()-20, Gdx.graphics.getHeight()-20); // Fits perfectly over viewport!
 			hgsc.dirty = false;
 		}
-		hgsc.sprite.rotate(1);
+		//hgsc.sprite.rotate(1);
 		hgsc.sprite.draw(batch2d);
 	}
 

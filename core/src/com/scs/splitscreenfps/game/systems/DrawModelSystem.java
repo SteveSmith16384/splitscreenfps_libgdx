@@ -88,6 +88,10 @@ public class DrawModelSystem extends AbstractSystem {
 				if (model.bb == null) {
 					model.bb = new BoundingBox();
 					model.model.calculateBoundingBox(model.bb);
+					//Vector3 tmp = new Vector3();
+					//model.model.transform.getTranslation(tmp);
+					model.bb.mul(model.model.transform);
+					//int dgdf = 435;
 				}
 				//if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
 				if (!camera.frustum.boundsInFrustum(model.bb)) {

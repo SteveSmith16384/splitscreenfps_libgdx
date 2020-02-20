@@ -39,6 +39,7 @@ public class GrowCropsSystem extends AbstractSystem {
 			HasDecal hasDecal = (HasDecal)entity.getComponent(HasDecal.class);
 			if (hasDecal != null) {
 				hasDecal.decal.setScale(cgc.current_growth / cgc.max_growth);
+				Settings.p("Scale=" + hasDecal.decal.getScaleY());
 			}
 		} else {
 			Settings.p("Max size reached!");

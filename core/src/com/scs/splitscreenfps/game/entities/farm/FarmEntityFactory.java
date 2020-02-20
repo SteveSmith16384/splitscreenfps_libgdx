@@ -84,7 +84,7 @@ public class FarmEntityFactory {
 		CollidesComponent cc = new CollidesComponent(true, 0.1f);
 		plant.addComponent(cc);
 		
-		CanGrowComponent cgc = new CanGrowComponent(.15f, .25f);
+		CanGrowComponent cgc = new CanGrowComponent(.1f, .25f);
 		plant.addComponent(cgc);
 
 		return plant;
