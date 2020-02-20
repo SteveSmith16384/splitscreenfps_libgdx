@@ -50,7 +50,7 @@ public class Game implements IModule {
 	private List<IInputMethod> inputs;
 	public MapData mapData;
 	public BasicECS ecs;
-	public EntityFactory entityFactory;
+	//public EntityFactory entityFactory;
 	private AbstractLevel currentLevel;
 
 	private int game_stage;
@@ -144,7 +144,6 @@ public class Game implements IModule {
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new PickupDropSystem(ecs, this));
 
-		entityFactory = new EntityFactory(ecs);
 	}
 
 

@@ -18,6 +18,7 @@ import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.systems.tag.TagSystem;
@@ -171,7 +172,7 @@ public class TagLevel extends AbstractLevel {
 					} else if (rnd == 3) {
 						float offX = 0;//NumberFunctions.rndFloat(0, 0.5f);
 						float offZ = 0;//NumberFunctions.rndFloat(0, 0.5f);
-						AbstractEntity crate = game.entityFactory.createCrate(x+offX, z+offZ);
+						AbstractEntity crate = EntityFactory.createCrate(game.ecs, x+offX, z+offZ);
 						game.ecs.addEntity(crate);
 					}
 

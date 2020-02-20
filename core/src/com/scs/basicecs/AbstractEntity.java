@@ -44,8 +44,10 @@ public class AbstractEntity {
 
 	public void restoreComponent(Class<?> clazz) {
 		Object component = this.hiddenComponents.remove(clazz);
-		this.components.put(clazz, component);
-		ecs.addEntityToSystems(this, clazz);
+		if (component != null) { // Just in case the component doesn't exist
+			this.components.put(clazz, component);
+			ecs.addEntityToSystems(this, clazz);
+		}
 	}
 
 

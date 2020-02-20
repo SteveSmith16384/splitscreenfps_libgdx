@@ -10,6 +10,8 @@ import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
+import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.litter.CombinesWithLitterComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.data.CollisionResultsList;
@@ -46,9 +48,10 @@ public class PickupDropSystem extends AbstractSystem {
 						Settings.p(cr.collidedWith + " picked up");
 						key.hideComponent(CollidesComponent.class);
 						key.hideComponent(HasDecal.class);
+						key.hideComponent(HasModel.class);
 						key.hideComponent(CombinesWithLitterComponent.class);
 						key.restoreComponent(HasGuiSpriteComponent.class);
-						
+
 						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)cr.collidedWith.getComponent(HasGuiSpriteComponent.class);
 						hgsc.onlyViewId = cc.viewId;
 						cc.carrying = cr.collidedWith;
@@ -57,21 +60,25 @@ public class PickupDropSystem extends AbstractSystem {
 				}
 			}
 		} else {
-			// Drop!
-			/*todo CanBeCarried cbc = (CanBeCarried)cc.carrying.getComponent(CanBeCarried.class);
-			if (cbc != null) {
-				Settings.p(cc.carrying + " dropped");
-				cc.carrying.restoreComponent(CollidesComponent.class);
-				cc.carrying.restoreComponent(HasDecal.class);
-				cc.carrying.restoreComponent(CombinesWithLitterComponent.class);
-				cc.carrying.hideComponent(HasGuiSpriteComponent.class);
+			if (cc.wantsToCarry) {
+				// Drop!
+				CanBeCarried cbc = (CanBeCarried)cc.carrying.getComponent(CanBeCarried.class);
+				if (cbc != null) {
+					Settings.p(cc.carrying + " dropped");
+					cc.carrying.restoreComponent(CollidesComponent.class);
+					cc.carrying.restoreComponent(HasDecal.class);
+					cc.carrying.restoreComponent(HasModel.class);
+					cc.carrying.restoreComponent(CombinesWithLitterComponent.class); // todo - separate game!
+					cc.carrying.hideComponent(HasGuiSpriteComponent.class);
 
-				// Set position
-				PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
-				PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
-				pos.originalPosition.set(carrierPos.originalPosition);
+					// Set position
+					PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
+					PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
+					pos.originalPosition.set(carrierPos.originalPosition);
 
-				cc.carrying = null;*/
+					cc.carrying = null;
+				}
+			}
 		}
 	}
 

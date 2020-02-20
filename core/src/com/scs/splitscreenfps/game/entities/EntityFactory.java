@@ -26,14 +26,13 @@ import ssmith.lang.NumberFunctions;
 
 public class EntityFactory {
 	
-	private BasicECS ecs;
+	//private BasicECS ecs;
 
-	public EntityFactory(BasicECS _ecs) {
-		this.ecs = _ecs;
+	private EntityFactory() {
 	}
 	
 	
-	public AbstractEntity createCrate(float map_x, float map_z) {
+	public static AbstractEntity createCrate(BasicECS ecs, float map_x, float map_z) {
 		float SIZE = 0.3f;
 		AbstractEntity entity = new AbstractEntity(ecs, "Crate");
 
@@ -48,7 +47,7 @@ public class EntityFactory {
 		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 		//instance.transform.rotate(Vector3.Y, NumberFunctions.rnd(0, 90));
 
-		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
+		HasModel model = new HasModel("CrateModel", instance);
 		//model.yOffset += SIZE/2;
 		model.angleOffset = NumberFunctions.rnd(0, 90);
 		entity.addComponent(model);
@@ -61,7 +60,7 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createDoor(float map_x, float map_z, boolean rot90) {
+	public static AbstractEntity createDoor(BasicECS ecs, float map_x, float map_z, boolean rot90) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Door");
 
 		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
@@ -85,7 +84,7 @@ public class EntityFactory {
 	}
 
 
-	public AbstractEntity createRedFilter(int viewId) {
+	public static AbstractEntity createRedFilter(BasicECS ecs, int viewId) {
 		AbstractEntity entity = new AbstractEntity(ecs, "RedFilter");
 
         Texture weaponTex = new Texture(Gdx.files.internal("colours/white.png"));		

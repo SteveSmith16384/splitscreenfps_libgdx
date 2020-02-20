@@ -22,7 +22,7 @@ public class Ceiling extends AbstractEntity {
 		super(ecs, Ceiling.class.getSimpleName());
 		
 		Texture tex = new Texture(tex_filename);
-		tex.setWrap(TextureWrap.Repeat, TextureWrap.ClampToEdge);
+		tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));		
 
 		ModelBuilder modelBuilder = new ModelBuilder();

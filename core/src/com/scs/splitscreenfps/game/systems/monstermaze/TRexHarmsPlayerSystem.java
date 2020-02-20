@@ -16,6 +16,7 @@ import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.TRexHarmsPlayerComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
 import ssmith.lang.NumberFunctions;
@@ -58,10 +59,10 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 				PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 				posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
 
-				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(1, 0, 0, 1), ic.playerId, 2);
+				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), ic.playerId, 2);
 				ecs.addEntity(te);
 				
-				AbstractEntity redfilter = game.entityFactory.createRedFilter(ic.playerId);
+				AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, ic.playerId);
 				ecs.addEntity(redfilter);
 				
 				// Freeze t-rex for a bit
