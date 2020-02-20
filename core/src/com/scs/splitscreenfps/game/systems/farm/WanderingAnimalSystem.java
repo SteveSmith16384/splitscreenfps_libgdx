@@ -1,6 +1,5 @@
 package com.scs.splitscreenfps.game.systems.farm;
 
-import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;

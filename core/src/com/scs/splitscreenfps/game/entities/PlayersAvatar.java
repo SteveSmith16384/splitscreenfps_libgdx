@@ -30,7 +30,6 @@ public class PlayersAvatar extends AbstractEntity {
 	public Camera camera;
 	public CameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
-	//private float footstepTimer;
 
 	private IInputMethod inputMethod;
 
@@ -63,6 +62,7 @@ public class PlayersAvatar extends AbstractEntity {
 
 		Model model = null;
 
+		// todo - https://kenney.nl/assets/space-kit
 		switch (idx) {
 		case 0:
 			am.load("models/Smooth_Male_Shirt.g3db", Model.class);
@@ -73,6 +73,9 @@ public class PlayersAvatar extends AbstractEntity {
 			am.load("models/Male_Casual.g3db", Model.class);
 			am.finishLoading();
 			model = am.get("models/Male_Casual.g3db");
+			/*am.load("space-kit-1.0/Models/station.g3db", Model.class);
+			am.finishLoading();
+			model = am.get("space-kit-1.0/Models/station.g3db");*/
 			break;
 		case 2:
 			am.load("models/Male_LongSleeve.g3db", Model.class);
@@ -90,12 +93,7 @@ public class PlayersAvatar extends AbstractEntity {
 		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
-
-		/*AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = "HumanArmature|Man_Idle"; // Standing
-		avatarAnim.walk_anim = "HumanArmature|Man_Walk";
-		this.addComponent(avatarAnim);*/
-
+		
 		AnimationController animation = new AnimationController(instance);
 		AnimatedComponent anim = new AnimatedComponent(animation, "HumanArmature|Man_Walk", "HumanArmature|Man_Idle");
 		anim.animationController = animation;
