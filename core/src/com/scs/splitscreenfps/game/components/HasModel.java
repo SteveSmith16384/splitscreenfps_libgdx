@@ -12,6 +12,7 @@ public class HasModel {
 	public float scale;
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
 	public BoundingBox bb; // For checking if in frustum  
+	public boolean always_draw = false;
 	
 	public HasModel(String name, ModelInstance _model) {
 		this(name, _model, 0, 0, 1);
