@@ -1,0 +1,17 @@
+# Made using Asset Forge (www.assetforge.io) version 1.0 
+
+newmtl _defaultMat
+Ka 1.000000 1.000000 1.000000 
+Kd 1 .5 .5
+Ks 0.330000 0.330000 0.330000 
+
+newmtl glass
+Ka 1.000000 1.000000 1.000000 
+Kd .5 1 .5
+Ks 0.330000 0.330000 0.330000 
+
+newmtl portal
+Ka 1.000000 1.000000 1.000000 
+Kd .5 1 1
+Ks 0.330000 0.330000 0.330000 
+

@@ -21,9 +21,8 @@ public class DrawModelSystem extends AbstractSystem {
 	private Game game;
 	private ModelBatch modelBatch;
 	private Environment environment;
-	
+
 	private Vector3 tmpOffset = new Vector3();
-	//private Vector3 tmp = new Vector3();
 
 	public DrawModelSystem(Game _game, BasicECS ecs) {
 		super(ecs);
@@ -32,8 +31,10 @@ public class DrawModelSystem extends AbstractSystem {
 		this.modelBatch = new ModelBatch();
 
 		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .4f, .4f, .4f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		//environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .4f, .4f, .4f, 1f));
+		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .8f, .8f, .8f, 1f));
+		environment.add(new DirectionalLight().set(1f, 1f, 1f, -1f, -0.8f, -0.2f));
 
 	}
 
@@ -69,9 +70,8 @@ public class DrawModelSystem extends AbstractSystem {
 		if (model.dontDrawInViewId != game.currentViewId) {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 			if (posData != null) {
-				
 				// Only draw if in frustum 
-				if (!camera.frustum.sphereInFrustum(posData.position, 1f)) {
+				if (model.always_draw == false && !camera.frustum.sphereInFrustum(posData.position, 1f)) {
 					return;
 				}
 
@@ -81,25 +81,18 @@ public class DrawModelSystem extends AbstractSystem {
 				model.model.transform.setToTranslation(tmpOffset);
 				model.model.transform.scl(model.scale);//.0016f);
 				model.model.transform.rotate(Vector3.Y, posData.angle+model.angleOffset);
-				//tmp.set(position);
-			} else if (model.always_draw) {
-				// Keep going
 			} else {
-				// Only draw if in frustum 
-				//model.model.transform.getTranslation(tmp);
-				if (model.bb == null) {
-					model.bb = new BoundingBox();
-					model.model.calculateBoundingBox(model.bb);
-					//Vector3 tmp = new Vector3();
-					//model.model.transform.getTranslation(tmp);
-					model.bb.mul(model.model.transform);
-					//int dgdf = 435;
+				if (model.always_draw == false) {
+					// Only draw if in frustum 
+					if (model.bb == null) {
+						model.bb = new BoundingBox();
+						model.model.calculateBoundingBox(model.bb);
+						model.bb.mul(model.model.transform);
+					}
+					if (!camera.frustum.boundsInFrustum(model.bb)) {
+						return;
+					}
 				}
-				//if (!camera.frustum.sphereInFrustum(tmp, 1f)) {
-				if (!camera.frustum.boundsInFrustum(model.bb)) {
-					return;
-				}
-
 			}
 			modelBatch.render(model.model, environment);
 		}

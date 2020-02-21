@@ -69,7 +69,6 @@ public class MonsterMazeLevel extends AbstractLevel {
 		if (Settings.prop.containsKey("mm.map_width") && Settings.prop.containsKey("mm.map_height")) {
 			this.map_width = Integer.parseInt(Settings.prop.getProperty("mm.map_width"));
 			this.map_height = Integer.parseInt(Settings.prop.getProperty("mm.map_height"));
-
 		} else {
 			this.map_height = 12 + game.players.length;
 			if (Settings.SMALL_MAP) {

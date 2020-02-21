@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
@@ -90,6 +91,11 @@ public class FTLLevel extends AbstractLevel {
 				}
 				row++;
 			}
+		}
+
+		if (Settings.TEST_MODEL) {
+			AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/station.g3db", 3, 0, 2, 1f);
+			game.ecs.addEntity(model);
 		}
 	}
 
