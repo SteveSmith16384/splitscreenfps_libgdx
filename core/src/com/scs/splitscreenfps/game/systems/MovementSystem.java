@@ -99,7 +99,7 @@ public class MovementSystem extends AbstractSystem {
 
 
 	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ, CollidesComponent cc) {
-		CollisionResultsList cr = this.collCheckSystem.collided(mover, offX, offZ);
+		CollisionResultsList cr = this.collCheckSystem.collided(mover, offX, offZ, true);
 		if (cc != null) {
 			cc.results.addAll(cr.results);
 		}

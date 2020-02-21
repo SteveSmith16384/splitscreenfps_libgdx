@@ -29,7 +29,7 @@ public class MonsterMazeExitSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);		
-		CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);
+		CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0, false);
 		for (CollisionResult cr : crl.results) {
 			AbstractEntity player = cr.collidedWith;
 			CanUseMonsterMazeExitComponent cumme = (CanUseMonsterMazeExitComponent)player.getComponent(CanUseMonsterMazeExitComponent.class);

@@ -61,7 +61,7 @@ public class DrawDecalSystem extends AbstractSystem {
 
 
 	private void updateTransform(Camera cam, HasDecal hasDecal, PositionComponent pos) {
-		if(hasDecal.faceCamera) {
+		if (hasDecal.faceCamera) {
 			tmp.set(cam.direction).scl(-1);
 			if(!hasDecal.dontLockYAxis) {
 				tmp.y = 0;

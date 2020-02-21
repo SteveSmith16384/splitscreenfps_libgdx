@@ -27,8 +27,6 @@ import ssmith.lang.NumberFunctions;
 
 public class EntityFactory {
 	
-	//private BasicECS ecs;
-
 	private EntityFactory() {
 	}
 	
@@ -74,7 +72,10 @@ public class EntityFactory {
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = false;
-        hasDecal.dontLockYAxis = false;        
+        hasDecal.dontLockYAxis = false;
+        if (rot90) {
+        	hasDecal.rotation = 90;
+        }
         entity.addComponent(hasDecal);	
 		
         CollidesComponent cc = new CollidesComponent(true, .5f);

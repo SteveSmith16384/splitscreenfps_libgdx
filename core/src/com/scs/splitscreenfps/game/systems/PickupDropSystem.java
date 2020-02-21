@@ -38,7 +38,7 @@ public class PickupDropSystem extends AbstractSystem {
 		CanCarryComponent cc = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
 		if (cc.carrying == null) {
 			CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
-			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0);
+			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0, false);
 			for (CollisionResult cr : crl.results) {
 				AbstractEntity key = cr.collidedWith;
 				CanBeCarried cbc = (CanBeCarried)key.getComponent(CanBeCarried.class);

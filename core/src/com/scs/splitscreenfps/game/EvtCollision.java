@@ -6,10 +6,11 @@ import com.scs.basicecs.AbstractEvent;
 public class EvtCollision extends AbstractEvent {
 
 	public AbstractEntity movingEntity;
-	public AbstractEntity blockingEntity;
+	public AbstractEntity hitEntity;
 	
-	public EvtCollision() {
-		// TODO Auto-generated constructor stub
+	public EvtCollision(AbstractEntity _movingEntity, AbstractEntity _hitEntity) {
+		movingEntity = _movingEntity;
+		hitEntity = _hitEntity;
 	}
 
 }

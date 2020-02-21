@@ -27,10 +27,10 @@ public class CollisionCheckSystem extends AbstractSystem {
 	private void setBB(AbstractEntity mover, CollidesComponent moverCC, float offX, float offZ) {
 		PositionComponent posData = (PositionComponent)mover.getComponent(PositionComponent.class);
 		moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
-		
+
 	}
-	
-	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ) { // todo - boolean to raise events
+
+	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
 		CollisionResultsList cr = new CollisionResultsList();
 
 		// Move bounding box to correct position
@@ -41,7 +41,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 
 		this.setBB(mover, moverCC, offX, offZ);
 		moverCC.bb_dirty = true; // So we move it back afterwards
-		
+
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();
@@ -55,12 +55,10 @@ public class CollisionCheckSystem extends AbstractSystem {
 					if (moverCC.bb.intersects(cc.bb)) {
 						//Settings.p(mover + " collided with " + e);
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
-						
-						EvtCollision evt = new EvtCollision();
-						evt.movingEntity = mover;
-						evt.blockingEntity = e;
-						ecs.events.add(evt);
-						
+
+						if (raise_event) {
+							ecs.events.add(new EvtCollision(mover, e));
+						}
 						/*if (cc.blocksMovement) {
 							Settings.p("Blocked by " + e);
 						}*/

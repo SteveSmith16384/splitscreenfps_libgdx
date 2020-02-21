@@ -12,6 +12,7 @@ import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.ftl.FTLEntityFactory;
 import com.scs.splitscreenfps.game.systems.DoorSystem;
 
 import ssmith.libgdx.GridPoint2Static;
@@ -58,10 +59,11 @@ public class FTLLevel extends AbstractLevel {
 							for (int i=0 ; i<this.startPositions.length ;i++) {
 								this.startPositions[i] = new GridPoint2Static(col, row);
 							}
-
 						} else if (token.equals("F")) { // Floor
 							//Floor floor = new Floor(game.ecs, "colours/red.png", col, row, 1, 1, false);
 							//game.ecs.addEntity(floor);
+							AbstractEntity b = FTLEntityFactory.createBlockThing(game.ecs, col, row);
+							game.ecs.addEntity(b);
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
 							Wall wall = new Wall(game.ecs, "sf/ufo2_03.png", col, 0, row, false);

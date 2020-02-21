@@ -25,7 +25,7 @@ public class DoorSystem extends AbstractSystem {
 		DoorComponent dc = (DoorComponent)entity.getComponent(DoorComponent.class);
 		if (dc.is_opening) {
 			if (posData.position.y < dc.max_height) {
-				posData.position.y += .4f * Gdx.graphics.getDeltaTime();
+				posData.position.y += .6f * Gdx.graphics.getDeltaTime();
 				CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 				cc.bb_dirty = true;
 			} else {
@@ -48,7 +48,7 @@ public class DoorSystem extends AbstractSystem {
 			List<AbstractEvent> it = ecs.getEvents(EvtCollision.class);
 			for (AbstractEvent e : it) {
 				EvtCollision evt = (EvtCollision)e;
-				if (evt.blockingEntity == entity) {
+				if (evt.hitEntity == entity) {
 					dc.is_opening = true;
 				}
 			}
