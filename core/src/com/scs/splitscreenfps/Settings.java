@@ -1,5 +1,9 @@
 package com.scs.splitscreenfps;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.Random;
 
 public class Settings {
@@ -10,7 +14,7 @@ public class Settings {
 	public static final int MODE_FARM = 4;
 	public static final int MODE_FTL = 5;
 	
-	public static final int CURRENT_MODE = MODE_FTL;
+	public static final int CURRENT_MODE = MODE_MM;
 	public static final String VERSION = "1.01";
 	public static final boolean RELEASE_MODE = false;
 	
@@ -25,11 +29,13 @@ public class Settings {
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = 0.14f;
 	
-	public static final String TITLE ="Split-Screen Multiplayer";
+	public static String TITLE;// ="Split-Screen Multiplayer";
 
 	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
+	public static Properties prop;
+	
 	// Logical size of viewport
 	//public static final int LOGICAL_WIDTH_PIXELS = 320;//640;
 	//public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
@@ -38,6 +44,32 @@ public class Settings {
 
 	private Settings() {
 
+	}
+	
+	
+	public static void init() {
+		// load any settings file
+		prop = new Properties();
+		try {
+			prop.load(new FileInputStream("config.txt"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		switch (CURRENT_MODE) {
+		case MODE_MM:
+			TITLE = "3D Monster Maze";
+			break;
+		case MODE_FARM:
+			TITLE = "The Funny Farm";
+			break;
+		case MODE_FTL:
+			TITLE = "FTL";
+			break;
+		default:
+			throw new RuntimeException("Todo");
+		}
+		
 	}
 
 	

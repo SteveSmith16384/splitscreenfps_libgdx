@@ -1,0 +1,3 @@
+#SSFPS Config
+mm.map_width=16
+mm.map_height=16

@@ -50,10 +50,11 @@ public class PreGameScreen implements IModule {
 		loadAssetsForResize();
 
 		this.appendToLog("Welcome to " + Settings.TITLE);
-		this.appendToLog("Looking for controllers...");
+		this.appendToLog("v" + Settings.VERSION);
 		if (Settings.RELEASE_MODE == false) {
 			this.appendToLog("WARNING! Game in debug mode!");
 		}
+		this.appendToLog("Looking for controllers...");
 
 	}
 

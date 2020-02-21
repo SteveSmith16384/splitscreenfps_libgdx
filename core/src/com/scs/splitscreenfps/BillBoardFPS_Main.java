@@ -27,6 +27,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		Settings.init();
+		
 		if (Settings.DEFAULT_4_PLAYERS) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
