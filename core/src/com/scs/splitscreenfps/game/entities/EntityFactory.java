@@ -15,13 +15,16 @@ import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.UBJsonReader;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
@@ -121,6 +124,35 @@ public class EntityFactory {
 	}
 
 
+	public static AbstractEntity createModel_New(Game game, String filename, float posX, float posY, float posZ, float scl) {
+		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
+
+		PositionComponent posData = new PositionComponent(posX, posY, posZ);
+		entity.addComponent(posData);
+
+		Model model = null;
+		if (filename.endsWith(".obj")) {
+			ModelLoader loader = new ObjLoader();
+			model = loader.loadModel(Gdx.files.internal(filename));
+		} else {
+			G3dModelLoader g3dbModelLoader;
+			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
+
+			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
+		}
+
+		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
+		
+		HasModel hasModel = new HasModel("model", instance);
+		hasModel.scale = scl;
+		hasModel.always_draw = true;
+		entity.addComponent(hasModel);
+
+		return entity;
+
+	}
+
+
 	public static AbstractEntity createModel(Game game, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
 
@@ -134,18 +166,23 @@ public class EntityFactory {
 			ModelLoader loader = new ObjLoader();
 			model = loader.loadModel(Gdx.files.internal(filename));
 		} else {
-			am.load(filename, Model.class);
+			/*am.load(filename, Model.class);
 			am.finishLoading();
-			model = am.get(filename);
+			model = am.get(filename);*/
+			G3dModelLoader g3dbModelLoader;
+			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
+
+			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		}
 
 		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
 		
-/*
-		Texture tex = new Texture("sf/corridor.jpg");
+		//Texture tex = new Texture("sf/corridor.jpg");
 		for(int m=0;m<instance.materials.size;m++) {
 			Material mat = instance.materials.get(m);
-			for (Iterator<Attribute> ai = mat.iterator(); ai.hasNext();){
+			mat.remove(BlendingAttribute.Type);
+
+			/*for (Iterator<Attribute> ai = mat.iterator(); ai.hasNext();){
 				Attribute att=ai.next();
 				if (att.type == 1) { // colour
 					((ColorAttribute)att).color.set(1,  0,  0,  1);
@@ -154,9 +191,9 @@ public class EntityFactory {
 				} else {
 					Settings.p("Unhandled type:" + att.type + ": " + att);
 				}
-			}
+			}*/
 		}
-*/
+
 		HasModel hasModel = new HasModel("model", instance);
 		hasModel.scale = scl;
 		hasModel.always_draw = true;
@@ -168,5 +205,4 @@ public class EntityFactory {
 		return entity;
 
 	}
-
 }

@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.systems;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -31,10 +32,8 @@ public class DrawModelSystem extends AbstractSystem {
 		this.modelBatch = new ModelBatch();
 
 		environment = new Environment();
-		//environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .4f, .4f, .4f, 1f));
-		//environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, .8f, .8f, .8f, 1f));
-		environment.add(new DirectionalLight().set(1f, 1f, 1f, -1f, -0.8f, -0.2f));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
 	}
 
@@ -49,15 +48,15 @@ public class DrawModelSystem extends AbstractSystem {
 	public void process(Camera cam) {
 		this.modelBatch.begin(cam);
 
+		//modelBatch.render(game.s.modelInstance, environment);
+		
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			this.processEntity(entity, cam);
 		}
 
-
 		this.modelBatch.end();
-
 	}
 
 
@@ -79,7 +78,7 @@ public class DrawModelSystem extends AbstractSystem {
 				tmpOffset.set(position);
 				tmpOffset.y += model.yOffset;
 				model.model.transform.setToTranslation(tmpOffset);
-				model.model.transform.scl(model.scale);//.0016f);
+				model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.Y, posData.angle+model.angleOffset);
 			} else {
 				if (model.always_draw == false) {
