@@ -101,19 +101,19 @@ public class MapData implements IAStarMapInterface {
 	}
 
 
-	public boolean canSee(Vector3 pos1, Vector3 pos2) {
-		Vector3 tmp = new Vector3();
-		tmp.set(pos1);
+	public boolean canSee(Vector3 startPos, Vector3 endPos) {
+		Vector3 currentPos = new Vector3();
+		currentPos.set(startPos);
 
 		Vector3 dir = new Vector3();
-		dir.set(tmp).sub(pos2);
+		dir.set(endPos).sub(startPos);
 		dir.y = 0;
 		dir.nor();
 
-		while(tmp.dst2(pos2) > (0.5f * 0.5f)){
-			tmp.mulAdd(dir, -0.25f);
+		while(currentPos.dst2(endPos) > (0.5f * 0.5f)){
+			currentPos.mulAdd(dir, 0.25f);
 
-			if (getMapSquareAt(tmp.x, tmp.z).blocked) {
+			if (getMapSquareAt(currentPos.x, currentPos.z).blocked) {
 				return false;
 			}
 		}
@@ -122,12 +122,12 @@ public class MapData implements IAStarMapInterface {
 
 
 	private MapSquare getMapSquareAt(float x, float y) {
-		return getMapSquareAt((int)(x+0.5f), (int)(y+0.5f));
+		return getMapSquareAt((int)(x), (int)(y));
 	}
 
 
 	public MapSquare getMapSquareAt(Vector3 vec) {
-		return getMapSquareAt((int)((vec.x)+0.5f), (int)((vec.z)+0.5f));
+		return getMapSquareAt((int)((vec.x)), (int)((vec.z)));
 	}
 
 

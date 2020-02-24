@@ -68,8 +68,8 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	private void loadMapFromMazegen(Game game) {
 		if (Settings.SMALL_MAP) {
-			this.map_width = 6;
-			this.map_height = 6;
+			this.map_width = 8;
+			this.map_height = 8;
 		} else if (Settings.prop.containsKey("mm.map_width") && Settings.prop.containsKey("mm.map_height")) {
 			this.map_width = Integer.parseInt(Settings.prop.getProperty("mm.map_width"));
 			this.map_height = Integer.parseInt(Settings.prop.getProperty("mm.map_height"));

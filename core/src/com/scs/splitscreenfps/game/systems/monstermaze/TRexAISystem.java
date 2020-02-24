@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
@@ -35,9 +36,17 @@ public class TRexAISystem extends AbstractSystem {
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 
 		if (check_if_see_player || System.currentTimeMillis() > next_check_can_see_time) {
+			Settings.p("TRex is checking if can see players...");
+			check_if_see_player = false;
+			next_check_can_see_time = System.currentTimeMillis() + 3000;
+			boolean found = false;
 			for (int i=0 ; i<game.players.length ; i++) {
-				Vector3 dest =canSeePlayer(posdata.position, i);
+				Vector3 dest = canSeePlayer(posdata.position, i);
 				if (dest != null) {
+					Settings.p("TRex has seen player " + i + "!");
+					dest = canSeePlayer(posdata.position, i); // todo - remove
+					found = true;
+					next_check_can_see_time = System.currentTimeMillis() + 1000; // Check again sooner
 					// Check the player isn't on spawn point
 					if (game.mapData.getMapSquareAt(dest).spawn_point == false) {
 						AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
@@ -46,11 +55,15 @@ public class TRexAISystem extends AbstractSystem {
 					}
 				}
 			}
-			check_if_see_player = false;
-			next_check_can_see_time = System.currentTimeMillis() + 3000;
+			if (!found) {
+				Settings.p("TRex cant see any player");
+
+			}
 		}
 
 		if (mac.route == null || mac.route.size() == 0) {
+			Settings.p("TRex getting new path!");
+			check_if_see_player = true;
 			AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
 			GridPoint2Static dest = game.mapData.getRandomFloorPos();
 			mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
@@ -78,7 +91,6 @@ public class TRexAISystem extends AbstractSystem {
 
 
 	private Vector3 canSeePlayer(Vector3 trexPos, int idx) {
-		//PositionComponent trexPosData = (PositionComponent)trex.getComponent(PositionComponent.class);
 		PositionComponent playerPosData = (PositionComponent)game.players[idx].getComponent(PositionComponent.class);
 
 		if (game.mapData.canSee(trexPos, playerPosData.position)) {
@@ -86,7 +98,6 @@ public class TRexAISystem extends AbstractSystem {
 		} else {
 			return null;
 		}
-
-
 	}
+
 }
