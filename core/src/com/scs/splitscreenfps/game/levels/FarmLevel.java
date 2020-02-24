@@ -58,7 +58,7 @@ public class FarmLevel extends AbstractLevel {
 		game.ecs.addEntity(new Floor(game.ecs, "farm/grass.jpg", 1, 1, map_width-1, map_height-1, true));
 		
 		if (Settings.TEST_MODEL) {
-			AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/consoleScreen.g3db", -4, 0, 2, .2f);
+			AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/consoleScreen.g3db", 2, 0, 2, .2f);
 			//AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/spaceCraft5.g3db", 3, 0, 1, 10f);
 			
 			//AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/consoleScreen.obj", 2, 0, 2, .1f);

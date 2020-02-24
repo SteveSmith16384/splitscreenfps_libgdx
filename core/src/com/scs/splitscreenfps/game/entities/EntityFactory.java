@@ -30,6 +30,7 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 import ssmith.lang.NumberFunctions;
+import ssmith.libgdx.ModelFunctions;
 
 public class EntityFactory {
 
@@ -148,8 +149,6 @@ public class EntityFactory {
 	public static AbstractEntity createModel(Game game, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
 
-		//AssetManager am = game.assetManager;
-
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);
 
@@ -158,24 +157,23 @@ public class EntityFactory {
 			ModelLoader loader = new ObjLoader();
 			model = loader.loadModel(Gdx.files.internal(filename));
 		} else {
-			/*am.load(filename, Model.class);
-			am.finishLoading();
-			model = am.get(filename);*/
 			G3dModelLoader g3dbModelLoader;
 			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
 
 			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		}
 
-		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
+		ModelInstance instance = new ModelInstance(model);//, new Vector3(posX, posY, posZ));
 		
-		//Texture tex = new Texture("sf/corridor.jpg");
 		for(int m=0;m<instance.materials.size;m++) {
 			Material mat = instance.materials.get(m);
 			mat.remove(BlendingAttribute.Type);
 		}
 
 		HasModel hasModel = new HasModel("model", instance);
+		instance.transform.scl(scl);
+		ModelFunctions.getOrigin(instance, hasModel.offset);
+		hasModel.offset.scl(-1f);
 		hasModel.scale = scl;
 		hasModel.always_draw = true;
 		entity.addComponent(hasModel);

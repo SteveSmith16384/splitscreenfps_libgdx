@@ -75,7 +75,8 @@ public class DrawModelSystem extends AbstractSystem {
 
 				Vector3 position = posData.position;
 				tmpOffset.set(position);
-				tmpOffset.y += model.yOffset;
+				//tmpOffset.y += model.yOffset;
+				tmpOffset.add(model.offset);
 				model.model.transform.setToTranslation(tmpOffset);
 				model.model.transform.scl(model.scale);
 				model.model.transform.rotate(Vector3.Y, posData.angle+model.angleOffset);

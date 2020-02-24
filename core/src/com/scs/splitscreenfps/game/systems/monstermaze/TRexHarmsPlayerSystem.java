@@ -14,7 +14,7 @@ import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.monstermaze.TRexHarmsPlayerComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.IsTRex;
 import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -28,7 +28,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 	private int playerRespawnX, playerRespawnY;
 	
 	public TRexHarmsPlayerSystem(BasicECS ecs, Game _game, int _startX, int _startY) {
-		super(ecs, TRexHarmsPlayerComponent.class);
+		super(ecs, IsTRex.class);
 		
 		game = _game;
 		

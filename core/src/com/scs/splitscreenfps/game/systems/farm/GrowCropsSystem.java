@@ -28,6 +28,10 @@ public class GrowCropsSystem extends AbstractSystem {
 		CanGrowComponent cgc = (CanGrowComponent)entity.getComponent(CanGrowComponent.class);
 		if (cgc.current_growth < cgc.max_growth) {
 			cgc.current_growth += cgc.grow_speed * Gdx.graphics.getDeltaTime();
+
+			if (cgc.current_growth > cgc.max_growth) {
+				cgc.current_growth = cgc.max_growth;
+			}
 			
 			// Scale the model, if it has one
 			HasModel hasModel = (HasModel)entity.getComponent(HasModel.class);

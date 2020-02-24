@@ -21,7 +21,7 @@ import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.monstermaze.TRexHarmsPlayerComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.IsTRex;
 
 import ssmith.libgdx.GraphicsHelper;
 
@@ -61,7 +61,7 @@ public class TRex extends AbstractEntity {
 
 		this.addComponent(new MovementData(.85f));
 
-		this.addComponent(new TRexHarmsPlayerComponent());
+		this.addComponent(new IsTRex());
 
 		this.addComponent(new CollidesComponent(false, .3f, .3f, .3f));
 

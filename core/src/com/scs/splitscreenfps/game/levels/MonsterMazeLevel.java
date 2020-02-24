@@ -18,6 +18,7 @@ import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
 import com.scs.splitscreenfps.game.systems.monstermaze.MonsterGrowlsSystem;
 import com.scs.splitscreenfps.game.systems.monstermaze.MonsterMazeExitSystem;
 import com.scs.splitscreenfps.game.systems.monstermaze.RegenKeySystem;
+import com.scs.splitscreenfps.game.systems.monstermaze.TRexAISystem;
 import com.scs.splitscreenfps.game.systems.monstermaze.TRexHarmsPlayerSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
@@ -66,14 +67,14 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 
 	private void loadMapFromMazegen(Game game) {
-		if (Settings.prop.containsKey("mm.map_width") && Settings.prop.containsKey("mm.map_height")) {
+		if (Settings.SMALL_MAP) {
+			this.map_width = 6;
+			this.map_height = 6;
+		} else if (Settings.prop.containsKey("mm.map_width") && Settings.prop.containsKey("mm.map_height")) {
 			this.map_width = Integer.parseInt(Settings.prop.getProperty("mm.map_width"));
 			this.map_height = Integer.parseInt(Settings.prop.getProperty("mm.map_height"));
 		} else {
 			this.map_height = 12 + game.players.length;
-			if (Settings.SMALL_MAP) {
-				this.map_height = 7;
-			}
 			this.map_width = map_height * 2;
 		}
 
@@ -119,6 +120,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		game.ecs.addSystem(new MonsterMazeExitSystem(ecs, game));
 		game.ecs.addSystem(new MonsterGrowlsSystem());
 		game.ecs.addSystem(new RegenKeySystem(ecs, this));
+		game.ecs.addSystem(new TRexAISystem(ecs, game));
 	}
 
 
@@ -128,6 +130,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		game.ecs.processSystem(MonsterMazeExitSystem.class);
 		game.ecs.processSystem(MonsterGrowlsSystem.class);
 		game.ecs.processSystem(RegenKeySystem.class);
+		game.ecs.processSystem(TRexAISystem.class);
 
 	}
 

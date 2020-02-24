@@ -165,11 +165,11 @@ public class Game implements IModule {
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
 
-			if (Settings.TEST_START_IN_WALL) {
+			/*if (Settings.TEST_START_IN_WALL) {
 				if (mapData.map[(int)posData.position.x][(int)posData.position.z].blocked) {
 					Settings.p("Blocked!");
 				}
-			}
+			}*/
 
 		}
 	}

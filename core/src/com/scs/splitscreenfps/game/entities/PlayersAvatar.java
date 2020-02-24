@@ -114,11 +114,11 @@ public class PlayersAvatar extends AbstractEntity {
 			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
 			pos.angle = -v2.angle();
 
-			if (Settings.TEST_START_IN_WALL) {
+			/*if (Settings.TEST_START_IN_WALL) {
 				if (game.mapData.map[(int)pos.position.x][(int)pos.position.z].blocked) {
 					Settings.p("Blocked!");
 				}
-			}
+			}*/
 		}
 
 	}
