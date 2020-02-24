@@ -11,7 +11,6 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 
 public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<AbstractEntity> {

@@ -9,7 +9,6 @@ import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Floor;
-import com.scs.splitscreenfps.game.entities.farm.Cow;
 import com.scs.splitscreenfps.game.entities.farm.FarmEntityFactory;
 import com.scs.splitscreenfps.game.systems.farm.GrowCropsSystem;
 import com.scs.splitscreenfps.game.systems.farm.WanderingAnimalSystem;

@@ -3,9 +3,6 @@ package com.scs.splitscreenfps.mapgen;
 import java.util.LinkedList;
 import java.util.Random;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.scs.splitscreenfps.Settings;
-
 import ssmith.libgdx.GridPoint2Static;
 
 public class MazeGen1 {

@@ -16,7 +16,6 @@ import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.farm.CanGrowComponent;
-import com.scs.splitscreenfps.game.components.litter.CombinesWithLitterComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 
