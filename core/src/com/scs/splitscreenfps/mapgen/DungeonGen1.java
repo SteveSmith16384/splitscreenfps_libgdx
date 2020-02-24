@@ -2,8 +2,6 @@ package com.scs.splitscreenfps.mapgen;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.math.GridPoint2;
-
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 

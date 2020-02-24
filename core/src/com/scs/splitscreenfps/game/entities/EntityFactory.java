@@ -123,7 +123,7 @@ public class EntityFactory {
 
 	}
 
-
+/*
 	public static AbstractEntity createModel_New(Game game, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
 
@@ -151,12 +151,12 @@ public class EntityFactory {
 		return entity;
 
 	}
-
+*/
 
 	public static AbstractEntity createModel(Game game, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
 
-		AssetManager am = game.assetManager;
+		//AssetManager am = game.assetManager;
 
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);
@@ -181,17 +181,6 @@ public class EntityFactory {
 		for(int m=0;m<instance.materials.size;m++) {
 			Material mat = instance.materials.get(m);
 			mat.remove(BlendingAttribute.Type);
-
-			/*for (Iterator<Attribute> ai = mat.iterator(); ai.hasNext();){
-				Attribute att=ai.next();
-				if (att.type == 1) { // colour
-					((ColorAttribute)att).color.set(1,  0,  0,  1);
-				} else if (att.type==TextureAttribute.Diffuse) {
-					((TextureAttribute)att).textureDescription.set(tex,TextureFilter.Linear,TextureFilter.Linear,TextureWrap.ClampToEdge,TextureWrap.ClampToEdge);
-				} else {
-					Settings.p("Unhandled type:" + att.type + ": " + att);
-				}
-			}*/
 		}
 
 		HasModel hasModel = new HasModel("model", instance);

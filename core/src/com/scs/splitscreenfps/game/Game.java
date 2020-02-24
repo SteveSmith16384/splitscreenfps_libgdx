@@ -9,9 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
@@ -41,8 +38,6 @@ import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 
-import asf.modelpreview.Spatial;
-
 public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
@@ -66,8 +61,8 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
-	public final Color backgroundColor = new Color(100 / 255f, 149 / 255f, 237 / 255f, 1f);
-	public Spatial s;
+	//public final Color backgroundColor = new Color(100 / 255f, 149 / 255f, 237 / 255f, 1f);
+	//public Spatial s;
 	
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
@@ -117,13 +112,13 @@ public class Game implements IModule {
 			this.currentLevel.setupAvatars(this.players[i], i);
 		}
 		
-		s = new Spatial();
+		/*s = new Spatial();
 		G3dModelLoader g3dbModelLoader;
 		g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
 
 		s.model = g3dbModelLoader.loadModel(Gdx.files.absolute("space-kit-1.0/Models/consoleScreen.g3db"));
 		s.init();
-		s.setLocation(new Vector3(-30, 0, 0));
+		s.setLocation(new Vector3(-30, 0, 0));*/
 	}
 
 
@@ -212,7 +207,7 @@ public class Game implements IModule {
 			viewportData.frameBuffer.begin();
 
 			this.currentLevel.setBackgroundColour();
-			Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+			//Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
 			//Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
