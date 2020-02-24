@@ -112,7 +112,6 @@ public class MapData implements IAStarMapInterface {
 
 		while(currentPos.dst2(endPos) > (0.5f * 0.5f)){
 			currentPos.mulAdd(dir, 0.25f);
-
 			if (getMapSquareAt(currentPos.x, currentPos.z).blocked) {
 				return false;
 			}

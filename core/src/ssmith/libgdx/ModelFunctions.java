@@ -16,9 +16,9 @@ public class ModelFunctions {
 
 	private ModelFunctions() {
 	}
-	
-	
-	public static ModelInstance loadModel(String filename) {
+
+
+	public static ModelInstance loadModel(String filename, boolean removeMaterials) {
 		Model model = null;
 		if (filename.endsWith(".obj")) {
 			ModelLoader loader = new ObjLoader();
@@ -28,20 +28,21 @@ public class ModelFunctions {
 			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
 			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		} else {
-			throw new RuntimeException("todo");
+			throw new RuntimeException("Unhandled model format: " + filename);
 		}
 
 		ModelInstance instance = new ModelInstance(model);//, new Vector3(posX, posY, posZ));
-	
-		for(int m=0;m<instance.materials.size;m++) {
-			Material mat = instance.materials.get(m);
-			mat.remove(BlendingAttribute.Type);
+
+		if (removeMaterials) {
+			for (Material mat : instance.materials) {
+				mat.remove(BlendingAttribute.Type);
+			}
 		}
-		
+
 		return instance;
 	}
-	
-	
+
+
 	public static void getOrigin(ModelInstance model, Vector3 out) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);

@@ -19,6 +19,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.levels.CarParkLevel;
 import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FarmLevel;
@@ -98,6 +99,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_FTL:
 			currentLevel = new FTLLevel(this);
+			break;
+		case Settings.MODE_CAR_PARK:
+			currentLevel = new CarParkLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);

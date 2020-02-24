@@ -28,13 +28,15 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		Settings.init();
-		
-		if (Settings.DEFAULT_4_PLAYERS) {
+
+		if (Settings.AUTO_START) {
 			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
 			inputs.add(new MouseAndKeyboardInputMethod());
-			inputs.add(new NoInputMethod());
-			inputs.add(new NoInputMethod());
-			inputs.add(new NoInputMethod());
+			if (Settings.START_4_PLAYERS) {
+				inputs.add(new NoInputMethod());
+				inputs.add(new NoInputMethod());
+				inputs.add(new NoInputMethod());
+			}
 			current_module = new Game(this, inputs);
 		} else {
 			current_module = new PreGameScreen(this);//Game();
