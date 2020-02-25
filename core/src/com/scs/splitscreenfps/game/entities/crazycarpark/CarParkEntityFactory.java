@@ -15,6 +15,7 @@ public class CarParkEntityFactory {
 	}
 
 
+	// Looks good
 	public static AbstractEntity createCar1(Game game, float posX, float posY, float posZ) {
 		float scl = .01f;
 		
@@ -42,6 +43,7 @@ public class CarParkEntityFactory {
 	}
 
 
+	// ONly one colour
 	public static AbstractEntity createCar2(Game game, float posX, float posY, float posZ) {
 		float scl = 1f;//.02f;
 		
@@ -50,7 +52,7 @@ public class CarParkEntityFactory {
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);
 
-		ModelInstance instance = ModelFunctions.loadModel("carpark/quaternius/Cop.obj", false);
+		ModelInstance instance = ModelFunctions.loadModel("carpark/quaternius/Cop.obj", true);
 
 		HasModel hasModel = new HasModel("model", instance);
 		
@@ -69,6 +71,7 @@ public class CarParkEntityFactory {
 	}
 
 
+	// Only one colour
 	public static AbstractEntity createAmbulance(Game game, float posX, float posY, float posZ) {
 		float scl = 1;//.2f;
 		
@@ -77,7 +80,7 @@ public class CarParkEntityFactory {
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);
 
-		ModelInstance instance = ModelFunctions.loadModel("carpark/kenney/ambulance.obj", false);
+		ModelInstance instance = ModelFunctions.loadModel("carpark/kenney/ambulance.obj", true);
 
 		HasModel hasModel = new HasModel("model", instance);
 		

@@ -6,6 +6,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
+import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.crazycarpark.CarParkEntityFactory;
 
 import ssmith.libgdx.GridPoint2Static;
@@ -46,7 +47,7 @@ public class CarParkLevel extends AbstractLevel {
 			this.startPositions[i] = new GridPoint2Static(i+1, i+1);
 		}
 
-		//game.ecs.addEntity(new Floor(game.ecs, "farm/grass.jpg", 0, 0, map_width-1, map_height-1, true));
+		game.ecs.addEntity(new Floor(game.ecs, "farm/grass.jpg", 0, 0, map_width-1, map_height-1, true));
 
 		AbstractEntity car = CarParkEntityFactory.createCar1(game, 3, 0, 0);
 		game.ecs.addEntity(car);
