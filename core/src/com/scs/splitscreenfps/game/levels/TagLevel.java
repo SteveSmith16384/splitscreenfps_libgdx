@@ -56,9 +56,9 @@ public class TagLevel extends AbstractLevel {
 	private ModelInstance addSkeletonForTagged(int idx, TagableComponent taggable) {
 		AssetManager am = game.assetManager;
 
-		am.load("models/Skeleton.g3dj", Model.class);
+		am.load("tag/models/Skeleton.g3dj", Model.class);
 		am.finishLoading();
-		Model model = am.get("models/Skeleton.g3dj");
+		Model model = am.get("tag/models/Skeleton.g3dj");
 
 		ModelInstance instance = new ModelInstance(model);
 		instance.transform.scl(.0015f);

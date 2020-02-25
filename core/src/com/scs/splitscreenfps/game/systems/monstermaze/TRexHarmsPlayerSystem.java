@@ -74,7 +74,7 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 					anim.next_animation = anim.idle_anim_name; 
 				}
 				
-				BillBoardFPS_Main.audio.play("audio/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
+				BillBoardFPS_Main.audio.play("monstermaze/sfx/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
 				
 				last_harm_done = System.currentTimeMillis();
 				

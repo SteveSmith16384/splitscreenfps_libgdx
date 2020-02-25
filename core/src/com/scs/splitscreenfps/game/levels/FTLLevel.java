@@ -56,34 +56,27 @@ public class FTLLevel extends AbstractLevel {
 					String cell = cells[col];
 					String tokens[] = cell.split(Pattern.quote("+"));
 					for (String token : tokens) {
-						if (token.equals("S")) { // Start pos
-							for (int i=0 ; i<this.startPositions.length ;i++) {
-								this.startPositions[i] = new GridPoint2Static(col, row);
-							}
+						if (token.equals("S1")) { // Start pos
+							this.startPositions[0] = new GridPoint2Static(col, row);
+						} else if (token.equals("S2")) { // Start pos
+							this.startPositions[1] = new GridPoint2Static(col, row);
+						} else if (token.equals("S3")) { // Start pos
+							this.startPositions[2] = new GridPoint2Static(col, row);
+						} else if (token.equals("S4")) { // Start pos
+							this.startPositions[3] = new GridPoint2Static(col, row);
 						} else if (token.equals("F")) { // Floor
-							//Floor floor = new Floor(game.ecs, "colours/red.png", col, row, 1, 1, false);
-							//game.ecs.addEntity(floor);
-							AbstractEntity b = FTLEntityFactory.createBlockThing(game.ecs, col, row);
-							game.ecs.addEntity(b);
+							// Do nothing
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
 							Wall wall = new Wall(game.ecs, "sf/ufo2_03.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 						} else if (token.equals("D1")) { // Door 1
-							//Floor floor = new Floor(game.ecs, "colours/red.png", col, row, 1, 1, false);
-							//game.ecs.addEntity(floor);
-
 							AbstractEntity door = EntityFactory.createDoor(game.ecs, col, row, false);
 							game.ecs.addEntity(door);
-
 						} else if (token.equals("D2")) { // Door 2
-							//Floor floor = new Floor(game.ecs, "colours/red.png", col, row, 1, 1, false);
-							//game.ecs.addEntity(floor);
-
 							AbstractEntity door = EntityFactory.createDoor(game.ecs, col, row, true);
 							game.ecs.addEntity(door);
-
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}
@@ -93,10 +86,10 @@ public class FTLLevel extends AbstractLevel {
 			}
 		}
 
-		if (Settings.TEST_MODEL) {
+		/*if (Settings.TEST_MODEL) {
 			AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/station.g3db", 3, 0, 2, 1f);
 			game.ecs.addEntity(model);
-		}
+		}*/
 	}
 
 

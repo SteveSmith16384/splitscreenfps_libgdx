@@ -65,27 +65,27 @@ public class PlayersAvatar extends AbstractEntity {
 		// todo - https://kenney.nl/assets/space-kit
 		switch (idx) {
 		case 0:
-			am.load("models/Smooth_Male_Shirt.g3db", Model.class);
+			am.load("shared/models/Smooth_Male_Shirt.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("models/Smooth_Male_Shirt.g3db");
+			model = am.get("shared/models/Smooth_Male_Shirt.g3db");
 			break;
 		case 1:
-			am.load("models/Male_Casual.g3db", Model.class);
+			am.load("shared/models/Male_Casual.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("models/Male_Casual.g3db");
+			model = am.get("shared/models/Male_Casual.g3db");
 			/*am.load("space-kit-1.0/Models/station.g3db", Model.class);
 			am.finishLoading();
 			model = am.get("space-kit-1.0/Models/station.g3db");*/
 			break;
 		case 2:
-			am.load("models/Male_LongSleeve.g3db", Model.class);
+			am.load("shared/models/Male_LongSleeve.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("models/Male_LongSleeve.g3db");
+			model = am.get("shared/models/Male_LongSleeve.g3db");
 			break;
 		case 3:
-			am.load("models/Male_Shirt.g3db", Model.class);
+			am.load("shared/models/Male_Shirt.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("models/Male_Shirt.g3db");
+			model = am.get("shared/models/Male_Shirt.g3db");
 			break;
 		}
 		ModelInstance instance = new ModelInstance(model);

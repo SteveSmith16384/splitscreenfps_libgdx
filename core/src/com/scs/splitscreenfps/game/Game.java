@@ -69,7 +69,7 @@ public class Game implements IModule {
 		main = _main;
 		inputs = _inputs;
 		
-		BillBoardFPS_Main.audio.startMusic("audio/Heroic Demise (New).mp3");
+		BillBoardFPS_Main.audio.startMusic("shared/Heroic Demise (New).mp3");
 
 		game_stage = 0;
 		batch2d = new SpriteBatch();
