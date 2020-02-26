@@ -93,6 +93,9 @@ public class FTLLevel extends AbstractLevel {
 			AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/station.g3db", 3, 0, 2, 1f);
 			game.ecs.addEntity(model);
 		}*/
+
+		AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 4);
+		game.ecs.addEntity(fire);
 	}
 
 

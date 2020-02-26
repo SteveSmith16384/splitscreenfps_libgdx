@@ -40,7 +40,7 @@ public class MonsterMazeEntityFactory {
 		Texture weaponTex = new Texture(Gdx.files.internal("monstermaze/key2.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.4f, 0.1f, 0.2f, 0.3f));
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.4f, 0.1f, 0.3f, 0.3f));
 		entity.addComponent(hgsc);
 		entity.hideComponent(HasGuiSpriteComponent.class); // Don't show it until picked up!
 

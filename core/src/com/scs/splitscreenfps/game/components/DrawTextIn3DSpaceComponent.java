@@ -8,9 +8,9 @@ public class DrawTextIn3DSpaceComponent {
 	public Vector3 pos;
 	public String text;
 	
-	public DrawTextIn3DSpaceComponent(String _text, Vector3 _pos, float _range) {
+	public DrawTextIn3DSpaceComponent(String _text, float x, float z, float _range) {
 		text = _text;
-		pos = _pos;
+		pos = new Vector3(x, .5f, z);
 		range = _range;
 	}
 

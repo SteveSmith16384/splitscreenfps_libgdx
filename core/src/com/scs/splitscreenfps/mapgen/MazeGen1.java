@@ -32,7 +32,6 @@ public class MazeGen1 {
 		this.map = new boolean[width][height];
 
 		final Random random = new Random();
-		//if (Settings.TEST_START_IN_WALL == false) {
 		{
 			final LinkedList<int[]> frontiers = new LinkedList<int[]>();
 			int x = 1+random.nextInt(width-2);
@@ -103,6 +102,7 @@ public class MazeGen1 {
 			int mx = 1+random.nextInt(width-2);
 			int my = 1+random.nextInt(height-2);
 			if (map[mx][my] == WALL) {
+				// Todo - check adjacent squaers are empty to avoid lone squares (which cause problems when selecting a dest for A*)
 				map[mx][my] = PASSAGE;
 				numWallsToRemove--;
 			}

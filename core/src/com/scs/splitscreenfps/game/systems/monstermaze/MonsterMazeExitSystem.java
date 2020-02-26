@@ -42,6 +42,7 @@ public class MonsterMazeExitSystem extends AbstractSystem {
 							game.ecs.removeSystem(MonsterMazeExitSystem.class);
 							game.ecs.removeSystem(MonsterMazeExitSystem.class);
 							game.ecs.removeSystem(TRexHarmsPlayerSystem.class);
+							game.ecs.removeSystem(TRexAISystem.class);
 							game.playerHasWon(player);
 							return;
 						}

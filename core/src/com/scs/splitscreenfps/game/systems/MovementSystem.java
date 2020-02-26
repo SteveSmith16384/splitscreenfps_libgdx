@@ -84,7 +84,11 @@ public class MovementSystem extends AbstractSystem {
 			if (this.movementBlockedByEntity(mover, offset.x, 0, cc) == false) {
 				position.x += offset.x;
 				resultX = true;
+			} else {
+				int dfgdf = 456;
 			}
+		} else {
+			int dfgdf = 456;
 		}
 
 		boolean resultZ = false;
@@ -92,7 +96,11 @@ public class MovementSystem extends AbstractSystem {
 			if (this.movementBlockedByEntity(mover, 0, offset.z, cc) == false) {
 				position.z += offset.z;
 				resultZ = true;
+			} else {
+				int dfgdf = 456;
 			}
+		} else {
+			int dfgdf = 456;
 		}
 		return resultX || resultZ;
 	}

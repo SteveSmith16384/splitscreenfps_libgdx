@@ -25,12 +25,14 @@ import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.DoorComponent;
 import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
+import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
 import ssmith.lang.NumberFunctions;
+import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
 
 public class EntityFactory {
@@ -39,10 +41,10 @@ public class EntityFactory {
 	}
 
 	
-	public static AbstractEntity create3DText(BasicECS ecs, float map_x, float map_z) {
+	public static AbstractEntity create3DText(BasicECS ecs, String text, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Text");
 		
-		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent();
+		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent(text, map_x, map_z, 3f);
 		data.text = "hello!";
 		data.pos = new Vector3(2f, 1f, 2f);
 		data.range = 5;
@@ -198,4 +200,38 @@ public class EntityFactory {
 		return entity;
 
 	}
+
+
+	public static AbstractEntity createFire(BasicECS ecs, float map_x, float map_z) {
+		AbstractEntity entity = new AbstractEntity(ecs, "Fire");
+
+		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
+		entity.addComponent(posData);
+
+		TextureRegion[][] trs = GraphicsHelper.createSheet("ftl/fire.png", 8, 4);
+
+		HasDecal hasDecal = new HasDecal();
+		//Texture tex = new Texture(Gdx.files.internal("sf/door1.jpg"));
+		TextureRegion tr = trs[0][0];//new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
+		hasDecal.decal = Decal.newDecal(tr, true);
+		hasDecal.decal.setScale(1f / tr.getRegionWidth());
+		hasDecal.decal.setPosition(posData.position);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = false;
+		entity.addComponent(hasDecal);	
+
+		/*
+		HasDecalCycle cycle = new HasDecalCycle(.8f, 2);
+		cycle.decals[0] = hasDecal.decal;
+		cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
+		this.addComponent(cycle);
+*/
+		CollidesComponent cc = new CollidesComponent(true, .5f);
+		entity.addComponent(cc);
+
+		return entity;	
+
+	}
+
+
 }
