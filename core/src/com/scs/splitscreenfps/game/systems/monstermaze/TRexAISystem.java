@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.systems.monstermaze;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -12,6 +14,7 @@ import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.IsTRex;
+import com.scs.splitscreenfps.game.entities.TextEntity;
 
 import ssmith.astar.AStar_LibGDX;
 import ssmith.lang.GeometryFuncs;
@@ -36,28 +39,29 @@ public class TRexAISystem extends AbstractSystem {
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 
 		if (check_if_see_player || System.currentTimeMillis() > next_check_can_see_time) {
-			Settings.p("TRex is checking if can see players...");
+			//Settings.p("TRex is checking if can see players...");
 			check_if_see_player = false;
 			next_check_can_see_time = System.currentTimeMillis() + 3000;
 			boolean found = false;
 			for (int i=0 ; i<game.players.length ; i++) {
 				Vector3 dest = canSeePlayer(posdata.position, i);
 				if (dest != null) {
-					Settings.p("TRex has seen player " + i + "!");
-					dest = canSeePlayer(posdata.position, i); // todo - remove
+					//Settings.p("TRex has seen player " + i + "!");
 					found = true;
 					next_check_can_see_time = System.currentTimeMillis() + 1000; // Check again sooner
 					// Check the player isn't on spawn point
 					if (game.mapData.getMapSquareAt(dest).spawn_point == false) {
 						AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
 						mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, (int)dest.x, (int)dest.z);
+
+						TextEntity te = new TextEntity(ecs, "T-REX HAS SEEN YOU!", Gdx.graphics.getBackBufferHeight()/5, 1, new Color(0, 0, 0, 1), i, 1);
+						ecs.addEntity(te);
 						break;
 					}
 				}
 			}
 			if (!found) {
-				Settings.p("TRex cant see any player");
-
+				//Settings.p("TRex cant see any player");
 			}
 		}
 

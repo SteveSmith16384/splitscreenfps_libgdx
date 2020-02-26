@@ -23,6 +23,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.DoorComponent;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
@@ -37,6 +38,19 @@ public class EntityFactory {
 	private EntityFactory() {
 	}
 
+	
+	public static AbstractEntity create3DText(BasicECS ecs, float map_x, float map_z) {
+		AbstractEntity entity = new AbstractEntity(ecs, "Text");
+		
+		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent();
+		data.text = "hello!";
+		data.pos = new Vector3(2f, 1f, 2f);
+		data.range = 5;
+		entity.addComponent(data);
+		
+		return entity;
+		
+	}
 
 	public static AbstractEntity createCrate(BasicECS ecs, float map_x, float map_z) {
 		float SIZE = 0.3f;
@@ -146,8 +160,8 @@ public class EntityFactory {
 	}
 */
 
-	public static AbstractEntity createModel(Game game, String filename, float posX, float posY, float posZ, float scl) {
-		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
+	public static AbstractEntity createModel(Game game, String name, String filename, float posX, float posY, float posZ, float scl) {
+		AbstractEntity entity = new AbstractEntity(game.ecs, name);
 
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);

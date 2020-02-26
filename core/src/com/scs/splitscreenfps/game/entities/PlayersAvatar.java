@@ -62,7 +62,6 @@ public class PlayersAvatar extends AbstractEntity {
 
 		Model model = null;
 
-		// todo - https://kenney.nl/assets/space-kit
 		switch (idx) {
 		case 0:
 			am.load("shared/models/Smooth_Male_Shirt.g3db", Model.class);

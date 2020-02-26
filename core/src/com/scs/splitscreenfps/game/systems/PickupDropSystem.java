@@ -68,7 +68,6 @@ public class PickupDropSystem extends AbstractSystem {
 					cc.carrying.restoreComponent(CollidesComponent.class);
 					cc.carrying.restoreComponent(HasDecal.class);
 					cc.carrying.restoreComponent(HasModel.class);
-					cc.carrying.restoreComponent(CombinesWithLitterComponent.class); // todo - separate game!
 					cc.carrying.hideComponent(HasGuiSpriteComponent.class);
 
 					// Set position

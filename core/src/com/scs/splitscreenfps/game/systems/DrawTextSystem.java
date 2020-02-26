@@ -46,7 +46,7 @@ public class DrawTextSystem extends AbstractSystem {
 				font = game.font_small;
 				break;
 			default:
-				throw new RuntimeException("Todo");
+				throw new RuntimeException("Unknown font size: " + dtd.size);
 			}
 			if (dtd.centre_x && dtd.x < 0) {
 				GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member

@@ -107,7 +107,7 @@ public class PreGameScreen implements IModule {
 		batch2d.begin();
 
 		logo.draw(batch2d);
-		// todo - draw title of game
+
 		font.setColor(1f,  1f,  1f,  1f);
 
 		int y = Gdx.graphics.getHeight() - (int)this.font.getLineHeight()*1;

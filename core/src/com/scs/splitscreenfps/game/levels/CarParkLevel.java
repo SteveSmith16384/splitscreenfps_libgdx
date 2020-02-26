@@ -6,6 +6,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
+import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.crazycarpark.CarParkEntityFactory;
 
@@ -51,6 +52,10 @@ public class CarParkLevel extends AbstractLevel {
 
 		AbstractEntity car = CarParkEntityFactory.createCar1(game, 3, 0, 0);
 		game.ecs.addEntity(car);
+		
+		AbstractEntity text3d = EntityFactory.create3DText(game.ecs, 0, 0);
+		game.ecs.addEntity(text3d);
+		
 
 		//AbstractEntity car = CarParkEntityFactory.createAmbulance(game, 3, 0, 0);
 		//game.ecs.addEntity(car);

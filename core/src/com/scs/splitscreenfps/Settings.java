@@ -18,7 +18,7 @@ public class Settings {
 	public static final boolean RELEASE_MODE = false;
 	
 	// Hacks
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final boolean START_4_PLAYERS = !RELEASE_MODE && false;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && true;
 	public static final boolean TEST_ALT_TREX = !RELEASE_MODE && false;

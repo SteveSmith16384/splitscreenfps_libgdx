@@ -32,6 +32,7 @@ import com.scs.splitscreenfps.game.systems.CycleThruDecalsSystem;
 import com.scs.splitscreenfps.game.systems.DrawDecalSystem;
 import com.scs.splitscreenfps.game.systems.DrawGuiSpritesSystem;
 import com.scs.splitscreenfps.game.systems.DrawModelSystem;
+import com.scs.splitscreenfps.game.systems.DrawTextIn3DSpaceSystem;
 import com.scs.splitscreenfps.game.systems.DrawTextSystem;
 import com.scs.splitscreenfps.game.systems.MoveAStarSystem;
 import com.scs.splitscreenfps.game.systems.MovementSystem;
@@ -156,7 +157,7 @@ public class Game implements IModule {
 		this.drawModelSystem = new DrawModelSystem(this, ecs); 
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new PickupDropSystem(ecs, this));
-
+		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
 	}
 
 
@@ -196,7 +197,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();
-
+		
 		currentLevel.update();
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
@@ -225,6 +226,7 @@ public class Game implements IModule {
 			this.ecs.getSystem(DrawDecalSystem.class).process();
 
 			batch2d.begin();
+			this.ecs.getSystem(DrawTextIn3DSpaceSystem.class).process();
 			this.ecs.getSystem(DrawTextSystem.class).process();
 			this.ecs.getSystem(DrawGuiSpritesSystem.class).process();
 

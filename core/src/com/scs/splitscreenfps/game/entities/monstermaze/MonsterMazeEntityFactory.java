@@ -28,7 +28,7 @@ public class MonsterMazeEntityFactory {
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
-		Texture tex = new Texture(Gdx.files.internal("monstermaze/key.png"));
+		Texture tex = new Texture(Gdx.files.internal("monstermaze/key2.png"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
 		hasDecal.decal = Decal.newDecal(tr, true);
 		hasDecal.decal.setScale(1f / tr.getRegionWidth() / 2f);
@@ -37,7 +37,7 @@ public class MonsterMazeEntityFactory {
 		hasDecal.dontLockYAxis = true;
 		entity.addComponent(hasDecal);
 
-		Texture weaponTex = new Texture(Gdx.files.internal("monstermaze/key.png"));		
+		Texture weaponTex = new Texture(Gdx.files.internal("monstermaze/key2.png"));		
 		Sprite sprite = new Sprite(weaponTex);
 		sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
 		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0.4f, 0.1f, 0.2f, 0.3f));

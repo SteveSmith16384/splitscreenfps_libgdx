@@ -50,11 +50,7 @@ public class BasicECS {
 				Class<?> system_clazz = system.getComponentClass();
 				if (system_clazz != null) {
 					if (component_class.equals(system_clazz)) {
-						if (system.entities.contains(e) == false) {
-							system.entities.add(e);
-						} else {
-							throw new RuntimeException("Entity " + e + " already exists in " + system);
-						}
+						system.addEntity(e);
 					}
 				}
 			}
@@ -113,11 +109,12 @@ public class BasicECS {
 					Class<?> clazz = system.getComponentClass();
 					if (clazz != null) {
 						if (e.getComponents().containsKey(clazz)) {
-							if (system.entities.contains(e) == false) {
+							system.addEntity(e);
+							/*if (system.entities.contains(e) == false) {
 								system.entities.add(e);
 							} else {
 								// Entity might already exist since we add components to systems immediately
-							}
+							}*/
 						}
 					}
 				}

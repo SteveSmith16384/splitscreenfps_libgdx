@@ -77,6 +77,9 @@ public class FTLLevel extends AbstractLevel {
 						} else if (token.equals("D2")) { // Door 2
 							AbstractEntity door = EntityFactory.createDoor(game.ecs, col, row, true);
 							game.ecs.addEntity(door);
+						} else if (token.equals("B")) { // Door 2
+							AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, col, row);
+							game.ecs.addEntity(battery);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}

@@ -48,6 +48,15 @@ public abstract class AbstractSystem implements ISystem {
 		return this.getClass().getSimpleName();
 	}
 
+	
+	public void addEntity(AbstractEntity e) {
+		if (entities.contains(e) == false) {
+			entities.add(e);
+		} else {
+			throw new RuntimeException("Entity " + e + " already exists in " + this.name);
+		}
+
+	}
 
 	// Override if required to run against specific entities specified by getComponentClass()
 	public void process() {

@@ -26,14 +26,20 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 
 
 	@Override
-	public void process() {
+	public void addEntity(AbstractEntity e) {
+		super.addEntity(e);
 		Collections.sort(this.entities, this);
+	}
+
+	
+	/*@Override
+	public void process() {
 		Iterator<AbstractEntity> it = this.entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
 			this.processEntity(entity);
 		}
-	}
+	}*/
 
 
 	@Override
