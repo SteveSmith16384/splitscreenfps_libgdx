@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
@@ -13,6 +12,7 @@ import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.ftl.Alien;
 import com.scs.splitscreenfps.game.entities.ftl.FTLEntityFactory;
 import com.scs.splitscreenfps.game.systems.DoorSystem;
 
@@ -94,8 +94,11 @@ public class FTLLevel extends AbstractLevel {
 			game.ecs.addEntity(model);
 		}*/
 
-		AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 4);
+		AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 5);
 		game.ecs.addEntity(fire);
+
+		AbstractEntity alien = new Alien(game.ecs, 1, 3);
+		game.ecs.addEntity(alien);
 	}
 
 

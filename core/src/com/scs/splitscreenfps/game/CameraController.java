@@ -41,9 +41,6 @@ public class CameraController {
 	}
 
 	public void update() {
-		//Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-		//float cam_ang = v2.angle();
-
 		if (this.input.isMouse()) {
 			if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 				Gdx.input.setCursorCatched(true);

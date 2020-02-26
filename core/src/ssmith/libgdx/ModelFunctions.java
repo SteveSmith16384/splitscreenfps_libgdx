@@ -42,13 +42,29 @@ public class ModelFunctions {
 		return instance;
 	}
 
+	
+	public static float getScaleForHeight(ModelInstance model, float height) {
+		BoundingBox bb = new BoundingBox();
+		model.calculateBoundingBox(bb);
+		bb.mul(model.transform);
 
+		return height / bb.getHeight();
+	}
+	
+	
 	public static void getOrigin(ModelInstance model, Vector3 out) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);
 		bb.mul(model.transform);
 		bb.getCenter(out);
 		out.y -= bb.getHeight()/2; // Make origin at the bottom of the model
+	}
+	
+	
+	public static Vector3 getOrigin(ModelInstance model) {
+		Vector3 out = new Vector3();
+		getOrigin(model, out);
+		return out;
 	}
 
 }

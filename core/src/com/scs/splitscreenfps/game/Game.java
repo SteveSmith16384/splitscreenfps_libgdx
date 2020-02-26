@@ -63,9 +63,6 @@ public class Game implements IModule {
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
-	//public final Color backgroundColor = new Color(100 / 255f, 149 / 255f, 237 / 255f, 1f);
-	//public Spatial s;
-	
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
@@ -116,14 +113,7 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			this.currentLevel.setupAvatars(this.players[i], i);
 		}
-		
-		/*s = new Spatial();
-		G3dModelLoader g3dbModelLoader;
-		g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
 
-		s.model = g3dbModelLoader.loadModel(Gdx.files.absolute("space-kit-1.0/Models/consoleScreen.g3db"));
-		s.init();
-		s.setLocation(new Vector3(-30, 0, 0));*/
 	}
 
 
@@ -169,13 +159,11 @@ public class Game implements IModule {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
 			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
 			players[idx].update();
-
-			/*if (Settings.TEST_START_IN_WALL) {
-				if (mapData.map[(int)posData.position.x][(int)posData.position.z].blocked) {
-					Settings.p("Blocked!");
-				}
-			}*/
-
+			
+			// Look down the z-axis
+			this.viewports[idx].camera.direction.x = 0;
+			this.viewports[idx].camera.direction.z = 1;
+			this.viewports[idx].camera.update();
 		}
 	}
 

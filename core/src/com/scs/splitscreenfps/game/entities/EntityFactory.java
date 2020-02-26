@@ -40,18 +40,18 @@ public class EntityFactory {
 	private EntityFactory() {
 	}
 
-	
+
 	public static AbstractEntity create3DText(BasicECS ecs, String text, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Text");
-		
+
 		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent(text, map_x, map_z, 3f);
 		data.text = "hello!";
 		data.pos = new Vector3(2f, 1f, 2f);
 		data.range = 5;
 		entity.addComponent(data);
-		
+
 		return entity;
-		
+
 	}
 
 	public static AbstractEntity createCrate(BasicECS ecs, float map_x, float map_z) {
@@ -132,7 +132,7 @@ public class EntityFactory {
 
 	}
 
-/*
+	/*
 	public static AbstractEntity createModel_New(Game game, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
 
@@ -151,7 +151,7 @@ public class EntityFactory {
 		}
 
 		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
-		
+
 		HasModel hasModel = new HasModel("model", instance);
 		hasModel.scale = scl;
 		hasModel.always_draw = true;
@@ -160,7 +160,7 @@ public class EntityFactory {
 		return entity;
 
 	}
-*/
+	 */
 
 	public static AbstractEntity createModel(Game game, String name, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, name);
@@ -180,7 +180,7 @@ public class EntityFactory {
 		}
 
 		ModelInstance instance = new ModelInstance(model);//, new Vector3(posX, posY, posZ));
-		
+
 		for(int m=0;m<instance.materials.size;m++) {
 			Material mat = instance.materials.get(m);
 			mat.remove(BlendingAttribute.Type);
@@ -211,8 +211,7 @@ public class EntityFactory {
 		TextureRegion[][] trs = GraphicsHelper.createSheet("ftl/fire.png", 8, 4);
 
 		HasDecal hasDecal = new HasDecal();
-		//Texture tex = new Texture(Gdx.files.internal("sf/door1.jpg"));
-		TextureRegion tr = trs[0][0];//new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
+		TextureRegion tr = trs[0][0];
 		hasDecal.decal = Decal.newDecal(tr, true);
 		hasDecal.decal.setScale(1f / tr.getRegionWidth());
 		hasDecal.decal.setPosition(posData.position);
@@ -220,12 +219,15 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		entity.addComponent(hasDecal);	
 
-		/*
-		HasDecalCycle cycle = new HasDecalCycle(.8f, 2);
-		cycle.decals[0] = hasDecal.decal;
-		cycle.decals[1] = GraphicsHelper.DecalHelper("monstermaze/trex2.png", 1f);
-		this.addComponent(cycle);
-*/
+		HasDecalCycle cycle = new HasDecalCycle(.1f, 8*4);
+		int idx = 0;
+		for (int y=0 ; y<trs[0].length ; y++) {
+			for (int x=0 ; x<trs.length ; x++) {
+				cycle.decals[idx] = GraphicsHelper.DecalHelper(trs[x][y], 1);
+				idx++;
+			}
+		}
+		entity.addComponent(cycle);
 		CollidesComponent cc = new CollidesComponent(true, .5f);
 		entity.addComponent(cc);
 

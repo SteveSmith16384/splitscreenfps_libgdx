@@ -1,7 +1,5 @@
 package com.scs.splitscreenfps.game.entities.ftl;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
@@ -14,41 +12,39 @@ import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.farm.WanderingAnimalComponent;
-import com.scs.splitscreenfps.game.entities.farm.Cow;
 
 import ssmith.libgdx.ModelFunctions;
 
 public class Alien extends AbstractEntity {
 
-	public Alien(Game game, BasicECS ecs, int x, int y) {
+	public Alien(BasicECS ecs, int x, int y) {
 		super(ecs, Alien.class.getSimpleName());
 
 		PositionComponent pos = new PositionComponent();
 		pos.position = new Vector3(x+0.5f, 0, y+0.5f);
 		this.addComponent(pos);
 
-		loadModel(game);
+		loadModel();
 
-		this.addComponent(new MovementData(.85f));
-
-		this.addComponent(new CollidesComponent(false, .3f, .3f, .3f));
-
+		float DIAM = .4f;
+		this.addComponent(new MovementData(DIAM));
+		this.addComponent(new CollidesComponent(false, DIAM+.2f));//.5f, .5f, .5f));
 	}
 
 
-	private void loadModel(Game game) {
+	private void loadModel() {
 		ModelInstance instance = ModelFunctions.loadModel("ftl/models/alien.g3db", false);
-
-		HasModel hasModel = new HasModel("Alien", instance, -0.3f, -90, 0.0016f);
+		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+		instance.transform.scl(scale);
+		
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		HasModel hasModel = new HasModel("Alien", instance, offset, -90, scale);
 		this.addComponent(hasModel);
 
 		AnimationController animation = new AnimationController(instance);
-		AnimatedComponent anim = new AnimatedComponent(animation, "Armature|WalkSlow", "Armature|Idle");
+		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
 		anim.animationController = animation;
 		this.addComponent(anim);
-		
-		WanderingAnimalComponent wac = new WanderingAnimalComponent(5f);
-		this.addComponent(wac);
 	}
 	
 }
