@@ -12,6 +12,7 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.ftl.RandomFloor;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
@@ -89,6 +90,9 @@ public class MonsterMazeLevel extends AbstractLevel {
 				if (game.mapData.map[x][z].blocked) {
 					Wall wall = new Wall(game.ecs, "monstermaze/wall.png", x, 0, z, false);
 					game.ecs.addEntity(wall);
+				} else {
+					RandomFloor rndfloor = new RandomFloor(game.ecs, x, z);
+					game.ecs.addEntity(rndfloor);
 				}
 			}
 		}

@@ -217,9 +217,9 @@ public class EntityFactory {
 		hasDecal.decal.setPosition(posData.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
-		entity.addComponent(hasDecal);	
+		entity.addComponent(hasDecal);
 
-		HasDecalCycle cycle = new HasDecalCycle(.1f, 8*4);
+		HasDecalCycle cycle = new HasDecalCycle(.05f, 8*4);
 		int idx = 0;
 		for (int y=0 ; y<trs[0].length ; y++) {
 			for (int x=0 ; x<trs.length ; x++) {

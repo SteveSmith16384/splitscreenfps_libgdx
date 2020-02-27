@@ -94,11 +94,14 @@ public class FTLLevel extends AbstractLevel {
 			game.ecs.addEntity(model);
 		}*/
 
-		AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 5);
-		game.ecs.addEntity(fire);
+		//AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 5);
+		//game.ecs.addEntity(fire);
 
-		AbstractEntity alien = new Alien(game.ecs, 1, 3);
-		game.ecs.addEntity(alien);
+		AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, 1, 5);
+		game.ecs.addEntity(battery);
+
+		//AbstractEntity alien = new Alien(game.ecs, 1, 3);
+		//game.ecs.addEntity(alien);
 	}
 
 

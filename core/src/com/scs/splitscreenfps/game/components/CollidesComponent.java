@@ -13,7 +13,7 @@ import ssmith.libgdx.MyBoundingBox;
 public class CollidesComponent {
 
 	public MyBoundingBox bb;
-	public boolean bb_dirty = true;
+	public boolean bb_dirty = true; // Set to true to recalc BB
 	public boolean blocksMovement = true;
 	public List<CollisionResult> results = new ArrayList<CollisionResult>(); // Results since last movement
 

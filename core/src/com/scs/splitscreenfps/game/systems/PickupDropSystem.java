@@ -51,7 +51,10 @@ public class PickupDropSystem extends AbstractSystem {
 						key.hideComponent(HasModel.class);
 						key.hideComponent(CombinesWithLitterComponent.class);
 						key.restoreComponent(HasGuiSpriteComponent.class);
-
+						
+						PositionComponent keyPos = (PositionComponent)key.getComponent(PositionComponent.class);
+						cbc.original_y = keyPos.position.y;
+								
 						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)cr.collidedWith.getComponent(HasGuiSpriteComponent.class);
 						hgsc.onlyViewId = cc.viewId;
 						cc.carrying = cr.collidedWith;
@@ -73,8 +76,14 @@ public class PickupDropSystem extends AbstractSystem {
 					// Set position
 					PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 					PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
-					pos.originalPosition.set(carrierPos.originalPosition);
+					pos.originalPosition.set(carrierPos.position);
+					pos.originalPosition.y = cbc.original_y;
+					pos.position.set(carrierPos.position);
+					pos.position.y = cbc.original_y;
 
+					CollidesComponent coll = (CollidesComponent)cc.carrying.getComponent(CollidesComponent.class);
+					coll.bb_dirty = true;
+							
 					cc.carrying = null;
 				}
 			}
