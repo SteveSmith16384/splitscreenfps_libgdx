@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.systems;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -36,6 +38,9 @@ public class PickupDropSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		CanCarryComponent cc = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
+		if (cc.lastPickupDropTime + 1000 > System.currentTimeMillis()) {
+			return;
+		}
 		if (cc.carrying == null) {
 			CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
 			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0, false);
@@ -46,6 +51,7 @@ public class PickupDropSystem extends AbstractSystem {
 					if (cc.wantsToCarry || cbc.auto_pickedup) {
 						//cc.wantsToCarry = false;
 						Settings.p(cr.collidedWith + " picked up");
+						cc.lastPickupDropTime = System.currentTimeMillis();
 						key.hideComponent(CollidesComponent.class);
 						key.hideComponent(HasDecal.class);
 						key.hideComponent(HasModel.class);
@@ -67,6 +73,7 @@ public class PickupDropSystem extends AbstractSystem {
 				// Drop!
 				CanBeCarried cbc = (CanBeCarried)cc.carrying.getComponent(CanBeCarried.class);
 				if (cbc != null) {
+					cc.lastPickupDropTime = System.currentTimeMillis();
 					Settings.p(cc.carrying + " dropped");
 					cc.carrying.restoreComponent(CollidesComponent.class);
 					cc.carrying.restoreComponent(HasDecal.class);
@@ -76,9 +83,20 @@ public class PickupDropSystem extends AbstractSystem {
 					// Set position
 					PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 					PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
-					pos.originalPosition.set(carrierPos.position);
+					
+					Vector3 dropPosition = new Vector3(carrierPos.position);
+					if (cc.viewId >= 0) {
+						// Drop in front of player
+						Camera cam = game.viewports[cc.viewId].camera;
+						Vector3 dir = new Vector3(cam.direction);
+						dir.y = 0;
+						dir.nor().scl(.2f);
+						dropPosition.add(dir);
+					}
+					
+					pos.originalPosition.set(dropPosition);
 					pos.originalPosition.y = cbc.original_y;
-					pos.position.set(carrierPos.position);
+					pos.position.set(dropPosition);
 					pos.position.y = cbc.original_y;
 
 					CollidesComponent coll = (CollidesComponent)cc.carrying.getComponent(CollidesComponent.class);

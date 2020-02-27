@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -41,6 +42,8 @@ public class FTLEntityFactory {
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
         hasDecal.decal.setScale(1f / tr.getRegionWidth() / 2);
+        //posData.position.y = -0.3f;
+		hasDecal.decal.transformationOffset = new Vector2(0, -.3f);
         hasDecal.decal.setPosition(posData.position);
         hasDecal.faceCamera = true;
         hasDecal.dontLockYAxis = true;
