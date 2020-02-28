@@ -108,28 +108,26 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 
 	private void checkMovementInput() {
-		float delta = 1f;//Gdx.graphics.getDeltaTime(); todo - remove
-
 		MovementData movementData = (MovementData)this.getComponent(MovementData.class);
 		movementData.offset.setZero();
 
 		if (this.inputMethod.isForwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * MOVE_SPEED));
+			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED));
 		} else if (this.inputMethod.isBackwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * -MOVE_SPEED));
+			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED));
 		}
 		if (this.inputMethod.isStrafeLeftPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * -MOVE_SPEED));
+			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED));
 		} else if (this.inputMethod.isStrafeRightPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * MOVE_SPEED));
+			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED));
 		}
 
 		if (this.inputMethod.isPickupDropPressed()) {

@@ -40,6 +40,7 @@ import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
 public class Game implements IModule {
 
@@ -153,6 +154,7 @@ public class Game implements IModule {
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new PickupDropSystem(ecs, this));
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
+		ecs.addSystem(new VehicleMovementSystem(ecs));
 	}
 
 
@@ -187,6 +189,7 @@ public class Game implements IModule {
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MoveAStarSystem.class).process();
+		this.ecs.processSystem(VehicleMovementSystem.class);
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();

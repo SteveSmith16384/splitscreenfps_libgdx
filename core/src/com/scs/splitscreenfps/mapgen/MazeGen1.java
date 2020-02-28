@@ -102,7 +102,7 @@ public class MazeGen1 {
 			int mx = 1+random.nextInt(width-2);
 			int my = 1+random.nextInt(height-2);
 			if (map[mx][my] == WALL) {
-				// Todo - check adjacent squaers are empty to avoid lone squares (which cause problems when selecting a dest for A*)
+				// Todo - check adjacent squares are empty to avoid lone squares (which cause problems when selecting a dest for A*)
 				map[mx][my] = PASSAGE;
 				numWallsToRemove--;
 			}

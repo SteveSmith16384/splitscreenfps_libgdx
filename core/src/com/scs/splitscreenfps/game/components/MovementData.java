@@ -8,7 +8,6 @@ public class MovementData {
 	public Vector3 offset = new Vector3();
 	public float diameter; // For collisions against walls
 	public long frozenUntil = 0;
-	//public boolean blocked_on_last_move; // todo - remove and use events
 	public boolean must_move_x_and_z = false;  // Movement is only successful if they can move on both axis
 	
 	public MovementData(float _diameter) {

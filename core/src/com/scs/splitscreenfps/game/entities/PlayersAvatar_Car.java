@@ -20,7 +20,7 @@ import ssmith.libgdx.ModelFunctions;
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 	private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
-	private static final float ROT_SPEED_Y = 10f;
+	private static final float ROT_SPEED_Y = 7f;
 	private static final float ACC = 4;
 
 	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
@@ -36,7 +36,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 		this.addCar(playerIdx);
 
-		this.addComponent(new VehicleComponent());
+		this.addComponent(new VehicleComponent(playerIdx));
 		this.addComponent(new CollidesComponent(false, .9f));
 
 		camera = _viewportData.camera;

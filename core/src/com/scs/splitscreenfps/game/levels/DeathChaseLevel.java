@@ -10,7 +10,7 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 import com.scs.splitscreenfps.game.entities.deathchase.DeathchaseEntityFactory;
-import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
+import com.scs.splitscreenfps.game.systems.deathchase.VehicleCrashSystem;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
@@ -54,9 +54,9 @@ public class DeathChaseLevel extends AbstractLevel {
 				if (z == 0 || x == 0 || z == map_height-1 || x == map_width-1) {
 					game.mapData.map[x][z].blocked = true;
 				} else {
-					if (NumberFunctions.rnd(1,  4) == 1) {
+					if (NumberFunctions.rnd(1,  10) == 1) {
 						AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
-						game.ecs.addEntity(tree);
+						game.ecs.addEntity(tree); // todo - check it's not on top of a player
 						game.mapData.map[x][z].blocked = true;
 					} else {
 						game.mapData.map[x][z].blocked = false;
@@ -70,22 +70,21 @@ public class DeathChaseLevel extends AbstractLevel {
 		}
 
 		if (Settings.DARKMODE == false) {
-			//game.ecs.addEntity(new Floor(game.ecs, "deathchase/grass.jpg", 1, 1, map_width-1, map_height-1, true));
-			game.ecs.addEntity(new Floor(game.ecs, "sf/crate.png", 1, 1, map_width-1, map_height-1, true));
+			game.ecs.addEntity(new Floor(game.ecs, "deathchase/grass.jpg", 1, 1, map_width-1, map_height-1, true));
+			//game.ecs.addEntity(new Floor(game.ecs, "sf/crate.png", 1, 1, map_width-1, map_height-1, true));
 		}
 	}
 
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new VehicleMovementSystem(ecs));
-
+		ecs.addSystem(new VehicleCrashSystem(ecs, game));
 	}
 
 
 	@Override
 	public void update() {
-		game.ecs.processSystem(VehicleMovementSystem.class);
+		game.ecs.processSystem(VehicleCrashSystem.class);
 	}
 
 }

@@ -28,7 +28,7 @@ public class LitterEntityFactory {
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
-		Texture tex = new Texture(Gdx.files.internal("heart.png")); // todo
+		Texture tex = new Texture(Gdx.files.internal("heart.png"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
@@ -52,7 +52,7 @@ public class LitterEntityFactory {
 		sprite.setScale(10);
 		//sprite.setPosition((Gdx.graphics.getWidth()-sprite.getWidth())/2, 0);		
 		sprite.setPosition(100, 100);		
-		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle()); // todo
+		HasGuiSpriteComponent hgsc = new HasGuiSpriteComponent(sprite, HasGuiSpriteComponent.Z_CARRIED, new Rectangle(0, 0, 1, 1));
         entity.addComponent(hgsc);
         entity.hideComponent(HasGuiSpriteComponent.class); // Don't show it until picked up!
 		
@@ -68,7 +68,7 @@ public class LitterEntityFactory {
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
-		Texture tex = new Texture(Gdx.files.internal("monstermaze/exit1.png")); // todo
+		Texture tex = new Texture(Gdx.files.internal("monstermaze/exit1.png"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
         hasDecal.decal.setScale(1f / tr.getRegionWidth());

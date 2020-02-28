@@ -13,7 +13,7 @@ import com.scs.splitscreenfps.game.components.VehicleComponent;
 
 public class VehicleMovementSystem extends AbstractSystem {
 
-	private static final float MAX_SPEED = 5;
+	public static final float MAX_SPEED = 5;
 
 	private Vector3 tmpVector = new Vector3();
 
@@ -25,7 +25,9 @@ public class VehicleMovementSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		VehicleComponent veh = (VehicleComponent)entity.getComponent(VehicleComponent.class);
-
+		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
+		movementData.offset.setZero();
+		
 		// todo - wrap angle
 		//while (angle > )
 
@@ -45,11 +47,7 @@ public class VehicleMovementSystem extends AbstractSystem {
 		}
 		if (veh.current_speed != 0) {
 			tmpVector.set((float)Math.sin(veh.angle), 0, (float)Math.cos(veh.angle));
-
-			MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-			movementData.offset.setZero();
-
-			movementData.offset.add(tmpVector.nor().scl(veh.current_speed));
+			movementData.offset.set(tmpVector.nor().scl(veh.current_speed));
 		}
 	}
 

@@ -32,7 +32,7 @@ public class FarmEntityFactory {
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
-		Texture tex = new Texture(Gdx.files.internal("heart.png")); // todo
+		Texture tex = new Texture(Gdx.files.internal("heart.png"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
         hasDecal.decal = Decal.newDecal(tr, true);
         hasDecal.decal.setScale(1f / tr.getRegionWidth());
