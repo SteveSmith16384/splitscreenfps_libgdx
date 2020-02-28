@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
 import com.scs.splitscreenfps.game.Game;
@@ -46,6 +47,13 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+			Gdx.input.setCursorCatched(true);
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			Gdx.input.setCursorCatched(false);
+		}
+
 		if (next_module != null) {
 			this.current_module.dispose();
 			this.current_module = this.next_module;

@@ -12,7 +12,7 @@ public interface IInputMethod {
 
 	boolean isStrafeRightPressed();
 	
-	boolean isPickupDropPressed();
+	boolean isPickupDropPressed(); // todo - rename to "button X"
 	
 	float getLookLeft();
 

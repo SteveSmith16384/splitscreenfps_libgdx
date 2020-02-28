@@ -8,9 +8,12 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
+import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.ftl.RandomFloor;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
@@ -32,6 +35,16 @@ public class MonsterMazeLevel extends AbstractLevel {
 	}
 
 
+	@Override
+	public void loadAvatars() {
+		for (int i=0 ; i<game.players.length ; i++) {
+			game.players[i].addComponent(new CanUseMonsterMazeExitComponent(i));
+			game.players[i].addComponent(new CanBeHarmedComponent(i));
+			game.ecs.addEntity(game.players[i]);
+		}	
+	}
+	
+	
 	@Override
 	public void load() {
 		loadMapFromMazegen(game);

@@ -7,7 +7,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.EvtCollision;
+import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.DoorComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -45,9 +45,9 @@ public class DoorSystem extends AbstractSystem {
 					cc.bb_dirty = true;
 				}
 			}
-			List<AbstractEvent> it = ecs.getEvents(EvtCollision.class);
+			List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
 			for (AbstractEvent e : it) {
-				EvtCollision evt = (EvtCollision)e;
+				EventCollision evt = (EventCollision)e;
 				if (evt.hitEntity == entity) {
 					dc.is_opening = true;
 				}

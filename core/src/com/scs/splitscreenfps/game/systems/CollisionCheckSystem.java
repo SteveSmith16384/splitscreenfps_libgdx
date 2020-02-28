@@ -5,7 +5,7 @@ import java.util.Iterator;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.EvtCollision;
+import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.data.CollisionResult;
@@ -57,7 +57,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 
 						if (raise_event) {
-							ecs.events.add(new EvtCollision(mover, e));
+							ecs.events.add(new EventCollision(mover, e));
 						}
 						/*if (cc.blocksMovement) {
 							Settings.p("Blocked by " + e);

@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
-public class CameraController {
+public class PersonCameraController {
 
 	private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	
@@ -28,7 +28,7 @@ public class CameraController {
 
 	private IInputMethod input;
 
-	public CameraController(Camera cam, IInputMethod _input) {
+	public PersonCameraController(Camera cam, IInputMethod _input) {
 		camera = cam;
 		input = _input;
 
@@ -42,12 +42,12 @@ public class CameraController {
 
 	public void update() {
 		if (this.input.isMouse()) {
-			if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+			/*if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 				Gdx.input.setCursorCatched(true);
 			}
 			if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 				Gdx.input.setCursorCatched(false);
-			}
+			}*/
 
 			if (Gdx.input.isCursorCatched()) {
 				float rx = Gdx.input.getDeltaX();

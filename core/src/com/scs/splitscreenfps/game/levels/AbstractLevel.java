@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -20,6 +21,15 @@ public abstract class AbstractLevel {
 	public AbstractLevel(Game _game) {
 		game = _game;
 	}
+	
+	
+	public void loadAvatars() {
+		for (int i=0 ; i<game.players.length ; i++) {
+			game.players[i] = new PlayersAvatar_Person(game, i, game.viewports[i], game.inputs.get(i));
+			game.ecs.addEntity(game.players[i]);
+		}	
+	}
+	
 	
 	public void setBackgroundColour() {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1);

@@ -15,11 +15,13 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar;
+import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
 import com.scs.splitscreenfps.game.levels.CarParkLevel;
+import com.scs.splitscreenfps.game.levels.DeathChaseLevel;
 import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FarmLevel;
@@ -47,8 +49,8 @@ public class Game implements IModule {
 	public BitmapFont font_small, font_med, font_large;
 	public final ViewportData[] viewports;
 
-	public PlayersAvatar[] players;
-	private List<IInputMethod> inputs;
+	public AbstractPlayersAvatar[] players;
+	public List<IInputMethod> inputs;
 	public MapData mapData;
 	public BasicECS ecs;
 	private AbstractLevel currentLevel;
@@ -74,12 +76,12 @@ public class Game implements IModule {
 		this.createECS();
 
 		viewports = new ViewportData[4];
-		players = new PlayersAvatar[inputs.size()];
+		players = new AbstractPlayersAvatar[inputs.size()];
 		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
 			IInputMethod input = inputs.get(i);
-			players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
-			ecs.addEntity(players[i]);
+			//players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
+			//ecs.addEntity(players[i]);
 		}
 
 		switch (Settings.CURRENT_MODE) {
@@ -101,10 +103,14 @@ public class Game implements IModule {
 		case Settings.MODE_CAR_PARK:
 			currentLevel = new CarParkLevel(this);
 			break;
+		case Settings.MODE_DEATHCHASE:
+			currentLevel = new DeathChaseLevel(this);
+			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
 		}
 
+		currentLevel.loadAvatars();
 		loadLevel();
 		this.loadAssetsForRescale(); // Need this to load font
 

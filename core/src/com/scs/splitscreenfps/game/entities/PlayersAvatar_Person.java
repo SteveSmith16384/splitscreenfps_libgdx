@@ -1,40 +1,33 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.Settings;
-import com.scs.splitscreenfps.game.CameraController;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.PersonCameraController;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModel;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 
-public class PlayersAvatar extends AbstractEntity {
+public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 	private static final float moveSpeed = 1.5f;
 
-	private Game game;
-	public Camera camera;
-	public CameraController cameraController;
+	public PersonCameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
+	private Vector2 tmpVec2 = new Vector2();
 
-	private IInputMethod inputMethod;
-
-	public PlayersAvatar(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
-		super(_game.ecs, PlayersAvatar.class.getSimpleName() + "_" + playerIdx);
+	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+		super(_game.ecs, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		game = _game;
 		inputMethod = _inputMethod;
@@ -48,12 +41,9 @@ public class PlayersAvatar extends AbstractEntity {
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 
-		this.addComponent(new CanBeHarmedComponent(playerIdx));
-		this.addComponent(new CanUseMonsterMazeExitComponent(playerIdx));
-
 		camera = _viewportData.camera;
 
-		cameraController = new CameraController(camera, inputMethod);
+		cameraController = new PersonCameraController(camera, inputMethod);
 	}
 
 
@@ -110,14 +100,8 @@ public class PlayersAvatar extends AbstractEntity {
 		HasModel hasModel = (HasModel)this.getComponent(HasModel.class);
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
-			Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-			pos.angle = -v2.angle();
-
-			/*if (Settings.TEST_START_IN_WALL) {
-				if (game.mapData.map[(int)pos.position.x][(int)pos.position.z].blocked) {
-					Settings.p("Blocked!");
-				}
-			}*/
+			tmpVec2.set(camera.direction.x, camera.direction.z);
+			pos.angle = -tmpVec2.angle();
 		}
 
 	}
