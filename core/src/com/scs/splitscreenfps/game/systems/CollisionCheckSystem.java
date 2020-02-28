@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
@@ -33,10 +34,6 @@ public class CollisionCheckSystem extends AbstractSystem {
 	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
 		CollisionResultsList cr = new CollisionResultsList();
 
-		// Move bounding box to correct position
-		//PositionData posData = (PositionData)mover.getComponent(PositionData.class);
-		//CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
-		//moverCC.bb.setCentre(posData.position.x + offX, posData.position.y, posData.position.z + offZ);
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 
 		this.setBB(mover, moverCC, offX, offZ);
@@ -53,7 +50,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 						cc.bb_dirty = false;
 					}
 					if (moverCC.bb.intersects(cc.bb)) {
-						//Settings.p(mover + " collided with " + e);
+						Settings.p(mover + " collided with " + e);
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 
 						if (raise_event) {

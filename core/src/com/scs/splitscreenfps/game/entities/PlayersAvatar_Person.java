@@ -20,7 +20,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 
 public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
-	private static final float moveSpeed = 1.5f;
+	private static final float MOVE_SPEED = 1.5f;
 
 	public PersonCameraController cameraController;
 	private Vector3 tmpVector = new Vector3();
@@ -116,20 +116,20 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		if (this.inputMethod.isForwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * MOVE_SPEED));
 		} else if (this.inputMethod.isBackwardsPressed()) {
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * -MOVE_SPEED));
 		}
 		if (this.inputMethod.isStrafeLeftPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * -moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * -MOVE_SPEED));
 		} else if (this.inputMethod.isStrafeRightPressed()) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(delta * moveSpeed));
+			movementData.offset.add(tmpVector.nor().scl(delta * MOVE_SPEED));
 		}
 
 		if (this.inputMethod.isPickupDropPressed()) {

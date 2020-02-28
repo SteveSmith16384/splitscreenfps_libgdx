@@ -88,13 +88,13 @@ public class MobAISystem extends AbstractSystem {
 	}
 
 
-	private Vector3 getRandomDirection() {
+	private void getRandomDirection(Vector3 out) {
 		int i = Settings.random.nextInt(4);
 		switch (i) {
-		case 0: return new Vector3(1, 0, 0);
-		case 1: return new Vector3(0, 0, 1);
-		case 2: return new Vector3(-1, 0, 0);
-		default: return new Vector3(0, 0, -1);
+		case 0: out.set(1, 0, 0); break;
+		case 1: out.set(0, 0, 1); break;
+		case 2: out.set(-1, 0, 0); break;
+		default: out.set(0, 0, -1); break;
 		}
 	}
 

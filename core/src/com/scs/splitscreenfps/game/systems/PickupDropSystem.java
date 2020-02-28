@@ -84,19 +84,19 @@ public class PickupDropSystem extends AbstractSystem {
 					PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 					PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
 					
-					Vector3 dropPosition = new Vector3(carrierPos.position);
+					pos.originalPosition.set(carrierPos.position);
 					if (cc.viewId >= 0) {
 						// Drop in front of player
 						Camera cam = game.viewports[cc.viewId].camera;
 						Vector3 dir = new Vector3(cam.direction);
 						dir.y = 0;
 						dir.nor().scl(.2f);
-						dropPosition.add(dir);
+						pos.originalPosition.add(dir);
 					}
 					
-					pos.originalPosition.set(dropPosition);
+					//pos.originalPosition.set(dropPosition);
 					pos.originalPosition.y = cbc.original_y;
-					pos.position.set(dropPosition);
+					pos.position.set(pos.originalPosition);
 					pos.position.y = cbc.original_y;
 
 					CollidesComponent coll = (CollidesComponent)cc.carrying.getComponent(CollidesComponent.class);

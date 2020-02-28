@@ -39,7 +39,7 @@ public class MovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		movementData.blocked_on_last_move = false;
+		//movementData.blocked_on_last_move = false;
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
@@ -55,8 +55,13 @@ public class MovementSystem extends AbstractSystem {
 
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
-				boolean moved = this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
-				movementData.blocked_on_last_move = moved;
+				boolean moved = false;
+				if (movementData.must_move_x_and_z) {
+					this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+				} else {
+					this.tryMoveXOrZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+				}
+				//movementData.blocked_on_last_move = moved;
 			}
 		}
 
@@ -79,16 +84,30 @@ public class MovementSystem extends AbstractSystem {
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
+		boolean result = false;
+		if (world.rectangleFree(position.x+offset.x, position.z+offset.z, diameter, diameter)) {
+			if (this.movementBlockedByEntity(mover, offset.x, offset.z, cc) == false) {
+				position.x += offset.x;
+				position.z += offset.z;
+				result = true;
+			}
+		}
+
+		return result;
+	}
+
+
+	private boolean tryMoveXOrZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter, CollidesComponent cc) {
+		PositionComponent pos = (PositionComponent)mover.getComponent(PositionComponent.class);
+		pos.originalPosition.set(pos.position);
+		Vector3 position = pos.position;
+
 		boolean resultX = false;
 		if (world.rectangleFree(position.x+offset.x, position.z, diameter, diameter)) {
 			if (this.movementBlockedByEntity(mover, offset.x, 0, cc) == false) {
 				position.x += offset.x;
 				resultX = true;
-			} else {
-				int dfgdf = 456;
 			}
-		} else {
-			int dfgdf = 456;
 		}
 
 		boolean resultZ = false;
@@ -96,11 +115,7 @@ public class MovementSystem extends AbstractSystem {
 			if (this.movementBlockedByEntity(mover, 0, offset.z, cc) == false) {
 				position.z += offset.z;
 				resultZ = true;
-			} else {
-				int dfgdf = 456;
 			}
-		} else {
-			int dfgdf = 456;
 		}
 		return resultX || resultZ;
 	}

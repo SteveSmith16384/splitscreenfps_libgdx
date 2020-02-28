@@ -31,7 +31,7 @@ public class ModelFunctions {
 			throw new RuntimeException("Unhandled model format: " + filename);
 		}
 
-		ModelInstance instance = new ModelInstance(model);//, new Vector3(posX, posY, posZ));
+		ModelInstance instance = new ModelInstance(model);
 
 		if (removeMaterials) {
 			for (Material mat : instance.materials) {

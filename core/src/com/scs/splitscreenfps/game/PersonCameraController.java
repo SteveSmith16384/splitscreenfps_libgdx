@@ -12,32 +12,25 @@ public class PersonCameraController {
 	private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	
 	private Camera camera;
-	private Vector3 tmp;
+	private Vector3 tmp = new Vector3();
 
 	private float rotSpeedX = 220f;
 	private float rotSpeedY = 140f;
 
 	private float cursorSpeed = .15f;
 
-	float[] sensitivity = new float[]{
+	/*float[] sensitivity = new float[]{
 			0.5f, 1f, 1.75f
 	};
 	float[] sensitivity2 = new float[]{
 			0.25f, 1f, 1.75f
-	};
+	};*/
 
 	private IInputMethod input;
 
 	public PersonCameraController(Camera cam, IInputMethod _input) {
 		camera = cam;
 		input = _input;
-
-		tmp = new Vector3();
-
-		int sens = 1;
-		rotSpeedX *= sensitivity[sens];
-		rotSpeedY *= sensitivity[sens];
-		cursorSpeed *= sensitivity2[sens];
 	}
 
 	public void update() {

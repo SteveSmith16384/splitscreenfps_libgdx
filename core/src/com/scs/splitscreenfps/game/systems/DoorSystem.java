@@ -50,6 +50,7 @@ public class DoorSystem extends AbstractSystem {
 				EventCollision evt = (EventCollision)e;
 				if (evt.hitEntity == entity) {
 					dc.is_opening = true;
+					break;
 				}
 			}
 		}

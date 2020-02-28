@@ -132,35 +132,6 @@ public class EntityFactory {
 
 	}
 
-	/*
-	public static AbstractEntity createModel_New(Game game, String filename, float posX, float posY, float posZ, float scl) {
-		AbstractEntity entity = new AbstractEntity(game.ecs, "todo");
-
-		PositionComponent posData = new PositionComponent(posX, posY, posZ);
-		entity.addComponent(posData);
-
-		Model model = null;
-		if (filename.endsWith(".obj")) {
-			ModelLoader loader = new ObjLoader();
-			model = loader.loadModel(Gdx.files.internal(filename));
-		} else {
-			G3dModelLoader g3dbModelLoader;
-			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
-
-			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
-		}
-
-		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
-
-		HasModel hasModel = new HasModel("model", instance);
-		hasModel.scale = scl;
-		hasModel.always_draw = true;
-		entity.addComponent(hasModel);
-
-		return entity;
-
-	}
-	 */
 
 	public static AbstractEntity createModel(Game game, String name, String filename, float posX, float posY, float posZ, float scl) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, name);
@@ -179,7 +150,7 @@ public class EntityFactory {
 			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
 		}
 
-		ModelInstance instance = new ModelInstance(model);//, new Vector3(posX, posY, posZ));
+		ModelInstance instance = new ModelInstance(model);
 
 		for(int m=0;m<instance.materials.size;m++) {
 			Material mat = instance.materials.get(m);

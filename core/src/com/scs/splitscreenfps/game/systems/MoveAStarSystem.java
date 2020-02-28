@@ -18,6 +18,7 @@ import ssmith.libgdx.GridPoint2Static;
 public class MoveAStarSystem extends AbstractSystem {
 
 	private Game game;
+	private Vector2 tmpVec2 = new Vector2();
 
 	public MoveAStarSystem(BasicECS ecs, Game _game) {
 		super(ecs, MoveAStarComponent.class);
@@ -41,8 +42,8 @@ public class MoveAStarSystem extends AbstractSystem {
 				mac.route.remove(0);
 			} else {
 				if (mac.rotate) {
-					Vector2 v = new Vector2(destpos.x+.5f-posdata.position.x, destpos.y+.5f-posdata.position.z);
-					float angle_required = v.angle();
+					tmpVec2.set(destpos.x+.5f-posdata.position.x, destpos.y+.5f-posdata.position.z);
+					float angle_required = tmpVec2.angle();
 					if (Math.abs(angle_required - posdata.angle) > 5) {
 						float diff = angle_required - posdata.angle;
 						posdata.angle += (diff/250);
@@ -50,7 +51,7 @@ public class MoveAStarSystem extends AbstractSystem {
 					//Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
 				}
 				MovementData moveData = (MovementData)entity.getComponent(MovementData.class);
-				moveData.offset = new Vector3(destpos.x+.5f-posdata.position.x, 0, destpos.y+.5f-posdata.position.z);
+				moveData.offset.set(destpos.x+.5f-posdata.position.x, 0, destpos.y+.5f-posdata.position.z);
 				moveData.offset.nor().scl(mac.speed);
 			}
 		}

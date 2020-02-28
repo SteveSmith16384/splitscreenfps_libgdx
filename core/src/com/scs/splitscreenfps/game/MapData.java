@@ -12,6 +12,8 @@ public class MapData implements IAStarMapInterface {
 	private static final MapSquare BLOCKED_WALL = new MapSquare(true);
 
 	public MapSquare map[][];
+	private Vector3 tmpCurrentPos = new Vector3();
+	private Vector3 tmpDir = new Vector3();
 
 	public MapData(int w, int h) {
 		map = new MapSquare[w][h];
@@ -102,17 +104,15 @@ public class MapData implements IAStarMapInterface {
 
 
 	public boolean canSee(Vector3 startPos, Vector3 endPos) {
-		Vector3 currentPos = new Vector3();
-		currentPos.set(startPos);
+		tmpCurrentPos.set(startPos);
 
-		Vector3 dir = new Vector3();
-		dir.set(endPos).sub(startPos);
-		dir.y = 0;
-		dir.nor();
+		tmpDir.set(endPos).sub(startPos);
+		tmpDir.y = 0;
+		tmpDir.nor();
 
-		while(currentPos.dst2(endPos) > (0.5f * 0.5f)){
-			currentPos.mulAdd(dir, 0.25f);
-			if (getMapSquareAt(currentPos.x, currentPos.z).blocked) {
+		while(tmpCurrentPos.dst2(endPos) > (0.5f * 0.5f)){
+			tmpCurrentPos.mulAdd(tmpDir, 0.25f);
+			if (getMapSquareAt(tmpCurrentPos.x, tmpCurrentPos.z).blocked) {
 				return false;
 			}
 		}
