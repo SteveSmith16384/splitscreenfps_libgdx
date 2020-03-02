@@ -19,9 +19,8 @@ import ssmith.libgdx.ModelFunctions;
 
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
-	//private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
-	private static final float ROT_SPEED_Y = 7f;
-	private static final float ACC = 4;
+	private static final float ROT_SPEED_Y = 4f;
+	private static final float ACC = 2;
 
 	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, PlayersAvatar_Car.class.getSimpleName() + "_" + playerIdx);
@@ -37,7 +36,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		this.addCar(playerIdx);
 
 		this.addComponent(new VehicleComponent(playerIdx));
-		this.addComponent(new CollidesComponent(false, .9f));
+		this.addComponent(new CollidesComponent(true, .5f));
 
 		camera = _viewportData.camera;
 	}
@@ -86,7 +85,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 			veh.current_speed -= dt * ACC * 2;
 			//Settings.p("Speed=" + veh.current_speed);
 		} else {
-			veh.current_speed -= dt * 2;
+			//todo - tend towards 0  = veh.current_speed -= dt * 1;
 		}
 
 		// Update camera pos and dir
@@ -99,9 +98,8 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		// Rotate model to direction of camera
 		HasModel hasModel = (HasModel)this.getComponent(HasModel.class);
 		if (hasModel != null) {
-			//PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
-			//Vector2 v2 = new Vector2(camera.direction.x, camera.direction.z);
-			posData.angle = -veh.angle;//v2.angle();
+			//Settings.p("Angle=" + veh.angle);
+			posData.angle = (float)(Math.toDegrees((double)veh.angle));//v2.angle();
 		}
 
 	}

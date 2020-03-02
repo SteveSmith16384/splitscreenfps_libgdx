@@ -38,6 +38,8 @@ public class VehicleCrashSystem implements ISystem {
 			VehicleComponent veh = (VehicleComponent)evt.movingEntity.getComponent(VehicleComponent.class);
 			if (veh != null) {
 				if (veh.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
+					// todo - if two cars, the fastest survives
+					veh.current_speed = 0;
 					this.crash(evt.movingEntity, veh.playerId);
 				}
 			}
@@ -51,7 +53,7 @@ public class VehicleCrashSystem implements ISystem {
 		posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
 
 		if (id >= 0) {
-			TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), id, 2);
+			TextEntity te = new TextEntity(ecs, "YOU HAVE CRASHED!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), id, 2);
 			ecs.addEntity(te);
 
 			AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);

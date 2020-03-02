@@ -43,7 +43,7 @@ public class DeathChaseLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		this.map_width = 100;
+		this.map_width = 50;
 		this.map_height = map_width;
 
 		game.mapData = new MapData(map_width, map_height);
@@ -56,7 +56,7 @@ public class DeathChaseLevel extends AbstractLevel {
 				} else {
 					if (NumberFunctions.rnd(1,  10) == 1) {
 						AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
-						game.ecs.addEntity(tree); // todo - check it's not on top of a player
+						//game.ecs.addEntity(tree); // todo - check it's not on top of a player
 					} else {
 						game.mapData.map[x][z].blocked = false;
 					}

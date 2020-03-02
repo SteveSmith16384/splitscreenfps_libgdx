@@ -15,14 +15,14 @@ public class Settings {
 	public static final int MODE_DEATHCHASE = 7;
 	public static final int MODE_TOWER_DEFENCE = 8;
 	
-	public static final int CURRENT_MODE = MODE_MM;
+	public static final int CURRENT_MODE = MODE_DEATHCHASE;
 	public static final String VERSION = "1.01";
 	public static final boolean RELEASE_MODE = false;
 	
 	// Hacks
 	public static final boolean DARKMODE = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
-	public static final boolean START_4_PLAYERS = !RELEASE_MODE && false;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final boolean START_4_PLAYERS = !RELEASE_MODE && true;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && false;
 	public static final boolean TEST_ALT_TREX = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
@@ -78,6 +78,9 @@ public class Settings {
 			break;
 		case MODE_DEATHCHASE:
 			TITLE = "3D Death Chase";
+			break;
+		case MODE_TOWER_DEFENCE:
+			TITLE = "Tower Defence";
 			break;
 		default:
 			throw new RuntimeException("Unknown Mode: " + CURRENT_MODE);

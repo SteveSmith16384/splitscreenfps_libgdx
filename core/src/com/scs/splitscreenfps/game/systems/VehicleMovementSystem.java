@@ -42,9 +42,10 @@ public class VehicleMovementSystem extends AbstractSystem {
 
 		if (veh.current_speed > MAX_SPEED) {
 			veh.current_speed = MAX_SPEED;
-		} else if (veh.current_speed < 0) {
-			veh.current_speed = 0;
+		} else if (veh.current_speed < -MAX_SPEED) {
+			veh.current_speed = -MAX_SPEED;
 		}
+		// todo - set speed to 0 if close enough
 		if (veh.current_speed != 0) {
 			tmpVector.set((float)Math.sin(veh.angle), 0, (float)Math.cos(veh.angle));
 			movementData.offset.set(tmpVector.nor().scl(veh.current_speed));

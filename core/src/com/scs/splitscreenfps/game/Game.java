@@ -26,6 +26,7 @@ import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
+import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
 import com.scs.splitscreenfps.game.systems.CycleThroughModelsSystem;
@@ -105,6 +106,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_DEATHCHASE:
 			currentLevel = new DeathChaseLevel(this);
+			break;
+		case Settings.MODE_TOWER_DEFENCE:
+			currentLevel = new TowerDefenceLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
