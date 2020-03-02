@@ -130,7 +130,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED));
 		}
 
-		if (this.inputMethod.isPickupDropPressed()) {
+		if (this.inputMethod.isCirclePressed()) {
 			CanCarryComponent cc = (CanCarryComponent)this.getComponent(CanCarryComponent.class);
 			if (cc != null) {
 				cc.wantsToCarry = true;

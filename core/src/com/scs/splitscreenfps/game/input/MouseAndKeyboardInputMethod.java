@@ -29,7 +29,7 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isPickupDropPressed() {
+	public boolean isCirclePressed() {
 		return Gdx.input.isKeyPressed(Keys.SPACE);
 	}
 

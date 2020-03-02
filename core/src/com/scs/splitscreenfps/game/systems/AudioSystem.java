@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class AudioSystem {
 
@@ -35,13 +36,14 @@ public class AudioSystem {
 			music.stop();
 			music.dispose();
 		}
-		//if (!music.isPlaying()) {
-		music = Gdx.audio.newMusic(Gdx.files.internal(filename));//orbital_colossus.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal(filename));
 		music.setLooping(true);
-		music.play();
-		music.setVolume(1f);
-		//musicVolume = 0f;
-		//}
+		try {
+			music.play();
+			music.setVolume(1f);
+		} catch (GdxRuntimeException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 

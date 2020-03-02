@@ -73,7 +73,7 @@ public class TagSystem extends AbstractSystem {
 			if (clean_tagable != null) {
 				Settings.p("Player " + clean_tagable.player + " tagged!");
 				
-				BillBoardFPS_Main.audio.play("audio/impactsplat01.mp3.flac");
+				BillBoardFPS_Main.audio.play("tag/sfx/impactsplat01.mp3");
 				
 				// Change "it" player to normal
 				this.swapModel(it_tagable);

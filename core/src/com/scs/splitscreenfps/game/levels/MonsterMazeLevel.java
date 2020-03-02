@@ -37,6 +37,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	@Override
 	public void loadAvatars() {
+		super.loadAvatars();
 		for (int i=0 ; i<game.players.length ; i++) {
 			game.players[i].addComponent(new CanUseMonsterMazeExitComponent(i));
 			game.players[i].addComponent(new CanBeHarmedComponent(i));

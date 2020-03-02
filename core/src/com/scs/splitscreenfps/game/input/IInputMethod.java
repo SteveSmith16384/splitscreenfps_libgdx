@@ -4,7 +4,7 @@ public interface IInputMethod {
 	
 	boolean isMouse(); // Mouse has extra features like capturing the window
 
-	boolean isForwardsPressed();
+	boolean isForwardsPressed(); // todo - change all these to return floats!
 
 	boolean isBackwardsPressed();
 
@@ -12,7 +12,7 @@ public interface IInputMethod {
 
 	boolean isStrafeRightPressed();
 	
-	boolean isPickupDropPressed(); // todo - rename to "button X"
+	boolean isCirclePressed();
 	
 	float getLookLeft();
 

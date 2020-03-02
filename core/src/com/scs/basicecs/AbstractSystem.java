@@ -53,7 +53,7 @@ public abstract class AbstractSystem implements ISystem {
 		if (entities.contains(e) == false) {
 			entities.add(e);
 		} else {
-			throw new RuntimeException("Entity " + e + " already exists in " + this.name);
+			//throw new RuntimeException("Entity " + e + " already exists in " + this.name);
 		}
 
 	}

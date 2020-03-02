@@ -50,15 +50,12 @@ public class CollisionCheckSystem extends AbstractSystem {
 						cc.bb_dirty = false;
 					}
 					if (moverCC.bb.intersects(cc.bb)) {
-						Settings.p(mover + " collided with " + e);
+						//Settings.p(mover + " collided with " + e);
 						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 
 						if (raise_event) {
 							ecs.events.add(new EventCollision(mover, e));
 						}
-						/*if (cc.blocksMovement) {
-							Settings.p("Blocked by " + e);
-						}*/
 					}
 				}
 			}

@@ -76,7 +76,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		}
 
 		// Acc/dec
-		if (this.inputMethod.isPickupDropPressed()) {
+		if (this.inputMethod.isCirclePressed()) {
 			veh.current_speed += dt * ACC;
 			Settings.p("Speed=" + veh.current_speed);
 		} else {

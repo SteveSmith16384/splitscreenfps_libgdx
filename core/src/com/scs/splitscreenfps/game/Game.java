@@ -79,7 +79,7 @@ public class Game implements IModule {
 		players = new AbstractPlayersAvatar[inputs.size()];
 		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
-			IInputMethod input = inputs.get(i);
+			//IInputMethod input = inputs.get(i);
 			//players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
 			//ecs.addEntity(players[i]);
 		}

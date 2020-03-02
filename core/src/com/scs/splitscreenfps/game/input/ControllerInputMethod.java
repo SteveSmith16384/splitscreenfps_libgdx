@@ -31,7 +31,7 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isPickupDropPressed() {
+	public boolean isCirclePressed() {
 		return this.controller.getButton(1);	
 	}
 

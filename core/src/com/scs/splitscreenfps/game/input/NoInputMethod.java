@@ -26,7 +26,7 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isPickupDropPressed() {
+	public boolean isCirclePressed() {
 		return false;
 	}
 
