@@ -81,9 +81,9 @@ public class TRexAISystem extends AbstractSystem {
 				if (mac.rotate) {
 					tmpVec2.set(destpos.x+.5f-posdata.position.x, destpos.y+.5f-posdata.position.z);
 					float angle_required = tmpVec2.angle();
-					if (Math.abs(angle_required - posdata.angle) > 5) {
-						float diff = angle_required - posdata.angle;
-						posdata.angle += (diff/250);
+					if (Math.abs(angle_required - posdata.angle_degs) > 5) {
+						float diff = angle_required - posdata.angle_degs;
+						posdata.angle_degs += (diff/250);
 					}
 					//Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
 				}

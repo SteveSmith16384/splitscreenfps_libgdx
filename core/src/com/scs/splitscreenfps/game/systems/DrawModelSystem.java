@@ -79,7 +79,7 @@ public class DrawModelSystem extends AbstractSystem {
 				tmpOffset.add(model.offset);
 				model.model.transform.setToTranslation(tmpOffset);
 				model.model.transform.scl(model.scale);
-				model.model.transform.rotate(Vector3.Y, posData.angle+model.angleOffset);
+				model.model.transform.rotate(Vector3.Y, posData.angle_degs+model.angleOffset);
 			} else {
 				if (model.always_draw == false) {
 					// Only draw if in frustum 

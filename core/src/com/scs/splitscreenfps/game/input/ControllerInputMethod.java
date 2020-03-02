@@ -65,4 +65,14 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(0); // todo - check	
 	}
 
+	@Override
+	public boolean isL1ressed() {
+		return this.controller.getButton(9); // todo - check	
+	}
+
+	@Override
+	public boolean isR1Pressed() {
+		return this.controller.getButton(10); // todo - check	
+	}
+
 }

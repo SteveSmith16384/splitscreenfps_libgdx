@@ -41,6 +41,7 @@ import com.scs.splitscreenfps.game.systems.MovementSystem;
 import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
+import com.scs.splitscreenfps.game.systems.RespawnSystem;
 import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
 public class Game implements IModule {
@@ -62,7 +63,8 @@ public class Game implements IModule {
 
 	// Specific systems 
 	private DrawModelSystem drawModelSystem;
-
+	public RespawnSystem respawnSystem;
+	
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
@@ -159,6 +161,8 @@ public class Game implements IModule {
 		ecs.addSystem(new PickupDropSystem(ecs, this));
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
 		ecs.addSystem(new VehicleMovementSystem(ecs));
+		respawnSystem = new RespawnSystem(ecs); 
+		ecs.addSystem(respawnSystem);
 	}
 
 
@@ -190,6 +194,7 @@ public class Game implements IModule {
 
 		this.ecs.events.clear();
 		this.ecs.getSystem(RemoveEntityAfterTimeSystem.class).process();
+		this.respawnSystem.process();
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MoveAStarSystem.class).process();

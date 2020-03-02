@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PositionComponent {
 
 	public Vector3 position; // Used as the centre of the bounding box for collisions!
-	public float angle;
+	public float angle_degs;
 	public Vector3 originalPosition = new Vector3();
 
 	public PositionComponent() {
@@ -25,8 +25,8 @@ public class PositionComponent {
 	
 	
 	public GridPoint2 getMapPos() {
-		float x = (position.x);// + 0.5f;
-		float y = position.z;// + 0.5f;
+		float x = (position.x);
+		float y = position.z;
 		
 		return new GridPoint2((int)x, (int)y) ;
 

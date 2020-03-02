@@ -65,16 +65,16 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 			float turn_frac = veh.current_speed / VehicleMovementSystem.MAX_SPEED;
 			if (this.inputMethod.isMouse()) {
 				if (inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
-					veh.angle += inputMethod.isStrafeLeftPressed() * ROT_SPEED_Y * dt * turn_frac;
+					veh.angle_rads += inputMethod.isStrafeLeftPressed() * ROT_SPEED_Y * dt * turn_frac;
 				} else if (inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
-					veh.angle -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt * turn_frac;
+					veh.angle_rads -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt * turn_frac;
 				}
 			} else if (inputMethod instanceof NoInputMethod) {
 			} else {
 				if (inputMethod.getLookLeft() > Settings.MIN_AXIS) {
-					veh.angle += ROT_SPEED_Y * inputMethod.getLookLeft() * dt * turn_frac;
+					veh.angle_rads += ROT_SPEED_Y * inputMethod.getLookLeft() * dt * turn_frac;
 				} else if (inputMethod.getLookRight() > Settings.MIN_AXIS) {
-					veh.angle -= ROT_SPEED_Y * inputMethod.getLookRight() * dt * turn_frac;
+					veh.angle_rads -= ROT_SPEED_Y * inputMethod.getLookRight() * dt * turn_frac;
 				}
 			}
 		}
@@ -92,8 +92,8 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		}
 
 		// Update camera pos and dir
-		camera.direction.x = (float)Math.sin(veh.angle);
-		camera.direction.z = (float)Math.cos(veh.angle);
+		camera.direction.x = (float)Math.sin(veh.angle_rads);
+		camera.direction.z = (float)Math.cos(veh.angle_rads);
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 		camera.update();
@@ -102,7 +102,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		HasModel hasModel = (HasModel)this.getComponent(HasModel.class);
 		if (hasModel != null) {
 			//Settings.p("Angle=" + veh.angle);
-			posData.angle = (float)(Math.toDegrees((double)veh.angle));//v2.angle();
+			posData.angle_degs = (float)(Math.toDegrees((double)veh.angle_rads));//v2.angle();
 		}
 
 	}

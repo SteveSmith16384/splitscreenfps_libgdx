@@ -49,10 +49,10 @@ public class VehicleCrashSystem implements ISystem {
 					} else {
 						// Hit tree
 						this.crash(evt.movingEntity, veh_mover.playerId);
+						veh_mover.current_speed = 0;
 					}
 				}
 			}
-			veh_mover.current_speed = 0;
 		}
 	}
 
@@ -69,6 +69,7 @@ public class VehicleCrashSystem implements ISystem {
 			AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
 			ecs.addEntity(redfilter);
 		}
+		game.respawnSystem.addEntity(player);
 	}
 
 }

@@ -60,4 +60,14 @@ public class NoInputMethod implements IInputMethod {
 		return false;
 	}
 
+	@Override
+	public boolean isL1ressed() {
+		return false;
+	}
+
+	@Override
+	public boolean isR1Pressed() {
+		return false;
+	}
+
 }

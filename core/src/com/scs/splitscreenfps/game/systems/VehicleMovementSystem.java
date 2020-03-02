@@ -53,7 +53,7 @@ public class VehicleMovementSystem extends AbstractSystem {
 			}			
 		}
 		if (veh.current_speed != 0) {
-			tmpVector.set((float)Math.sin(veh.angle), 0, (float)Math.cos(veh.angle));
+			tmpVector.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
 			movementData.offset.set(tmpVector.nor().scl(veh.current_speed));
 		}
 	}

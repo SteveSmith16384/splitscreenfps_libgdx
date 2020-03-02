@@ -67,4 +67,14 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return Gdx.input.isKeyPressed(Keys.ENTER);
 	}
 
+	@Override
+	public boolean isL1ressed() {
+		return Gdx.input.isKeyPressed(Keys.NUM_1);
+	}
+
+	@Override
+	public boolean isR1Pressed() {
+		return Gdx.input.isKeyPressed(Keys.NUM_2);
+	}
+
 }
