@@ -12,10 +12,6 @@ public interface IInputMethod {
 
 	float isStrafeRightPressed();
 	
-	boolean isCirclePressed();
-	
-	boolean isCrossPressed();
-	
 	float getLookLeft();
 
 	float getLookRight();
@@ -24,4 +20,8 @@ public interface IInputMethod {
 
 	float getLookDown();
 
+	boolean isCirclePressed();
+	
+	boolean isCrossPressed();
+	
 }

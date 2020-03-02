@@ -32,7 +32,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 	}
 
 	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
-		CollisionResultsList cr = new CollisionResultsList();
+		CollisionResultsList cr = new CollisionResultsList(); // todo - don't create each time
 
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 

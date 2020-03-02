@@ -35,14 +35,24 @@ public class VehicleCrashSystem implements ISystem {
 		List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
 		for (AbstractEvent e : it) {
 			EventCollision evt = (EventCollision)e;
-			VehicleComponent veh = (VehicleComponent)evt.movingEntity.getComponent(VehicleComponent.class);
-			if (veh != null) {
-				if (veh.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
-					// todo - if two cars, the fastest survives
-					veh.current_speed = 0;
-					this.crash(evt.movingEntity, veh.playerId);
+			VehicleComponent veh_mover = (VehicleComponent)evt.movingEntity.getComponent(VehicleComponent.class);
+			if (veh_mover != null) {
+				if (veh_mover.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
+					VehicleComponent veh_hit = (VehicleComponent)evt.hitEntity.getComponent(VehicleComponent.class);
+					if (veh_hit != null) {
+						// Hot another car!
+						if (veh_mover.current_speed > veh_hit.current_speed) {
+							this.crash(evt.hitEntity, veh_hit.playerId);
+						} else {
+							this.crash(evt.movingEntity, veh_mover.playerId);
+						}
+					} else {
+						// Hit tree
+						this.crash(evt.movingEntity, veh_mover.playerId);
+					}
 				}
 			}
+			veh_mover.current_speed = 0;
 		}
 	}
 

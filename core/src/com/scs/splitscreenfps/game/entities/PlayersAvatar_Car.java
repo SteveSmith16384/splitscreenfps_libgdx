@@ -14,13 +14,14 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
+import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
 import ssmith.libgdx.ModelFunctions;
 
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 	private static final float ROT_SPEED_Y = 4f;
-	private static final float ACC = 2;
+	public static final float ACC = 2;
 
 	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, PlayersAvatar_Car.class.getSimpleName() + "_" + playerIdx);
@@ -36,14 +37,14 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		this.addCar(playerIdx);
 
 		this.addComponent(new VehicleComponent(playerIdx));
-		this.addComponent(new CollidesComponent(true, .5f));
+		this.addComponent(new CollidesComponent(true, .7f));
 
 		camera = _viewportData.camera;
 	}
 
 
 	private void addCar(int idx) {
-		ModelInstance instance = ModelFunctions.loadModel("deathchase/models/van.g3db", true);
+		ModelInstance instance = ModelFunctions.loadModel("deathchase/models/race.g3db", true); // todo - diff car per player
 		float scale = ModelFunctions.getScaleForHeight(instance, 1f);
 		instance.transform.scl(scale);
 
@@ -61,18 +62,19 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 		//Rotation
 		if (veh.current_speed != 0) {
+			float turn_frac = veh.current_speed / VehicleMovementSystem.MAX_SPEED;
 			if (this.inputMethod.isMouse()) {
 				if (inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
-					veh.angle += inputMethod.isStrafeLeftPressed() * ROT_SPEED_Y * dt;
+					veh.angle += inputMethod.isStrafeLeftPressed() * ROT_SPEED_Y * dt * turn_frac;
 				} else if (inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
-					veh.angle -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt;
+					veh.angle -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt * turn_frac;
 				}
 			} else if (inputMethod instanceof NoInputMethod) {
 			} else {
 				if (inputMethod.getLookLeft() > Settings.MIN_AXIS) {
-					veh.angle += ROT_SPEED_Y * inputMethod.getLookLeft() * dt;
+					veh.angle += ROT_SPEED_Y * inputMethod.getLookLeft() * dt * turn_frac;
 				} else if (inputMethod.getLookRight() > Settings.MIN_AXIS) {
-					veh.angle -= ROT_SPEED_Y * inputMethod.getLookRight() * dt;
+					veh.angle -= ROT_SPEED_Y * inputMethod.getLookRight() * dt * turn_frac;
 				}
 			}
 		}
@@ -85,7 +87,8 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 			veh.current_speed -= dt * ACC * 2;
 			//Settings.p("Speed=" + veh.current_speed);
 		} else {
-			//todo - tend towards 0  = veh.current_speed -= dt * 1;
+			// tend towards 0
+			veh.current_speed -= Math.signum(veh.current_speed) * dt * 0.2f;
 		}
 
 		// Update camera pos and dir

@@ -54,18 +54,34 @@ public class DeathChaseLevel extends AbstractLevel {
 				if (z == 0 || x == 0 || z == map_height-1 || x == map_width-1) {
 					game.mapData.map[x][z].blocked = true;
 				} else {
+					game.mapData.map[x][z].blocked = false;
 					if (NumberFunctions.rnd(1,  10) == 1) {
-						AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
-						//game.ecs.addEntity(tree); // todo - check it's not on top of a player
-					} else {
-						game.mapData.map[x][z].blocked = false;
+						if (z >= 2 && x >= 2 && z <= map_height-3 && x <= map_width-3) {
+							AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
+							game.ecs.addEntity(tree);
+						}
 					}
 				}
 			}
 		}
 
 		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2Static(i*10+1, i*10+1);
+			switch (i) {
+			case 0:
+				this.startPositions[i] = new GridPoint2Static(1, 1);
+				break;
+			case 1:
+				this.startPositions[i] = new GridPoint2Static(map_width-2, map_height-2);
+				break;
+			case 2:
+				this.startPositions[i] = new GridPoint2Static(map_width-2, 1);
+				break;
+			case 3:
+				this.startPositions[i] = new GridPoint2Static(1, map_height-2);
+				break;
+			default:
+				throw new RuntimeException("Todo");
+			}
 		}
 
 		if (Settings.DARKMODE == false) {
