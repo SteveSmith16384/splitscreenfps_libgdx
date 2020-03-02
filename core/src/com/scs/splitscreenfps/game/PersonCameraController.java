@@ -1,15 +1,15 @@
 package com.scs.splitscreenfps.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class PersonCameraController {
 
-	private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
+	//public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored - todo - move to settings
 	
 	private Camera camera;
 	private Vector3 tmp = new Vector3();
@@ -60,21 +60,21 @@ public class PersonCameraController {
 			//Rotation
 			float dt = Gdx.graphics.getDeltaTime();
 
-			if (input.getLookUp() > MIN_AXIS) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			if (input.getLookUp() > Settings.MIN_AXIS) { //if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 				if(camera.direction.y < 0.95) {
 					tmp.set(camera.direction).crs(camera.up).nor();
 					camera.rotate(tmp, rotSpeedY * input.getLookUp() * dt);
 				}
 
-			} else if (input.getLookDown() > MIN_AXIS) { // Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			} else if (input.getLookDown() > Settings.MIN_AXIS) { // Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 				if(camera.direction.y>-0.95) {
 					tmp.set(camera.direction).crs(camera.up).nor();
 					camera.rotate(tmp, -rotSpeedY * input.getLookDown() * dt);
 				}
 			}
-			if (input.getLookLeft() > MIN_AXIS) {//Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			if (input.getLookLeft() > Settings.MIN_AXIS) {//Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				camera.rotate(Vector3.Y, rotSpeedX * input.getLookLeft() * dt);
-			} else if (input.getLookRight() > MIN_AXIS) {
+			} else if (input.getLookRight() > Settings.MIN_AXIS) {
 				camera.rotate(Vector3.Y, -rotSpeedX * input.getLookRight() * dt);
 			}
 		}

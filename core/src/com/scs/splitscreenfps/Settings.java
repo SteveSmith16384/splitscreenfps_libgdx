@@ -13,6 +13,7 @@ public class Settings {
 	public static final int MODE_FTL = 5;
 	public static final int MODE_CAR_PARK = 6;
 	public static final int MODE_DEATHCHASE = 7;
+	public static final int MODE_TOWER_DEFENCE = 8;
 	
 	public static final int CURRENT_MODE = MODE_MM;
 	public static final String VERSION = "1.01";
@@ -28,6 +29,7 @@ public class Settings {
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
 	
+	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = 0.14f;
 	

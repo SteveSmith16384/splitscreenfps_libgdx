@@ -6,23 +6,23 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isForwardsPressed() {
-		return false;
+	public float isForwardsPressed() {
+		return 0;
 	}
 
 	@Override
-	public boolean isBackwardsPressed() {
-		return false;
+	public float isBackwardsPressed() {
+		return 0;
 	}
 
 	@Override
-	public boolean isStrafeLeftPressed() {
-		return false;
+	public float isStrafeLeftPressed() {
+		return 0;
 	}
 
 	@Override
-	public boolean isStrafeRightPressed() {
-		return false;
+	public float isStrafeRightPressed() {
+		return 0;
 	}
 
 	@Override
@@ -53,6 +53,11 @@ public class NoInputMethod implements IInputMethod {
 	@Override
 	public float getLookDown() {
 		return 0;
+	}
+
+	@Override
+	public boolean isCrossPressed() {
+		return false;
 	}
 
 }

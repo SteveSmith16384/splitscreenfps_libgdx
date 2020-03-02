@@ -55,9 +55,8 @@ public class DeathChaseLevel extends AbstractLevel {
 					game.mapData.map[x][z].blocked = true;
 				} else {
 					if (NumberFunctions.rnd(1,  10) == 1) {
-						//AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
-						//game.ecs.addEntity(tree); // todo - check it's not on top of a player
-						//game.mapData.map[x][z].blocked = true;
+						AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
+						game.ecs.addEntity(tree); // todo - check it's not on top of a player
 					} else {
 						game.mapData.map[x][z].blocked = false;
 					}

@@ -19,7 +19,7 @@ import ssmith.libgdx.ModelFunctions;
 
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
-	private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
+	//private static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	private static final float ROT_SPEED_Y = 7f;
 	private static final float ACC = 4;
 
@@ -49,7 +49,8 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		instance.transform.scl(scale);
 
 		Vector3 offset = ModelFunctions.getOrigin(instance);
-		HasModel hasModel = new HasModel("Van", instance, offset, -90, scale);
+		offset.y -= 0.2f; // Put wheels on floor
+		HasModel hasModel = new HasModel("Van", instance, offset, 0, scale); // was -90
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 	}
@@ -60,27 +61,32 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		float dt = Gdx.graphics.getDeltaTime();
 
 		//Rotation
-		if (this.inputMethod.isMouse()) {
-			if (inputMethod.isStrafeLeftPressed()) {
-				veh.angle += ROT_SPEED_Y * dt;
-			} else if (inputMethod.isStrafeRightPressed()) {
-				veh.angle -= ROT_SPEED_Y * dt;
-			}
-		} else if (inputMethod instanceof NoInputMethod) {
-		} else {
-			if (inputMethod.getLookLeft() > MIN_AXIS) {
-				veh.angle += ROT_SPEED_Y * inputMethod.getLookLeft() * dt;
-			} else if (inputMethod.getLookRight() > MIN_AXIS) {
-				veh.angle -= ROT_SPEED_Y * inputMethod.getLookRight() * dt;
+		if (veh.current_speed != 0) {
+			if (this.inputMethod.isMouse()) {
+				if (inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
+					veh.angle += inputMethod.isStrafeLeftPressed() * ROT_SPEED_Y * dt;
+				} else if (inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
+					veh.angle -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt;
+				}
+			} else if (inputMethod instanceof NoInputMethod) {
+			} else {
+				if (inputMethod.getLookLeft() > Settings.MIN_AXIS) {
+					veh.angle += ROT_SPEED_Y * inputMethod.getLookLeft() * dt;
+				} else if (inputMethod.getLookRight() > Settings.MIN_AXIS) {
+					veh.angle -= ROT_SPEED_Y * inputMethod.getLookRight() * dt;
+				}
 			}
 		}
 
 		// Acc/dec
 		if (this.inputMethod.isCirclePressed()) {
 			veh.current_speed += dt * ACC;
-			Settings.p("Speed=" + veh.current_speed);
+			//Settings.p("Speed=" + veh.current_speed);
+		} else if (this.inputMethod.isCrossPressed()) {
+			veh.current_speed -= dt * ACC * 2;
+			//Settings.p("Speed=" + veh.current_speed);
 		} else {
-			veh.current_speed -= dt * 5;
+			veh.current_speed -= dt * 2;
 		}
 
 		// Update camera pos and dir
