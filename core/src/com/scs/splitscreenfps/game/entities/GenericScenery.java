@@ -29,10 +29,6 @@ public class GenericScenery extends AbstractEntity {
         this.addComponent(hasDecal);
         
         if (blocks_movement) {
-        	/*MovementData md = new MovementData(.5f);
-        	//md.blocksMovement = true;
-            this.addComponent(md);*/
-
             PositionComponent pos = new PositionComponent();
             pos.position = new Vector3(x+0.5f, -.2f, y+0.5f);
             this.addComponent(pos);

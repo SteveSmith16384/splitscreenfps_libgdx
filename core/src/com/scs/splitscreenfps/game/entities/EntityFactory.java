@@ -89,7 +89,7 @@ public class EntityFactory {
 		entity.addComponent(posData);
 
 		HasDecal hasDecal = new HasDecal();
-		Texture tex = new Texture(Gdx.files.internal("sf/door1.jpg"));
+		Texture tex = new Texture(Gdx.files.internal("ftl/textures/door1.jpg"));
 		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
 		hasDecal.decal = Decal.newDecal(tr, true);
 		hasDecal.decal.setScale(1f / tr.getRegionWidth());
@@ -199,6 +199,7 @@ public class EntityFactory {
 			}
 		}
 		entity.addComponent(cycle);
+
 		CollidesComponent cc = new CollidesComponent(true, .5f);
 		entity.addComponent(cc);
 

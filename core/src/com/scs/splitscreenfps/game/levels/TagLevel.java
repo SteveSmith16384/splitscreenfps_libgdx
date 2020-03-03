@@ -48,8 +48,6 @@ public class TagLevel extends AbstractLevel {
 		TagableComponent taggable = new TagableComponent(player, playerIdx);
 		player.addComponent(taggable);
 		addSkeletonForTagged(playerIdx, taggable);
-
-
 	}
 
 
@@ -66,11 +64,6 @@ public class TagLevel extends AbstractLevel {
 		HasModel hasModel = new HasModel("Skeleton", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
 		taggable.storedHasModel = hasModel;
-
-		/*AnimatedForAvatarComponent avatarAnim = new AnimatedForAvatarComponent();
-		avatarAnim.idle_anim = ;
-		avatarAnim.walk_anim = ;
-		taggable.storedAvatarAnim = avatarAnim;*/
 
 		AnimationController animation = new AnimationController(instance);
 		AnimatedComponent anim = new AnimatedComponent(animation, "SkeletonArmature|Skeleton_Running", "SkeletonArmature|Skeleton_Idle");
@@ -129,11 +122,11 @@ public class TagLevel extends AbstractLevel {
 		for (int z=-1 ; z<=map_height ; z++) {
 			for (int x=-1 ; x<=map_width ; x++) {
 				if (x == -1 || z == -1 || x == map_width || z == map_height) {
-					Wall wall = new Wall(game.ecs, "sf/spacewall2.png", x, 0, z, false);
+					Wall wall = new Wall(game.ecs, "tag/textures/spacewall2.png", x, 0, z, false);
 					game.ecs.addEntity(wall);
 
 					// underground floor
-					Wall floor = new Wall(game.ecs, "sf/floor3.jpg", x, -1, z, false);
+					Wall floor = new Wall(game.ecs, "tag/textures/floor3.jpg", x, -1, z, false);
 					game.ecs.addEntity(floor);
 
 					continue;
@@ -143,28 +136,28 @@ public class TagLevel extends AbstractLevel {
 				game.mapData.map[x][z].blocked = maze.map[x][z] == MazeGen1.WALL;
 				if (game.mapData.map[x][z].blocked) {
 					if (NumberFunctions.rnd(1,  3) == 1) {
-						Ceiling ceiling = new Ceiling(game.ecs, "sf/corridor.jpg", x, z, 1, 1, false, 1f);
+						Ceiling ceiling = new Ceiling(game.ecs, "tag/textures/corridor.jpg", x, z, 1, 1, false, 1f);
 						game.ecs.addEntity(ceiling);
 						// Don't draw floor!
 					} else {
-						Wall wall = new Wall(game.ecs, "sf/spacewall2.png", x, 0, z, false);
+						Wall wall = new Wall(game.ecs, "tag/textures/spacewall2.png", x, 0, z, false);
 						game.ecs.addEntity(wall);
 
 						// underground floor
-						Wall floor = new Wall(game.ecs, "sf/floor3.jpg", x, -1, z, false);
+						Wall floor = new Wall(game.ecs, "tag/textures/floor3.jpg", x, -1, z, false);
 						game.ecs.addEntity(floor);
 					}
 				} else {
-					//Floor floor = new Floor(game.ecs, "", "sf/floor3.jpg", x, z, 1f, 1f);
+					//Floor floor = new Floor(game.ecs, "", "tag/textures/floor3.jpg", x, z, 1f, 1f);
 					//game.ecs.addEntity(floor);
 
 					// underground floor
-					Wall floor = new Wall(game.ecs, "sf/floor3.jpg", x, -1, z, false);
+					Wall floor = new Wall(game.ecs, "tag/textures/floor3.jpg", x, -1, z, false);
 					game.ecs.addEntity(floor);
 
 					int rnd = NumberFunctions.rnd(1, 5);
 					if (rnd == 1) {
-						GenericSquare sq = new GenericSquare(game.ecs, x, z, "sf/damaged_floor2.png");
+						GenericSquare sq = new GenericSquare(game.ecs, x, z, "tag/textures/damaged_floor2.png");
 						game.ecs.addEntity(sq);
 					} else if (rnd == 2) {
 						//AbstractEntity door = game.entityFactory.createDoor(x, z, false);
@@ -176,7 +169,7 @@ public class TagLevel extends AbstractLevel {
 						game.ecs.addEntity(crate);
 					}
 
-					Ceiling ceiling = new Ceiling(game.ecs, "sf/corridor.jpg", x, z, 1, 1, false, 1f);
+					Ceiling ceiling = new Ceiling(game.ecs, "tag/textures/corridor.jpg", x, z, 1, 1, false, 1f);
 					game.ecs.addEntity(ceiling);
 				}
 
@@ -186,8 +179,6 @@ public class TagLevel extends AbstractLevel {
 		for (int i=0 ; i<this.startPositions.length ;i++) {
 			this.startPositions[i] = game.mapData.getRandomFloorPos();
 		}
-
-		//game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));
 	}
 
 
@@ -211,11 +202,10 @@ public class TagLevel extends AbstractLevel {
 		if (tagSystem != null) {
 			if (tagSystem.currentIt.id == game.players[game.currentViewId].id) {
 				if (tagSystem.lastTagTime + TagSystem.TAG_INTERVAL > System.currentTimeMillis()) {
-					batch2d.setColor(1, 1, 1 ,1);
+					batch2d.setColor(1, 1, 1, 1);
 				} else {
-					batch2d.setColor(1, 1, 1, 0.5f);
+					batch2d.setColor(1, 1, 1, 0.3f);
 				}
-				//batch2d.draw(slime, viewportData.viewPos.x, viewportData.viewPos.y+viewportData.viewPos.height, viewportData.viewPos.width, -viewportData.viewPos.height);
 				batch2d.draw(slime, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 				batch2d.setColor(1, 1, 1, 1f);
 			}
@@ -230,7 +220,6 @@ public class TagLevel extends AbstractLevel {
 				game.font_med.setColor(0, 0, 0, 1);
 			}
 			game.font_med.draw(batch2d, "Time Left: " + (int)tc.timeLeftAsIt, 10, game.font_med.getLineHeight());
-			//font.setColor(1, 1, 1 ,1);
 		}
 	}
 

@@ -82,9 +82,6 @@ public class Game implements IModule {
 		players = new AbstractPlayersAvatar[inputs.size()];
 		for (int i=0 ; i<players.length ; i++) {
 			this.viewports[i] = new ViewportData(false, i);
-			//IInputMethod input = inputs.get(i);
-			//players[i] = new PlayersAvatar(this, i, this.viewports[i], input);
-			//ecs.addEntity(players[i]);
 		}
 
 		switch (Settings.CURRENT_MODE) {
@@ -125,7 +122,6 @@ public class Game implements IModule {
 		for (int i=0 ; i<players.length ; i++) {
 			this.currentLevel.setupAvatars(this.players[i], i);
 		}
-
 	}
 
 
@@ -217,8 +213,6 @@ public class Game implements IModule {
 			viewportData.frameBuffer.begin();
 
 			this.currentLevel.setBackgroundColour();
-			//Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-			//Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 			if (viewportData.post != null) {
@@ -286,10 +280,7 @@ public class Game implements IModule {
 
 	@Override
 	public void resize(int w, int h) {
-		//float scale = w / prev_width;
 		this.loadAssetsForRescale();
-		//this.resizeViewports(false);
-		//this.prev_width = w;
 	}
 
 

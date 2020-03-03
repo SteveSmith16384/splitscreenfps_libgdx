@@ -33,7 +33,7 @@ public class Alien extends AbstractEntity {
 
 
 	private void loadModel() {
-		ModelInstance instance = ModelFunctions.loadModel("ftl/models/alien.g3db", false);
+		ModelInstance instance = ModelFunctions.loadModel("ftl/models/Alien_Helmet.g3db", true);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 		instance.transform.scl(scale);
 		

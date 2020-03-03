@@ -16,10 +16,12 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.ModelFunctions;
 
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
+	private static final float MAX_CAM_BOUNCE = .1f;
 	private static final float ROT_SPEED_Y = 4f;
 	public static final float ACC = 2;
 
@@ -70,6 +72,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 					veh.angle_rads -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt * turn_frac;
 				}
 			} else if (inputMethod instanceof NoInputMethod) {
+				// Do nothing
 			} else {
 				if (inputMethod.getLookLeft() > Settings.MIN_AXIS) {
 					veh.angle_rads += ROT_SPEED_Y * inputMethod.getLookLeft() * dt * turn_frac;
@@ -96,6 +99,9 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		camera.direction.z = (float)Math.cos(veh.angle_rads);
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+		// Bounce camera
+		float delta = veh.current_speed / VehicleMovementSystem.MAX_SPEED * MAX_CAM_BOUNCE;
+		camera.position.y += NumberFunctions.rndFloat(0, delta);
 		camera.update();
 
 		// Rotate model to direction of camera

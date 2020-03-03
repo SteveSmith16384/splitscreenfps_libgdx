@@ -110,16 +110,11 @@ public class BasicECS {
 					if (clazz != null) {
 						if (e.getComponents().containsKey(clazz)) {
 							system.addEntity(e);
-							/*if (system.entities.contains(e) == false) {
-								system.entities.add(e);
-							} else {
-								// Entity might already exist since we add components to systems immediately
-							}*/
 						}
 					}
 				}
 			}
-			this.entities.add(e);			
+			this.entities.add(e);
 		}
 
 		to_add_entities.clear();
@@ -127,6 +122,7 @@ public class BasicECS {
 
 
 	public void addEntity(AbstractEntity e) {
+		e.unmarkForRemoval(); // In case it's been re-added after being removed
 		this.to_add_entities.add(e);
 	}
 
@@ -134,6 +130,7 @@ public class BasicECS {
 	public void removeEntity(AbstractEntity e) {
 		e.remove();
 	}
+	
 
 	public AbstractEntity get(int i) {
 		return this.entities.get(i);

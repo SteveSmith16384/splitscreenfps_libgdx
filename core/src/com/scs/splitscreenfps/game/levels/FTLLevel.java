@@ -27,6 +27,20 @@ public class FTLLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		loadMapFromFile("ftl/map1.csv");
+
+		/*if (Settings.TEST_MODEL) {
+		AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/station.g3db", 3, 0, 2, 1f);
+		game.ecs.addEntity(model);
+	}*/
+
+	//AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 5);
+	//game.ecs.addEntity(fire);
+
+	AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, 1, 5);
+	game.ecs.addEntity(battery);
+
+	AbstractEntity alien = new Alien(game.ecs, 1, 3);
+	game.ecs.addEntity(alien);
 	}
 
 
@@ -39,10 +53,10 @@ public class FTLLevel extends AbstractLevel {
 
 		game.mapData = new MapData(map_width, map_height);
 
-		Floor floor = new Floor(game.ecs, "sf/corridor.jpg", 0, 0, map_width, map_height, true);
+		Floor floor = new Floor(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true);
 		game.ecs.addEntity(floor);
 
-		Ceiling ceiling = new Ceiling(game.ecs, "sf/corridor.jpg", 0, 0, map_width, map_height, true, 1f);
+		Ceiling ceiling = new Ceiling(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true, 1f);
 		game.ecs.addEntity(ceiling);
 
 		int row = 0;
@@ -68,7 +82,7 @@ public class FTLLevel extends AbstractLevel {
 							// Do nothing
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "sf/ufo2_03.png", col, 0, row, false);
+							Wall wall = new Wall(game.ecs, "ftl/textures/ufo2_03.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 						} else if (token.equals("D1")) { // Door 1
@@ -89,19 +103,6 @@ public class FTLLevel extends AbstractLevel {
 			}
 		}
 
-		/*if (Settings.TEST_MODEL) {
-			AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/station.g3db", 3, 0, 2, 1f);
-			game.ecs.addEntity(model);
-		}*/
-
-		//AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 5);
-		//game.ecs.addEntity(fire);
-
-		AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, 1, 5);
-		game.ecs.addEntity(battery);
-
-		//AbstractEntity alien = new Alien(game.ecs, 1, 3);
-		//game.ecs.addEntity(alien);
 	}
 
 

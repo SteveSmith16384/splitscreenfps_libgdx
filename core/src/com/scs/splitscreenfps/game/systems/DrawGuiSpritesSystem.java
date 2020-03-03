@@ -32,16 +32,6 @@ public class DrawGuiSpritesSystem extends AbstractSystem implements Comparator<A
 	}
 
 	
-	/*@Override
-	public void process() {
-		Iterator<AbstractEntity> it = this.entities.iterator();
-		while (it.hasNext()) {
-			AbstractEntity entity = it.next();
-			this.processEntity(entity);
-		}
-	}*/
-
-
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)entity.getComponent(HasGuiSpriteComponent.class);

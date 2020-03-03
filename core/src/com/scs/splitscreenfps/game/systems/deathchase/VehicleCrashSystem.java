@@ -43,8 +43,10 @@ public class VehicleCrashSystem implements ISystem {
 						// Hot another car!
 						if (veh_mover.current_speed > veh_hit.current_speed) {
 							this.crash(evt.hitEntity, veh_hit.playerId);
+							veh_hit.current_speed = 0;
 						} else {
 							this.crash(evt.movingEntity, veh_mover.playerId);
+							veh_mover.current_speed = 0;
 						}
 					} else {
 						// Hit tree

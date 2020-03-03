@@ -27,7 +27,7 @@ public class RespawnSystem implements ISystem {
 
 	@Override
 	public void process() {
-		for (int i=this.entities.size()-1 ; i>= 0 ; i++) {
+		for (int i=this.entities.size()-1 ; i>= 0 ; i--) {
 			AbstractEntity e = this.entities.get(i);
 			WillRespawnComponent wrc = (WillRespawnComponent)e.getComponent(WillRespawnComponent.class);
 			if (wrc.respawn_time < System.currentTimeMillis()) {

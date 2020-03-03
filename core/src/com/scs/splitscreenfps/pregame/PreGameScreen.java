@@ -121,7 +121,7 @@ public class PreGameScreen implements IModule {
 				font.draw(batch2d, "IN GAME!", 10, y-this.font.getLineHeight());
 			} else {
 				font.setColor(1,  0,  0,  1);
-				font.draw(batch2d, "Not in game", 10, y-this.font.getLineHeight());
+				font.draw(batch2d, "Not in game - Press X to Join!", 10, y-this.font.getLineHeight());
 			}
 			y -= this.font.getLineHeight()*2;
 		}
@@ -138,7 +138,7 @@ public class PreGameScreen implements IModule {
 		}
 
 		if (this.controllerManager.getInGameControllers().size() >= 1) {
-			font.draw(batch2d, "PRESS SPACE TO START!", 10, y);
+			font.draw(batch2d, "PRESS SPACE TO START GAME!", 10, y);
 		}
 
 		batch2d.end();

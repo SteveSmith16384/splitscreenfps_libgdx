@@ -75,6 +75,11 @@ public class AbstractEntity {
 	}
 
 
+	protected void unmarkForRemoval() {
+		this.markForRemoval = false;
+	}
+
+
 	@Override
 	public String toString() {
 		return name;

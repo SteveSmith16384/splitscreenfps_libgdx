@@ -47,8 +47,6 @@ public class DrawModelSystem extends AbstractSystem {
 	public void process(Camera cam) {
 		this.modelBatch.begin(cam);
 
-		//modelBatch.render(game.s.modelInstance, environment);
-		
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity entity = it.next();
@@ -61,9 +59,6 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
-		/*if (entity.name.equals("TRex")) {
-			Settings.p("");
-		}*/
 		HasModel model = (HasModel)entity.getComponent(HasModel.class);
 		if (model.dontDrawInViewId != game.currentViewId) {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
@@ -75,7 +70,6 @@ public class DrawModelSystem extends AbstractSystem {
 
 				Vector3 position = posData.position;
 				tmpOffset.set(position);
-				//tmpOffset.y += model.yOffset;
 				tmpOffset.add(model.offset);
 				model.model.transform.setToTranslation(tmpOffset);
 				model.model.transform.scl(model.scale);

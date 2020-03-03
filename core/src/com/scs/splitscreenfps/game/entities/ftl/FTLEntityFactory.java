@@ -108,7 +108,7 @@ public class FTLEntityFactory {
 		
 		AbstractEntity entity = new AbstractEntity(ecs, "Block");
 		
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("sf/wall2.jpg")));
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("ftl/textures/wall2.jpg")));
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1f, thickness, thickness, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 

@@ -18,7 +18,6 @@ public class GenericSquare extends AbstractEntity {
 	public GenericSquare(BasicECS ecs, int map_x, int map_y, String filename) {
 		super(ecs, GenericSquare.class.getSimpleName());
 
-		//if (floor == null) {
 		BlendingAttribute blendingAttribute = new BlendingAttribute();
 		blendingAttribute.opacity = 1f;
 		
@@ -32,7 +31,6 @@ public class GenericSquare extends AbstractEntity {
 					1f, 1f,1f,
 					material,
 					VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
-		//}
 		
 		ModelInstance instance = new ModelInstance(floor);
 		//instance.transform.translate((map_x*Game.UNIT)-(Game.UNIT/2), 0.1f, (map_y*Game.UNIT)-(Game.UNIT/2));
