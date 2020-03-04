@@ -27,7 +27,7 @@ import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.RemoveEntityAfterTimeComponent;
 
@@ -69,7 +69,7 @@ public class EntityFactory {
 		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 		//instance.transform.rotate(Vector3.Y, NumberFunctions.rnd(0, 90));
 
-		HasModel model = new HasModel("CrateModel", instance);
+		HasModelComponent model = new HasModelComponent("CrateModel", instance);
 		//model.yOffset += SIZE/2;
 		model.angleOffset = NumberFunctions.rnd(0, 90);
 		entity.addComponent(model);
@@ -157,7 +157,7 @@ public class EntityFactory {
 			mat.remove(BlendingAttribute.Type);
 		}
 
-		HasModel hasModel = new HasModel("model", instance);
+		HasModelComponent hasModel = new HasModelComponent("model", instance);
 		instance.transform.scl(scl);
 		ModelFunctions.getOrigin(instance, hasModel.offset);
 		hasModel.offset.scl(-1f);

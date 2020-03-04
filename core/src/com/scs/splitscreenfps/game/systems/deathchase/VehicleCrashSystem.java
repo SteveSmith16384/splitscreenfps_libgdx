@@ -8,10 +8,9 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.CanRespawnComponent;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -21,8 +20,6 @@ public class VehicleCrashSystem implements ISystem {
 
 	private Game game;
 	private BasicECS ecs;
-	private int playerRespawnX = 1;
-	private int playerRespawnY = 1;
 
 	public VehicleCrashSystem(BasicECS _ecs, Game _game) {
 		ecs = _ecs;
@@ -61,9 +58,11 @@ public class VehicleCrashSystem implements ISystem {
 
 	private void crash(AbstractEntity player, int id) {		
 		// Move player back to start
-		PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-		posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
-
+		CanRespawnComponent crc = (CanRespawnComponent)player.getComponent(CanRespawnComponent.class);
+		/*PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+		//posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
+		posData.position.set(crc.respawnPoint);
+*/
 		if (id >= 0) {
 			TextEntity te = new TextEntity(ecs, "YOU HAVE CRASHED!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), id, 2);
 			ecs.addEntity(te);
@@ -71,7 +70,7 @@ public class VehicleCrashSystem implements ISystem {
 			AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, id);
 			ecs.addEntity(redfilter);
 		}
-		game.respawnSystem.addEntity(player);
+		game.respawnSystem.addEntity(player, crc.respawnPoint);
 	}
 
 }

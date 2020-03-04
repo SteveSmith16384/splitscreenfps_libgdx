@@ -1,11 +1,13 @@
 package com.scs.splitscreenfps.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.CanRespawnComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
@@ -88,6 +90,8 @@ public class DeathChaseLevel extends AbstractLevel {
 			default:
 				throw new RuntimeException("Todo");
 			}
+			game.players[i].addComponent(new CanRespawnComponent(new Vector3(this.startPositions[i].x+.5f, Settings.PLAYER_HEIGHT/2, this.startPositions[i].y+0.5f)));
+
 		}
 
 		if (Settings.DARKMODE == false) {

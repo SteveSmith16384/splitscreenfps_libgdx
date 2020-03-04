@@ -2,13 +2,12 @@ package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
@@ -47,12 +46,12 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 	private void addCar(int idx) {
 		ModelInstance instance = ModelFunctions.loadModel("deathchase/models/race.g3db", true); // todo - diff car per player
-		float scale = ModelFunctions.getScaleForHeight(instance, 1f);
+		float scale = ModelFunctions.getScaleForHeight(instance, .6f);
 		instance.transform.scl(scale);
 
 		Vector3 offset = ModelFunctions.getOrigin(instance);
 		offset.y -= 0.2f; // Put wheels on floor
-		HasModel hasModel = new HasModel("Van", instance, offset, 0, scale); // was -90
+		HasModelComponent hasModel = new HasModelComponent("Van", instance, offset, 0, scale); // was -90
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 	}
@@ -105,7 +104,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		camera.update();
 
 		// Rotate model to direction of camera
-		HasModel hasModel = (HasModel)this.getComponent(HasModel.class);
+		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
 		if (hasModel != null) {
 			//Settings.p("Angle=" + veh.angle);
 			posData.angle_degs = (float)(Math.toDegrees((double)veh.angle_rads));//v2.angle();

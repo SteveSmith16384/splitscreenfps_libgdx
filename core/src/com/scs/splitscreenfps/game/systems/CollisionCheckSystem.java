@@ -5,12 +5,9 @@ import java.util.Iterator;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.data.CollisionResult;
-import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
 public class CollisionCheckSystem extends AbstractSystem {
 
@@ -31,9 +28,12 @@ public class CollisionCheckSystem extends AbstractSystem {
 
 	}
 
-	public CollisionResultsList collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
-		CollisionResultsList cr = new CollisionResultsList(); // todo - don't create each time
-
+	/**
+	 * Returns true/false depending if movement blocked
+	 */
+	public boolean collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
+		//CollisionResultsList cr = new CollisionResultsList(); // todo - don't create each time
+		boolean blocked = false;
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 
 		this.setBB(mover, moverCC, offX, offZ);
@@ -51,8 +51,8 @@ public class CollisionCheckSystem extends AbstractSystem {
 					}
 					if (moverCC.bb.intersects(cc.bb)) {
 						//Settings.p(mover + " collided with " + e);
-						cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
-
+						//cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
+						blocked = cc.blocksMovement || blocked;
 						if (raise_event) {
 							ecs.events.add(new EventCollision(mover, e));
 						}
@@ -61,13 +61,8 @@ public class CollisionCheckSystem extends AbstractSystem {
 			}
 		}
 
-		// If we failed to move, move bounding box back
-		/*if (cr.blocksMovement) {
-			// Move us back
-			moverCC.bb.setCentre(posData.position.x, posData.position.y, posData.position.z);
-		}*/
-
-		return cr;
+		//return cr;
+		return blocked;
 	}
 
 }

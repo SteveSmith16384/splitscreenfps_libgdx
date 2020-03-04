@@ -13,7 +13,6 @@ import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitC
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
-import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.ftl.RandomFloor;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;

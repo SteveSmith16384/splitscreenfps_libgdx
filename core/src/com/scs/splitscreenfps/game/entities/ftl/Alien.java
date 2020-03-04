@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.farm.WanderingAnimalComponent;
 
 import ssmith.libgdx.ModelFunctions;
 
@@ -38,7 +36,7 @@ public class Alien extends AbstractEntity {
 		instance.transform.scl(scale);
 		
 		Vector3 offset = ModelFunctions.getOrigin(instance);
-		HasModel hasModel = new HasModel("Alien", instance, offset, -90, scale);
+		HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, -90, scale);
 		this.addComponent(hasModel);
 
 		AnimationController animation = new AnimationController(instance);

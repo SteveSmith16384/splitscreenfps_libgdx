@@ -1,22 +1,24 @@
 package com.scs.splitscreenfps.game.systems;
 
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.litter.CombinesWithLitterComponent;
-import com.scs.splitscreenfps.game.data.CollisionResult;
-import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
 public class PickupDropSystem extends AbstractSystem {
 
@@ -36,34 +38,40 @@ public class PickupDropSystem extends AbstractSystem {
 
 
 	@Override
-	public void processEntity(AbstractEntity entity) {
-		CanCarryComponent cc = (CanCarryComponent)entity.getComponent(CanCarryComponent.class);
+	public void processEntity(AbstractEntity carrier) {
+		CanCarryComponent cc = (CanCarryComponent)carrier.getComponent(CanCarryComponent.class);
 		if (cc.lastPickupDropTime + 1000 > System.currentTimeMillis()) {
 			return;
 		}
 		if (cc.carrying == null) {
-			CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
-			CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0, false);
-			for (CollisionResult cr : crl.results) {
-				AbstractEntity key = cr.collidedWith;
+			//CollisionCheckSystem collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
+			//CollisionResultsList crl = collCheckSystem.collided(entity, 0, 0, false);
+			//for (CollisionResult cr : crl.results) { // todo - check events instead
+			//AbstractEntity key = cr.collidedWith;
+			List<AbstractEvent> it = ecs.getEventsForEntity(EventCollision.class, carrier);
+			for (AbstractEvent e : it) {
+				EventCollision evt = (EventCollision)e;
+				//AbstractEntity player = evt.movingEntity;
+				AbstractEntity key = evt.hitEntity;
+
 				CanBeCarried cbc = (CanBeCarried)key.getComponent(CanBeCarried.class);
 				if (cbc != null) {
 					if (cc.wantsToCarry || cbc.auto_pickedup) {
 						//cc.wantsToCarry = false;
-						Settings.p(cr.collidedWith + " picked up");
+						Settings.p(key + " picked up");
 						cc.lastPickupDropTime = System.currentTimeMillis();
 						key.hideComponent(CollidesComponent.class);
 						key.hideComponent(HasDecal.class);
-						key.hideComponent(HasModel.class);
+						key.hideComponent(HasModelComponent.class);
 						key.hideComponent(CombinesWithLitterComponent.class);
 						key.restoreComponent(HasGuiSpriteComponent.class);
-						
+
 						PositionComponent keyPos = (PositionComponent)key.getComponent(PositionComponent.class);
 						cbc.original_y = keyPos.position.y;
-								
-						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)cr.collidedWith.getComponent(HasGuiSpriteComponent.class);
+
+						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)key.getComponent(HasGuiSpriteComponent.class);
 						hgsc.onlyViewId = cc.viewId;
-						cc.carrying = cr.collidedWith;
+						cc.carrying = key;
 						break;
 					}
 				}
@@ -77,13 +85,13 @@ public class PickupDropSystem extends AbstractSystem {
 					Settings.p(cc.carrying + " dropped");
 					cc.carrying.restoreComponent(CollidesComponent.class);
 					cc.carrying.restoreComponent(HasDecal.class);
-					cc.carrying.restoreComponent(HasModel.class);
+					cc.carrying.restoreComponent(HasModelComponent.class);
 					cc.carrying.hideComponent(HasGuiSpriteComponent.class);
 
 					// Set position
-					PositionComponent carrierPos = (PositionComponent)entity.getComponent(PositionComponent.class);
+					PositionComponent carrierPos = (PositionComponent)carrier.getComponent(PositionComponent.class);
 					PositionComponent pos = (PositionComponent)cc.carrying.getComponent(PositionComponent.class);
-					
+
 					pos.originalPosition.set(carrierPos.position);
 					if (cc.viewId >= 0) {
 						// Drop in front of player
@@ -93,7 +101,7 @@ public class PickupDropSystem extends AbstractSystem {
 						dir.nor().scl(.2f);
 						pos.originalPosition.add(dir);
 					}
-					
+
 					//pos.originalPosition.set(dropPosition);
 					pos.originalPosition.y = cbc.original_y;
 					pos.position.set(pos.originalPosition);
@@ -101,7 +109,7 @@ public class PickupDropSystem extends AbstractSystem {
 
 					CollidesComponent coll = (CollidesComponent)cc.carrying.getComponent(CollidesComponent.class);
 					coll.bb_dirty = true;
-							
+
 					cc.carrying = null;
 				}
 			}

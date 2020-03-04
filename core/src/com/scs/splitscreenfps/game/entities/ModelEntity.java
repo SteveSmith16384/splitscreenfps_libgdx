@@ -10,7 +10,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class ModelEntity extends AbstractEntity {
 
@@ -28,7 +28,7 @@ public class ModelEntity extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(model, new Vector3(posX, posY, posZ));
 		instance.transform.scl(.002f);
 		
-		HasModel hasModel = new HasModel(name + "_model", instance);
+		HasModelComponent hasModel = new HasModelComponent(name + "_model", instance);
 		this.addComponent(hasModel);
 		
 		AnimationController animation = new AnimationController(instance);

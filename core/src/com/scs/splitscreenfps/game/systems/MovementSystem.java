@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
@@ -12,7 +13,6 @@ import com.scs.splitscreenfps.game.components.AutoMove;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.data.CollisionResultsList;
 
 public class MovementSystem extends AbstractSystem {
 
@@ -20,15 +20,9 @@ public class MovementSystem extends AbstractSystem {
 	private CollisionCheckSystem collCheckSystem;
 
 	public MovementSystem(Game _game, BasicECS ecs) {
-		super(ecs);
+		super(ecs, MovementData.class);
 
 		game = _game;
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return MovementData.class;
 	}
 
 
@@ -39,12 +33,10 @@ public class MovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		//movementData.blocked_on_last_move = false;
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
 		if (cc != null) {
 			cc.bb_dirty = true;
-			cc.results.clear();
 		}
 
 		AutoMove auto = (AutoMove)entity.getComponent(AutoMove.class);
@@ -55,7 +47,6 @@ public class MovementSystem extends AbstractSystem {
 
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
-				boolean moved = false;
 				if (movementData.must_move_x_and_z) {
 					this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
 				} else {
@@ -91,6 +82,8 @@ public class MovementSystem extends AbstractSystem {
 				position.z += offset.z;
 				result = true;
 			}
+		} else {
+			ecs.events.add(new EventCollision(mover, null));
 		}
 
 		return result;
@@ -108,6 +101,8 @@ public class MovementSystem extends AbstractSystem {
 				position.x += offset.x;
 				resultX = true;
 			}
+		} else {
+			ecs.events.add(new EventCollision(mover, null));
 		}
 
 		boolean resultZ = false;
@@ -116,17 +111,15 @@ public class MovementSystem extends AbstractSystem {
 				position.z += offset.z;
 				resultZ = true;
 			}
+		} else {
+			ecs.events.add(new EventCollision(mover, null));
 		}
 		return resultX || resultZ;
 	}
 
 
 	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ, CollidesComponent cc) {
-		CollisionResultsList cr = this.collCheckSystem.collided(mover, offX, offZ, true);
-		if (cc != null) {
-			cc.results.addAll(cr.results);
-		}
-		return cr.blocksMovement;
+		return this.collCheckSystem.collided(mover, offX, offZ, true);
 	}
 
 }

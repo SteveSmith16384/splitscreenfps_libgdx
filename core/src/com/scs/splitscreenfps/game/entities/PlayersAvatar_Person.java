@@ -13,7 +13,7 @@ import com.scs.splitscreenfps.game.ViewportData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
@@ -79,7 +79,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		}
 		ModelInstance instance = new ModelInstance(model);
 
-		HasModel hasModel = new HasModel("SmoothMale", instance, -.3f, 90, 0.0016f);
+		HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 		
@@ -97,7 +97,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		cameraController.update();
 
 		// Rotate model to direction of camera
-		HasModel hasModel = (HasModel)this.getComponent(HasModel.class);
+		HasModelComponent hasModel = (HasModelComponent)this.getComponent(HasModelComponent.class);
 		if (hasModel != null) {
 			PositionComponent pos = (PositionComponent)getComponent(PositionComponent.class);
 			tmpVec2.set(camera.direction.x, camera.direction.z);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
-public class HasModel { // todo - rename
+public class HasModelComponent {
 
 	public String name;
 	public ModelInstance model;
@@ -15,12 +15,12 @@ public class HasModel { // todo - rename
 	public BoundingBox bb; // For checking if in frustum  
 	public boolean always_draw = false;
 	
-	public HasModel(String name, ModelInstance _model) {
+	public HasModelComponent(String name, ModelInstance _model) {
 		this(name, _model, new Vector3(), 0, 1);
 	}
 	
 
-	public HasModel(String _name, ModelInstance _model, float yOffset, int _angleOffset, float _scale) {
+	public HasModelComponent(String _name, ModelInstance _model, float yOffset, int _angleOffset, float _scale) {
 		this(_name, _model);
 		
 		this.offset.y = yOffset;
@@ -29,7 +29,7 @@ public class HasModel { // todo - rename
 	}
 
 	
-	public HasModel(String _name, ModelInstance _model, Vector3 _offset, int _angleOffset, float _scale) {
+	public HasModelComponent(String _name, ModelInstance _model, Vector3 _offset, int _angleOffset, float _scale) {
 		name = _name;
 		model = _model;
 		offset = _offset;

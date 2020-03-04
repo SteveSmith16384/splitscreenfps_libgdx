@@ -2,7 +2,7 @@ package com.scs.splitscreenfps.game.components.tag;
 
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class TagableComponent {
 
@@ -12,7 +12,7 @@ public class TagableComponent {
 	public int playerIdx;
 	
 	// Fields for when swapping models
-	public HasModel storedHasModel;
+	public HasModelComponent storedHasModel;
 	//public AnimatedComponent storedAvatarAnim;
 	public AnimatedComponent storedAnimated;
 	

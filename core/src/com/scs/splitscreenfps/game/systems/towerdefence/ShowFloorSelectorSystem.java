@@ -3,7 +3,7 @@ package com.scs.splitscreenfps.game.systems.towerdefence;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.ShowFloorSelectorComponent;
 import com.scs.splitscreenfps.game.entities.towerdefence.FloorSelector;
@@ -21,9 +21,9 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 			return;
 		}
 		if (b) {
-			sfsc.floor_selector.restoreComponent(HasModel.class);
+			sfsc.floor_selector.restoreComponent(HasModelComponent.class);
 		} else {
-			sfsc.floor_selector.hideComponent(HasModel.class);
+			sfsc.floor_selector.hideComponent(HasModelComponent.class);
 		}
 	}
 	
@@ -35,7 +35,7 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 			sfsc.floor_selector = new FloorSelector(ecs);
 		}
 		if (sfsc.actually_show) {
-			sfsc.floor_selector.restoreComponent(HasModel.class);
+			sfsc.floor_selector.restoreComponent(HasModelComponent.class);
 
 			PositionComponent entityPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			PositionComponent selectorPos = (PositionComponent)sfsc.floor_selector.getComponent(PositionComponent.class);

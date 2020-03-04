@@ -2,17 +2,15 @@ package com.scs.splitscreenfps.game.entities.towerdefence;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
-import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class FloorSelector extends AbstractEntity {
 
@@ -42,9 +40,9 @@ public class FloorSelector extends AbstractEntity {
 
 		ModelInstance instance = new ModelInstance(floor);
 
-		HasModel model = new HasModel(this.name, instance);
+		HasModelComponent model = new HasModelComponent(this.name, instance);
 		this.addComponent(model);
-		this.hideComponent(HasModel.class); // Don't draw it just yet
+		this.hideComponent(HasModelComponent.class); // Don't draw it just yet
 	}
 
 

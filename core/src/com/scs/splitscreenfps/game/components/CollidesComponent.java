@@ -1,12 +1,8 @@
 package com.scs.splitscreenfps.game.components;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
-import com.scs.splitscreenfps.game.data.CollisionResult;
 
 import ssmith.libgdx.MyBoundingBox;
 
@@ -15,7 +11,7 @@ public class CollidesComponent {
 	public MyBoundingBox bb;
 	public boolean bb_dirty = true; // Set to true to recalc BB
 	public boolean blocksMovement = true;
-	public List<CollisionResult> results = new ArrayList<CollisionResult>(); // Results since last movement
+	//public List<CollisionResult> results = new ArrayList<CollisionResult>(); // Results since last movement
 
 	public CollidesComponent(boolean _blocks, MyBoundingBox _bb) {
 		this.blocksMovement = _blocks;

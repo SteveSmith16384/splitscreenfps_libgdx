@@ -10,7 +10,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.farm.WanderingAnimalComponent;
@@ -42,7 +42,7 @@ public class Cow extends AbstractEntity {
 		Model model = am.get("farm/models/Cow.g3db");
 		ModelInstance instance = new ModelInstance(model);
 
-		HasModel hasModel = new HasModel("Cow", instance, -0.3f, -90, 0.0016f);
+		HasModelComponent hasModel = new HasModelComponent("Cow", instance, -0.3f, -90, 0.0016f);
 		this.addComponent(hasModel);
 
 		AnimationController animation = new AnimationController(instance);

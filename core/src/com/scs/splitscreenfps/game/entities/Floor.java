@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasModelCycle;
 
 public class Floor extends AbstractEntity {
@@ -54,7 +54,7 @@ public class Floor extends AbstractEntity {
 			//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 			//instance.calculateTransforms();
 
-			HasModel model = new HasModel("Floor", instance);
+			HasModelComponent model = new HasModelComponent("Floor", instance);
 			this.addComponent(model);
 
 			model_cycle.models[0] = instance;
@@ -115,7 +115,7 @@ public class Floor extends AbstractEntity {
 		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel("Floor", instance);
+		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
 	}
 
@@ -144,7 +144,7 @@ public class Floor extends AbstractEntity {
 		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel("Floor", instance);
+		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
 	}
 }
