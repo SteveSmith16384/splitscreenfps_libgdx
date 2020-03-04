@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps.game;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class Game implements IModule {
 		viewports = new ViewportData[4];
 		players = new AbstractPlayersAvatar[inputs.size()];
 		for (int i=0 ; i<players.length ; i++) {
-			this.viewports[i] = new ViewportData(false, i);
+			this.viewports[i] = new ViewportData(i, false, players.length);
 		}
 
 		switch (Settings.CURRENT_MODE) {
@@ -134,7 +135,7 @@ public class Game implements IModule {
 
 	public void resizeViewports(boolean full_screen) {
 		for (int i=0 ; i<players.length ; i++) {
-			this.viewports[i].resize(full_screen, i);
+			this.viewports[i].resize(i, false, players.length);
 		}
 	}
 

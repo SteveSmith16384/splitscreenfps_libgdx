@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 import ssmith.lang.NumberFunctions;
 
@@ -47,7 +47,7 @@ public class RandomFloor extends AbstractEntity {
 		//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel("Floor", instance);
+		HasModelComponent model = new HasModelComponent("Floor", instance);
 		this.addComponent(model);
 	}
 

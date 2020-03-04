@@ -6,27 +6,31 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class Wall extends AbstractEntity {
 
 	public Wall(BasicECS ecs, String tex_filename, int mapPosX, float yPos, int mapPosZ, boolean add_collision) {
 		super(ecs, Wall.class.getSimpleName() + "_" + mapPosX + "_" + mapPosZ);
 		
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		BlendingAttribute blendingAttribute = new BlendingAttribute();
+		blendingAttribute.opacity = 1f;
+		
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)), blendingAttribute);
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, yPos+0.5f, mapPosZ+0.5f));
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 
-		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
+		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
 		if (add_collision) {
@@ -49,7 +53,7 @@ public class Wall extends AbstractEntity {
 		instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 		//instance.calculateTransforms();
 
-		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
+		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
 		if (add_collision) {
@@ -72,7 +76,7 @@ public class Wall extends AbstractEntity {
 		//ModelInstance instance = new ModelInstance(box_model, new Vector3(posX, posY, posZ));
 		//instance.transform.rotate(Vector3.Z, 90); // Position textures upright
 
-		HasModel model = new HasModel(this.getClass().getSimpleName(), instance);
+		HasModelComponent model = new HasModelComponent(this.getClass().getSimpleName(), instance);
 		this.addComponent(model);
 		
 		if (add_collision) {

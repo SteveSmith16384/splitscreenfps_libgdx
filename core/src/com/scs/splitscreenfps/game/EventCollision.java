@@ -13,4 +13,9 @@ public class EventCollision extends AbstractEvent {
 		hitEntity = _hitEntity;
 	}
 
+	@Override
+	public boolean isForEntity(AbstractEntity e) {
+		return movingEntity == e || hitEntity == e;
+	}
+
 }

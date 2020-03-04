@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class GenericSquare extends AbstractEntity {
 
@@ -36,7 +36,7 @@ public class GenericSquare extends AbstractEntity {
 		//instance.transform.translate((map_x*Game.UNIT)-(Game.UNIT/2), 0.1f, (map_y*Game.UNIT)-(Game.UNIT/2));
 		instance.transform.translate(map_x, 0.05f, map_y); // Raise it slightly
 		//instance.calculateTransforms();
-		this.addComponent(new HasModel(this.getClass().getSimpleName(), instance));
+		this.addComponent(new HasModelComponent(this.getClass().getSimpleName(), instance));
 
 	}
 

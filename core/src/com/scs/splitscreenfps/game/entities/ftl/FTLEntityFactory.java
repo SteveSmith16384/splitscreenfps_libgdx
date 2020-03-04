@@ -21,7 +21,7 @@ import com.scs.splitscreenfps.game.components.CanShootComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ftl.IsBatteryComponent;
 
@@ -115,7 +115,7 @@ public class FTLEntityFactory {
 		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX, 1-thickness, mapPosZ));
 		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 
-		HasModel model = new HasModel("Block", instance);
+		HasModelComponent model = new HasModelComponent("Block", instance);
 		entity.addComponent(model);
 		
 		return entity;

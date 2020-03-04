@@ -6,7 +6,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.HasDecal;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.farm.CanGrowComponent;
 
 public class GrowCropsSystem extends AbstractSystem {
@@ -34,7 +34,7 @@ public class GrowCropsSystem extends AbstractSystem {
 			}
 			
 			// Scale the model, if it has one
-			HasModel hasModel = (HasModel)entity.getComponent(HasModel.class);
+			HasModelComponent hasModel = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 			if (hasModel != null) {
 				hasModel.scale = cgc.current_growth / cgc.max_growth;
 			}

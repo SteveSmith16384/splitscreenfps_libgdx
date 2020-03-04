@@ -142,18 +142,33 @@ public class BasicECS {
 	}
 
 	
-	public Iterator<AbstractEvent> getEventIterator() {
+	/*public Iterator<AbstractEvent> getEventIterator() {
 		return this.events.iterator();
-	}
+	}*/
 	
 	
 	public List<AbstractEvent> getEvents(Class<? extends AbstractEvent> clazz) {
 		List<AbstractEvent> list = new ArrayList<AbstractEvent>();
-		Iterator<AbstractEvent> it = getEventIterator();
+		Iterator<AbstractEvent> it = this.events.iterator();
 		while (it.hasNext()) {
 			AbstractEvent evt = it.next();
 			if (evt.getClass().equals(clazz)) {
 				list.add(evt);
+			}
+		}
+		return list;
+	}
+
+	
+	public List<AbstractEvent> getEventsForEntity(Class<? extends AbstractEvent> clazz, AbstractEntity e) {
+		List<AbstractEvent> list = new ArrayList<AbstractEvent>();
+		Iterator<AbstractEvent> it = this.events.iterator();
+		while (it.hasNext()) {
+			AbstractEvent evt = it.next();
+			if (evt.getClass().equals(clazz)) {
+				if (evt.isForEntity(e)) {
+					list.add(evt);
+				}
 			}
 		}
 		return list;

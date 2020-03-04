@@ -13,14 +13,10 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
-import com.scs.splitscreenfps.game.components.VehicleComponent;
 import com.scs.splitscreenfps.game.components.tag.TagableComponent;
-import com.scs.splitscreenfps.game.data.CollisionResult;
 import com.scs.splitscreenfps.game.entities.TextEntity;
-import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
 import ssmith.lang.NumberFunctions;
 
@@ -127,7 +123,7 @@ public class TagSystem extends AbstractSystem {
 		Settings.p("Swapping model of player #" + it_tagable.player);
 
 		AbstractEntity it_entity = it_tagable.player;
-		HasModel hasModel = (HasModel)it_entity.getComponent(HasModel.class);
+		HasModelComponent hasModel = (HasModelComponent)it_entity.getComponent(HasModelComponent.class);
 		//AnimatedForAvatarComponent animatedForAvatarComponent = (AnimatedForAvatarComponent)it_entity.getComponent(AnimatedForAvatarComponent.class);
 		AnimatedComponent animatedComponent = (AnimatedComponent)it_entity.getComponent(AnimatedComponent.class);
 
@@ -138,7 +134,7 @@ public class TagSystem extends AbstractSystem {
 		tmp.storedHasModel = hasModel;
 
 		// Remove current
-		it_entity.removeComponent(HasModel.class);
+		it_entity.removeComponent(HasModelComponent.class);
 		//it_entity.removeComponent(AnimatedForAvatarComponent.class);
 		it_entity.removeComponent(AnimatedComponent.class);
 
@@ -151,7 +147,7 @@ public class TagSystem extends AbstractSystem {
 		//it_tagable.storedAvatarAnim = tmp.storedAvatarAnim;
 		it_tagable.storedHasModel = tmp.storedHasModel;
 
-		HasModel xxx = (HasModel)it_entity.getComponent(HasModel.class);
+		HasModelComponent xxx = (HasModelComponent)it_entity.getComponent(HasModelComponent.class);
 		Settings.p("Model is now " + xxx.name);
 
 	}

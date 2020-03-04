@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.HasModelCycle;
 
 public class CycleThroughModelsSystem extends AbstractSystem {
@@ -23,7 +23,7 @@ public class CycleThroughModelsSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		HasModelCycle hdc = (HasModelCycle)entity.getComponent(HasModelCycle.class);
-		HasModel hd = (HasModel)entity.getComponent(HasModel.class);
+		HasModelComponent hd = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 
 		float dt = Gdx.graphics.getDeltaTime();
 

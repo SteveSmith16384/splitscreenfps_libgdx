@@ -13,7 +13,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawModelSystem extends AbstractSystem {
@@ -39,7 +39,7 @@ public class DrawModelSystem extends AbstractSystem {
 
 	@Override
 	public Class<?> getComponentClass() {
-		return HasModel.class;
+		return HasModelComponent.class;
 	}
 
 
@@ -59,7 +59,7 @@ public class DrawModelSystem extends AbstractSystem {
 
 	//@Override
 	public void processEntity(AbstractEntity entity, Camera camera) {
-		HasModel model = (HasModel)entity.getComponent(HasModel.class);
+		HasModelComponent model = (HasModelComponent)entity.getComponent(HasModelComponent.class);
 		if (model.dontDrawInViewId != game.currentViewId) {
 			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class) ;
 			if (posData != null) {

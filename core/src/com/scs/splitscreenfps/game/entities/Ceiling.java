@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 
 public class Ceiling extends AbstractEntity {
 
@@ -46,7 +46,7 @@ public class Ceiling extends AbstractEntity {
 		instance.transform.translate(0, 0, -(float)map_width);
 		instance.calculateTransforms();
 
-		HasModel model = new HasModel("ceiling", instance);
+		HasModelComponent model = new HasModelComponent("ceiling", instance);
 		this.addComponent(model);
 	}
 
@@ -76,7 +76,7 @@ public class Ceiling extends AbstractEntity {
 		instance.transform.translate(0, 0, -(float)map_width);
 		instance.calculateTransforms();
 
-		HasModel model = new HasModel("Ceiling", instance);
+		HasModelComponent model = new HasModelComponent("Ceiling", instance);
 		this.addComponent(model);
 	}
 

@@ -14,7 +14,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
@@ -61,7 +61,7 @@ public class TagLevel extends AbstractLevel {
 		ModelInstance instance = new ModelInstance(model);
 		instance.transform.scl(.0015f);
 		instance.transform.rotate(Vector3.Y, 90f); // Model is facing the wrong way
-		HasModel hasModel = new HasModel("Skeleton", instance, -.3f, 90, 0.0016f);
+		HasModelComponent hasModel = new HasModelComponent("Skeleton", instance, -.3f, 90, 0.0016f);
 		hasModel.dontDrawInViewId = idx;
 		taggable.storedHasModel = hasModel;
 

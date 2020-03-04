@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.HasModel;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
 import ssmith.libgdx.ModelFunctions;
@@ -26,7 +26,7 @@ public class CarParkEntityFactory {
 
 		ModelInstance instance = ModelFunctions.loadModel("carpark/quaternius/NormalCar1.g3db", true);
 
-		HasModel hasModel = new HasModel("model", instance);
+		HasModelComponent hasModel = new HasModelComponent("model", instance);
 		
 		instance.transform.scl(scl);
 		ModelFunctions.getOrigin(instance, hasModel.offset);		
@@ -54,7 +54,7 @@ public class CarParkEntityFactory {
 
 		ModelInstance instance = ModelFunctions.loadModel("carpark/quaternius/Cop.obj", true);
 
-		HasModel hasModel = new HasModel("model", instance);
+		HasModelComponent hasModel = new HasModelComponent("model", instance);
 		
 		instance.transform.scl(scl);
 		ModelFunctions.getOrigin(instance, hasModel.offset);		
@@ -82,7 +82,7 @@ public class CarParkEntityFactory {
 
 		ModelInstance instance = ModelFunctions.loadModel("carpark/kenney/ambulance.obj", true);
 
-		HasModel hasModel = new HasModel("model", instance);
+		HasModelComponent hasModel = new HasModelComponent("model", instance);
 		
 		instance.transform.scl(scl);
 		ModelFunctions.getOrigin(instance, hasModel.offset);		
