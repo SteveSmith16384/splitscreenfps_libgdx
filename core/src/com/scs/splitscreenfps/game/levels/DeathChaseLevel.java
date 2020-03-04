@@ -9,6 +9,7 @@ import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
+import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.deathchase.DeathchaseEntityFactory;
 import com.scs.splitscreenfps.game.systems.deathchase.VehicleCrashSystem;
 
@@ -43,7 +44,7 @@ public class DeathChaseLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		this.map_width = 50;
+		this.map_width = 30;
 		this.map_height = map_width;
 
 		game.mapData = new MapData(map_width, map_height);
@@ -53,6 +54,8 @@ public class DeathChaseLevel extends AbstractLevel {
 				game.mapData.map[x][z] = new MapSquare();
 				if (z == 0 || x == 0 || z == map_height-1 || x == map_width-1) {
 					game.mapData.map[x][z].blocked = true;
+					Wall wall = new Wall(game.ecs, "deathchase/ForestTrees1.png", x, 0, z, false);
+					game.ecs.addEntity(wall);
 				} else {
 					game.mapData.map[x][z].blocked = false;
 					if (NumberFunctions.rnd(1,  10) == 1) {

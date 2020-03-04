@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
@@ -19,7 +20,10 @@ public class Wall extends AbstractEntity {
 	public Wall(BasicECS ecs, String tex_filename, int mapPosX, float yPos, int mapPosZ, boolean add_collision) {
 		super(ecs, Wall.class.getSimpleName() + "_" + mapPosX + "_" + mapPosZ);
 		
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)));
+		BlendingAttribute blendingAttribute = new BlendingAttribute();
+		blendingAttribute.opacity = 1f;
+		
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture(tex_filename)), blendingAttribute);
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1f, 1f, 1f, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 

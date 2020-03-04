@@ -20,29 +20,13 @@ public class ViewportData {
 	public PostProcessing post;
 	public DecalBatch decalBatch;
 
-	public ViewportData(boolean full_screen, int idx) {
+	public ViewportData(boolean full_screen, int idx, int total) {
 		int w = Gdx.graphics.getWidth()/2;
 		int h = Gdx.graphics.getHeight()/2;
 		if (full_screen) {
 			w = Gdx.graphics.getBackBufferWidth()/2;
 			h = Gdx.graphics.getBackBufferHeight()/2;
 		}
-		
-		// Goes clockwise starting top-left
-		/*switch (idx) {
-		case 0:
-			this.viewPos = new Rectangle(0, 0, w, h);
-			break;
-		case 1:
-			this.viewPos = new Rectangle(w, 0, w, h);
-			break;
-		case 2:
-			this.viewPos = new Rectangle(w, h, w, h);
-			break;
-		case 3:
-			this.viewPos = new Rectangle(0, h, w, h);
-			break;
-		}*/
 		
 		camera = new PerspectiveCamera(65, w, h);
 		camera.position.set(10f, 0, 10f);
