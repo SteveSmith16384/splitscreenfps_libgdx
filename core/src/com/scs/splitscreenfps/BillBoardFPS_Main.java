@@ -35,8 +35,8 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			inputs.add(new MouseAndKeyboardInputMethod());
 			if (Settings.START_4_PLAYERS) {
 				inputs.add(new NoInputMethod());
-				//inputs.add(new NoInputMethod());
-				//inputs.add(new NoInputMethod());
+				inputs.add(new NoInputMethod());
+				inputs.add(new NoInputMethod());
 			}
 			current_module = new Game(this, inputs);
 		} else {
