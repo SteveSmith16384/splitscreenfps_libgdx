@@ -14,7 +14,7 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 		super(ecs, ShowFloorSelectorComponent.class);
 	}
 
-	
+	/*
 	public void setVisible(AbstractEntity entity, boolean b) {
 		ShowFloorSelectorComponent sfsc = (ShowFloorSelectorComponent)entity.getComponent(ShowFloorSelectorComponent.class);
 		if (sfsc.actually_show == b) {
@@ -26,20 +26,23 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 			sfsc.floor_selector.hideComponent(HasModelComponent.class);
 		}
 	}
-	
+	 */
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		ShowFloorSelectorComponent sfsc = (ShowFloorSelectorComponent)entity.getComponent(ShowFloorSelectorComponent.class);
-		if (sfsc.floor_selector == null) {
-			sfsc.floor_selector = new FloorSelector(ecs);
-		}
 		if (sfsc.actually_show) {
+			if (sfsc.floor_selector == null) {
+				sfsc.floor_selector = new FloorSelector(ecs);
+			}
 			sfsc.floor_selector.restoreComponent(HasModelComponent.class);
 
 			PositionComponent entityPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			PositionComponent selectorPos = (PositionComponent)sfsc.floor_selector.getComponent(PositionComponent.class);
-			selectorPos.position.set((int)(entityPos.position.x)+1, 0, (int)(entityPos.position.z)+1);
+			selectorPos.position.set((int)(entityPos.position.x)+1, 0, (int)(entityPos.position.z)+1); // todo - take into account direction
+
+			sfsc.pos.x = (int)(entityPos.position.x)+1;
+			sfsc.pos.y = (int)(entityPos.position.z)+1;
 		}
 
 	}

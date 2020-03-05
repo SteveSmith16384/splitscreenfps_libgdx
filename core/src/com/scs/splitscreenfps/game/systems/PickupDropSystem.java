@@ -25,15 +25,9 @@ public class PickupDropSystem extends AbstractSystem {
 	private Game game;
 
 	public PickupDropSystem(BasicECS ecs, Game _game) {
-		super(ecs);
+		super(ecs, CanCarryComponent.class);
 
 		game = _game;
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return CanCarryComponent.class;
 	}
 
 
@@ -54,27 +48,27 @@ public class PickupDropSystem extends AbstractSystem {
 				//AbstractEntity player = evt.movingEntity;
 				AbstractEntity key = evt.hitEntity;
 				if (key != null) {
-				CanBeCarried cbc = (CanBeCarried)key.getComponent(CanBeCarried.class);
-				if (cbc != null) {
-					if (cc.wantsToCarry || cbc.auto_pickedup) {
-						//cc.wantsToCarry = false;
-						Settings.p(key + " picked up");
-						cc.lastPickupDropTime = System.currentTimeMillis();
-						key.hideComponent(CollidesComponent.class);
-						key.hideComponent(HasDecal.class);
-						key.hideComponent(HasModelComponent.class);
-						key.hideComponent(CombinesWithLitterComponent.class);
-						key.restoreComponent(HasGuiSpriteComponent.class);
+					CanBeCarried cbc = (CanBeCarried)key.getComponent(CanBeCarried.class);
+					if (cbc != null) {
+						if (cc.wantsToCarry || cbc.auto_pickedup) {
+							//cc.wantsToCarry = false;
+							Settings.p(key + " picked up");
+							cc.lastPickupDropTime = System.currentTimeMillis();
+							key.hideComponent(CollidesComponent.class);
+							key.hideComponent(HasDecal.class);
+							key.hideComponent(HasModelComponent.class);
+							key.hideComponent(CombinesWithLitterComponent.class);
+							key.restoreComponent(HasGuiSpriteComponent.class);
 
-						PositionComponent keyPos = (PositionComponent)key.getComponent(PositionComponent.class);
-						cbc.original_y = keyPos.position.y;
+							PositionComponent keyPos = (PositionComponent)key.getComponent(PositionComponent.class);
+							cbc.original_y = keyPos.position.y;
 
-						HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)key.getComponent(HasGuiSpriteComponent.class);
-						hgsc.onlyViewId = cc.viewId;
-						cc.carrying = key;
-						break;
+							HasGuiSpriteComponent hgsc = (HasGuiSpriteComponent)key.getComponent(HasGuiSpriteComponent.class);
+							hgsc.onlyViewId = cc.viewId;
+							cc.carrying = key;
+							break;
+						}
 					}
-				}
 				}
 			}
 		} else {

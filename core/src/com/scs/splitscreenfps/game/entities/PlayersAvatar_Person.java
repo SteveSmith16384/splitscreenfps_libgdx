@@ -135,12 +135,12 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		if (this.inputMethod.isCirclePressed()) {
 			CanCarryComponent cc = (CanCarryComponent)this.getComponent(CanCarryComponent.class);
 			if (cc != null) {
-				cc.wantsToCarry = true;
+				cc.wantsToCarry = true; // todo - don't do this here
 			}
 		} else {
 			CanCarryComponent cc = (CanCarryComponent)this.getComponent(CanCarryComponent.class);
 			if (cc != null) {
-				cc.wantsToCarry = false;
+				cc.wantsToCarry = false; // todo - don't do this here
 			}
 		}
 

@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class FloorSelector extends AbstractEntity {
 
@@ -18,7 +20,10 @@ public class FloorSelector extends AbstractEntity {
 	public FloorSelector(BasicECS ecs) {
 		super(ecs, FloorSelector.class.getSimpleName());
 
-		Texture tex = new Texture("tower/defence/unit_highlighter_w.png");
+		PositionComponent pos = new PositionComponent();
+		this.addComponent(pos);
+
+		Texture tex = new Texture("towerdefence/unit_highlighter_w.png");
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		Material white_material = new Material(TextureAttribute.createDiffuse(tex));
 

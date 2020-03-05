@@ -25,7 +25,7 @@ public class TowerDefenceEntityFactory {
 		pos.position = new Vector3(x, 0, y);
 		e.addComponent(pos);
 
-		TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/coins.png", 8, 4);
+		TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/Coin_16x16_Anim.png", 8, 1);
 
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];
@@ -46,4 +46,19 @@ public class TowerDefenceEntityFactory {
 
 		return e;
 	}
+
+
+	public static AbstractEntity createTurret(BasicECS ecs, float x, float y) {
+		AbstractEntity e = new AbstractEntity(ecs, "Turret");
+
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(x, 0, y);
+		e.addComponent(pos);
+
+
+		e.addComponent(new CollidesComponent(true, 0.2f));
+
+		return e;
+	}
+
 }

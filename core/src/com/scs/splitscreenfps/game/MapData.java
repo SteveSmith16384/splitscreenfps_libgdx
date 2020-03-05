@@ -65,7 +65,7 @@ public class MapData implements IAStarMapInterface {
 		return true;
 	}
 
-
+/*
 	public boolean rectangleFree_ORIG(float center_x, float center_z, float width, float depth) {
 		//Upper left
 		float x = (center_x)-(width/2) + 0.5f;
@@ -101,7 +101,7 @@ public class MapData implements IAStarMapInterface {
 
 		return true;
 	}
-
+*/
 
 	public boolean canSee(Vector3 startPos, Vector3 endPos) {
 		tmpCurrentPos.set(startPos);

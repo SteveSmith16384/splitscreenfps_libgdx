@@ -66,6 +66,7 @@ public class MovementSystem extends AbstractSystem {
 			}
 		}
 	}
+	
 
 	/**
 	 * Returns true if entity moved successfully on either axis.
