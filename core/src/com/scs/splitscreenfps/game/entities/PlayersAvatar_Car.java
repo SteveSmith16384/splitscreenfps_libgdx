@@ -73,19 +73,19 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 			} else if (inputMethod instanceof NoInputMethod) {
 				// Do nothing
 			} else {
-				if (inputMethod.getLookLeft() > Settings.MIN_AXIS) {
-					veh.angle_rads += ROT_SPEED_Y * inputMethod.getLookLeft() * dt * turn_frac;
-				} else if (inputMethod.getLookRight() > Settings.MIN_AXIS) {
-					veh.angle_rads -= ROT_SPEED_Y * inputMethod.getLookRight() * dt * turn_frac;
+				if (inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
+					veh.angle_rads += ROT_SPEED_Y * inputMethod.isStrafeLeftPressed() * dt * turn_frac;
+				} else if (inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
+					veh.angle_rads -= ROT_SPEED_Y * inputMethod.isStrafeRightPressed() * dt * turn_frac;
 				}
 			}
 		}
 
 		// Acc/dec
-		if (this.inputMethod.isCirclePressed()) {
+		if (this.inputMethod.isCrossPressed()) {
 			veh.current_speed += dt * ACC;
 			//Settings.p("Speed=" + veh.current_speed);
-		} else if (this.inputMethod.isCrossPressed()) {
+		} else if (this.inputMethod.isCirclePressed()) {
 			veh.current_speed -= dt * ACC * 2;
 			//Settings.p("Speed=" + veh.current_speed);
 		} else {

@@ -54,39 +54,41 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 			} else {
 				player = evt.movingEntity;
 			}
-			CanBeHarmedComponent ic = (CanBeHarmedComponent)player.getComponent(CanBeHarmedComponent.class);
-			if (ic != null) {
-				// Drop key
-				CanCarryComponent ccc = (CanCarryComponent)player.getComponent(CanCarryComponent.class);
-				if (ccc.carrying != null) {
-					ccc.carrying.remove();
-					ccc.carrying = null;
+			if (player != null) {
+				CanBeHarmedComponent ic = (CanBeHarmedComponent)player.getComponent(CanBeHarmedComponent.class);
+				if (ic != null) {
+					// Drop key
+					CanCarryComponent ccc = (CanCarryComponent)player.getComponent(CanCarryComponent.class);
+					if (ccc.carrying != null) {
+						ccc.carrying.remove();
+						ccc.carrying = null;
+					}
+
+					// Move player back to start
+					PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
+					posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
+
+					TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), ic.playerId, 2);
+					ecs.addEntity(te);
+
+					AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, ic.playerId);
+					ecs.addEntity(redfilter);
+
+					// Freeze t-rex for a bit
+					MovementData movementData = (MovementData)trex.getComponent(MovementData.class);
+					movementData.frozenUntil = System.currentTimeMillis() + 4000;
+
+					AnimatedComponent anim = (AnimatedComponent)trex.getComponent(AnimatedComponent.class);
+					if (anim != null) {
+						anim.next_animation = anim.idle_anim_name; 
+					}
+
+					BillBoardFPS_Main.audio.play("monstermaze/sfx/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
+
+					last_harm_done = System.currentTimeMillis();
+
+					break;
 				}
-
-				// Move player back to start
-				PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
-				posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
-
-				TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), ic.playerId, 2);
-				ecs.addEntity(te);
-
-				AbstractEntity redfilter = EntityFactory.createRedFilter(game.ecs, ic.playerId);
-				ecs.addEntity(redfilter);
-
-				// Freeze t-rex for a bit
-				MovementData movementData = (MovementData)trex.getComponent(MovementData.class);
-				movementData.frozenUntil = System.currentTimeMillis() + 4000;
-
-				AnimatedComponent anim = (AnimatedComponent)trex.getComponent(AnimatedComponent.class);
-				if (anim != null) {
-					anim.next_animation = anim.idle_anim_name; 
-				}
-
-				BillBoardFPS_Main.audio.play("monstermaze/sfx/aargh/aargh" + NumberFunctions.rnd(0, 7) + ".ogg");
-
-				last_harm_done = System.currentTimeMillis();
-
-				break;
 			}
 		}
 	}

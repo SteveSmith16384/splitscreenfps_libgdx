@@ -94,26 +94,28 @@ public class TagSystem extends AbstractSystem {
 			clean = evt.movingEntity;
 			it = evt.hitEntity;
 		}
-		TagableComponent clean_tagable = (TagableComponent)clean.getComponent(TagableComponent.class);
-		if (clean_tagable != null) {
-			TagableComponent it_tagable = (TagableComponent)it.getComponent(TagableComponent.class);
-			if (it_tagable != null) {
-				Settings.p("Player " + clean_tagable.player + " tagged!");
+		if (clean != null) {
+			TagableComponent clean_tagable = (TagableComponent)clean.getComponent(TagableComponent.class);
+			if (clean_tagable != null) {
+				TagableComponent it_tagable = (TagableComponent)it.getComponent(TagableComponent.class);
+				if (it_tagable != null) {
+					Settings.p("Player " + clean_tagable.player + " tagged!");
 
-				BillBoardFPS_Main.audio.play("tag/sfx/impactsplat01.mp3");
+					BillBoardFPS_Main.audio.play("tag/sfx/impactsplat01.mp3");
 
-				// Change "it" player to normal
-				this.swapModel(it_tagable);
-				// Change normal player to "it"
-				this.swapModel(clean_tagable);
+					// Change "it" player to normal
+					this.swapModel(it_tagable);
+					// Change normal player to "it"
+					this.swapModel(clean_tagable);
 
-				this.currentIt = clean;
-				lastTagTime = System.currentTimeMillis();
+					this.currentIt = clean;
+					lastTagTime = System.currentTimeMillis();
 
-				game.ecs.addEntity(new TextEntity(ecs, "YOU HAVE BEEN INFECTED", 50, 2, new Color(1, 1f, 0, 1), clean_tagable.playerIdx, 2));
+					game.ecs.addEntity(new TextEntity(ecs, "YOU HAVE BEEN INFECTED", 50, 2, new Color(1, 1f, 0, 1), clean_tagable.playerIdx, 2));
 
-				MovementData movementData = (MovementData)this.currentIt.getComponent(MovementData.class);
-				movementData.frozenUntil = System.currentTimeMillis() + TAG_INTERVAL;
+					MovementData movementData = (MovementData)this.currentIt.getComponent(MovementData.class);
+					movementData.frozenUntil = System.currentTimeMillis() + TAG_INTERVAL;
+				}
 			}
 		}
 	}

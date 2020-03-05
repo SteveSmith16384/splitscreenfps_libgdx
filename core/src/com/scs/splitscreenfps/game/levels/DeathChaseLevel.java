@@ -73,27 +73,15 @@ public class DeathChaseLevel extends AbstractLevel {
 			}
 		}
 
-		for (int i=0 ; i<this.startPositions.length ; i++) {
-			switch (i) {
-			case 0:
-				this.startPositions[i] = new GridPoint2Static(1, 1);
-				break;
-			case 1:
-				this.startPositions[i] = new GridPoint2Static(map_width-2, map_height-2);
-				break;
-			case 2:
-				this.startPositions[i] = new GridPoint2Static(map_width-2, 1);
-				break;
-			case 3:
-				this.startPositions[i] = new GridPoint2Static(1, map_height-2);
-				break;
-			default:
-				throw new RuntimeException("Todo");
-			}
+		this.startPositions[0] = new GridPoint2Static(1, 1);
+		this.startPositions[1] = new GridPoint2Static(map_width-2, map_height-2);
+		this.startPositions[2] = new GridPoint2Static(map_width-2, 1);
+		this.startPositions[3] = new GridPoint2Static(1, map_height-2);
+
+		for (int i=0 ; i<this.game.players.length ; i++) {
 			game.players[i].addComponent(new CanRespawnComponent(new Vector3(this.startPositions[i].x+.5f, Settings.PLAYER_HEIGHT/2, this.startPositions[i].y+0.5f)));
-
 		}
-
+		
 		if (Settings.DARKMODE == false) {
 			game.ecs.addEntity(new Floor(game.ecs, "deathchase/grass.jpg", 1, 1, map_width-1, map_height-1, true));
 		}

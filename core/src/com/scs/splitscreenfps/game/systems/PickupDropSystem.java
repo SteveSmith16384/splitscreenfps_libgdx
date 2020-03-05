@@ -53,7 +53,7 @@ public class PickupDropSystem extends AbstractSystem {
 				EventCollision evt = (EventCollision)e;
 				//AbstractEntity player = evt.movingEntity;
 				AbstractEntity key = evt.hitEntity;
-
+				if (key != null) {
 				CanBeCarried cbc = (CanBeCarried)key.getComponent(CanBeCarried.class);
 				if (cbc != null) {
 					if (cc.wantsToCarry || cbc.auto_pickedup) {
@@ -74,6 +74,7 @@ public class PickupDropSystem extends AbstractSystem {
 						cc.carrying = key;
 						break;
 					}
+				}
 				}
 			}
 		} else {

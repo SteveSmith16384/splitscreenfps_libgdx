@@ -12,7 +12,7 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public float isForwardsPressed() {
-		return controller.getAxis(1);
+		return -controller.getAxis(1);
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class ControllerInputMethod implements IInputMethod {
 
 	@Override
 	public float isStrafeLeftPressed() {
-		return controller.getAxis(0);
+		return -controller.getAxis(0);
 	}
 
 	@Override

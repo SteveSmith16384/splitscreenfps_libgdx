@@ -112,10 +112,12 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		movementData.offset.setZero();
 
 		if (this.inputMethod.isForwardsPressed() > Settings.MIN_AXIS) {
+			Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
 			movementData.offset.add(tmpVector.nor().scl(this.inputMethod.isForwardsPressed() * MOVE_SPEED));
 		} else if (this.inputMethod.isBackwardsPressed() > Settings.MIN_AXIS) {
+			Settings.p("Back:" + this.inputMethod.isBackwardsPressed());
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
 			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.isBackwardsPressed()));

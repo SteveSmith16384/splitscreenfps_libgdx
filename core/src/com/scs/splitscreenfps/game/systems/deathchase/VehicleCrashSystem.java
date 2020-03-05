@@ -35,6 +35,9 @@ public class VehicleCrashSystem implements ISystem {
 			VehicleComponent veh_mover = (VehicleComponent)evt.movingEntity.getComponent(VehicleComponent.class);
 			if (veh_mover != null) {
 				if (veh_mover.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
+					if (evt.hitEntity == null) {
+						this.crash(evt.movingEntity, veh_mover.playerId);
+					} else {
 					VehicleComponent veh_hit = (VehicleComponent)evt.hitEntity.getComponent(VehicleComponent.class);
 					if (veh_hit != null) {
 						// Hot another car!
@@ -50,6 +53,7 @@ public class VehicleCrashSystem implements ISystem {
 						this.crash(evt.movingEntity, veh_mover.playerId);
 						veh_mover.current_speed = 0;
 					}
+				}
 				}
 			}
 		}
