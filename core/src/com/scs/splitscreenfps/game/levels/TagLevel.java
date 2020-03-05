@@ -200,7 +200,7 @@ public class TagLevel extends AbstractLevel {
 		// Draw slime
 		TagSystem tagSystem = (TagSystem)game.ecs.getSystem(TagSystem.class);
 		if (tagSystem != null) {
-			if (tagSystem.currentIt.id == game.players[game.currentViewId].id) {
+			if (tagSystem.currentIt.entityId == game.players[game.currentViewId].entityId) {
 				if (tagSystem.lastTagTime + TagSystem.TAG_INTERVAL > System.currentTimeMillis()) {
 					batch2d.setColor(1, 1, 1, 1);
 				} else {

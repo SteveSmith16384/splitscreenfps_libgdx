@@ -27,7 +27,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	private Vector2 tmpVec2 = new Vector2();
 
 	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
-		super(_game.ecs, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
+		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		game = _game;
 		inputMethod = _inputMethod;

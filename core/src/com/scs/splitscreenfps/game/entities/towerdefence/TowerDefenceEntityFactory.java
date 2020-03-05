@@ -1,20 +1,55 @@
 package com.scs.splitscreenfps.game.entities.towerdefence;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
+import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
 
 import ssmith.libgdx.GraphicsHelper;
+import ssmith.libgdx.ModelFunctions;
 
 public class TowerDefenceEntityFactory {
 
 	private TowerDefenceEntityFactory() {
+	}
+
+
+	public static AbstractEntity createAlien(BasicECS ecs, float x, float z) {
+		AbstractEntity e = new AbstractEntity(ecs, "Alien");
+
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(x+0.5f, 0, z+0.5f);
+		e.addComponent(pos);
+
+		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/Alien_Helmet.g3db", true);
+		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+		instance.transform.scl(scale);
+		
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, -90, scale);
+		e.addComponent(hasModel);
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
+		anim.animationController = animation;
+		e.addComponent(anim);
+
+		float DIAM = .4f;
+		e.addComponent(new MovementData(DIAM));
+		e.addComponent(new CollidesComponent(false, DIAM+.2f));//.5f, .5f, .5f));
+		
+		return e;
 	}
 
 
@@ -48,15 +83,23 @@ public class TowerDefenceEntityFactory {
 	}
 
 
-	public static AbstractEntity createTurret(BasicECS ecs, float x, float y) {
+	public static AbstractEntity createTurret(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "Turret");
 
 		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x, 0, y);
+		pos.position = new Vector3(x+.5f, 0, z+.5f);
 		e.addComponent(pos);
 
+		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/kenney_td_kit/weapon_blaster.g3db", true);
+		float scale = ModelFunctions.getScaleForHeight(instance, .5f);
+		instance.transform.scl(scale);
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		HasModelComponent hasModel = new HasModelComponent("Turret", instance, offset, 0, scale);
+		e.addComponent(hasModel);
 
 		e.addComponent(new CollidesComponent(true, 0.2f));
+
+		e.addComponent(new IsTurretComponent());
 
 		return e;
 	}

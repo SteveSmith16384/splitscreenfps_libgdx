@@ -8,6 +8,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.towerdefence.CanBuildComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.CanBuildOnComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.ShowFloorSelectorComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerDefencePlayerData;
@@ -15,6 +16,7 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
+import com.scs.splitscreenfps.game.systems.towerdefence.BuildDefenceSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
 
@@ -34,6 +36,7 @@ public class TowerDefenceLevel extends AbstractLevel {
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
 		player.addComponent(new ShowFloorSelectorComponent());
 		player.addComponent(new TowerDefencePlayerData());
+		player.addComponent(new CanBuildComponent());
 	}
 
 
@@ -125,7 +128,7 @@ public class TowerDefenceLevel extends AbstractLevel {
 	@Override
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new ShowFloorSelectorSystem(ecs));
-		//ecs.addSystem(new SpawnEnemiesSystem());
+		ecs.addSystem(new BuildDefenceSystem(ecs, game));
 	}
 
 	
@@ -133,6 +136,7 @@ public class TowerDefenceLevel extends AbstractLevel {
 	public void update() {
 		game.ecs.processSystem(ShowFloorSelectorSystem.class);
 		spawnEnemiesSystem.process();
+		game.ecs.processSystem(BuildDefenceSystem.class);
 	}
 
 

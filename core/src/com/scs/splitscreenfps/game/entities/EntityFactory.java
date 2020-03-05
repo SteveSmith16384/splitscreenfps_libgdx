@@ -139,23 +139,7 @@ public class EntityFactory {
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);
 
-		Model model = null;
-		if (filename.endsWith(".obj")) {
-			ModelLoader loader = new ObjLoader();
-			model = loader.loadModel(Gdx.files.internal(filename));
-		} else {
-			G3dModelLoader g3dbModelLoader;
-			g3dbModelLoader = new G3dModelLoader(new UBJsonReader());
-
-			model = g3dbModelLoader.loadModel(Gdx.files.absolute(filename));
-		}
-
-		ModelInstance instance = new ModelInstance(model);
-
-		for(int m=0;m<instance.materials.size;m++) {
-			Material mat = instance.materials.get(m);
-			mat.remove(BlendingAttribute.Type);
-		}
+		ModelInstance instance = ModelFunctions.loadModel("towerdefence/weapon_blaster.g3gp", false);
 
 		HasModelComponent hasModel = new HasModelComponent("model", instance);
 		instance.transform.scl(scl);

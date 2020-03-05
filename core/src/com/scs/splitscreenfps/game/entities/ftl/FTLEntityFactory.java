@@ -10,20 +10,25 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CanShootComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ftl.IsBatteryComponent;
+
+import ssmith.libgdx.ModelFunctions;
 
 public class FTLEntityFactory {
 
@@ -31,6 +36,34 @@ public class FTLEntityFactory {
 	}
 	
 	
+	public static AbstractEntity createAlien(BasicECS ecs, float x, float z) {
+		AbstractEntity e = new AbstractEntity(ecs, "Alien");
+
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(x+0.5f, 0, z+0.5f);
+		e.addComponent(pos);
+
+		ModelInstance instance = ModelFunctions.loadModel("ftl/models/Alien_Helmet.g3db", true);
+		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
+		instance.transform.scl(scale);
+		
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, -90, scale);
+		e.addComponent(hasModel);
+
+		AnimationController animation = new AnimationController(instance);
+		AnimatedComponent anim = new AnimatedComponent(animation, "AlienArmature|Alien_Walk", "AlienArmature|Alien_Idle");
+		anim.animationController = animation;
+		e.addComponent(anim);
+
+		float DIAM = .4f;
+		e.addComponent(new MovementData(DIAM));
+		e.addComponent(new CollidesComponent(false, DIAM+.2f));//.5f, .5f, .5f));
+		
+		return e;
+	}
+
+
 	public static AbstractEntity createBattery(BasicECS ecs, float map_x, float map_z) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Battery");
 

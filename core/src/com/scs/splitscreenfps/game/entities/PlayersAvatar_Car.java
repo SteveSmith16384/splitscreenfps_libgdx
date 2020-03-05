@@ -25,7 +25,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 	public static final float ACC = 2;
 
 	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
-		super(_game.ecs, PlayersAvatar_Car.class.getSimpleName() + "_" + playerIdx);
+		super(_game.ecs, playerIdx, PlayersAvatar_Car.class.getSimpleName() + "_" + playerIdx);
 
 		game = _game;
 		inputMethod = _inputMethod;

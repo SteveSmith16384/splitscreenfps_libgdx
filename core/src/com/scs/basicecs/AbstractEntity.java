@@ -8,7 +8,7 @@ public class AbstractEntity {
 
 	private BasicECS ecs;
 
-	public int id;
+	public int entityId;
 	public String name;
 	private HashMap<Class<?>, Object> components = new HashMap<Class<?>, Object>();
 	private HashMap<Class<?>, Object> hiddenComponents = new HashMap<Class<?>, Object>(); // For temporarily removing components, e.g. collision
@@ -16,7 +16,7 @@ public class AbstractEntity {
 	
 	public AbstractEntity(BasicECS _ecs, String _name) {
 		ecs = _ecs;
-		this.id = next_id++;
+		this.entityId = next_id++;
 		this.name = _name;
 	}
 

@@ -11,9 +11,12 @@ public abstract class AbstractPlayersAvatar extends AbstractEntity {
 	protected Game game;
 	public Camera camera;
 	public IInputMethod inputMethod;
+	public int playerIdx;
 
-	public AbstractPlayersAvatar(BasicECS _ecs, String _name) {
+	public AbstractPlayersAvatar(BasicECS _ecs, int _playerIdx, String _name) {
 		super(_ecs, _name);
+		
+		playerIdx = _playerIdx;
 	}
 
 	
