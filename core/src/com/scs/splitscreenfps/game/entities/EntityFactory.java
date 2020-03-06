@@ -1,7 +1,6 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,15 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
@@ -133,15 +128,16 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createModel(Game game, String name, String filename, float posX, float posY, float posZ, float scl) {
+	public static AbstractEntity createModel(Game game, String name, String filename, float posX, float posY, float posZ, float height) {
 		AbstractEntity entity = new AbstractEntity(game.ecs, name);
 
 		PositionComponent posData = new PositionComponent(posX, posY, posZ);
 		entity.addComponent(posData);
 
-		ModelInstance instance = ModelFunctions.loadModel("towerdefence/weapon_blaster.g3gp", false);
+		ModelInstance instance = ModelFunctions.loadModel(filename, false);
 
 		HasModelComponent hasModel = new HasModelComponent("model", instance);
+		float scl = ModelFunctions.getScaleForHeight(instance, height);				
 		instance.transform.scl(scl);
 		ModelFunctions.getOrigin(instance, hasModel.offset);
 		hasModel.offset.scl(-1f);

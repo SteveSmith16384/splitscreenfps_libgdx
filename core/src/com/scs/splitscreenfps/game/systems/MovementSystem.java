@@ -29,11 +29,6 @@ public class MovementSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 		
-		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
-		if (cc != null) {
-			cc.bb_dirty = true;
-		}
-
 		AutoMove auto = (AutoMove)entity.getComponent(AutoMove.class);
 		if (auto != null) {
 			movementData.offset = auto.dir.cpy();
@@ -42,10 +37,14 @@ public class MovementSystem extends AbstractSystem {
 
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
+				/*CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
+				if (cc != null) {
+					cc.bb_dirty = true;
+				}*/
 				if (movementData.must_move_x_and_z) {
-					this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+					this.tryMoveXAndZ(entity, game.mapData, movementData.offset, movementData.diameter);
 				} else {
-					this.tryMoveXOrZ(entity, game.mapData, movementData.offset, movementData.diameter, cc);
+					this.tryMoveXOrZ(entity, game.mapData, movementData.offset, movementData.diameter);
 				}
 				//movementData.blocked_on_last_move = moved;
 			}
@@ -60,20 +59,22 @@ public class MovementSystem extends AbstractSystem {
 				anim.next_animation = anim.idle_anim_name;
 			}
 		}
+
+		movementData.offset.setZero(); // Ready for next loop
 	}
 	
 
 	/**
 	 * Returns true if entity moved successfully on either axis.
 	 */
-	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter, CollidesComponent cc) {
+	private boolean tryMoveXAndZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter) {
 		PositionComponent pos = (PositionComponent)mover.getComponent(PositionComponent.class);
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
 		boolean result = false;
 		if (world.rectangleFree(position.x+offset.x, position.z+offset.z, diameter, diameter)) {
-			if (this.movementBlockedByEntity(mover, offset.x, offset.z, cc) == false) {
+			if (this.movementBlockedByEntity(mover, offset.x, offset.z) == false) {
 				position.x += offset.x;
 				position.z += offset.z;
 				result = true;
@@ -86,14 +87,14 @@ public class MovementSystem extends AbstractSystem {
 	}
 
 
-	private boolean tryMoveXOrZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter, CollidesComponent cc) {
+	private boolean tryMoveXOrZ(AbstractEntity mover, MapData world, Vector3 offset, float diameter) {
 		PositionComponent pos = (PositionComponent)mover.getComponent(PositionComponent.class);
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
 		boolean resultX = false;
 		if (world.rectangleFree(position.x+offset.x, position.z, diameter, diameter)) {
-			if (this.movementBlockedByEntity(mover, offset.x, 0, cc) == false) {
+			if (this.movementBlockedByEntity(mover, offset.x, 0) == false) {
 				position.x += offset.x;
 				resultX = true;
 			}
@@ -103,7 +104,7 @@ public class MovementSystem extends AbstractSystem {
 
 		boolean resultZ = false;
 		if (world.rectangleFree(position.x, position.z+offset.z, diameter, diameter)) {
-			if (this.movementBlockedByEntity(mover, 0, offset.z, cc) == false) {
+			if (this.movementBlockedByEntity(mover, 0, offset.z) == false) {
 				position.z += offset.z;
 				resultZ = true;
 			}
@@ -114,7 +115,7 @@ public class MovementSystem extends AbstractSystem {
 	}
 
 
-	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ, CollidesComponent cc) {
+	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ) {
 		return game.collCheckSystem.collided(mover, offX, offZ, true);
 	}
 

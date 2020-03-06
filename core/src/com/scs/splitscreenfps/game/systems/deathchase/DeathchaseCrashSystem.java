@@ -16,12 +16,12 @@ import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
-public class VehicleCrashSystem implements ISystem {
+public class DeathchaseCrashSystem implements ISystem {
 
 	private Game game;
 	private BasicECS ecs;
 
-	public VehicleCrashSystem(BasicECS _ecs, Game _game) {
+	public DeathchaseCrashSystem(BasicECS _ecs, Game _game) {
 		ecs = _ecs;
 		game = _game;
 	}
@@ -36,24 +36,25 @@ public class VehicleCrashSystem implements ISystem {
 			if (veh_mover != null) {
 				if (veh_mover.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
 					if (evt.hitEntity == null) {
+						veh_mover.current_speed = 0;
 						this.crash(evt.movingEntity, veh_mover.playerId);
 					} else {
-					VehicleComponent veh_hit = (VehicleComponent)evt.hitEntity.getComponent(VehicleComponent.class);
-					if (veh_hit != null) {
-						// Hot another car!
-						if (veh_mover.current_speed > veh_hit.current_speed) {
-							this.crash(evt.hitEntity, veh_hit.playerId);
-							veh_hit.current_speed = 0;
+						VehicleComponent veh_hit = (VehicleComponent)evt.hitEntity.getComponent(VehicleComponent.class);
+						if (veh_hit != null) {
+							// Hit another car!
+							if (veh_mover.current_speed > veh_hit.current_speed) {
+								this.crash(evt.hitEntity, veh_hit.playerId);
+								veh_hit.current_speed = 0;
+							} else {
+								this.crash(evt.movingEntity, veh_mover.playerId);
+								veh_mover.current_speed = 0;
+							}
 						} else {
+							// Hit tree
 							this.crash(evt.movingEntity, veh_mover.playerId);
 							veh_mover.current_speed = 0;
 						}
-					} else {
-						// Hit tree
-						this.crash(evt.movingEntity, veh_mover.playerId);
-						veh_mover.current_speed = 0;
 					}
-				}
 				}
 			}
 		}
@@ -66,7 +67,7 @@ public class VehicleCrashSystem implements ISystem {
 		/*PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 		//posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
 		posData.position.set(crc.respawnPoint);
-*/
+		 */
 		if (id >= 0) {
 			TextEntity te = new TextEntity(ecs, "YOU HAVE CRASHED!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), id, 2);
 			ecs.addEntity(te);

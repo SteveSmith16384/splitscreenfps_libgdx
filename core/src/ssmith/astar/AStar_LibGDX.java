@@ -97,24 +97,21 @@ public class AStar_LibGDX {
 	 * 
 	 */
 	public ArrayList<GridPoint2> findPath(int start_x, int start_z, int targ_x, int targ_z, int max_dist) {
+		route = new ArrayList<GridPoint2>();
+
+		if (start_x == targ_x && start_z == targ_z) {
+			return route;
+		}
+		
 		if (this.can_timeout) {
 			timeout_time = System.currentTimeMillis() + max_dur; 
 		}
 
 		//System.out.println("Finding path from " + start_x + "," + start_z + " to " + targ_x+ "," + targ_z + ".");
-		route = new ArrayList<GridPoint2>();
 		//this.start_x = start_x;
 		//this.start_z = start_z;
 		this.end_x = targ_x;
 		this.end_z = targ_z;
-		//this.max_dist = max_dist;
-
-		/*return run();
-	}
-
-
-	public ArrayList<GridPoint2> run() {*/
-		//System.out.println("Tot A* threads:" + this.tot_threads);
 
 		int w = map_interface.getMapWidth();
 		int h = map_interface.getMapHeight();

@@ -6,6 +6,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.ShowFloorSelectorComponent;
+import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.towerdefence.FloorSelector;
 
 public class ShowFloorSelectorSystem extends AbstractSystem {
@@ -39,10 +40,16 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 
 			PositionComponent entityPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			PositionComponent selectorPos = (PositionComponent)sfsc.floor_selector.getComponent(PositionComponent.class);
+			
+			AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 			selectorPos.position.set((int)(entityPos.position.x)+1, 0, (int)(entityPos.position.z)+1); // todo - take into account direction
 
-			sfsc.pos.x = (int)(entityPos.position.x)+1;
-			sfsc.pos.y = (int)(entityPos.position.z)+1;
+			sfsc.pos.x = (int)(entityPos.position.x + player.camera.direction.x * 2);
+			sfsc.pos.y = (int)(entityPos.position.z + player.camera.direction.z * 2);
+
+			selectorPos.position.x = sfsc.pos.x;//-= player.camera.direction.x * 1;
+			selectorPos.position.z = sfsc.pos.y;//-= player.camera.direction.z * 1;
+
 		}
 
 	}

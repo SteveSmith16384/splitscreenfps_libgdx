@@ -36,7 +36,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 
 		if (player.inputMethod.isCirclePressed()) {
 			// todo - check coins
-			int f = 34;
+
 			// Check map is empty
 			CanBuildOnComponent cbboc = (CanBuildOnComponent)game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.getComponent(CanBuildOnComponent.class);
 			if (cbboc != null) {

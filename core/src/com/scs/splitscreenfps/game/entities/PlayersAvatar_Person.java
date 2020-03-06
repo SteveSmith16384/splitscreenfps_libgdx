@@ -109,7 +109,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 	private void checkMovementInput() {
 		MovementData movementData = (MovementData)this.getComponent(MovementData.class);
-		movementData.offset.setZero();
+		//movementData.offset.setZero();
 
 		if (this.inputMethod.isForwardsPressed() > Settings.MIN_AXIS) {
 			Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());

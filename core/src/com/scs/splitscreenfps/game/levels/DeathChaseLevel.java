@@ -13,7 +13,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.deathchase.DeathchaseEntityFactory;
-import com.scs.splitscreenfps.game.systems.deathchase.VehicleCrashSystem;
+import com.scs.splitscreenfps.game.systems.deathchase.DeathchaseCrashSystem;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
@@ -57,16 +57,16 @@ public class DeathChaseLevel extends AbstractLevel {
 				if (z == 0 || x == 0 || z == map_height-1 || x == map_width-1) {
 					game.mapData.map[x][z].blocked = true;
 					if (Settings.DARKMODE == false) {
-					Wall wall = new Wall(game.ecs, "deathchase/ForestTrees1.png", x, 0, z, false);
-					game.ecs.addEntity(wall);
+						Wall wall = new Wall(game.ecs, "deathchase/ForestTrees1.png", x, 0, z, false);
+						game.ecs.addEntity(wall);
 					}
 				} else {
 					game.mapData.map[x][z].blocked = false;
 					if (NumberFunctions.rnd(1,  10) == 1) {
 						if (z >= 2 && x >= 2 && z <= map_height-3 && x <= map_width-3) {
 							if (Settings.DARKMODE == false) {
-							AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
-							game.ecs.addEntity(tree);
+								//AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
+								//game.ecs.addEntity(tree);
 							}
 						}
 					} else {
@@ -87,7 +87,7 @@ public class DeathChaseLevel extends AbstractLevel {
 		for (int i=0 ; i<this.game.players.length ; i++) {
 			game.players[i].addComponent(new CanRespawnComponent(new Vector3(this.startPositions[i].x+.5f, Settings.PLAYER_HEIGHT/2, this.startPositions[i].y+0.5f)));
 		}
-		
+
 		if (Settings.DARKMODE == false) {
 			game.ecs.addEntity(new Floor(game.ecs, "deathchase/grass.jpg", 1, 1, map_width-1, map_height-1, true));
 		}
@@ -96,13 +96,13 @@ public class DeathChaseLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new VehicleCrashSystem(ecs, game));
+		ecs.addSystem(new DeathchaseCrashSystem(ecs, game));
 	}
 
 
 	@Override
 	public void update() {
-		game.ecs.processSystem(VehicleCrashSystem.class);
+		game.ecs.processSystem(DeathchaseCrashSystem.class);
 	}
 
 }

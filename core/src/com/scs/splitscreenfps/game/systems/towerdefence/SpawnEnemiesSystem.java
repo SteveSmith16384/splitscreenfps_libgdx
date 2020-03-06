@@ -3,21 +3,41 @@ package com.scs.splitscreenfps.game.systems.towerdefence;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 
 public class SpawnEnemiesSystem implements ISystem {
 
+	private BasicECS ecs;
 	public List<GridPoint2Static> enemy_spawn_points = new ArrayList<GridPoint2Static>();
-
-	public SpawnEnemiesSystem() {
-		// TODO Auto-generated constructor stub
+	private long nextSpawnTime;
+	private long spawnUntil;
+	
+	public SpawnEnemiesSystem(BasicECS _ecs) {
+		ecs = _ecs;
+		
+		spawnUntil = System.currentTimeMillis() + 20000; // todo
 	}
 
+	
 	@Override
 	public void process() {
-		// TODO Auto-generated method stub
+		if (spawnUntil < System.currentTimeMillis()) {
+			return;
+		}
+		
+		if (nextSpawnTime < System.currentTimeMillis()) {
+			nextSpawnTime = System.currentTimeMillis() + 3000;
+			
+			GridPoint2Static spawn_point = this.enemy_spawn_points.get(NumberFunctions.rnd(0,  this.enemy_spawn_points.size()-1));
+			AbstractEntity alien = TowerDefenceEntityFactory.createAlien(ecs, spawn_point.x, spawn_point.y);
+			ecs.addEntity(alien);
+		}
 		
 	}
 

@@ -16,13 +16,15 @@ import ssmith.libgdx.GridPoint2Static;
 
 public class MoveAStarSystem extends AbstractSystem {
 
-	private Game game;
-	private Vector2 tmpVec2 = new Vector2();
+	private final Game game;
+	private final Vector2 tmpVec2 = new Vector2();
+	//private final AStar_LibGDX astar;
 
 	public MoveAStarSystem(BasicECS ecs, Game _game) {
 		super(ecs, MoveAStarComponent.class);
 
 		game = _game;
+		//astar = new AStar_LibGDX(game.mapData);
 	}
 
 
@@ -31,9 +33,10 @@ public class MoveAStarSystem extends AbstractSystem {
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (mac.route == null || mac.route.size() == 0) {
-			AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
-			GridPoint2Static dest = game.mapData.getRandomFloorPos();
-			mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
+			//AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
+			//GridPoint2Static dest = game.mapData.getRandomFloorPos();
+			//mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
+			// DO NOTHING!  other system should find route
 		} else {
 			GridPoint2 destpos = mac.route.get(0);
 			double dist = GeometryFuncs.distance(posdata.position.x, posdata.position.z, destpos.x+.5f, destpos.y+.5f);
@@ -57,3 +60,4 @@ public class MoveAStarSystem extends AbstractSystem {
 	}
 
 }
+

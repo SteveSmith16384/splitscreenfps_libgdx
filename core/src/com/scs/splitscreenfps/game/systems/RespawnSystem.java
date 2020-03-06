@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 
@@ -46,6 +46,7 @@ public class RespawnSystem implements ISystem {
 
 				// check area clear
 				if (game.collCheckSystem.collided(e, 0, 0, false)) {
+					Settings.p("Area not clear - trying again...");
 					wrc.respawn_time = System.currentTimeMillis() + 3000;
 				} else {
 					e.removeComponent(WillRespawnComponent.class);

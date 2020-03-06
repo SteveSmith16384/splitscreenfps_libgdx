@@ -12,9 +12,11 @@ import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 
 import ssmith.libgdx.GraphicsHelper;
 import ssmith.libgdx.ModelFunctions;
@@ -26,16 +28,15 @@ public class TowerDefenceEntityFactory {
 
 
 	public static AbstractEntity createAlien(BasicECS ecs, float x, float z) {
-		AbstractEntity e = new AbstractEntity(ecs, "Alien");
+		AbstractEntity e = new AbstractEntity(ecs, "TD_Alien");
 
 		PositionComponent pos = new PositionComponent();
 		pos.position = new Vector3(x+0.5f, 0, z+0.5f);
 		e.addComponent(pos);
 
-		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/Alien_Helmet.g3db", true);
+		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/Alien.g3db", false);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
-		instance.transform.scl(scale);
-		
+		instance.transform.scl(scale);		
 		Vector3 offset = ModelFunctions.getOrigin(instance);
 		HasModelComponent hasModel = new HasModelComponent("Alien", instance, offset, -90, scale);
 		e.addComponent(hasModel);
@@ -47,7 +48,9 @@ public class TowerDefenceEntityFactory {
 
 		float DIAM = .4f;
 		e.addComponent(new MovementData(DIAM));
-		e.addComponent(new CollidesComponent(false, DIAM+.2f));//.5f, .5f, .5f));
+		e.addComponent(new CollidesComponent(false, DIAM+.2f));
+		e.addComponent(new TowerEnemyComponent());
+		e.addComponent(new MoveAStarComponent(1, true));
 		
 		return e;
 	}
@@ -61,7 +64,6 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(pos);
 
 		TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/Coin_16x16_Anim.png", 8, 1);
-
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];
 		hasDecal.decal = Decal.newDecal(tr, true);
@@ -76,8 +78,9 @@ public class TowerDefenceEntityFactory {
 			cycle.decals[i] = GraphicsHelper.DecalHelper(trs[i][0], 1);
 		}
 		e.addComponent(cycle);
-
-		e.addComponent(new CollidesComponent(false, 0.2f));//.5f, .5f, .5f));
+		
+		e.addComponent(new CollidesComponent(false, 0.2f));
+		e.addComponent(new IsCoinComponent());
 
 		return e;
 	}
@@ -94,7 +97,7 @@ public class TowerDefenceEntityFactory {
 		float scale = ModelFunctions.getScaleForHeight(instance, .5f);
 		instance.transform.scl(scale);
 		Vector3 offset = ModelFunctions.getOrigin(instance);
-		HasModelComponent hasModel = new HasModelComponent("Turret", instance, offset, 0, scale);
+		HasModelComponent hasModel = new HasModelComponent("Turret", instance, offset, -90, scale);
 		e.addComponent(hasModel);
 
 		e.addComponent(new CollidesComponent(true, 0.2f));

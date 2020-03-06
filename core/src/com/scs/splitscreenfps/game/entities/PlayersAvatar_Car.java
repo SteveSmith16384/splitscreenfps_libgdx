@@ -20,9 +20,13 @@ import ssmith.libgdx.ModelFunctions;
 
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
-	private static final float MAX_CAM_BOUNCE = .1f;
-	private static final float ROT_SPEED_Y = 4f;
+	private static final boolean SHOULDER_VIEW = true;
+	private static final float MAX_CAM_BOUNCE = .04f;
+	private static final float ROT_SPEED_Y = 1f;//4f;
+	private static final float CAM_BACK = 3f;
 	public static final float ACC = 2;
+	
+	private Vector3 tmpCamPos = new Vector3();
 
 	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Car.class.getSimpleName() + "_" + playerIdx);
@@ -52,7 +56,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		Vector3 offset = ModelFunctions.getOrigin(instance);
 		offset.y -= 0.2f; // Put wheels on floor
 		HasModelComponent hasModel = new HasModelComponent("Van", instance, offset, 0, scale); // was -90
-		hasModel.dontDrawInViewId = idx;
+		//hasModel.dontDrawInViewId = idx;
 		this.addComponent(hasModel);
 	}
 
@@ -97,7 +101,17 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		camera.direction.x = (float)Math.sin(veh.angle_rads);
 		camera.direction.z = (float)Math.cos(veh.angle_rads);
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
-		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+		tmpCamPos.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
+		if (SHOULDER_VIEW) {
+			tmpCamPos.set(posData.position.x, posData.position.y + .9f, posData.position.z);
+			tmpCamPos.x -= camera.direction.x * 2.f;//CAM_BACK;
+			tmpCamPos.z -= camera.direction.z * 2.f; //CAM_BACK;
+
+			camera.direction.y = -0.3f; // look down slightly
+			camera.direction.nor();
+		}
+		camera.position.set(tmpCamPos);
+		
 		// Bounce camera
 		float delta = veh.current_speed / VehicleMovementSystem.MAX_SPEED * MAX_CAM_BOUNCE;
 		camera.position.y += NumberFunctions.rndFloat(0, delta);

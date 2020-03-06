@@ -16,7 +16,7 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 public class VehicleMovementSystem extends AbstractSystem {
 
 	public static final float MAX_SPEED = 5;
-	private static final float TRACTION = .0001f;
+	private static final float TRACTION = .0004f;
 
 	private Vector3 tmpTargetMomentum = new Vector3();
 
@@ -64,7 +64,7 @@ public class VehicleMovementSystem extends AbstractSystem {
 		tmpTargetMomentum.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
 		tmpTargetMomentum.nor().scl(veh.current_speed);
 		veh.momentum.lerp(tmpTargetMomentum, TRACTION); 
-		movementData.offset.set(veh.momentum);
+		movementData.offset.add(veh.momentum);
 		//}
 	}
 
