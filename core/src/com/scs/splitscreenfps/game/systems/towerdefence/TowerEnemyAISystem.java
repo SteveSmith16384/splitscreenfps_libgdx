@@ -2,8 +2,6 @@ package com.scs.splitscreenfps.game.systems.towerdefence;
 
 import java.util.List;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
@@ -11,18 +9,16 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
-import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 
 import ssmith.astar.AStar_LibGDX;
-import ssmith.lang.GeometryFuncs;
 import ssmith.libgdx.GridPoint2Static;
 
 public final class TowerEnemyAISystem extends AbstractSystem {
 
 	private final Game game;
-	private final Vector2 tmpVec2 = new Vector2();
+	//private final Vector2 tmpVec2 = new Vector2();
 	private final GridPoint2Static targetPos;
 	private final AStar_LibGDX astar;
 

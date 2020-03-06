@@ -23,7 +23,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 	private static final boolean SHOULDER_VIEW = true;
 	private static final float MAX_CAM_BOUNCE = .04f;
 	private static final float ROT_SPEED_Y = 1f;//4f;
-	private static final float CAM_BACK = 3f;
+	private static final float CAM_BACK = 2f;
 	public static final float ACC = 2;
 	
 	private Vector3 tmpCamPos = new Vector3();
@@ -104,8 +104,8 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		tmpCamPos.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 		if (SHOULDER_VIEW) {
 			tmpCamPos.set(posData.position.x, posData.position.y + .9f, posData.position.z);
-			tmpCamPos.x -= camera.direction.x * 2.f;//CAM_BACK;
-			tmpCamPos.z -= camera.direction.z * 2.f; //CAM_BACK;
+			tmpCamPos.x -= camera.direction.x * CAM_BACK;
+			tmpCamPos.z -= camera.direction.z * CAM_BACK;
 
 			camera.direction.y = -0.3f; // look down slightly
 			camera.direction.nor();

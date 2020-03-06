@@ -142,11 +142,6 @@ public class BasicECS {
 	}
 
 	
-	/*public Iterator<AbstractEvent> getEventIterator() {
-		return this.events.iterator();
-	}*/
-	
-	
 	public List<AbstractEvent> getEvents(Class<? extends AbstractEvent> clazz) {
 		List<AbstractEvent> list = new ArrayList<AbstractEvent>();
 		Iterator<AbstractEvent> it = this.events.iterator();

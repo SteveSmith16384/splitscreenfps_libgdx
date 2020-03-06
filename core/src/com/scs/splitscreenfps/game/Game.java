@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
@@ -345,6 +347,24 @@ public class Game implements IModule {
 		}
 		this.game_stage = 1;
 		this.restartTime = System.currentTimeMillis() + 5000;
+	}
+	
+	
+	public List<AbstractEntity> getCollidedEntities(AbstractEntity e) {
+		List<AbstractEntity> list = new ArrayList<AbstractEntity>();
+		Iterator<AbstractEvent> it = ecs.events.iterator();
+		while (it.hasNext()) {
+			AbstractEvent evt = it.next();
+			if (evt.getClass().equals(EventCollision.class)) {
+				EventCollision coll = (EventCollision)evt;
+				if (coll.movingEntity == e) {
+					list.add(coll.hitEntity);
+				} else if (coll.hitEntity == e) {
+					list.add(coll.movingEntity);
+				}
+			}
+		}
+		return list;
 	}
 
 }

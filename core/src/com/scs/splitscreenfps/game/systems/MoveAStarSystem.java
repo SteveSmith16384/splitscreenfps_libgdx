@@ -10,9 +10,7 @@ import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
-import ssmith.astar.AStar_LibGDX;
 import ssmith.lang.GeometryFuncs;
-import ssmith.libgdx.GridPoint2Static;
 
 public class MoveAStarSystem extends AbstractSystem {
 

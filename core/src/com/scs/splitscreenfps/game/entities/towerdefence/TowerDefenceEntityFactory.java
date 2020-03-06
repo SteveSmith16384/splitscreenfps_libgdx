@@ -15,6 +15,7 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.IsCoinComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 

@@ -2,8 +2,6 @@ package com.scs.splitscreenfps.game.systems.monstermaze;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -11,13 +9,11 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
-import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.IsTRex;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 
 import ssmith.astar.AStar_LibGDX;
-import ssmith.lang.GeometryFuncs;
 import ssmith.libgdx.GridPoint2Static;
 
 public class TRexAISystem extends AbstractSystem {
@@ -25,7 +21,7 @@ public class TRexAISystem extends AbstractSystem {
 	private Game game;
 	private long next_check_can_see_time = 0;
 	private boolean check_if_see_player = false;
-	private Vector2 tmpVec2 = new Vector2();
+	//private Vector2 tmpVec2 = new Vector2();
 	
 	public TRexAISystem(BasicECS ecs, Game _game) {
 		super(ecs, IsTRex.class);

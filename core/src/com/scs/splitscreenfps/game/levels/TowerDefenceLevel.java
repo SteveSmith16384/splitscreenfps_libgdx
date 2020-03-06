@@ -4,7 +4,6 @@ import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
@@ -19,6 +18,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
 import com.scs.splitscreenfps.game.systems.towerdefence.BuildDefenceSystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerEnemyAISystem;
@@ -141,6 +141,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new BuildDefenceSystem(ecs, game));
 		ecs.addSystem(new TurretSystem(ecs, game));
 		ecs.addSystem(new TowerEnemyAISystem(ecs, game, targetPos));
+		ecs.addSystem(new CollectCoinsSystem(ecs, game));
 	}
 
 
@@ -151,6 +152,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		game.ecs.processSystem(BuildDefenceSystem.class);
 		game.ecs.processSystem(TurretSystem.class);
 		game.ecs.processSystem(TowerEnemyAISystem.class);
+		game.ecs.processSystem(CollectCoinsSystem.class);
 	}
 
 
