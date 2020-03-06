@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.WillRespawnComponent;
 
@@ -14,9 +16,11 @@ public class RespawnSystem implements ISystem {
 
 	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>();
 	private BasicECS ecs;
+	private Game game;
 
-	public RespawnSystem(BasicECS _ecs) {
+	public RespawnSystem(BasicECS _ecs, Game _game) {
 		ecs = _ecs;
+		game = _game;
 	}
 
 
@@ -33,17 +37,23 @@ public class RespawnSystem implements ISystem {
 			AbstractEntity e = this.entities.get(i);
 			WillRespawnComponent wrc = (WillRespawnComponent)e.getComponent(WillRespawnComponent.class);
 			if (wrc.respawn_time < System.currentTimeMillis()) {
-				// todo - check area clear
-				
+				// Set position
 				PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
-				//posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
 				posData.position.set(wrc.respawnPoint);
 
-				e.removeComponent(WillRespawnComponent.class);
-				ecs.addEntity(e);
-				this.entities.remove(i);
+				//CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
+				//cc.bb_dirty = true;
+
+				// check area clear
+				if (game.collCheckSystem.collided(e, 0, 0, false)) {
+					wrc.respawn_time = System.currentTimeMillis() + 3000;
+				} else {
+					e.removeComponent(WillRespawnComponent.class);
+					ecs.addEntity(e);
+					this.entities.remove(i);
+				}
 			}
 		}
 	}
-	
+
 }

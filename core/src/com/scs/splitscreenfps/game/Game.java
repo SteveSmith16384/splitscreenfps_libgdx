@@ -63,6 +63,7 @@ public class Game implements IModule {
 	private List<AbstractEntity> losers = new ArrayList<AbstractEntity>();
 
 	// Specific systems 
+	public CollisionCheckSystem collCheckSystem;
 	private DrawModelSystem drawModelSystem;
 	public RespawnSystem respawnSystem;
 	
@@ -143,7 +144,8 @@ public class Game implements IModule {
 	private void createECS() {
 		ecs = new BasicECS();
 		ecs.addSystem(new PlayerInputSystem(this));
-		ecs.addSystem(new CollisionCheckSystem(ecs));
+		collCheckSystem = new CollisionCheckSystem(ecs); 
+		ecs.addSystem(collCheckSystem);
 		ecs.addSystem(new DrawDecalSystem(this, ecs));
 		ecs.addSystem(new CycleThruDecalsSystem(ecs));
 		ecs.addSystem(new CycleThroughModelsSystem(ecs));
@@ -158,7 +160,7 @@ public class Game implements IModule {
 		ecs.addSystem(new PickupDropSystem(ecs, this));
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
 		ecs.addSystem(new VehicleMovementSystem(ecs));
-		respawnSystem = new RespawnSystem(ecs); 
+		respawnSystem = new RespawnSystem(ecs, this); 
 		ecs.addSystem(respawnSystem);
 	}
 

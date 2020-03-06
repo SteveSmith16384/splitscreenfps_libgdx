@@ -32,7 +32,6 @@ public class CollisionCheckSystem extends AbstractSystem {
 	 * Returns true/false depending if movement blocked
 	 */
 	public boolean collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
-		//CollisionResultsList cr = new CollisionResultsList(); // todo - don't create each time
 		boolean blocked = false;
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 
@@ -51,7 +50,6 @@ public class CollisionCheckSystem extends AbstractSystem {
 					}
 					if (moverCC.bb.intersects(cc.bb)) {
 						//Settings.p(mover + " collided with " + e);
-						//cr.AddCollisionResult(new CollisionResult(e, cc.blocksMovement));
 						blocked = cc.blocksMovement || blocked;
 						if (raise_event) {
 							ecs.events.add(new EventCollision(mover, e));
@@ -60,8 +58,6 @@ public class CollisionCheckSystem extends AbstractSystem {
 				}
 			}
 		}
-
-		//return cr;
 		return blocked;
 	}
 

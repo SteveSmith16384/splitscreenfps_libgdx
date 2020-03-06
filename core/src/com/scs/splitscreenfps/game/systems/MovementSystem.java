@@ -17,7 +17,6 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 public class MovementSystem extends AbstractSystem {
 
 	private Game game;
-	private CollisionCheckSystem collCheckSystem;
 
 	public MovementSystem(Game _game, BasicECS ecs) {
 		super(ecs, MovementData.class);
@@ -28,10 +27,6 @@ public class MovementSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		if (collCheckSystem == null) {
-			this.collCheckSystem = (CollisionCheckSystem)game.ecs.getSystem(CollisionCheckSystem.class);
-		}
-
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 		
 		CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
@@ -120,7 +115,7 @@ public class MovementSystem extends AbstractSystem {
 
 
 	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ, CollidesComponent cc) {
-		return this.collCheckSystem.collided(mover, offX, offZ, true);
+		return game.collCheckSystem.collided(mover, offX, offZ, true);
 	}
 
 }
