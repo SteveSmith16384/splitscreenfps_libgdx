@@ -15,12 +15,12 @@ public class Settings {
 	public static final int MODE_DEATHCHASE = 7;
 	public static final int MODE_TOWER_DEFENCE = 8;
 	
-	public static final int CURRENT_MODE = MODE_TOWER_DEFENCE;
+	public static final int CURRENT_MODE = MODE_DEATHCHASE;
 	public static final String VERSION = "1.01";
 	public static final boolean RELEASE_MODE = false;
 	
 	// Hacks
-	public static final boolean DARKMODE = !RELEASE_MODE && false;
+	public static final boolean DARKMODE = !RELEASE_MODE && true;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final boolean START_4_PLAYERS = !RELEASE_MODE && false;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && false;

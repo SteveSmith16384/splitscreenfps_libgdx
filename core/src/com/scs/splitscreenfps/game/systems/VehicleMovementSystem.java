@@ -16,8 +16,9 @@ import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 public class VehicleMovementSystem extends AbstractSystem {
 
 	public static final float MAX_SPEED = 5;
+	private static final float TRACTION = .0001f;
 
-	private Vector3 tmpVector = new Vector3();
+	private Vector3 tmpTargetMomentum = new Vector3();
 
 	public VehicleMovementSystem(BasicECS ecs) {
 		super(ecs, VehicleComponent.class);
@@ -27,11 +28,14 @@ public class VehicleMovementSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		VehicleComponent veh = (VehicleComponent)entity.getComponent(VehicleComponent.class);
-		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		movementData.offset.setZero();
-		
-		// todo - wrap angle
-		//while (angle > )
+
+		// wrap angle
+		float MAX = (float)Math.PI*2;
+		if (veh.angle_rads > MAX) {
+			veh.angle_rads -= MAX;
+		} else if (veh.angle_rads < 0) {
+			veh.angle_rads += MAX;
+		}
 
 		List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
 		for (AbstractEvent e : it) {
@@ -42,7 +46,7 @@ public class VehicleMovementSystem extends AbstractSystem {
 			}
 		}
 
-		if (veh.current_speed > MAX_SPEED) {
+		if (veh.current_speed > MAX_SPEED) { // todo - check momentum instead
 			veh.current_speed = MAX_SPEED;
 		} else if (veh.current_speed < -MAX_SPEED) {
 			veh.current_speed = -MAX_SPEED;
@@ -52,10 +56,16 @@ public class VehicleMovementSystem extends AbstractSystem {
 				veh.current_speed = 0;
 			}			
 		}
-		if (veh.current_speed != 0) {
-			tmpVector.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
-			movementData.offset.set(tmpVector.nor().scl(veh.current_speed));
-		}
+
+		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
+		//movementData.offset.setZero();
+		//if (veh.current_speed != 0) {
+		
+		tmpTargetMomentum.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
+		tmpTargetMomentum.nor().scl(veh.current_speed);
+		veh.momentum.lerp(tmpTargetMomentum, TRACTION); 
+		movementData.offset.set(veh.momentum);
+		//}
 	}
 
 }

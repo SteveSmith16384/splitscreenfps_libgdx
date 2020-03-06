@@ -56,18 +56,24 @@ public class DeathChaseLevel extends AbstractLevel {
 				game.mapData.map[x][z] = new MapSquare();
 				if (z == 0 || x == 0 || z == map_height-1 || x == map_width-1) {
 					game.mapData.map[x][z].blocked = true;
+					if (Settings.DARKMODE == false) {
 					Wall wall = new Wall(game.ecs, "deathchase/ForestTrees1.png", x, 0, z, false);
 					game.ecs.addEntity(wall);
+					}
 				} else {
 					game.mapData.map[x][z].blocked = false;
 					if (NumberFunctions.rnd(1,  10) == 1) {
 						if (z >= 2 && x >= 2 && z <= map_height-3 && x <= map_width-3) {
+							if (Settings.DARKMODE == false) {
 							AbstractEntity tree = DeathchaseEntityFactory.createTree(game, x, z);
 							game.ecs.addEntity(tree);
+							}
 						}
 					} else {
-						AbstractEntity weed = DeathchaseEntityFactory.createWeed(game, x, z);
-						game.ecs.addEntity(weed);
+						if (NumberFunctions.rnd(1,  10) == 1) {
+							AbstractEntity weed = DeathchaseEntityFactory.createWeed(game, x, z);
+							game.ecs.addEntity(weed);
+						}
 					}
 				}
 			}
