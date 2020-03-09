@@ -25,7 +25,7 @@ public abstract class AbstractLevel {
 	
 	public void loadAvatars() {
 		for (int i=0 ; i<game.players.length ; i++) {
-			game.players[i] = new PlayersAvatar_Person(game, i, game.viewports[i], game.inputs.get(i));
+			game.players[i] = new PlayersAvatar_Person(game, i, game.viewports[i], game.inputs.get(i), i);
 			game.ecs.addEntity(game.players[i]);
 		}	
 	}

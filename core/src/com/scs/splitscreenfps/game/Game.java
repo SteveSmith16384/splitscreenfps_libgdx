@@ -22,6 +22,7 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.levels.BladeRunnerLevel;
 import com.scs.splitscreenfps.game.levels.CarParkLevel;
 import com.scs.splitscreenfps.game.levels.DeathChaseLevel;
 import com.scs.splitscreenfps.game.levels.DungeonLevel;
@@ -112,6 +113,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_TOWER_DEFENCE:
 			currentLevel = new TowerDefenceLevel(this);
+			break;
+		case Settings.MODE_BLADE_RUNNER:
+			currentLevel = new BladeRunnerLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);

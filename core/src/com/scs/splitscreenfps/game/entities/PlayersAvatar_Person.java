@@ -26,7 +26,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	private Vector3 tmpVector = new Vector3();
 	private Vector2 tmpVec2 = new Vector2();
 
-	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+	public PlayersAvatar_Person(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, int modelType) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Person.class.getSimpleName() + "_" + playerIdx);
 
 		game = _game;
@@ -37,7 +37,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		this.addComponent(new CanCarryComponent(playerIdx));
 
 		// Model stuff
-		this.addSmooth_Male_ShirtComponents(playerIdx);
+		this.addModel(playerIdx, modelType);
 
 		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
 
@@ -47,12 +47,12 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 	}
 
 
-	private ModelInstance addSmooth_Male_ShirtComponents(int idx) {
+	private ModelInstance addModel(int playerIdx, int modelType) {
 		AssetManager am = game.assetManager;
 
 		Model model = null;
 
-		switch (idx) {
+		switch (modelType) {
 		case 0:
 			am.load("shared/models/Smooth_Male_Shirt.g3db", Model.class);
 			am.finishLoading();
@@ -80,7 +80,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		ModelInstance instance = new ModelInstance(model);
 
 		HasModelComponent hasModel = new HasModelComponent("SmoothMale", instance, -.3f, 90, 0.0016f);
-		hasModel.dontDrawInViewId = idx;
+		hasModel.dontDrawInViewId = playerIdx;
 		this.addComponent(hasModel);
 		
 		AnimationController animation = new AnimationController(instance);

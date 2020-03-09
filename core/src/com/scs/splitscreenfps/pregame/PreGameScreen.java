@@ -29,12 +29,13 @@ import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 public class PreGameScreen implements IModule {
 
 	private SpriteBatch batch2d;
-	private BitmapFont font;
+	private BitmapFont font_small, font_large;
 	private ControllerManager controllerManager = new ControllerManager(null, 3);
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
 	private Sprite logo;
+	private boolean keyboard_player_joined = false;
 
 	public PreGameScreen(BillBoardFPS_Main _main) {
 		super();
@@ -49,12 +50,15 @@ public class PreGameScreen implements IModule {
 
 		loadAssetsForResize();
 
-		this.appendToLog("Welcome to " + Settings.TITLE);
+		this.appendToLog("Welcome to Split-Screen Games");// + Settings.TITLE);
 		this.appendToLog("v" + Settings.VERSION);
 		if (Settings.RELEASE_MODE == false) {
 			this.appendToLog("WARNING! Game in debug mode!");
 		}
-		this.appendToLog("Looking for controllers...");
+		//this.appendToLog("Looking for controllers...");
+		this.appendToLog("Press SPACE to play with keyboard/mouse");
+		this.appendToLog("Press X to play with controller");
+		this.appendToLog("Select a game once all players have joined!");
 
 	}
 
@@ -70,10 +74,13 @@ public class PreGameScreen implements IModule {
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = Gdx.graphics.getBackBufferHeight()/30;
 		//Settings.p("Font size=" + parameter.size);
-		font = generator.generateFont(parameter); // font size 12 pixels
+		font_small = generator.generateFont(parameter); // font size 12 pixels
+		parameter.size = Gdx.graphics.getBackBufferHeight()/10;
+		//Settings.p("Font size=" + parameter.size);
+		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		String filename = "";
+		/*String filename = "";
 		switch (Settings.CURRENT_MODE) {
 		case Settings.MODE_TAG:
 			filename = "tag/tag_logo.png";
@@ -89,7 +96,7 @@ public class PreGameScreen implements IModule {
 		Texture logoTex = new Texture(Gdx.files.internal(filename));		
 		logo = new Sprite(logoTex);
 		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-		logo.setColor(0.4f, 0.4f, 0.4f, 1);
+		logo.setColor(0.4f, 0.4f, 0.4f, 1);*/
 	}
 
 
@@ -106,40 +113,52 @@ public class PreGameScreen implements IModule {
 
 		batch2d.begin();
 
-		logo.draw(batch2d);
+		//logo.draw(batch2d);
 
-		font.setColor(1f,  1f,  1f,  1f);
-
-		int y = Gdx.graphics.getHeight() - (int)this.font.getLineHeight()*1;
+		int y = Gdx.graphics.getHeight()-10;// - (int)this.font_large.getLineHeight()*1;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
 		for (Controller c : allControllers) {
-			font.setColor(1,  1,  1,  1);
-			font.draw(batch2d, "Controller " + c.getName(), 10, y);
+			font_large.setColor(1,  1,  1,  1);
+			font_large.draw(batch2d, "Controller " + c.getName(), 10, y);
 
 			if (this.controllerManager.isControllerInGame(c)) {
-				font.setColor(0,  1,  0,  1);
-				font.draw(batch2d, "IN GAME!", 10, y-this.font.getLineHeight());
+				font_large.setColor(0,  1,  0,  1);
+				font_large.draw(batch2d, "IN GAME!", 10, y-this.font_large.getLineHeight());
 			} else {
-				font.setColor(1,  0,  0,  1);
-				font.draw(batch2d, "Not in game - Press X to Join!", 10, y-this.font.getLineHeight());
+				font_large.setColor(1,  0,  0,  1);
+				font_large.draw(batch2d, "Not in game - Press X to Join!", 10, y-this.font_large.getLineHeight());
 			}
-			y -= this.font.getLineHeight()*2;
+			y -= this.font_large.getLineHeight()*2;
 		}
 		if (allControllers.size == 0) {
-			font.setColor(1,  1,  1,  1);
-			font.draw(batch2d, "No Controllers Found", 10, y);
+			font_large.setColor(1,  1,  1,  1);
+			font_large.draw(batch2d, "No Controllers Found", 10, y);
 		}
 
-		font.setColor(1,  1,  1,  1);
-		y = Gdx.graphics.getHeight()/3;// - 220;
+		// Draw log
+		font_small.setColor(1,  1,  1,  1);
+		y = (int)(Gdx.graphics.getHeight()*0.7);// - 220;
 		for (String s :this.log) {
-			font.draw(batch2d, s, 10, y);
-			y -= this.font.getLineHeight();
+			font_small.draw(batch2d, s, 10, y);
+			y -= this.font_small.getLineHeight();
 		}
 
-		if (this.controllerManager.getInGameControllers().size() >= 1) {
-			font.draw(batch2d, "PRESS SPACE TO START GAME!", 10, y);
-		}
+		// Draw game options
+		font_small.setColor(0,  1,  1,  1);
+		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
+		y = Gdx.graphics.getHeight()/2;
+		font_small.draw(batch2d, "SELECT GAME:", x, y);
+		font_small.setColor(1,  1,  0,  1);
+		y -= this.font_small.getLineHeight();
+		font_small.draw(batch2d, "1 - 3D MONSTER MAZE", x, y);
+		y -= this.font_small.getLineHeight();
+		font_small.draw(batch2d, "2 - ALIEN TAG", x, y);
+		y -= this.font_small.getLineHeight();
+
+
+		/*if (this.controllerManager.getInGameControllers().size() >= 1) {
+			font_large.draw(batch2d, "PRESS SPACE TO START GAME!", 10, y);
+		}*/
 
 		batch2d.end();
 
@@ -149,29 +168,54 @@ public class PreGameScreen implements IModule {
 		batch2d.begin();
 		batch2d.draw(frameBuffer.getColorBufferTexture(), 0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), -Gdx.graphics.getHeight());
 
-		if (Settings.SHOW_FPS) {
+		/*if (Settings.SHOW_FPS) {
 			font.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font.getLineHeight());
-		}
+		}*/
 
 		batch2d.end();
 
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			List<IInputMethod> inputs = new ArrayList<IInputMethod>();
-			inputs.add(new MouseAndKeyboardInputMethod());
-			for (Controller c : controllerManager.getInGameControllers()) {
-				inputs.add(new ControllerInputMethod(c));
-			}
+		readKeyboard();
+	}
 
-			main.next_module = new Game(main, inputs);
+
+	private void readKeyboard() {
+		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && keyboard_player_joined == false) {
+			this.keyboard_player_joined = true;
+			this.appendToLog("Keyboard player joined!");
+		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+			Settings.CURRENT_MODE = Settings.MODE_MM;
+			this.startGame();
+		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
+			Settings.CURRENT_MODE = Settings.MODE_TAG;
+			this.startGame();
+		} else {
+			//this.appendToLog("Unknown option selected");
 		}
 	}
 
 
+	private void startGame() {
+		List<IInputMethod> inputs = new ArrayList<IInputMethod>();
+		if (keyboard_player_joined) {
+			inputs.add(new MouseAndKeyboardInputMethod());
+		}
+		for (Controller c : controllerManager.getInGameControllers()) {
+			inputs.add(new ControllerInputMethod(c));
+		}
+		if (inputs.size() > 0) {
+			main.next_module = new Game(main, inputs);
+		} else {
+			this.appendToLog("No players have joined!");
+		}
+	}
+	
+	
 	@Override
 	public void dispose() {
 		this.batch2d.dispose();
 		this.frameBuffer.dispose();
-		this.font.dispose();
+		this.font_small.dispose();
+		this.font_large.dispose();
 	}
 
 
@@ -189,7 +233,7 @@ public class PreGameScreen implements IModule {
 
 	private void appendToLog(String s) {
 		this.log.add(s);
-		while (log.size() > 20) {
+		while (log.size() > 6) {
 			log.remove(0);
 		}
 	}
