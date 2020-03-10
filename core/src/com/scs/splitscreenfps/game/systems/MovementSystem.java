@@ -114,7 +114,7 @@ public class MovementSystem extends AbstractSystem {
 	}
 
 
-	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ) {
+	private boolean movementBlockedByEntity(AbstractEntity mover, float offX, float offZ) { // todo - rename
 		return game.collCheckSystem.collided(mover, offX, offZ, true);
 	}
 
