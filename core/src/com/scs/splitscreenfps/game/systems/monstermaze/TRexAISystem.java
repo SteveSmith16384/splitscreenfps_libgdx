@@ -68,25 +68,6 @@ public class TRexAISystem extends AbstractSystem {
 			AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
 			GridPoint2Static dest = game.mapData.getRandomFloorPos();
 			mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
-		} else {
-			/*GridPoint2 destpos = mac.route.get(0);
-			double dist = GeometryFuncs.distance(posdata.position.x, posdata.position.z, destpos.x+.5f, destpos.y+.5f);
-			if (dist < 0.2) {
-				mac.route.remove(0);
-			} else {
-				if (mac.rotate) {
-					tmpVec2.set(destpos.x+.5f-posdata.position.x, destpos.y+.5f-posdata.position.z);
-					float angle_required = tmpVec2.angle();
-					if (Math.abs(angle_required - posdata.angle_degs) > 5) {
-						float diff = angle_required - posdata.angle_degs;
-						posdata.angle_degs += (diff/250);
-					}
-					//Settings.p("Required angle: " + angle_required + ", actual=" + posdata.angle);
-				}
-				MovementData moveData = (MovementData)entity.getComponent(MovementData.class);
-				moveData.offset.set(destpos.x+.5f-posdata.position.x, 0, destpos.y+.5f-posdata.position.z);
-				moveData.offset.nor().scl(mac.speed);
-			}*/
 		}
 	}
 

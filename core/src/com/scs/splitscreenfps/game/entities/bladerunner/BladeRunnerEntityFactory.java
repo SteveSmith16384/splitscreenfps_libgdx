@@ -8,6 +8,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
+import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.bladerunner.IsCivilianComponent;
@@ -27,7 +28,7 @@ public class BladeRunnerEntityFactory {
 		pos.position = new Vector3(x+0.5f, 0, z+0.5f);
 		e.addComponent(pos);
 
-		ModelInstance instance = ModelFunctions.loadModel("shared/models/Smooth_Male_Shirt.g3db", false);
+		ModelInstance instance = ModelFunctions.loadModel("shared/models/quaternius/Smooth_Male_Shirt.g3db", false);
 		float scale = ModelFunctions.getScaleForHeight(instance, .8f);
 		instance.transform.scl(scale);		
 		Vector3 offset = ModelFunctions.getOrigin(instance);
@@ -38,6 +39,9 @@ public class BladeRunnerEntityFactory {
 		AnimatedComponent anim = new AnimatedComponent(animation, "HumanArmature|Man_Walk", "HumanArmature|Man_Idle");
 		anim.animationController = animation;
 		e.addComponent(anim);
+
+		MoveAStarComponent astar = new MoveAStarComponent(1.9f, false);
+		e.addComponent(astar);
 
 		float DIAM = .4f;
 		e.addComponent(new MovementData(DIAM));

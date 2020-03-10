@@ -10,13 +10,13 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.components.towerdefence.CanBuildOnComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerDefencePlayerData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Person;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.bladerunner.BladeRunnerEntityFactory;
+import com.scs.splitscreenfps.game.systems.bladerunner.BladeRunnerCivSystem;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
@@ -66,11 +66,7 @@ public class BladeRunnerLevel extends AbstractLevel {
 
 		game.mapData = new MapData(map_width, map_height);
 
-		//Floor floor = new Floor(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true);
-		//game.ecs.addEntity(floor);
-
-		//Ceiling ceiling = new Ceiling(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true, 1f);
-		//game.ecs.addEntity(ceiling);
+		this.rndStartPositions.add(new GridPoint2Static(1, 1));
 
 		int row = 0;
 		for (String s : str2) {
@@ -91,16 +87,17 @@ public class BladeRunnerLevel extends AbstractLevel {
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 							game.mapData.map[col][row].blocked = true;
-						} else if (token.equals("F")) { // Floor
+						} else if (token.equals("P") || token.equals("F")) { // Path
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
-							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
 							
 							if (NumberFunctions.rnd(1,  20) == 1) {
 								AbstractEntity civ = BladeRunnerEntityFactory.createCiv(game.ecs, col, row);
 								game.ecs.addEntity(civ);
 							}
-							
+						} else if (token.equals("R")) { // Road
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}
@@ -114,13 +111,13 @@ public class BladeRunnerLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		//ecs.addSystem(new CollectCoinsSystem(ecs, game));
+		ecs.addSystem(new BladeRunnerCivSystem(ecs, game));
 	}
 
 
 	@Override
 	public void update() {
-		//game.ecs.processSystem(CollectCoinsSystem.class);
+		game.ecs.processSystem(BladeRunnerCivSystem.class);
 	}
 
 

@@ -48,6 +48,8 @@ import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnSystem;
 import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
+import ssmith.libgdx.GridPoint2Static;
+
 public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
@@ -177,7 +179,8 @@ public class Game implements IModule {
 		// Set start position of players
 		for (int idx=0 ; idx<players.length  ; idx++) {
 			PositionComponent posData = (PositionComponent)this.players[idx].getComponent(PositionComponent.class);
-			posData.position.set(currentLevel.getPlayerStartMap(idx).x + 0.5f, Settings.PLAYER_HEIGHT/2, currentLevel.getPlayerStartMap(idx).y + 0.5f); // Start in middle of square
+			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx); 
+			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
 			players[idx].update();
 			
 			// Look down the z-axis

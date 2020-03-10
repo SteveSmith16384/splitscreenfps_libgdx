@@ -31,9 +31,6 @@ public class MoveAStarSystem extends AbstractSystem {
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (mac.route == null || mac.route.size() == 0) {
-			//AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
-			//GridPoint2Static dest = game.mapData.getRandomFloorPos();
-			//mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
 			// DO NOTHING!  other system should find route
 		} else {
 			GridPoint2 destpos = mac.route.get(0);
