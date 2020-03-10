@@ -34,19 +34,21 @@ public class TurretSystem extends AbstractSystem {
 			itc.current_target = this.getTarget(turretPos);//game.players[0];
 		}
 
-		PositionComponent targetPos = (PositionComponent)itc.current_target.getComponent(PositionComponent.class);
-		tmp.set(turretPos.position.x, turretPos.position.z);
-		tmp.x -= targetPos.position.x;
-		tmp.y -= targetPos.position.z;
-		turretPos.angle_degs = -tmp.angle();
-		//Settings.p("Angle: " + turretPos.angle_degs);
+		if (itc.current_target != null) {
+			PositionComponent targetPos = (PositionComponent)itc.current_target.getComponent(PositionComponent.class);
+			tmp.set(turretPos.position.x, turretPos.position.z);
+			tmp.x -= targetPos.position.x;
+			tmp.y -= targetPos.position.z;
+			turretPos.angle_degs = -tmp.angle();
+			//Settings.p("Angle: " + turretPos.angle_degs);
+		}
 	}
 
 
 	private AbstractEntity getTarget(PositionComponent turretPos) {
 		//AbstractEntity target = null;
 		//float dist = 9999;
-		
+
 		Iterator<AbstractEntity> it = ecs.getEntityIterator();
 		while (it.hasNext()) {
 			AbstractEntity ent = it.next();

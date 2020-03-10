@@ -49,7 +49,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 
 	private void addCar(int idx) {
-		ModelInstance instance = ModelFunctions.loadModel("deathchase/models/race.g3db", true); // todo - diff car per player
+		ModelInstance instance = ModelFunctions.loadModel("shared/models/kenney_car_kit/race.g3db", true); // todo - diff car per player
 		float scale = ModelFunctions.getScaleForHeight(instance, .6f);
 		instance.transform.scl(scale);
 

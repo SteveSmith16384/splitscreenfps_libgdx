@@ -54,27 +54,27 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 
 		switch (modelType) {
 		case 0:
-			am.load("shared/models/Smooth_Male_Shirt.g3db", Model.class);
+			am.load("shared/models/quaternius/Smooth_Male_Shirt.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("shared/models/Smooth_Male_Shirt.g3db");
+			model = am.get("shared/models/quaternius/Smooth_Male_Shirt.g3db");
 			break;
 		case 1:
-			am.load("shared/models/Male_Casual.g3db", Model.class);
+			am.load("shared/models/quaternius/Male_Casual.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("shared/models/Male_Casual.g3db");
+			model = am.get("shared/models/quaternius/Male_Casual.g3db");
 			/*am.load("space-kit-1.0/Models/station.g3db", Model.class);
 			am.finishLoading();
 			model = am.get("space-kit-1.0/Models/station.g3db");*/
 			break;
 		case 2:
-			am.load("shared/models/Male_LongSleeve.g3db", Model.class);
+			am.load("shared/models/quaternius/Male_LongSleeve.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("shared/models/Male_LongSleeve.g3db");
+			model = am.get("shared/models/quaternius/Male_LongSleeve.g3db");
 			break;
 		case 3:
-			am.load("shared/models/Male_Shirt.g3db", Model.class);
+			am.load("shared/models/quaternius/Male_Shirt.g3db", Model.class);
 			am.finishLoading();
-			model = am.get("shared/models/Male_Shirt.g3db");
+			model = am.get("shared/models/quaternius/Male_Shirt.g3db");
 			break;
 		}
 		ModelInstance instance = new ModelInstance(model);
