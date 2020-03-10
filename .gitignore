@@ -1,3 +1,5 @@
+*.ods#
+
 ## Output
 /out/
 
