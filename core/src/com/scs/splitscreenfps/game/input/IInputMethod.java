@@ -24,6 +24,8 @@ public interface IInputMethod {
 	
 	boolean isCrossPressed();
 	
+	boolean isTrianglePressed();
+	
 	boolean isL1ressed();
 
 	boolean isR1Pressed();

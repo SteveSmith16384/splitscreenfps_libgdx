@@ -70,4 +70,9 @@ public class NoInputMethod implements IInputMethod {
 		return false;
 	}
 
+	@Override
+	public boolean isTrianglePressed() {
+		return false;
+	}
+
 }

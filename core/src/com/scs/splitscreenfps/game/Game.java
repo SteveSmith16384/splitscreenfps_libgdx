@@ -17,6 +17,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -376,6 +377,22 @@ public class Game implements IModule {
 			}
 		}
 		return list;
+	}
+	
+	
+	public boolean isAreaEmpty(AbstractEntity e) {
+		float diameter = 0;
+		MovementData md = (MovementData)e.getComponent(MovementData.class);
+		if (md != null) {
+			diameter = md.diameter;
+		}
+		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
+		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
+			if (collCheckSystem.collided(e, 0, 0, false) == false) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

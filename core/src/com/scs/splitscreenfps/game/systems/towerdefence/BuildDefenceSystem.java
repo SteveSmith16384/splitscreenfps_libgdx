@@ -9,11 +9,15 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.towerdefence.CanBuildComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.CanBuildOnComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.ShowFloorSelectorComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.TowerDefencePlayerData;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
 
 public class BuildDefenceSystem extends AbstractSystem {
+
+	private static final int TOWER_COST = 5;
+	private static final int WALL_COST = 2;
 
 	private Game game;
 
@@ -27,7 +31,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity carrier) {
 		CanBuildComponent cc = (CanBuildComponent)carrier.getComponent(CanBuildComponent.class);
-		if (cc.lastPickupDropTime + 1000 > System.currentTimeMillis()) {
+		if (cc.lastBuildTime + 1000 > System.currentTimeMillis()) {
 			return;
 		}
 
@@ -35,17 +39,45 @@ public class BuildDefenceSystem extends AbstractSystem {
 		ShowFloorSelectorComponent sfsc = (ShowFloorSelectorComponent)carrier.getComponent(ShowFloorSelectorComponent.class);
 
 		if (player.inputMethod.isCirclePressed()) {
-			// todo - check coins
+			TowerDefencePlayerData playerData = (TowerDefencePlayerData)carrier.getComponent(TowerDefencePlayerData.class);
+			if (playerData.coins >= TOWER_COST) {
 
-			// Check map is empty
-			CanBuildOnComponent cbboc = (CanBuildOnComponent)game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.getComponent(CanBuildOnComponent.class);
-			if (cbboc != null) {
-				game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.hideComponent(CanBuildOnComponent.class);
+				// Check we can build
+				CanBuildOnComponent cbboc = (CanBuildOnComponent)game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.getComponent(CanBuildOnComponent.class);
+				if (cbboc != null) {
+					//game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.hideComponent(CanBuildOnComponent.class);
 
-				AbstractEntity turret = TowerDefenceEntityFactory.createTurret(game.ecs, sfsc.pos.x, sfsc.pos.y);
-				game.ecs.addEntity(turret);
+					AbstractEntity turret = TowerDefenceEntityFactory.createTurret(game.ecs, sfsc.pos.x, sfsc.pos.y);
+					// Check map is empty
+					if (game.isAreaEmpty(turret)) {//if (game.collCheckSystem.collided(turret, 0, 0, false) == false) {
+						game.ecs.addEntity(turret);
+						playerData.coins -= TOWER_COST;
+					}
+					cc.lastBuildTime = System.currentTimeMillis() + 1000;
+				}
+			} else {
+				TextEntity te = new TextEntity(ecs, "Cannot Build There", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
+				ecs.addEntity(te);
+			}
 
-				cc.lastPickupDropTime = System.currentTimeMillis() + 1000;
+		}
+
+		if (player.inputMethod.isTrianglePressed()) {
+			TowerDefencePlayerData playerData = (TowerDefencePlayerData)carrier.getComponent(TowerDefencePlayerData.class);
+			if (playerData.coins >= WALL_COST) {
+				// Check map is empty
+				CanBuildOnComponent cbboc = (CanBuildOnComponent)game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.getComponent(CanBuildOnComponent.class);
+				if (cbboc != null) {
+					game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.hideComponent(CanBuildOnComponent.class);
+
+					AbstractEntity wall = TowerDefenceEntityFactory.createLowWall(game.ecs, sfsc.pos.x, sfsc.pos.y);
+					// Check map is empty - todo - this won't work!
+					if (game.isAreaEmpty(wall)) {//.collCheckSystem.collided(wall, 0, 0, false) == false) {
+						game.ecs.addEntity(wall);
+						playerData.coins -= WALL_COST;
+					}
+				}
+				cc.lastBuildTime = System.currentTimeMillis() + 1000;
 			} else {
 				TextEntity te = new TextEntity(ecs, "Cannot Build There", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
 				ecs.addEntity(te);

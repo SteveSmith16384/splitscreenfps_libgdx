@@ -34,7 +34,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 	public boolean collided(AbstractEntity mover, float offX, float offZ, boolean raise_event) {
 		boolean blocked = false;
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
-
+		
 		this.setBB(mover, moverCC, offX, offZ);
 		moverCC.bb_dirty = true; // So we move it back afterwards
 

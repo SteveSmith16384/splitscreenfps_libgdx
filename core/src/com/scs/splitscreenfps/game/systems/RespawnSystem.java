@@ -46,7 +46,8 @@ public class RespawnSystem implements ISystem {
 				cc.bb_dirty = true;
 
 				// check area clear
-				if (game.collCheckSystem.collided(e, 0, 0, false)) {
+				//if (game.collCheckSystem.collided(e, 0, 0, false)) {
+				if (game.isAreaEmpty(e)) {
 					Settings.p("Area not clear - trying again...");
 					wrc.respawn_time = System.currentTimeMillis() + 3000;
 				} else {

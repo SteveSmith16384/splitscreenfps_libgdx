@@ -7,12 +7,11 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.towerdefence.IsAltarComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.CanBeDamagedByEnemyComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 
 import ssmith.astar.AStar_LibGDX;
@@ -46,10 +45,14 @@ public final class TowerEnemyAISystem extends AbstractSystem {
 					// Hit wall;
 					mac.route.clear();
 				} else {
-					IsAltarComponent altar = (IsAltarComponent)evt.hitEntity.getComponent(IsAltarComponent.class);
+					CanBeDamagedByEnemyComponent altar = (CanBeDamagedByEnemyComponent)evt.hitEntity.getComponent(CanBeDamagedByEnemyComponent.class);
 					if (altar != null) {
 						altar.health -= Gdx.graphics.getDeltaTime();
-						Settings.p("Alter health=" + altar.health);
+						//Settings.p("Alter health=" + altar.health);
+						if (altar.health <= 0) {
+							evt.hitEntity.remove();
+						}
+						return;
 					}
 				}
 			}

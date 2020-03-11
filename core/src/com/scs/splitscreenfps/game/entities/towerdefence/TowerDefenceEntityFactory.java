@@ -1,9 +1,15 @@
 package com.scs.splitscreenfps.game.entities.towerdefence;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -16,7 +22,7 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
-import com.scs.splitscreenfps.game.components.towerdefence.IsAltarComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.CanBeDamagedByEnemyComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsCoinComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
@@ -107,6 +113,7 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(new CollidesComponent(true, 0.2f));
 
 		e.addComponent(new IsTurretComponent());
+		e.addComponent(new CanBeDamagedByEnemyComponent(10));
 
 		return e;
 	}
@@ -156,8 +163,27 @@ public class TowerDefenceEntityFactory {
 
 		e.addComponent(new CollidesComponent(true, 0.2f));
 
-		e.addComponent(new IsAltarComponent());
+		e.addComponent(new CanBeDamagedByEnemyComponent(100));
 
+		return e;
+	}
+
+
+	public static AbstractEntity createLowWall(BasicECS ecs, int mapPosX, int mapPosZ) {
+		final float HEIGHT = .4f;
+		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
+
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("towerdefence/textures/SmallSPattern_S.jpg")));
+		
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model box_model = modelBuilder.createBox(1, HEIGHT, 1, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, HEIGHT/2, mapPosZ+0.5f));
+		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
+
+		HasModelComponent model = new HasModelComponent("LowWall", instance);
+		e.addComponent(model);
+		
 		return e;
 	}
 

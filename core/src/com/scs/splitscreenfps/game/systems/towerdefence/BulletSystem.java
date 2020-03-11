@@ -6,7 +6,6 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.towerdefence.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;

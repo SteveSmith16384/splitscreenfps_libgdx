@@ -31,11 +31,6 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public boolean isCirclePressed() {
-		return this.controller.getButton(1);	
-	}
-
-	@Override
 	public boolean isMouse() {
 		return false;
 	}
@@ -63,6 +58,16 @@ public class ControllerInputMethod implements IInputMethod {
 	@Override
 	public boolean isCrossPressed() {
 		return this.controller.getButton(0); // todo - check	
+	}
+
+	@Override
+	public boolean isCirclePressed() {
+		return this.controller.getButton(1); // todo - check	
+	}
+
+	@Override
+	public boolean isTrianglePressed() {
+		return this.controller.getButton(2); // todo - check	
 	}
 
 	@Override

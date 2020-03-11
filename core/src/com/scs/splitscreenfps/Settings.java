@@ -20,7 +20,7 @@ public class Settings {
 	
 	public static int CURRENT_MODE = MODE_TOWER_DEFENCE;
 	public static final String VERSION = "1.01";
-	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists();
+	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists() == false;
 	
 	// Hacks
 	public static final boolean DARKMODE = !RELEASE_MODE && false;
@@ -59,7 +59,7 @@ public class Settings {
 		try {
 			prop.load(new FileInputStream("config.txt"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		switch (CURRENT_MODE) {

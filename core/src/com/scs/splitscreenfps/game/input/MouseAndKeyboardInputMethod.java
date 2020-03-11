@@ -77,4 +77,9 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 		return Gdx.input.isKeyPressed(Keys.NUM_2);
 	}
 
+	@Override
+	public boolean isTrianglePressed() {
+		return Gdx.input.isKeyPressed(Keys.CONTROL_LEFT);
+	}
+
 }

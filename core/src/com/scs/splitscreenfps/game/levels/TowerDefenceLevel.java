@@ -25,6 +25,7 @@ import com.scs.splitscreenfps.game.systems.towerdefence.CheckAltarSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefencePhaseSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerEnemyAISystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TurretSystem;
 
@@ -35,7 +36,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 
 	public static Properties prop;
 	
-	private SpawnEnemiesSystem spawnEnemiesSystem;
+	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
 
 	public TowerDefenceLevel(Game _game) {
@@ -149,21 +150,21 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
 		ecs.addSystem(new BulletSystem(ecs));
 		ecs.addSystem(new CheckAltarSystem(ecs));
+		//ecs.addSystem(new TowerDefenceLevelSystem(this));
 	}
 
 
 	@Override
 	public void update() {
 		game.ecs.processSystem(ShowFloorSelectorSystem.class);
-		spawnEnemiesSystem.process();
+		//spawnEnemiesSystem.process();
 		game.ecs.processSystem(BuildDefenceSystem.class);
 		game.ecs.processSystem(TurretSystem.class);
 		game.ecs.processSystem(TowerEnemyAISystem.class);
 		game.ecs.processSystem(CollectCoinsSystem.class);
 		game.ecs.processSystem(BulletSystem.class);
 		game.ecs.processSystem(CheckAltarSystem.class);
-		
-		
+		game.ecs.processSystem(TowerDefencePhaseSystem.class);
 	}
 
 
