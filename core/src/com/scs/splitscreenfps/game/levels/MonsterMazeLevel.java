@@ -1,5 +1,8 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -27,10 +30,20 @@ import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 public class MonsterMazeLevel extends AbstractLevel {
 
+	public static Properties prop;
+	
 	private MazeGen1 maze;
 
 	public MonsterMazeLevel(Game _game) {
 		super(_game);
+
+		prop = new Properties();
+		try {
+			prop.load(new FileInputStream("monstermaze/mm_config.txt"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 
@@ -84,9 +97,9 @@ public class MonsterMazeLevel extends AbstractLevel {
 		if (Settings.SMALL_MAP) {
 			this.map_width = 8;
 			this.map_height = 8;
-		} else if (Settings.prop.containsKey("mm.map_width") && Settings.prop.containsKey("mm.map_height")) {
-			this.map_width = Integer.parseInt(Settings.prop.getProperty("mm.map_width"));
-			this.map_height = Integer.parseInt(Settings.prop.getProperty("mm.map_height"));
+		} else if (prop.containsKey("map_width") && prop.containsKey("map_height")) {
+			this.map_width = Integer.parseInt(prop.getProperty("map_width"));
+			this.map_height = Integer.parseInt(prop.getProperty("map_height"));
 		} else {
 			this.map_height = 12 + game.players.length;
 			this.map_width = map_height * 2;

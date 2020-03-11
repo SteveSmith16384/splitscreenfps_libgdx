@@ -1,5 +1,7 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileInputStream;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
@@ -26,15 +28,25 @@ import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerEnemyAISystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TurretSystem;
 
+import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 
 public final class TowerDefenceLevel extends AbstractLevel {
 
+	public static Properties prop;
+	
 	private SpawnEnemiesSystem spawnEnemiesSystem;
 	private GridPoint2Static targetPos;
 
 	public TowerDefenceLevel(Game _game) {
 		super(_game);
+
+		prop = new Properties();
+		try {
+			prop.load(new FileInputStream("towerdefence/td_config.txt"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs);
 	}
@@ -102,10 +114,10 @@ public final class TowerDefenceLevel extends AbstractLevel {
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 							if (Settings.DARKMODE == false) {
-								/*if (NumberFunctions.rnd(1,  5) == 1) {
+								if (NumberFunctions.rnd(1,  5) == 1) {
 									AbstractEntity coin = TowerDefenceEntityFactory.createCoin(game.ecs, col, row);
 									game.ecs.addEntity(coin);
-								}*/
+								}
 							}
 						} else if (token.equals("D")) { // Centre for defending!
 							targetPos = new GridPoint2Static(col, row);

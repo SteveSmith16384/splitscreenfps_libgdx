@@ -1,5 +1,6 @@
 package com.scs.splitscreenfps;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 import java.util.Random;
@@ -19,7 +20,7 @@ public class Settings {
 	
 	public static int CURRENT_MODE = MODE_TOWER_DEFENCE;
 	public static final String VERSION = "1.01";
-	public static final boolean RELEASE_MODE = false;
+	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists();
 	
 	// Hacks
 	public static final boolean DARKMODE = !RELEASE_MODE && false;

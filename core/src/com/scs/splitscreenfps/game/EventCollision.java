@@ -6,7 +6,7 @@ import com.scs.basicecs.AbstractEvent;
 public class EventCollision extends AbstractEvent {
 
 	public AbstractEntity movingEntity;
-	public AbstractEntity hitEntity;
+	public AbstractEntity hitEntity; // if null, it has hit a wall
 
 	public EventCollision(AbstractEntity _movingEntity, AbstractEntity _hitEntity) {
 		movingEntity = _movingEntity;
@@ -19,7 +19,7 @@ public class EventCollision extends AbstractEvent {
 	}
 
 
-	public AbstractEntity[] getEntitiesByComponent(Class clazz1, Class clazz2) {
+	public AbstractEntity[] getEntitiesByComponent(Class<?> clazz1, Class<?> clazz2) {
 		if (this.hitEntity == null) {
 			return null;
 		}
