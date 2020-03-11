@@ -44,11 +44,11 @@ public class Floor extends AbstractEntity {
 					white_material,
 					VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-			Matrix3 mat = new Matrix3();
 			if (tile) {
+				Matrix3 mat = new Matrix3(); // scs new
 				mat.scl(new Vector2(map_width, map_depth));
+				floor.meshes.get(0).transformUV(mat);
 			}
-			floor.meshes.get(0).transformUV(mat);
 
 			ModelInstance instance = new ModelInstance(floor, new Vector3(mapX, 0, mapZ));
 			//instance.transform.translate(Game.UNIT/2, 0, Game.UNIT/2);

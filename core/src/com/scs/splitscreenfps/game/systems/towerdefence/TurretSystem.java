@@ -3,6 +3,7 @@ package com.scs.splitscreenfps.game.systems.towerdefence;
 import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
@@ -10,6 +11,9 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
+import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
+
+import ssmith.lang.NumberFunctions;
 
 public class TurretSystem extends AbstractSystem {
 
@@ -41,6 +45,15 @@ public class TurretSystem extends AbstractSystem {
 			tmp.y -= targetPos.position.z;
 			turretPos.angle_degs = -tmp.angle();
 			//Settings.p("Angle: " + turretPos.angle_degs);
+			
+			if (itc.nextShotTime < System.currentTimeMillis()) {
+				itc.nextShotTime = System.currentTimeMillis() + NumberFunctions.rnd(900,  1100);
+				
+				Vector3 offset = new Vector3(targetPos.position);
+				offset.sub(turretPos.position).nor().scl(30); // Speed
+				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, turretPos.position, offset);
+				game.ecs.addEntity(bullet);
+			}
 		}
 	}
 

@@ -29,6 +29,7 @@ import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
+import com.scs.splitscreenfps.game.levels.StockCarLevel;
 import com.scs.splitscreenfps.game.levels.TagLevel;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
@@ -118,6 +119,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_BLADE_RUNNER:
 			currentLevel = new BladeRunnerLevel(this);
+			break;
+		case Settings.MODE_STOCK_CAR:
+			currentLevel = new StockCarLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);

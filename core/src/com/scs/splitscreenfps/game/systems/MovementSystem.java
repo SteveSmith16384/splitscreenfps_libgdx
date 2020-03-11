@@ -9,7 +9,7 @@ import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
-import com.scs.splitscreenfps.game.components.AutoMove;
+import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
@@ -28,9 +28,9 @@ public class MovementSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 		
-		AutoMove auto = (AutoMove)entity.getComponent(AutoMove.class);
+		AutoMoveComponent auto = (AutoMoveComponent)entity.getComponent(AutoMoveComponent.class);
 		if (auto != null) {
-			movementData.offset = auto.dir.cpy();
+			movementData.offset.set(auto.dir);
 		}
 		movementData.offset.scl(Gdx.graphics.getDeltaTime());
 

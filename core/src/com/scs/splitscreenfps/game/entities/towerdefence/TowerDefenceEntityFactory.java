@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
+import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
@@ -15,6 +16,8 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.IsAltarComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsCoinComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
@@ -52,16 +55,16 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(new CollidesComponent(false, DIAM+.2f));
 		e.addComponent(new TowerEnemyComponent());
 		e.addComponent(new MoveAStarComponent(1, true));
-		
+
 		return e;
 	}
 
 
-	public static AbstractEntity createCoin(BasicECS ecs, float x, float y) {
+	public static AbstractEntity createCoin(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "Coin");
 
 		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x, 0, y);
+		pos.position = new Vector3(x, 0, z);
 		e.addComponent(pos);
 
 		TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/Coin_16x16_Anim.png", 8, 1);
@@ -79,7 +82,7 @@ public class TowerDefenceEntityFactory {
 			cycle.decals[i] = GraphicsHelper.DecalHelper(trs[i][0], 1);
 		}
 		e.addComponent(cycle);
-		
+
 		e.addComponent(new CollidesComponent(false, 0.2f));
 		e.addComponent(new IsCoinComponent());
 
@@ -107,5 +110,56 @@ public class TowerDefenceEntityFactory {
 
 		return e;
 	}
+
+
+	public static AbstractEntity createBullet(BasicECS ecs, Vector3 start, Vector3 offset) {
+		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
+
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(start);
+		e.addComponent(pos);
+
+		//TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/sparks.png", 8, 1);
+		HasDecal hasDecal = new HasDecal();
+		//TextureRegion tr = trs[0][0];
+		hasDecal.decal = GraphicsHelper.DecalHelper("towerdefence/sparks.png", .3f);
+		//hasDecal.decal.setScale(1f / tr.getRegionWidth());
+		hasDecal.decal.setPosition(pos.position);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = false;
+		e.addComponent(hasDecal);
+
+		float DIAM = 0.2f;
+		e.addComponent(new MovementData(DIAM));
+		e.addComponent(new AutoMoveComponent(offset));
+		e.addComponent(new CollidesComponent(false, DIAM));
+		e.addComponent(new IsBulletComponent());
+
+
+		return e;
+	}
+
+
+	public static AbstractEntity createAltar(BasicECS ecs, float x, float z) {
+		AbstractEntity e = new AbstractEntity(ecs, "Altar");
+
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(x+.5f, 0, z+.5f);
+		e.addComponent(pos);
+
+		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/kenney_td_kit/detail_crystalLarge.g3db", true);
+		float scale = ModelFunctions.getScaleForWidth(instance, 1f);
+		instance.transform.scl(scale);
+		Vector3 offset = ModelFunctions.getOrigin(instance);
+		HasModelComponent hasModel = new HasModelComponent("Altar", instance, offset, -90, scale);
+		e.addComponent(hasModel);
+
+		e.addComponent(new CollidesComponent(true, 0.2f));
+
+		e.addComponent(new IsAltarComponent());
+
+		return e;
+	}
+
 
 }

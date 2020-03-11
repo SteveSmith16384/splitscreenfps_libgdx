@@ -52,6 +52,15 @@ public class ModelFunctions {
 	}
 	
 	
+	public static float getScaleForWidth(ModelInstance model, float width) {
+		BoundingBox bb = new BoundingBox();
+		model.calculateBoundingBox(bb);
+		bb.mul(model.transform);
+
+		return width / bb.getWidth();
+	}
+	
+	
 	public static void getOrigin(ModelInstance model, Vector3 out) {
 		BoundingBox bb = new BoundingBox();
 		model.calculateBoundingBox(bb);

@@ -26,6 +26,10 @@ public class CollectCoinsSystem implements ISystem {
 		List<AbstractEvent> colls = ecs.getEvents(EventCollision.class);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
+
+			if (coll.hitEntity == null) {
+				continue;
+			}
 			
 			Object coin = coll.movingEntity.getComponent(IsCoinComponent.class);
 			if (coin != null) {

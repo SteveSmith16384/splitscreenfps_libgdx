@@ -21,7 +21,7 @@ public class SpawnEnemiesSystem implements ISystem {
 	public SpawnEnemiesSystem(BasicECS _ecs) {
 		ecs = _ecs;
 		
-		spawnUntil = System.currentTimeMillis() + 20000; // todo
+		spawnUntil = System.currentTimeMillis() + 20000; // todo - move to level
 	}
 
 	

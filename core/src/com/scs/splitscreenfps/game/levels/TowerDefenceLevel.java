@@ -18,13 +18,14 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
 import com.scs.splitscreenfps.game.systems.towerdefence.BuildDefenceSystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.BulletSystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.CheckAltarSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerEnemyAISystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TurretSystem;
 
-import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;
 
 public final class TowerDefenceLevel extends AbstractLevel {
@@ -56,9 +57,6 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	@Override
 	public void load() {
 		loadMapFromFile("towerdefence/map1.csv");
-
-		//game.ecs.addEntity(new Floor(game.ecs, "farm/grass.jpg", 1, 1, map_width-1, map_height-1, true));
-
 	}
 
 
@@ -70,12 +68,6 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		this.map_height = str2.length;
 
 		game.mapData = new MapData(map_width, map_height);
-
-		//Floor floor = new Floor(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true);
-		//game.ecs.addEntity(floor);
-
-		//Ceiling ceiling = new Ceiling(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true, 1f);
-		//game.ecs.addEntity(ceiling);
 
 		int row = 0;
 		for (String s : str2) {
@@ -110,16 +102,17 @@ public final class TowerDefenceLevel extends AbstractLevel {
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 							if (Settings.DARKMODE == false) {
-								if (NumberFunctions.rnd(1,  5) == 1) {
+								/*if (NumberFunctions.rnd(1,  5) == 1) {
 									AbstractEntity coin = TowerDefenceEntityFactory.createCoin(game.ecs, col, row);
 									game.ecs.addEntity(coin);
-								}
+								}*/
 							}
 						} else if (token.equals("D")) { // Centre for defending!
 							targetPos = new GridPoint2Static(col, row);
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false);
-							game.ecs.addEntity(floor);
-							// todo - add defence entity
+							game.ecs.addEntity(floor);							
+							AbstractEntity altar = TowerDefenceEntityFactory.createAltar(game.ecs, col, row);
+							game.ecs.addEntity(altar);
 						} else if (token.equals("S")) { // Spawn point
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false); // todo - diff tex
 							game.ecs.addEntity(floor);
@@ -142,6 +135,8 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new TurretSystem(ecs, game));
 		ecs.addSystem(new TowerEnemyAISystem(ecs, game, targetPos));
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
+		ecs.addSystem(new BulletSystem(ecs));
+		ecs.addSystem(new CheckAltarSystem(ecs));
 	}
 
 
@@ -153,6 +148,10 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		game.ecs.processSystem(TurretSystem.class);
 		game.ecs.processSystem(TowerEnemyAISystem.class);
 		game.ecs.processSystem(CollectCoinsSystem.class);
+		game.ecs.processSystem(BulletSystem.class);
+		game.ecs.processSystem(CheckAltarSystem.class);
+		
+		
 	}
 
 

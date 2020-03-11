@@ -50,6 +50,11 @@ This project uses the MIT licence.  See LICENCE.txt.
 #### Funny Farm
 * Farm animal sfx from https://opengameart.org/content/farm-animals
 
+#### FTL
+* Alien by Quaternius
+* Spaceship furniture by Kenney (www.kenney.nl)
+* Battery by [TODO]
+
 #### Tower Defence
 * Models by Kenney - https://kenney.nl/assets/tower-defense-kit
 * Rotating coin by Master484: https://opengameart.org/content/cute-platformer-sisters

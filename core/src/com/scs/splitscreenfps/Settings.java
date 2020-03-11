@@ -15,14 +15,15 @@ public class Settings {
 	public static final int MODE_DEATHCHASE = 7;
 	public static final int MODE_TOWER_DEFENCE = 8;
 	public static final int MODE_BLADE_RUNNER = 9;
+	public static final int MODE_STOCK_CAR = 10;
 	
-	public static int CURRENT_MODE = MODE_BLADE_RUNNER;
+	public static int CURRENT_MODE = MODE_TOWER_DEFENCE;
 	public static final String VERSION = "1.01";
 	public static final boolean RELEASE_MODE = false;
 	
 	// Hacks
 	public static final boolean DARKMODE = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final boolean START_4_PLAYERS = !RELEASE_MODE && false;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
@@ -85,8 +86,12 @@ public class Settings {
 		case MODE_BLADE_RUNNER:
 			TITLE = "Bladerunner";
 			break;
+		case MODE_STOCK_CAR:
+			TITLE = "Stock Car Racer";
+			break;
 		default:
-			throw new RuntimeException("Unknown Mode: " + CURRENT_MODE);
+			TITLE = "[Unknown]";
+			//throw new RuntimeException("Unknown Mode: " + CURRENT_MODE);
 		}
 		
 	}

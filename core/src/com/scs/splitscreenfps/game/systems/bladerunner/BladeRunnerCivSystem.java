@@ -25,14 +25,14 @@ public class BladeRunnerCivSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
-		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
+		//MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 
-		if (mac.route == null || mac.route.size() == 0) {
+		/*if (mac.route == null || mac.route.size() == 0) {
 			//Settings.p("TRex getting new path!");
 			AStar_LibGDX astar = new AStar_LibGDX(game.mapData);
 			GridPoint2Static dest = game.mapData.getRandomFloorPos();
 			mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, dest.x, dest.y);
-		}
+		}*/
 	}
 
 }
