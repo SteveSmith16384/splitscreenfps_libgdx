@@ -52,11 +52,14 @@ public class BuildDefenceSystem extends AbstractSystem {
 					if (game.isAreaEmpty(turret)) {//if (game.collCheckSystem.collided(turret, 0, 0, false) == false) {
 						game.ecs.addEntity(turret);
 						playerData.coins -= TOWER_COST;
+					} else {
+						TextEntity te = new TextEntity(ecs, "Area not clear", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
+						ecs.addEntity(te);
 					}
 					cc.lastBuildTime = System.currentTimeMillis() + 1000;
 				}
 			} else {
-				TextEntity te = new TextEntity(ecs, "Cannot Build There", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
+				TextEntity te = new TextEntity(ecs, "Not enough creds", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
 				ecs.addEntity(te);
 			}
 
@@ -75,14 +78,15 @@ public class BuildDefenceSystem extends AbstractSystem {
 					if (game.isAreaEmpty(wall)) {//.collCheckSystem.collided(wall, 0, 0, false) == false) {
 						game.ecs.addEntity(wall);
 						playerData.coins -= WALL_COST;
+					} else {
+						TextEntity te = new TextEntity(ecs, "Area not clear", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
+						ecs.addEntity(te);
 					}
 				}
 				cc.lastBuildTime = System.currentTimeMillis() + 1000;
 			} else {
-				TextEntity te = new TextEntity(ecs, "Cannot Build There", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
+				TextEntity te = new TextEntity(ecs, "Not enough creds", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), player.playerIdx, 2);
 				ecs.addEntity(te);
-
-
 			}
 
 		}

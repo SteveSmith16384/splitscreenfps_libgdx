@@ -39,7 +39,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		// Model stuff
 		this.addModel(playerIdx, modelType);
 
-		this.addComponent(new CollidesComponent(false, .3f, Settings.PLAYER_HEIGHT, .3f));
+		this.addComponent(new CollidesComponent(false, .3f));//, Settings.PLAYER_HEIGHT, .3f));
 
 		camera = _viewportData.camera;
 

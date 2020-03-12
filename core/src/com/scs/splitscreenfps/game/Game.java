@@ -388,7 +388,7 @@ public class Game implements IModule {
 		}
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
-			if (collCheckSystem.collided(e, 0, 0, false) == false) {
+			if (collCheckSystem.collided(e, posData, 0, 0, false) == false) {
 				return true;
 			}
 		}

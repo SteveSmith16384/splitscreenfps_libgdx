@@ -1,32 +1,16 @@
 package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
-
-import ssmith.libgdx.MyBoundingBox;
 
 public class CollidesComponent {
 
-	public MyBoundingBox bb;
-	public boolean bb_dirty = true; // Set to true to recalc BB
 	public boolean blocksMovement = true;
+	public float rad;
 
-	public CollidesComponent(boolean _blocks, MyBoundingBox _bb) {
+	public CollidesComponent(boolean _blocks, float _rad) {
 		this.blocksMovement = _blocks;
-		bb = _bb;
-	}
-
-
-	public CollidesComponent(boolean _blocks, float rad) {
-		this.blocksMovement = _blocks;
-		bb = new MyBoundingBox(new Vector3(), rad, rad, rad);
-	}
-
-
-	public CollidesComponent(boolean _blocks, float w, float h, float d) {
-		this.blocksMovement = _blocks;
-		bb = new MyBoundingBox(w, h, d);
+		rad = _rad;
 	}
 
 
@@ -36,7 +20,7 @@ public class CollidesComponent {
 		BoundingBox bbx = new BoundingBox();
 		instance.calculateBoundingBox(bbx);
 		bbx.mul(instance.transform); // Move bb to position
-		bb = new MyBoundingBox(bbx.min, bbx.max);
+		rad = (bbx.getWidth() + bbx.getDepth())/2;
 	}
 
 }

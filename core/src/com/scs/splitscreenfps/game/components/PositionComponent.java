@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class PositionComponent {
 
-	public Vector3 position; // Used as the centre of the bounding box for collisions!
+	public Vector3 position; // Used as the centre of the radius for collisions!
 	public float angle_degs;
 	public Vector3 originalPosition = new Vector3();
 

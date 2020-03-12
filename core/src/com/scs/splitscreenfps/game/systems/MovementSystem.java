@@ -73,7 +73,7 @@ public class MovementSystem extends AbstractSystem {
 
 		boolean result = false;
 		if (world.rectangleFree(position.x+offset.x, position.z+offset.z, diameter, diameter)) {
-			if (this.game.collCheckSystem.collided(mover, offset.x, offset.z, true) == false) {
+			if (this.game.collCheckSystem.collided(mover, pos, offset.x, offset.z, true) == false) {
 				position.x += offset.x;
 				position.z += offset.z;
 				result = true;
@@ -93,7 +93,7 @@ public class MovementSystem extends AbstractSystem {
 
 		boolean resultX = false;
 		if (world.rectangleFree(position.x+offset.x, position.z, diameter, diameter)) {
-			if (this.game.collCheckSystem.collided(mover, offset.x, 0, true) == false) {
+			if (this.game.collCheckSystem.collided(mover, pos, offset.x, 0, true) == false) {
 				position.x += offset.x;
 				resultX = true;
 			}
@@ -103,7 +103,7 @@ public class MovementSystem extends AbstractSystem {
 
 		boolean resultZ = false;
 		if (world.rectangleFree(position.x, position.z+offset.z, diameter, diameter)) {
-			if (this.game.collCheckSystem.collided(mover, 0, offset.z, true) == false) {
+			if (this.game.collCheckSystem.collided(mover, pos, 0, offset.z, true) == false) {
 				position.z += offset.z;
 				resultZ = true;
 			}
@@ -113,9 +113,4 @@ public class MovementSystem extends AbstractSystem {
 		return resultX || resultZ;
 	}
 
-/*
-	private boolean movementBlockedByEntity_(AbstractEntity mover, float offX, float offZ) {
-		return game.collCheckSystem.collided(mover, offX, offZ, true);
-	}
-*/
 }

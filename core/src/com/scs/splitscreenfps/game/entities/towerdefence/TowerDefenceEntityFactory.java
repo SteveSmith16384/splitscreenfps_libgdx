@@ -111,7 +111,6 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(hasModel);
 
 		e.addComponent(new CollidesComponent(true, 0.2f));
-
 		e.addComponent(new IsTurretComponent());
 		e.addComponent(new CanBeDamagedByEnemyComponent(10));
 
@@ -126,18 +125,19 @@ public class TowerDefenceEntityFactory {
 		pos.position = new Vector3(start);
 		e.addComponent(pos);
 
-		//TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/sparks.png", 8, 1);
 		HasDecal hasDecal = new HasDecal();
-		//TextureRegion tr = trs[0][0];
-		hasDecal.decal = GraphicsHelper.DecalHelper("towerdefence/sparks.png", .3f);
-		//hasDecal.decal.setScale(1f / tr.getRegionWidth());
+		hasDecal.decal = GraphicsHelper.DecalHelper("towerdefence/laser_bolt.png", .3f);
 		hasDecal.decal.setPosition(pos.position);
 		hasDecal.faceCamera = true;
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
 		float DIAM = 0.2f;
-		e.addComponent(new MovementData(DIAM));
+		
+		MovementData md = new MovementData(DIAM);
+		md.must_move_x_and_z = true;
+		e.addComponent(md);
+		
 		e.addComponent(new AutoMoveComponent(offset));
 		e.addComponent(new CollidesComponent(false, DIAM));
 		e.addComponent(new IsBulletComponent());

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
@@ -24,6 +25,7 @@ public class TurretSystem extends AbstractSystem {
 	private Game game;
 	private Vector2 tmp2 = new Vector2();
 	private Vector3 tmp3 = new Vector3();
+	private Vector3 startPos = new Vector3();
 
 	public TurretSystem(BasicECS ecs, Game _game) {
 		super(ecs, IsTurretComponent.class);
@@ -39,6 +41,7 @@ public class TurretSystem extends AbstractSystem {
 		if (itc.nextTargetCheck < System.currentTimeMillis()) {
 			itc.nextTargetCheck = System.currentTimeMillis() + 2000;
 			itc.current_target = this.getTarget(turretPos);//game.players[0];
+			//itc.current_target = game.players[0];
 		}
 
 		if (itc.current_target != null) {
@@ -46,18 +49,17 @@ public class TurretSystem extends AbstractSystem {
 			tmp2.set(turretPos.position.x, turretPos.position.z);
 			tmp2.x -= targetPos.position.x;
 			tmp2.y -= targetPos.position.z;
-			turretPos.angle_degs += (turretPos.angle_degs-tmp2.angle()) * .1f;
+			float target_angle = -tmp2.angle();
+			turretPos.angle_degs += Math.signum(target_angle-turretPos.angle_degs) * .1f;
 			//Settings.p("Angle: " + turretPos.angle_degs);
 			
 			if (itc.nextShotTime < System.currentTimeMillis()) {
 				itc.nextShotTime = System.currentTimeMillis() + NumberFunctions.rnd(900,  1100);
-				
-				//tmpDir.x = (float)Math.cos(Math.toRadians(turretPos.angle_degs));
-				//tmpDir.y = (float)Math.sin(Math.toRadians(turretPos.angle_degs));
-				tmp3.set((float)Math.sin(Math.toRadians(turretPos.angle_degs)), 0, (float)Math.cos(Math.toRadians(turretPos.angle_degs)));
-				//tmp3.xset(targetPos.position);
+				startPos.set(turretPos.position);
+				tmp3.set((float)Math.sin(Math.toRadians(turretPos.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(turretPos.angle_degs-90)));
+				startPos.add(tmp3);
 				tmp3.scl(BULLET_SPEED);
-				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, turretPos.position, tmp3);
+				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, startPos, tmp3);
 				game.ecs.addEntity(bullet);
 			}
 		}

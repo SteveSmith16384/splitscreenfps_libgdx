@@ -15,7 +15,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
 import com.scs.splitscreenfps.game.components.CanCarryComponent;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.IsTRex;
@@ -69,8 +68,8 @@ public class TRexHarmsPlayerSystem extends AbstractSystem {
 					PositionComponent posData = (PositionComponent)player.getComponent(PositionComponent.class);
 					posData.position.set(playerRespawnX + 0.5f, Settings.PLAYER_HEIGHT/2, playerRespawnY + 0.5f); // Start in middle of square
 
-					CollidesComponent cc = (CollidesComponent)player.getComponent(CollidesComponent.class);
-					cc.bb_dirty = true;
+					//CollidesComponent cc = (CollidesComponent)player.getComponent(CollidesComponent.class);
+					//cc.bb_dirty = true;
 
 					TextEntity te = new TextEntity(ecs, "YOU HAVE BEEN EATEN!", Gdx.graphics.getBackBufferHeight()/2, 4, new Color(0, 0, 0, 1), ic.playerId, 2);
 					ecs.addEntity(te);

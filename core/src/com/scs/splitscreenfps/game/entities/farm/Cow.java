@@ -1,4 +1,4 @@
-	package com.scs.splitscreenfps.game.entities.farm;
+package com.scs.splitscreenfps.game.entities.farm;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -28,7 +28,7 @@ public class Cow extends AbstractEntity {
 
 		this.addComponent(new MovementData(.85f));
 
-		this.addComponent(new CollidesComponent(false, .3f, .3f, .3f));
+		this.addComponent(new CollidesComponent(false, .3f));
 
 	}
 
@@ -49,9 +49,9 @@ public class Cow extends AbstractEntity {
 		AnimatedComponent anim = new AnimatedComponent(animation, "Armature|WalkSlow", "Armature|Idle");
 		anim.animationController = animation;
 		this.addComponent(anim);
-		
+
 		WanderingAnimalComponent wac = new WanderingAnimalComponent(5f);
 		this.addComponent(wac);
 	}
-	
+
 }

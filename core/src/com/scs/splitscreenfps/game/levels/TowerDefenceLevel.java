@@ -150,7 +150,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
 		ecs.addSystem(new BulletSystem(ecs));
 		ecs.addSystem(new CheckAltarSystem(ecs));
-		//ecs.addSystem(new TowerDefenceLevelSystem(this));
+		ecs.addSystem(new TowerDefencePhaseSystem(this));
 	}
 
 

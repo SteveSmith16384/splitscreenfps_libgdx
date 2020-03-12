@@ -68,7 +68,7 @@ public class StockCarLevel extends AbstractLevel {
 		for (String s : str2) {
 			s = s.trim();
 			if (s.length() > 0 && s.startsWith("#") == false) {
-				String cells[] = s.split(",");
+				String cells[] = s.split("\t");
 				for (int col=0 ; col<cells.length ; col++) {
 					game.mapData.map[col][row] = new MapSquare(game.ecs);
 
@@ -78,13 +78,20 @@ public class StockCarLevel extends AbstractLevel {
 					int itoken = Integer.parseInt(cell);
 					if (itoken < 0) { // Start pos
 						this.rndStartPositions.add(new GridPoint2Static(col, row));
-					} else if (itoken == 1) { // Wall
-						game.mapData.map[col][row].blocked = true;
-						Wall wall = new Wall(game.ecs, "stockcar/textures/track_edge.jpg", col, 0, row, false);
-						game.ecs.addEntity(wall);
 					} else if (itoken == 0) { // Road
 						Floor floor = new Floor(game.ecs, "stockcar/textures/road2.png", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
+					} else if (itoken == 2) { // track edge
+						game.mapData.map[col][row].blocked = true;
+						Floor floor = new Floor(game.ecs, "stockcar/textures/track_edge.jpg", col, 1, 1, row, false);
+						game.ecs.addEntity(floor);
+					} else if (itoken == 2) { // Grass
+						Floor floor = new Floor(game.ecs, "stockcar/textures/grass.jpg", col, row, 1, 1, false);
+						game.ecs.addEntity(floor);
+					} else if (itoken == 3) { // wall
+						game.mapData.map[col][row].blocked = true;
+						Wall wall = new Wall(game.ecs, "stockcar/textures/track_edge.jpg", col, 0, row, false);
+						game.ecs.addEntity(wall);
 					} else {
 						throw new RuntimeException("Unknown cell type: " + itoken);
 					}

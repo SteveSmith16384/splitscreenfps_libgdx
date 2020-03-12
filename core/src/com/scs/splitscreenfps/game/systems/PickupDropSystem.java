@@ -102,8 +102,8 @@ public class PickupDropSystem extends AbstractSystem {
 					pos.position.set(pos.originalPosition);
 					pos.position.y = cbc.original_y;
 
-					CollidesComponent coll = (CollidesComponent)cc.carrying.getComponent(CollidesComponent.class);
-					coll.bb_dirty = true;
+					//CollidesComponent coll = (CollidesComponent)cc.carrying.getComponent(CollidesComponent.class);
+					//coll.bb_dirty = true;
 
 					cc.carrying = null;
 				}

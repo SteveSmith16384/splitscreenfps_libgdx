@@ -13,7 +13,6 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeExitComponent;
 
 import ssmith.libgdx.GraphicsHelper;
-import ssmith.libgdx.MyBoundingBox;
 
 public class MonsterMazeExit extends AbstractEntity {
 
@@ -41,7 +40,7 @@ public class MonsterMazeExit extends AbstractEntity {
         
 		this.addComponent(new MonsterMazeExitComponent());
 
-        this.addComponent(new CollidesComponent(false, new MyBoundingBox(posData.position, .3f, .3f, .3f)));
+        this.addComponent(new CollidesComponent(false, .3f));//new MyBoundingBox(posData.position, .3f, .3f, .3f)));
 	}
 
 }

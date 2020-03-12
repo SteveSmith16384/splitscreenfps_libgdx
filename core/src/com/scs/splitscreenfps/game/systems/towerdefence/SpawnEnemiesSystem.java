@@ -7,7 +7,6 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
-import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.GridPoint2Static;

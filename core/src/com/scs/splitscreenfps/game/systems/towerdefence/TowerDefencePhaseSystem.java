@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.systems.towerdefence;
 
 import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 
 public class TowerDefencePhaseSystem implements ISystem {
@@ -23,8 +24,10 @@ public class TowerDefencePhaseSystem implements ISystem {
 		if (this.next_phase_time < System.currentTimeMillis()) {
 			this.spawn_phase = !this.spawn_phase;
 			if (this.spawn_phase) {
+				Settings.p("Spawn phase!");
 				next_phase_time = System.currentTimeMillis() + SPAWN_PHASE_DURATION;
 			} else {
+				Settings.p("Rest phase!");
 				next_phase_time = System.currentTimeMillis() + REST_PHASE_DURATION;
 				levelNum++;
 			}

@@ -28,17 +28,17 @@ public class BulletSystem extends AbstractSystem {
 			
 			if (coll.hitEntity == null) { // Hit wall
 				entity.remove();
+				continue;
 			}
 
-			AbstractEntity[] ents =  coll.getEntitiesByComponent(IsBulletComponent.class, TowerEnemyComponent.class);
+			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, TowerEnemyComponent.class);
 			if (ents != null) {
-				/*if (ents[1] == null) {
-					ents =  coll.getEntitiesByComponent(IsBulletComponent.class, TowerEnemyComponent.class);
-				}*/
-				
 				ents[0].remove();
 				ents[1].remove();
 				return;
+			} else {
+				// Remove us anyway since we've hit something
+				entity.remove();
 			}
 		}
 	}

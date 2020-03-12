@@ -8,7 +8,6 @@ import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.EventCollision;
-import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.DoorComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 
@@ -26,8 +25,8 @@ public class DoorSystem extends AbstractSystem {
 		if (dc.is_opening) {
 			if (posData.position.y < dc.max_height) {
 				posData.position.y += .6f * Gdx.graphics.getDeltaTime();
-				CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
-				cc.bb_dirty = true;
+				//CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
+				//cc.bb_dirty = true;
 			} else {
 				posData.position.y = dc.max_height;
 				dc.is_opening = false;
@@ -41,8 +40,8 @@ public class DoorSystem extends AbstractSystem {
 					if (posData.position.y < 0) {
 						posData.position.y = 0;
 					}
-					CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
-					cc.bb_dirty = true;
+					//CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
+					//cc.bb_dirty = true;
 				}
 			}
 			List<AbstractEvent> it = ecs.getEvents(EventCollision.class);

@@ -34,7 +34,7 @@ public class PreGameScreen implements IModule {
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
-	private Sprite logo;
+	//private Sprite logo;
 	private boolean keyboard_player_joined = false;
 
 	public PreGameScreen(BillBoardFPS_Main _main) {
@@ -147,14 +147,17 @@ public class PreGameScreen implements IModule {
 		font_small.setColor(0,  1,  1,  1);
 		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
 		y = Gdx.graphics.getHeight()/2;
-		font_small.draw(batch2d, "SELECT GAME:", x, y);
-		font_small.setColor(1,  1,  0,  1);
-		y -= this.font_small.getLineHeight();
-		font_small.draw(batch2d, "1 - 3D MONSTER MAZE", x, y);
-		y -= this.font_small.getLineHeight();
-		font_small.draw(batch2d, "2 - ALIEN TAG", x, y);
-		y -= this.font_small.getLineHeight();
-
+		if (Settings.FIXED_GAME == false) {
+			font_small.draw(batch2d, "SELECT GAME:", x, y);
+			font_small.setColor(1,  1,  0,  1);
+			y -= this.font_small.getLineHeight();
+			font_small.draw(batch2d, "1 - 3D MONSTER MAZE", x, y);
+			y -= this.font_small.getLineHeight();
+			font_small.draw(batch2d, "2 - ALIEN TAG", x, y);
+			y -= this.font_small.getLineHeight();
+		} else {
+			font_small.draw(batch2d, "PRESS S TO START!", x, y);
+		}
 
 		/*if (this.controllerManager.getInGameControllers().size() >= 1) {
 			font_large.draw(batch2d, "PRESS SPACE TO START GAME!", 10, y);
@@ -182,10 +185,12 @@ public class PreGameScreen implements IModule {
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && keyboard_player_joined == false) {
 			this.keyboard_player_joined = true;
 			this.appendToLog("Keyboard player joined!");
-		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.S) && Settings.FIXED_GAME) {
+			this.startGame();
+		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && Settings.FIXED_GAME == false) {
 			Settings.CURRENT_MODE = Settings.MODE_MM;
 			this.startGame();
-		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && Settings.FIXED_GAME == false) {
 			Settings.CURRENT_MODE = Settings.MODE_TAG;
 			this.startGame();
 		} else {
@@ -208,8 +213,8 @@ public class PreGameScreen implements IModule {
 			this.appendToLog("No players have joined!");
 		}
 	}
-	
-	
+
+
 	@Override
 	public void dispose() {
 		this.batch2d.dispose();
