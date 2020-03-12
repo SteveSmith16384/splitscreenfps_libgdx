@@ -36,6 +36,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 
 	public static Properties prop;
 	
+	public int levelNum = 1;
 	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
 
@@ -49,7 +50,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 			e.printStackTrace();
 		}
 
-		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs);
+		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, this);
 	}
 
 
