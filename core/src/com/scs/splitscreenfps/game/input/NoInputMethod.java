@@ -6,22 +6,22 @@ public class NoInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public float isForwardsPressed() {
+	public float getForwards() {
 		return 0;
 	}
 
 	@Override
-	public float isBackwardsPressed() {
+	public float getBackwards() {
 		return 0;
 	}
 
 	@Override
-	public float isStrafeLeftPressed() {
+	public float getStrafeLeft() {
 		return 0;
 	}
 
 	@Override
-	public float isStrafeRightPressed() {
+	public float getStrafeRight() {
 		return 0;
 	}
 
@@ -75,4 +75,9 @@ public class NoInputMethod implements IInputMethod {
 		return false;
 	}
 
+
+	@Override
+	public boolean isHelpPressed() {
+		return false; // todo
+	}
 }

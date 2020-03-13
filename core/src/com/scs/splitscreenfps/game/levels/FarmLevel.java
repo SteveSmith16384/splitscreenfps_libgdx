@@ -84,4 +84,10 @@ public class FarmLevel extends AbstractLevel {
 		game.ecs.processSystem(WanderingAnimalSystem.class);
 	}
 
+	
+	public void renderHelp() {
+		
+	}
+	
+
 }

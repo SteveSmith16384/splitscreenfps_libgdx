@@ -71,15 +71,20 @@ public class MovementSystem extends AbstractSystem {
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
+		position.x += offset.x;
+		position.z += offset.z;
+
 		boolean result = false;
-		if (world.rectangleFree(position.x+offset.x, position.z+offset.z, diameter, diameter)) {
-			if (this.game.collCheckSystem.collided(mover, pos, offset.x, offset.z, true) == false) {
-				position.x += offset.x;
-				position.z += offset.z;
+		if (world.rectangleFree(position.x, position.z, diameter, diameter)) {
+			if (this.game.collCheckSystem.collided(mover, pos, true) == false) {
 				result = true;
 			}
 		} else {
 			ecs.events.add(new EventCollision(mover, null));
+		}
+		
+		if (!result) {
+			position.set(pos.originalPosition);
 		}
 
 		return result;
@@ -91,25 +96,32 @@ public class MovementSystem extends AbstractSystem {
 		pos.originalPosition.set(pos.position);
 		Vector3 position = pos.position;
 
+		position.x += offset.x;
 		boolean resultX = false;
-		if (world.rectangleFree(position.x+offset.x, position.z, diameter, diameter)) {
-			if (this.game.collCheckSystem.collided(mover, pos, offset.x, 0, true) == false) {
-				position.x += offset.x;
+		if (world.rectangleFree(position.x, position.z, diameter, diameter)) {
+			if (this.game.collCheckSystem.collided(mover, pos, true) == false) {
 				resultX = true;
 			}
 		} else {
 			ecs.events.add(new EventCollision(mover, null));
 		}
+		if (!resultX) {
+			position.x -= offset.x;
+		}
 
+		position.z += offset.z;
 		boolean resultZ = false;
-		if (world.rectangleFree(position.x, position.z+offset.z, diameter, diameter)) {
-			if (this.game.collCheckSystem.collided(mover, pos, 0, offset.z, true) == false) {
-				position.z += offset.z;
+		if (world.rectangleFree(position.x, position.z, diameter, diameter)) {
+			if (this.game.collCheckSystem.collided(mover, pos, true) == false) {
 				resultZ = true;
 			}
 		} else {
 			ecs.events.add(new EventCollision(mover, null));
 		}
+		if (!resultZ) {
+			position.z -= offset.z;
+		}
+
 		return resultX || resultZ;
 	}
 

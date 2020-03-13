@@ -9,6 +9,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.Game;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.MoveAStarComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.CanBeDamagedByEnemyComponent;
@@ -17,14 +18,13 @@ import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 import ssmith.astar.AStar_LibGDX;
 import ssmith.libgdx.GridPoint2Static;
 
-public final class TowerEnemyAISystem extends AbstractSystem {
+public final class TowerDefenceEnemySystem extends AbstractSystem {
 
 	private final Game game;
-	//private final Vector2 tmpVec2 = new Vector2();
 	private final GridPoint2Static targetPos;
 	private final AStar_LibGDX astar;
 
-	public TowerEnemyAISystem(BasicECS ecs, Game _game, GridPoint2Static _targetPos) {
+	public TowerDefenceEnemySystem(BasicECS ecs, Game _game, GridPoint2Static _targetPos) {
 		super(ecs, TowerEnemyComponent.class);
 
 		game = _game;
@@ -52,6 +52,10 @@ public final class TowerEnemyAISystem extends AbstractSystem {
 						if (altar.health <= 0) {
 							evt.hitEntity.remove();
 						}
+						DrawTextIn3DSpaceComponent text = (DrawTextIn3DSpaceComponent)evt.hitEntity.getComponent(DrawTextIn3DSpaceComponent.class);
+						if (text != null) {
+							text.text = (int)altar.health + "%";
+						}
 						return;
 					}
 				}
@@ -59,8 +63,7 @@ public final class TowerEnemyAISystem extends AbstractSystem {
 		}
 
 		if (mac.route == null || mac.route.size() == 0) {
-			//Settings.p("TRex getting new path!");
-			//GridPoint2Static dest = game.mapData.getRandomFloorPos();
+			//Settings.p("Enemy getting new path!");
 			mac.route = astar.findPath((int)posdata.position.x, (int)posdata.position.z, targetPos.x, targetPos.y);
 		}
 	}

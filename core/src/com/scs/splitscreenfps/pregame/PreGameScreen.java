@@ -34,7 +34,7 @@ public class PreGameScreen implements IModule {
 	private List<String> log = new LinkedList<String>();
 	private FrameBuffer frameBuffer;
 	private BillBoardFPS_Main main;
-	//private Sprite logo;
+	private Sprite logo;
 	private boolean keyboard_player_joined = false;
 
 	public PreGameScreen(BillBoardFPS_Main _main) {
@@ -80,23 +80,25 @@ public class PreGameScreen implements IModule {
 		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		/*String filename = "";
-		switch (Settings.CURRENT_MODE) {
-		case Settings.MODE_TAG:
-			filename = "tag/tag_logo.png";
-			break;
-		case Settings.MODE_MM:
-			filename = "monstermaze/monstermaze_logo.png";
-			break;
-		default:
-			Settings.pe("Unknown mode for logo: " + Settings.CURRENT_MODE);
-			filename = "colours/black.png"; // default
-		}
+		if (Settings.FIXED_GAME) {
+			String filename = "";
+			switch (Settings.CURRENT_MODE) {
+			case Settings.MODE_TAG:
+				filename = "tag/tag_logo.png";
+				break;
+			case Settings.MODE_MM:
+				filename = "monstermaze/monstermaze_logo.png";
+				break;
+			default:
+				Settings.pe("Unknown mode for logo: " + Settings.CURRENT_MODE);
+				filename = "colours/black.png"; // default
+			}
 
-		Texture logoTex = new Texture(Gdx.files.internal(filename));		
-		logo = new Sprite(logoTex);
-		logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-		logo.setColor(0.4f, 0.4f, 0.4f, 1);*/
+			Texture logoTex = new Texture(Gdx.files.internal(filename));		
+			logo = new Sprite(logoTex);
+			logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+			logo.setColor(0.4f, 0.4f, 0.4f, 1);
+		}
 	}
 
 
@@ -113,8 +115,10 @@ public class PreGameScreen implements IModule {
 
 		batch2d.begin();
 
-		//logo.draw(batch2d);
-
+		if (logo != null) {
+			logo.draw(batch2d);
+		}
+		
 		int y = Gdx.graphics.getHeight()-10;// - (int)this.font_large.getLineHeight()*1;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
 		for (Controller c : allControllers) {

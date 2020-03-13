@@ -2,9 +2,11 @@ package com.scs.splitscreenfps.game.components;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.scs.basicecs.AbstractEntity;
 
 public class CollidesComponent {
 
+	public AbstractEntity dont_collide_with; // We don't collide with shooter
 	public boolean blocksMovement = true;
 	public float rad;
 

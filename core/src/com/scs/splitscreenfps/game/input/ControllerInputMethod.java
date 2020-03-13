@@ -11,22 +11,22 @@ public class ControllerInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public float isForwardsPressed() {
+	public float getForwards() {
 		return -controller.getAxis(1);
 	}
 
 	@Override
-	public float isBackwardsPressed() {
+	public float getBackwards() {
 		return controller.getAxis(1);
 	}
 
 	@Override
-	public float isStrafeLeftPressed() {
+	public float getStrafeLeft() {
 		return -controller.getAxis(0);
 	}
 
 	@Override
-	public float isStrafeRightPressed() {
+	public float getStrafeRight() {
 		return controller.getAxis(0);
 	}
 
@@ -78,6 +78,11 @@ public class ControllerInputMethod implements IInputMethod {
 	@Override
 	public boolean isR1Pressed() {
 		return this.controller.getButton(10); // todo - check	
+	}
+
+	@Override
+	public boolean isHelpPressed() {
+		return false; // todo
 	}
 
 }

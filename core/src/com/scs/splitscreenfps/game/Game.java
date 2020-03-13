@@ -31,7 +31,7 @@ import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.StockCarLevel;
-import com.scs.splitscreenfps.game.levels.TagLevel;
+import com.scs.splitscreenfps.game.levels.AlienTagLevel;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
@@ -95,7 +95,7 @@ public class Game implements IModule {
 
 		switch (Settings.CURRENT_MODE) {
 		case Settings.MODE_TAG:
-			currentLevel = new TagLevel(this);
+			currentLevel = new AlienTagLevel(this);
 			break;
 		case Settings.MODE_MM:
 			currentLevel = new MonsterMazeLevel(this);
@@ -259,6 +259,10 @@ public class Game implements IModule {
 
 			currentLevel.renderUI(batch2d, currentViewId);
 
+			if (players[this.currentViewId].inputMethod.isHelpPressed()) {
+				this.currentLevel.renderHelp(batch2d, currentViewId);
+			}
+
 			/*if (players[currentViewId] != null) {
 				players[currentViewId].renderUI(batch2d, font);
 			}*/
@@ -288,9 +292,8 @@ public class Game implements IModule {
 					font_small.draw(batch2d, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, font_small.getLineHeight()*2);
 				}
 			}
-
 			batch2d.end();
-
+			
 		}
 	}
 
@@ -388,7 +391,7 @@ public class Game implements IModule {
 		}
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
-			if (collCheckSystem.collided(e, posData, 0, 0, false) == false) {
+			if (collCheckSystem.collided(e, posData, false) == false) {
 				return true;
 			}
 		}

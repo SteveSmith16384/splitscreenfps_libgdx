@@ -1,11 +1,11 @@
 package com.scs.splitscreenfps.game.components.towerdefence;
 
 public class IsBulletComponent {
-
-	/*public Vector3 offset;
+/*
+	public AbstractEntity shooter; // We don't collide with shooter
 	
-	public IsBulletComponent(Vector3 _offset) {
-		offset = _offset;
-	}*/
-
+	public IsBulletComponent(AbstractEntity _shooter) {
+		shooter = _shooter;
+	}
+*/
 }

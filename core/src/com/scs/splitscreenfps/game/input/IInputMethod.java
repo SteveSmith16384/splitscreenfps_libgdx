@@ -4,13 +4,13 @@ public interface IInputMethod {
 	
 	boolean isMouse(); // Mouse has extra features like capturing the window
 
-	float isForwardsPressed(); // todo - rename these
+	float getForwards();
 
-	float isBackwardsPressed();
+	float getBackwards();
 
-	float isStrafeLeftPressed();
+	float getStrafeLeft();
 
-	float isStrafeRightPressed();
+	float getStrafeRight();
 	
 	float getLookLeft();
 
@@ -29,5 +29,7 @@ public interface IInputMethod {
 	boolean isL1ressed();
 
 	boolean isR1Pressed();
+	
+	boolean isHelpPressed();
 	
 }

@@ -16,6 +16,7 @@ import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.AutoMoveComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasDecalCycle;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -118,7 +119,7 @@ public class TowerDefenceEntityFactory {
 	}
 
 
-	public static AbstractEntity createBullet(BasicECS ecs, Vector3 start, Vector3 offset) {
+	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 offset) {
 		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
 
 		PositionComponent pos = new PositionComponent();
@@ -139,7 +140,9 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(md);
 		
 		e.addComponent(new AutoMoveComponent(offset));
-		e.addComponent(new CollidesComponent(false, DIAM));
+		CollidesComponent cc = new CollidesComponent(false, DIAM);
+		cc.dont_collide_with = shooter;
+		e.addComponent(cc);
 		e.addComponent(new IsBulletComponent());
 
 
@@ -164,7 +167,9 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(new CollidesComponent(true, 0.2f));
 
 		e.addComponent(new CanBeDamagedByEnemyComponent(100));
-
+		
+		DrawTextIn3DSpaceComponent text = new DrawTextIn3DSpaceComponent("todo", new Vector3(0, 1, 0), 5);
+		e.addComponent(text);;
 		return e;
 	}
 

@@ -26,7 +26,7 @@ import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefencePhaseSystem;
-import com.scs.splitscreenfps.game.systems.towerdefence.TowerEnemyAISystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefenceEnemySystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TurretSystem;
 
 import ssmith.lang.NumberFunctions;
@@ -39,6 +39,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	public int levelNum = 1;
 	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
+	//private 
 
 	public TowerDefenceLevel(Game _game) {
 		super(_game);
@@ -147,10 +148,10 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new ShowFloorSelectorSystem(ecs));
 		ecs.addSystem(new BuildDefenceSystem(ecs, game));
 		ecs.addSystem(new TurretSystem(ecs, game));
-		ecs.addSystem(new TowerEnemyAISystem(ecs, game, targetPos));
+		ecs.addSystem(new TowerDefenceEnemySystem(ecs, game, targetPos));
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
 		ecs.addSystem(new BulletSystem(ecs));
-		ecs.addSystem(new CheckAltarSystem(ecs));
+		ecs.addSystem(new CheckAltarSystem(ecs, game));
 		ecs.addSystem(new TowerDefencePhaseSystem(this));
 	}
 
@@ -161,7 +162,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		//spawnEnemiesSystem.process();
 		game.ecs.processSystem(BuildDefenceSystem.class);
 		game.ecs.processSystem(TurretSystem.class);
-		game.ecs.processSystem(TowerEnemyAISystem.class);
+		game.ecs.processSystem(TowerDefenceEnemySystem.class);
 		game.ecs.processSystem(CollectCoinsSystem.class);
 		game.ecs.processSystem(BulletSystem.class);
 		game.ecs.processSystem(CheckAltarSystem.class);
@@ -173,9 +174,19 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		AbstractEntity playerAvatar = game.players[viewIndex];
 		TowerDefencePlayerData tc = (TowerDefencePlayerData)playerAvatar.getComponent(TowerDefencePlayerData.class);
 		if (tc != null) {
-			game.font_med.setColor(0, 0, 0, 1);
-			game.font_med.draw(batch2d, "Coins: " + (int)tc.coins, 10, game.font_med.getLineHeight());
+			game.font_med.setColor(1, 1, 1, 1);
+			game.font_med.draw(batch2d, "Coins: " + tc.coins, 10, game.font_med.getLineHeight()*2);
+			//String stage = ""
+			game.font_med.draw(batch2d, "Level: " + levelNum, 10, game.font_med.getLineHeight()*3);
 		}
 	}
 
+
+	@Override
+	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
+		game.font_med.setColor(1, 1, 1, 1);
+		game.font_med.draw(batch2d, "HELP!", 10, game.font_med.getLineHeight()*2);
+	
+	}
+	
 }

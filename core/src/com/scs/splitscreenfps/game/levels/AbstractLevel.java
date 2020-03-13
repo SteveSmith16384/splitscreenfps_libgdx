@@ -68,6 +68,8 @@ public abstract class AbstractLevel {
 
 	public abstract void update();
 	
+	public void renderHelp(SpriteBatch batch2d, int viewIndex) {}
+	
 	public void renderUI(SpriteBatch batch, int viewIndex) {}
 
 	public GridPoint2Static getPlayerStartMap(int idx) {

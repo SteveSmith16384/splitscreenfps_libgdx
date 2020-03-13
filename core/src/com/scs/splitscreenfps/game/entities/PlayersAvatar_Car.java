@@ -69,18 +69,18 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		if (veh.current_speed != 0) {
 			float turn_frac = veh.current_speed / VehicleMovementSystem.MAX_SPEED;
 			if (this.inputMethod.isMouse()) {
-				if (inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
-					veh.angle_rads += inputMethod.isStrafeLeftPressed() * ROT_SPEED_Y * dt * turn_frac;
-				} else if (inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
-					veh.angle_rads -= inputMethod.isStrafeRightPressed() * ROT_SPEED_Y * dt * turn_frac;
+				if (inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
+					veh.angle_rads += inputMethod.getStrafeLeft() * ROT_SPEED_Y * dt * turn_frac;
+				} else if (inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
+					veh.angle_rads -= inputMethod.getStrafeRight() * ROT_SPEED_Y * dt * turn_frac;
 				}
 			} else if (inputMethod instanceof NoInputMethod) {
 				// Do nothing
 			} else {
-				if (inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
-					veh.angle_rads += ROT_SPEED_Y * inputMethod.isStrafeLeftPressed() * dt * turn_frac;
-				} else if (inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
-					veh.angle_rads -= ROT_SPEED_Y * inputMethod.isStrafeRightPressed() * dt * turn_frac;
+				if (inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
+					veh.angle_rads += ROT_SPEED_Y * inputMethod.getStrafeLeft() * dt * turn_frac;
+				} else if (inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
+					veh.angle_rads -= ROT_SPEED_Y * inputMethod.getStrafeRight() * dt * turn_frac;
 				}
 			}
 		}

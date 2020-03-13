@@ -9,22 +9,22 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 	}
 
 	@Override
-	public float isForwardsPressed() {
+	public float getForwards() {
 		return Gdx.input.isKeyPressed(Keys.W) ? 1 : 0;
 	}
 
 	@Override
-	public float isBackwardsPressed() {
+	public float getBackwards() {
 		return Gdx.input.isKeyPressed(Keys.S) ? 1 : 0;
 	}
 
 	@Override
-	public float isStrafeLeftPressed() {
+	public float getStrafeLeft() {
 		return Gdx.input.isKeyPressed(Keys.A) ? 1 : 0;
 	}
 
 	@Override
-	public float isStrafeRightPressed() {
+	public float getStrafeRight() {
 		return Gdx.input.isKeyPressed(Keys.D) ? 1 : 0;
 	}
 
@@ -80,6 +80,11 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 	@Override
 	public boolean isTrianglePressed() {
 		return Gdx.input.isKeyPressed(Keys.CONTROL_LEFT);
+	}
+
+	@Override
+	public boolean isHelpPressed() {
+		return Gdx.input.isKeyPressed(Keys.H);
 	}
 
 }

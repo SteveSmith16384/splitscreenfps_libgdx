@@ -111,25 +111,25 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		MovementData movementData = (MovementData)this.getComponent(MovementData.class);
 		//movementData.offset.setZero();
 
-		if (this.inputMethod.isForwardsPressed() > Settings.MIN_AXIS) {
+		if (this.inputMethod.getForwards() > Settings.MIN_AXIS) {
 			//Settings.p("Fwd:" + this.inputMethod.isForwardsPressed());
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(this.inputMethod.isForwardsPressed() * MOVE_SPEED));
-		} else if (this.inputMethod.isBackwardsPressed() > Settings.MIN_AXIS) {
+			movementData.offset.add(tmpVector.nor().scl(this.inputMethod.getForwards() * MOVE_SPEED));
+		} else if (this.inputMethod.getBackwards() > Settings.MIN_AXIS) {
 			//Settings.p("Back:" + this.inputMethod.isBackwardsPressed());
 			tmpVector.set(camera.direction);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.isBackwardsPressed()));
+			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getBackwards()));
 		}
-		if (this.inputMethod.isStrafeLeftPressed() > Settings.MIN_AXIS) {
+		if (this.inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.isStrafeLeftPressed()));
-		} else if (this.inputMethod.isStrafeRightPressed() > Settings.MIN_AXIS) {
+			movementData.offset.add(tmpVector.nor().scl(-MOVE_SPEED * this.inputMethod.getStrafeLeft()));
+		} else if (this.inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
 			tmpVector.set(camera.direction).crs(camera.up);
 			tmpVector.y = 0;
-			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.isStrafeRightPressed()));
+			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.getStrafeRight()));
 		}
 
 		if (this.inputMethod.isCirclePressed()) {

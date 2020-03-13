@@ -26,11 +26,11 @@ import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 import ssmith.lang.NumberFunctions;
 
-public class TagLevel extends AbstractLevel {
+public class AlienTagLevel extends AbstractLevel {
 
 	private Texture slime;
 
-	public TagLevel(Game _game) {
+	public AlienTagLevel(Game _game) {
 		super(_game);
 
 		slime = new Texture(Gdx.files.internal("tag/slime.jpg"));

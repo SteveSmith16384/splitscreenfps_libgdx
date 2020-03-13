@@ -38,6 +38,12 @@ public class TurretSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity turret) {
 		PositionComponent turretPos = (PositionComponent)turret.getComponent(PositionComponent.class);
 		IsTurretComponent itc = (IsTurretComponent)turret.getComponent(IsTurretComponent.class);
+		if (itc.current_target != null) {
+			if (itc.current_target.isMarkedForRemoval()) {
+				itc.current_target = null;
+			}
+		}
+
 		if (itc.nextTargetCheck < System.currentTimeMillis()) {
 			itc.nextTargetCheck = System.currentTimeMillis() + 2000;
 			itc.current_target = this.getTarget(turretPos);//game.players[0];
@@ -50,7 +56,7 @@ public class TurretSystem extends AbstractSystem {
 			tmp2.x -= targetPos.position.x;
 			tmp2.y -= targetPos.position.z;
 			float target_angle = -tmp2.angle();
-			turretPos.angle_degs += Math.signum(target_angle-turretPos.angle_degs) * .1f;
+			turretPos.angle_degs += Math.signum(target_angle-turretPos.angle_degs) * .05f;
 			//Settings.p("Angle: " + turretPos.angle_degs);
 			
 			if (itc.nextShotTime < System.currentTimeMillis()) {
@@ -59,7 +65,7 @@ public class TurretSystem extends AbstractSystem {
 				tmp3.set((float)Math.sin(Math.toRadians(turretPos.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(turretPos.angle_degs-90)));
 				startPos.add(tmp3);
 				tmp3.scl(BULLET_SPEED);
-				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, startPos, tmp3);
+				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, turret, startPos, tmp3);
 				game.ecs.addEntity(bullet);
 			}
 		}

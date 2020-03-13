@@ -29,7 +29,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 	/**
 	 * Returns true/false depending if movement blocked
 	 */
-	public boolean collided(AbstractEntity mover, PositionComponent ourPos, float offX, float offZ, boolean raise_event) {
+	public boolean collided(AbstractEntity mover, PositionComponent ourPos, boolean raise_event) {
 		boolean blocked = false;
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
 
@@ -39,6 +39,10 @@ public class CollisionCheckSystem extends AbstractSystem {
 			if (e != mover) {
 				CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
 				if (cc != null) {
+					if (cc.dont_collide_with == mover || moverCC.dont_collide_with == e) {
+						continue;
+					}
+					
 					PositionComponent theirPos = (PositionComponent)e.getComponent(PositionComponent.class);
 					float len = tmp.set(theirPos.position).sub(ourPos.position).len();
 					

@@ -36,13 +36,12 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity create3DText(BasicECS ecs, String text, float map_x, float map_z) {
+	public static AbstractEntity create3DText_TEST(BasicECS ecs, String text, Vector3 offset) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Text");
 
-		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent(text, map_x, map_z, 3f);
-		data.text = "hello!";
-		data.pos = new Vector3(2f, 1f, 2f);
-		data.range = 5;
+		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent(text, offset, 3f);
+		//data.text = "hello!";
+		//data.offset = new Vector3(0f, 1f, 0f);
 		entity.addComponent(data);
 
 		return entity;

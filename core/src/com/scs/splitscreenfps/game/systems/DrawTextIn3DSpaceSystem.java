@@ -10,6 +10,7 @@ import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.DrawTextIn3DSpaceComponent;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 
 public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 
@@ -30,10 +31,14 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		DrawTextIn3DSpaceComponent data = (DrawTextIn3DSpaceComponent)entity.getComponent(DrawTextIn3DSpaceComponent.class);
 
+		tmp.set(data.offset);
+
+		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+		tmp.add(posData.position);
+		
 		Camera cam = game.viewports[game.currentViewId].camera;
-		float dist = data.pos.dst(cam.position);
-		if (dist <= data.range) {
-			tmp.set(data.pos);
+		float dist = tmp.dst(cam.position);
+		if (data.range < 0 || dist <= data.range) {
 			cam.project(tmp);
 			//Settings.p("Pos: " + pos);
 			BitmapFont font = game.font_large;
