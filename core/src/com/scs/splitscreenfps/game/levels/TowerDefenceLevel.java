@@ -51,7 +51,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 			e.printStackTrace();
 		}
 
-		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, this);
+		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, game, this);
 	}
 
 

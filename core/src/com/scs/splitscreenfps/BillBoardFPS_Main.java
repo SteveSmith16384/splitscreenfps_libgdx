@@ -48,10 +48,11 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	@Override
 	public void render() {
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-			Gdx.input.setCursorCatched(true);
+			Gdx.input.setCursorCatched(true); // todo - don't do this in pre-game
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {// && Gdx.input.isCursorCatched()) {
 			Gdx.input.setCursorCatched(false);
+			//return;
 		}
 
 		if (next_module != null) {
@@ -68,6 +69,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		audio.update();
 
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
+			Settings.p("F1");
 			if (fullscreen) {
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
 				fullscreen = false;
@@ -88,12 +90,16 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			}
 			this.current_module.setFullScreen(fullscreen);
 		} else if (Gdx.input.isKeyJustPressed(Keys.F2)) {
+			Settings.p("F2");
 			if (fullscreen) {
+				Gdx.graphics.setUndecorated(true);
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
 				fullscreen = false;
 			} else {
 				int w = Gdx.graphics.getDisplayMode().width;
 				int h = Gdx.graphics.getDisplayMode().height;
+				Gdx.graphics.setUndecorated(true);
+				//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 				Gdx.graphics.setWindowedMode(w, h);
 				fullscreen = true;
 			}
