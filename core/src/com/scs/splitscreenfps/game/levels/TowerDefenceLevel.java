@@ -1,6 +1,8 @@
 package com.scs.splitscreenfps.game.levels;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -25,8 +27,8 @@ import com.scs.splitscreenfps.game.systems.towerdefence.CheckAltarSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
-import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefencePhaseSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefenceEnemySystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefencePhaseSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TurretSystem;
 
 import ssmith.lang.NumberFunctions;
@@ -39,7 +41,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	public int levelNum = 1;
 	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
-	//private 
+	private List<String> instructions = new ArrayList<String>(); 
 
 	public TowerDefenceLevel(Game _game) {
 		super(_game);
@@ -50,8 +52,16 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		instructions.add("Keyboard:");
+		instructions.add("1: Build Tower");
+		instructions.add("2: Build Wall");
+		instructions.add("");
+		instructions.add("Controllers:");
+		instructions.add("1: Build Tower");
+		instructions.add("2: Build Wall");
 
-		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, this);
+		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, game, this);
 	}
 
 
