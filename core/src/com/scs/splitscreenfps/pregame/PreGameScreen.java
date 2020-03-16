@@ -50,7 +50,11 @@ public class PreGameScreen implements IModule {
 
 		loadAssetsForResize();
 
-		this.appendToLog("Welcome to Split-Screen Games");// + Settings.TITLE);
+		if (Settings.FIXED_GAME) {
+			this.appendToLog("Welcome to " + Settings.TITLE);
+		} else {
+			this.appendToLog("Welcome to Split-Screen Games");// + Settings.TITLE);
+		}
 		this.appendToLog("v" + Settings.VERSION);
 		if (Settings.RELEASE_MODE == false) {
 			this.appendToLog("WARNING! Game in debug mode!");
@@ -58,8 +62,9 @@ public class PreGameScreen implements IModule {
 		//this.appendToLog("Looking for controllers...");
 		this.appendToLog("Press SPACE to play with keyboard/mouse");
 		this.appendToLog("Press X to play with controller");
-		this.appendToLog("Select a game once all players have joined!");
-
+		if (!Settings.FIXED_GAME) {
+			this.appendToLog("Select a game once all players have joined!");
+		}
 	}
 
 
@@ -118,12 +123,14 @@ public class PreGameScreen implements IModule {
 		if (logo != null) {
 			logo.draw(batch2d);
 		}
-		
+
+		// Show controllers
 		int y = Gdx.graphics.getHeight()-10;// - (int)this.font_large.getLineHeight()*1;
 		Array<Controller> allControllers = this.controllerManager.getAllControllers();
+		int idx = 1;
 		for (Controller c : allControllers) {
 			font_large.setColor(1,  1,  1,  1);
-			font_large.draw(batch2d, "Controller " + c.getName(), 10, y);
+			font_large.draw(batch2d, "Controller " + idx, 10, y);
 
 			if (this.controllerManager.isControllerInGame(c)) {
 				font_large.setColor(0,  1,  0,  1);
@@ -133,6 +140,7 @@ public class PreGameScreen implements IModule {
 				font_large.draw(batch2d, "Not in game - Press X to Join!", 10, y-this.font_large.getLineHeight());
 			}
 			y -= this.font_large.getLineHeight()*2;
+			idx++;
 		}
 		if (allControllers.size == 0) {
 			font_large.setColor(1,  1,  1,  1);
@@ -141,7 +149,7 @@ public class PreGameScreen implements IModule {
 
 		// Draw log
 		font_small.setColor(1,  1,  1,  1);
-		y = (int)(Gdx.graphics.getHeight()*0.7);// - 220;
+		y = (int)(Gdx.graphics.getHeight()*0.4);// - 220;
 		for (String s :this.log) {
 			font_small.draw(batch2d, s, 10, y);
 			y -= this.font_small.getLineHeight();
@@ -150,7 +158,7 @@ public class PreGameScreen implements IModule {
 		// Draw game options
 		font_small.setColor(0,  1,  1,  1);
 		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
-		y = Gdx.graphics.getHeight()/2;
+		y = (int)(Gdx.graphics.getHeight()*.3f);
 		if (Settings.FIXED_GAME == false) {
 			font_small.draw(batch2d, "SELECT GAME:", x, y);
 			font_small.setColor(1,  1,  0,  1);

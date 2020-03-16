@@ -18,7 +18,7 @@ public class Settings {
 	public static final int MODE_BLADE_RUNNER = 9;
 	public static final int MODE_STOCK_CAR = 10;
 	
-	public static int CURRENT_MODE = MODE_TOWER_DEFENCE;
+	public static int CURRENT_MODE = MODE_MM;
 	public static boolean FIXED_GAME = true;
 	public static final String VERSION = "1.01";
 

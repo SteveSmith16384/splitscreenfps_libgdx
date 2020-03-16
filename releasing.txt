@@ -2,5 +2,5 @@ RELEASING
 
 Update version number
 Release mode = true
-Zip up and upload to Itch
 Run compile_desktop to get jar
+Zip up and upload to Itch
