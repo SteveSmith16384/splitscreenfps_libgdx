@@ -10,7 +10,7 @@ public class Settings {
 	public static final int MODE_TAG = 1;
 	public static final int MODE_MM = 2;
 	public static final int MODE_DUNGEON = 3;
-	public static final int MODE_FARM = 4;
+	public static final int MODE_FUNNY_FARM = 4;
 	public static final int MODE_FTL = 5;
 	public static final int MODE_CAR_PARK = 6;
 	public static final int MODE_DEATHCHASE = 7;
@@ -18,11 +18,12 @@ public class Settings {
 	public static final int MODE_BLADE_RUNNER = 9;
 	public static final int MODE_STOCK_CAR = 10;
 	
-	public static int CURRENT_MODE = MODE_MM;
-	public static boolean FIXED_GAME = true;
+	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists() == false;
+
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_STOCK_CAR;
+	public static boolean FIXED_GAME = RELEASE_MODE || true;
 	public static final String VERSION = "1.01";
 
-	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists() == false;
 	
 	// Hacks
 	public static final boolean STRICT = !RELEASE_MODE && true;
@@ -72,7 +73,7 @@ public class Settings {
 		case MODE_MM:
 			TITLE = "3D Monster Maze";
 			break;
-		case MODE_FARM:
+		case MODE_FUNNY_FARM:
 			TITLE = "The Funny Farm";
 			break;
 		case MODE_FTL:

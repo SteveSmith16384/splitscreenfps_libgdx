@@ -13,6 +13,7 @@ import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.deathchase.DeathchaseEntityFactory;
+import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 import com.scs.splitscreenfps.game.systems.deathchase.DeathchaseCrashSystem;
 
 import ssmith.lang.NumberFunctions;
@@ -96,12 +97,14 @@ public class DeathChaseLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
+		ecs.addSystem(new VehicleMovementSystem(ecs, .0004f));
 		ecs.addSystem(new DeathchaseCrashSystem(ecs, game));
 	}
 
 
 	@Override
 	public void update() {
+		game.ecs.processSystem(VehicleMovementSystem.class);
 		game.ecs.processSystem(DeathchaseCrashSystem.class);
 	}
 

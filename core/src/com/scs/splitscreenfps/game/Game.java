@@ -23,6 +23,7 @@ import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.levels.AbstractLevel;
+import com.scs.splitscreenfps.game.levels.AlienTagLevel;
 import com.scs.splitscreenfps.game.levels.BladeRunnerLevel;
 import com.scs.splitscreenfps.game.levels.CarParkLevel;
 import com.scs.splitscreenfps.game.levels.DeathChaseLevel;
@@ -31,7 +32,6 @@ import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.StockCarLevel;
-import com.scs.splitscreenfps.game.levels.AlienTagLevel;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
 import com.scs.splitscreenfps.game.systems.CollisionCheckSystem;
@@ -48,7 +48,6 @@ import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnSystem;
-import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -103,7 +102,7 @@ public class Game implements IModule {
 		case Settings.MODE_DUNGEON:
 			currentLevel = new DungeonLevel(this);
 			break;
-		case Settings.MODE_FARM:
+		case Settings.MODE_FUNNY_FARM:
 			currentLevel = new FarmLevel(this);
 			break;
 		case Settings.MODE_FTL:
@@ -172,7 +171,6 @@ public class Game implements IModule {
 		ecs.addSystem(this.drawModelSystem);
 		ecs.addSystem(new PickupDropSystem(ecs, this));
 		ecs.addSystem(new DrawTextIn3DSpaceSystem(ecs, this, batch2d));
-		ecs.addSystem(new VehicleMovementSystem(ecs));
 		respawnSystem = new RespawnSystem(ecs, this); 
 		ecs.addSystem(respawnSystem);
 	}
@@ -211,7 +209,6 @@ public class Game implements IModule {
 		this.ecs.addAndRemoveEntities();
 		this.ecs.getSystem(PlayerInputSystem.class).process();
 		this.ecs.getSystem(MoveAStarSystem.class).process();
-		this.ecs.processSystem(VehicleMovementSystem.class);
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();

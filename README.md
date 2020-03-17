@@ -1,10 +1,21 @@
 # Split-Screen FPS Games
 A 1-4 player split-screen FPS engine and games.
 
-I have a very short interest span when it comes to gamedev: this codebase contains various games, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  The games that are selectable from the first menu are typically mostly complete.
+I have a very short interest span when it comes to gamedev: this codebase contains various games, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  The games that are selectable from the first menu are typically mostly complete.  The rest may be barely started.
+
+Currently, the following games are at various stages of progress:
+* 3D Monster maze: escape from the maze
+*  Alien Tag: Don't be the player who's been tagged the longest
+* Tower Defence: Build turrets to shoot the aliens
+* Funny Farm: Grow and harvest crops
+* FTL: An FTL-inspsired 3D game
+* Deathchase: Crash into other players
+* Bladerunner: Identify and kill the replicant
+* Stock car: Race around a track
+
 
 ### Example Videos
-* https://www.youtube.com/watch?v=hM-P-M--Or4&t=77s
+* 3D Monster maze:  https://www.youtube.com/watch?v=YDUUCQZeCSI
 
 
 ## Controls
@@ -12,7 +23,7 @@ I have a very short interest span when it comes to gamedev: this codebase contai
 
 It depends on the specific game selected, but controls are typically:-
 
-* W, A S, D, Space and Enter for keyboard & mouse player.
+* W, A S, D, Space and Enter for keyboard & mouse player.  H for Help (where implemented).
 * Tested with PS4 controllers.
 * F1 - Toggle full Screen
 * F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
@@ -57,4 +68,10 @@ This project uses the MIT licence.  See LICENCE.txt.
 
 #### Tower Defence
 * Models by Kenney - https://kenney.nl/assets/tower-defense-kit
+* Alien by Quaternius
 * Rotating coin by Master484: https://opengameart.org/content/cute-platformer-sisters
+
+
+## Notes for other developers
+* See Settings.java for settings that determine what game is selected.
+

@@ -68,7 +68,11 @@ public abstract class AbstractLevel {
 
 	public abstract void update();
 	
-	public void renderHelp(SpriteBatch batch2d, int viewIndex) {}
+	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
+		game.font_med.setColor(1, 1, 1, 1);
+		game.font_med.draw(batch2d, "Sorry, there is currently no help for this game", 10, game.font_med.getLineHeight()*2);
+	
+	}
 	
 	public void renderUI(SpriteBatch batch, int viewIndex) {}
 
