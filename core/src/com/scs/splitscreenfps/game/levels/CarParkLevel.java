@@ -54,8 +54,8 @@ public class CarParkLevel extends AbstractLevel {
 		AbstractEntity car = CarParkEntityFactory.createCar1(game, 3, 0, 0);
 		game.ecs.addEntity(car);
 		
-		AbstractEntity text3d = EntityFactory.create3DText_TEST(game.ecs, "A car!", new Vector3(0, 1, 0));
-		game.ecs.addEntity(text3d);
+		//AbstractEntity text3d = EntityFactory.create3DText_TEST(game.ecs, "A car!", new Vector3(0, 1, 0));
+		//game.ecs.addEntity(text3d);
 		
 
 		//AbstractEntity car = CarParkEntityFactory.createAmbulance(game, 3, 0, 0);

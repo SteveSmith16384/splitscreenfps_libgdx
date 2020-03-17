@@ -7,20 +7,20 @@ import java.util.Random;
 
 public class Settings {
 	
-	public static final int MODE_TAG = 1;
-	public static final int MODE_MM = 2;
-	public static final int MODE_DUNGEON = 3;
-	public static final int MODE_FUNNY_FARM = 4;
-	public static final int MODE_FTL = 5;
-	public static final int MODE_CAR_PARK = 6;
-	public static final int MODE_DEATHCHASE = 7;
-	public static final int MODE_TOWER_DEFENCE = 8;
-	public static final int MODE_BLADE_RUNNER = 9;
-	public static final int MODE_STOCK_CAR = 10;
+	public static final int MODE_TAG = 1; // Finished
+	public static final int MODE_MM = 2; // Finished
+	public static final int MODE_DUNGEON = 3; // Barely started
+	public static final int MODE_FUNNY_FARM = 4; // Barely started
+	public static final int MODE_FTL = 5; // Barely started
+	public static final int MODE_CAR_PARK = 6; // Barely started
+	public static final int MODE_DEATHCHASE = 7; // Basic
+	public static final int MODE_TOWER_DEFENCE = 8; // Started
+	public static final int MODE_BLADE_RUNNER = 9; // Barely started
+	public static final int MODE_STOCK_CAR = 10; // Started
 	
 	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_STOCK_CAR;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_CAR_PARK;
 	public static boolean FIXED_GAME = RELEASE_MODE || true;
 	public static final String VERSION = "1.01";
 

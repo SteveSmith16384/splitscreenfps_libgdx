@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.splitscreenfps.Settings;
@@ -68,13 +69,13 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		//Rotation
 		if (veh.current_speed != 0) {
 			float turn_frac = veh.current_speed / VehicleMovementSystem.MAX_SPEED;
-			if (this.inputMethod.isMouse()) {
+			//if (this.inputMethod.isMouse()) {
 				if (inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
 					veh.angle_rads += inputMethod.getStrafeLeft() * ROT_SPEED_Y * dt * turn_frac;
 				} else if (inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
 					veh.angle_rads -= inputMethod.getStrafeRight() * ROT_SPEED_Y * dt * turn_frac;
 				}
-			} else if (inputMethod instanceof NoInputMethod) {
+			/*} else if (inputMethod instanceof NoInputMethod) {
 				// Do nothing
 			} else {
 				if (inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
@@ -82,14 +83,14 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 				} else if (inputMethod.getStrafeRight() > Settings.MIN_AXIS) {
 					veh.angle_rads -= ROT_SPEED_Y * inputMethod.getStrafeRight() * dt * turn_frac;
 				}
-			}
+			}*/
 		}
 
 		// Acc/dec
-		if (this.inputMethod.isCrossPressed()) {
+		if (this.inputMethod.isCrossPressed() || this.inputMethod.isKeyPressed(Keys.ENTER)) {
 			veh.current_speed += dt * ACC;
 			Settings.p("Speed=" + veh.current_speed);
-		} else if (this.inputMethod.isCirclePressed()) {
+		} else if (this.inputMethod.isCirclePressed() || this.inputMethod.isKeyPressed(Keys.SPACE)) {
 			veh.current_speed -= dt * ACC * 2;
 			Settings.p("Speed=" + veh.current_speed);
 		} else {

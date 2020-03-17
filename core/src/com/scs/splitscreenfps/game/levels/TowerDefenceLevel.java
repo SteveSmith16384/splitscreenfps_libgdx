@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -21,6 +22,10 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
+import com.scs.splitscreenfps.game.input.ControllerInputMethod;
+import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.systems.towerdefence.BuildDefenceSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.BulletSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CheckAltarSystem;
@@ -37,7 +42,7 @@ import ssmith.libgdx.GridPoint2Static;
 public final class TowerDefenceLevel extends AbstractLevel {
 
 	public static Properties prop;
-	
+
 	public int levelNum = 1;
 	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
@@ -52,7 +57,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		instructions.add("Keyboard:");
 		instructions.add("1: Build Tower");
 		instructions.add("2: Build Wall");
@@ -156,7 +161,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	@Override
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new ShowFloorSelectorSystem(ecs));
-		ecs.addSystem(new BuildDefenceSystem(ecs, game));
+		ecs.addSystem(new BuildDefenceSystem(ecs, game, this));
 		ecs.addSystem(new TurretSystem(ecs, game));
 		ecs.addSystem(new TowerDefenceEnemySystem(ecs, game, targetPos));
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
@@ -196,7 +201,48 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
 		game.font_med.setColor(1, 1, 1, 1);
 		game.font_med.draw(batch2d, "HELP!", 10, game.font_med.getLineHeight()*2);
-	
+
 	}
+
+
+	public boolean isBuildTowerPressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.T);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isCirclePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
+		}
+
+	}
+
 	
+	public boolean isBuildBlockPressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.B);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isTrianglePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
+		}
+
+	}
+
+
+	public boolean isDismanstlePressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.X);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isSquarePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
+		}
+
+	}
 }

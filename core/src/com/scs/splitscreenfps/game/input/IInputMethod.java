@@ -26,10 +26,16 @@ public interface IInputMethod {
 	
 	boolean isTrianglePressed();
 	
+	boolean isSquarePressed();
+	
 	boolean isL1ressed();
 
 	boolean isR1Pressed();
 	
 	boolean isHelpPressed();
 	
+	boolean isKeyJustPressed(int key);
+
+	boolean isKeyPressed(int key);
+
 }

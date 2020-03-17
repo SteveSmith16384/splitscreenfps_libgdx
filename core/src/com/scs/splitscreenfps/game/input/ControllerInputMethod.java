@@ -85,4 +85,14 @@ public class ControllerInputMethod implements IInputMethod {
 		return false; // todo
 	}
 
+	@Override
+	public boolean isKeyJustPressed(int key) {
+		return false; // Not required
+	}
+
+	@Override
+	public boolean isSquarePressed() {
+		return this.controller.getButton(3); // todo - check	
+	}
+
 }

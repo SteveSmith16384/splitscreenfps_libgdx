@@ -78,6 +78,18 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isHelpPressed() {
-		return false; // todo
+		return false;
+	}
+
+	
+	@Override
+	public boolean isKeyJustPressed(int key) {
+		return false;
+	}
+
+	
+	@Override
+	public boolean isSquarePressed() {
+		return false;
 	}
 }

@@ -13,6 +13,7 @@ import com.scs.splitscreenfps.game.components.towerdefence.TowerDefencePlayerDat
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
+import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 
 public class BuildDefenceSystem extends AbstractSystem {
 
@@ -20,11 +21,13 @@ public class BuildDefenceSystem extends AbstractSystem {
 	private static final int WALL_COST = 2;
 
 	private Game game;
+	private TowerDefenceLevel towerDefenceLevel;
 
-	public BuildDefenceSystem(BasicECS ecs, Game _game) {
+	public BuildDefenceSystem(BasicECS ecs, Game _game, TowerDefenceLevel level) {
 		super(ecs, CanBuildComponent.class);
 
 		game = _game;
+		this.towerDefenceLevel = level;
 	}
 
 
@@ -38,7 +41,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)carrier;
 		ShowFloorSelectorComponent sfsc = (ShowFloorSelectorComponent)carrier.getComponent(ShowFloorSelectorComponent.class);
 
-		if (player.inputMethod.isCirclePressed()) {
+		if (towerDefenceLevel.isBuildTowerPressed(player.inputMethod)) {
 			TowerDefencePlayerData playerData = (TowerDefencePlayerData)carrier.getComponent(TowerDefencePlayerData.class);
 			if (playerData.coins >= TOWER_COST) {
 
@@ -63,9 +66,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 				ecs.addEntity(te);
 			}
 
-		}
-
-		if (player.inputMethod.isTrianglePressed()) {
+		} else if (towerDefenceLevel.isBuildBlockPressed(player.inputMethod)) {
 			TowerDefencePlayerData playerData = (TowerDefencePlayerData)carrier.getComponent(TowerDefencePlayerData.class);
 			if (playerData.coins >= WALL_COST) {
 				// Check map is empty

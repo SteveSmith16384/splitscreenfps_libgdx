@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -13,6 +14,10 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.input.ControllerInputMethod;
+import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 import com.scs.splitscreenfps.game.systems.VehicleProcessCollisionSystem;
 
@@ -150,4 +155,31 @@ public class StockCarLevel extends AbstractLevel {
 	
 	}
 
+	
+	public boolean isAcceleratePressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.ENTER);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isTrianglePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
+		}
+
+	}
+
+
+	public boolean isBrakePressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.SPACE);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isSquarePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
+		}
+
+	}
 }

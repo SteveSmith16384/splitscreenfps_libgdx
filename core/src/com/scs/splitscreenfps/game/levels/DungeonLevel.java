@@ -22,8 +22,8 @@ public class DungeonLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		//loadMapFromDungeonGen(game);
-		loadMapFromFile("");
+		loadMapFromDungeonGen(game);
+		//loadMapFromFile("");
 	}
 
 

@@ -36,7 +36,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity create3DText_TEST(BasicECS ecs, String text, Vector3 offset) {
+	/*public static AbstractEntity create3DText_TEST(BasicECS ecs, String text, Vector3 offset) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Text");
 
 		DrawTextIn3DSpaceComponent data = new DrawTextIn3DSpaceComponent(text, offset, 3f);
@@ -46,7 +46,7 @@ public class EntityFactory {
 
 		return entity;
 
-	}
+	}*/
 
 	public static AbstractEntity createCrate(BasicECS ecs, float map_x, float map_z) {
 		float SIZE = 0.3f;
