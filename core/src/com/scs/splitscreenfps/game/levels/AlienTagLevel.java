@@ -109,7 +109,7 @@ public class AlienTagLevel extends AbstractLevel {
 
 
 	private void loadMapFromMazegen(Game game) {
-		this.map_width = 15 + game.players.length;
+		this.map_width = 13 + game.players.length;
 		if (Settings.SMALL_MAP) {
 			this.map_width = 9;
 		}
