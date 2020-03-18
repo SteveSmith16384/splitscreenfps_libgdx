@@ -20,7 +20,7 @@ public class Settings {
 	
 	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_CAR_PARK;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_FUNNY_FARM;
 	public static boolean FIXED_GAME = RELEASE_MODE || true;
 	public static final String VERSION = "1.01";
 

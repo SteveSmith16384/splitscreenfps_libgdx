@@ -1,27 +1,33 @@
 package com.scs.splitscreenfps.game.systems.towerdefence;
 
-import com.scs.basicecs.AbstractEntity;
-import com.scs.basicecs.AbstractSystem;
-import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.game.Game;
-import com.scs.splitscreenfps.game.components.towerdefence.CanBeDamagedByEnemyComponent;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CheckAltarSystem extends AbstractSystem {
+import com.scs.basicecs.AbstractEntity;
+import com.scs.basicecs.BasicECS;
+import com.scs.basicecs.ISystem;
+import com.scs.splitscreenfps.game.Game;
+
+public class CheckAltarSystem implements ISystem {
 
 	private Game game;
-	
+	public List<AbstractEntity> altars = new ArrayList<AbstractEntity>();
+
 	public CheckAltarSystem(BasicECS ecs, Game _game) {
-		super(ecs, CanBeDamagedByEnemyComponent.class);
-		
+		//super(ecs, CanBeDamagedByEnemyComponent.class);
+
 		game = _game;
 	}
 
 
 	@Override
-	public void processEntity(AbstractEntity entity) {
-		if (entity.isMarkedForRemoval()) {
-			game.playerHasWon(null);
+	public void process() {
+		for (AbstractEntity altar : altars) {
+			if (altar.isMarkedForRemoval() == false) {
+				return;
+			}
 		}
+		game.playerHasWon(null);
 	}
 
 }

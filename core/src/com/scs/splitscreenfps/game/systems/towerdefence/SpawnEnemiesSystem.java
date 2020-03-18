@@ -31,8 +31,7 @@ public class SpawnEnemiesSystem implements ISystem {
 	
 	@Override
 	public void process() {
-		if (nextSpawnTime < System.currentTimeMillis()) {
-			
+		if (nextSpawnTime < System.currentTimeMillis()) {			
 			int max_spawn = Math.min(this.towerDefenceLevel.levelNum, this.enemy_spawn_points.size());
 			GridPoint2Static spawn_point = this.enemy_spawn_points.get(NumberFunctions.rnd(0, max_spawn-1));
 			if (next_alien == null) {
@@ -43,8 +42,7 @@ public class SpawnEnemiesSystem implements ISystem {
 				ecs.addEntity(next_alien);
 				next_alien = null;
 			}
-		}
-		
+		}		
 	}
 
 }

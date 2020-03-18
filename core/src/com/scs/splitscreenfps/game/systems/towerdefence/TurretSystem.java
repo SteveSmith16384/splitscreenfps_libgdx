@@ -63,8 +63,9 @@ public class TurretSystem extends AbstractSystem {
 				itc.nextShotTime = System.currentTimeMillis() + NumberFunctions.rnd(900,  1100);
 				startPos.set(turretPos.position);
 				tmp3.set((float)Math.sin(Math.toRadians(turretPos.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(turretPos.angle_degs-90)));
+				tmp3.nor();
 				startPos.add(tmp3);
-				tmp3.scl(BULLET_SPEED);
+				tmp3.scl(10);//todo BULLET_SPEED);
 				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, turret, startPos, tmp3);
 				game.ecs.addEntity(bullet);
 			}

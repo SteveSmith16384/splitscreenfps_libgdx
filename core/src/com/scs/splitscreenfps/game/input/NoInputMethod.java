@@ -92,4 +92,10 @@ public class NoInputMethod implements IInputMethod {
 	public boolean isSquarePressed() {
 		return false;
 	}
+
+	@Override
+	public boolean isKeyPressed(int key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

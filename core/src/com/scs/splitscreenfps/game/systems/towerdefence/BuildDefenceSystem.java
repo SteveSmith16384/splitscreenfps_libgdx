@@ -1,6 +1,7 @@
 package com.scs.splitscreenfps.game.systems.towerdefence;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
@@ -13,6 +14,10 @@ import com.scs.splitscreenfps.game.components.towerdefence.TowerDefencePlayerDat
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
+import com.scs.splitscreenfps.game.input.ControllerInputMethod;
+import com.scs.splitscreenfps.game.input.IInputMethod;
+import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
+import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 
 public class BuildDefenceSystem extends AbstractSystem {
@@ -21,13 +26,11 @@ public class BuildDefenceSystem extends AbstractSystem {
 	private static final int WALL_COST = 2;
 
 	private Game game;
-	private TowerDefenceLevel towerDefenceLevel;
 
-	public BuildDefenceSystem(BasicECS ecs, Game _game, TowerDefenceLevel level) {
+	public BuildDefenceSystem(BasicECS ecs, Game _game) {
 		super(ecs, CanBuildComponent.class);
 
 		game = _game;
-		this.towerDefenceLevel = level;
 	}
 
 
@@ -41,7 +44,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)carrier;
 		ShowFloorSelectorComponent sfsc = (ShowFloorSelectorComponent)carrier.getComponent(ShowFloorSelectorComponent.class);
 
-		if (towerDefenceLevel.isBuildTowerPressed(player.inputMethod)) {
+		if (isBuildTowerPressed(player.inputMethod)) {
 			TowerDefencePlayerData playerData = (TowerDefencePlayerData)carrier.getComponent(TowerDefencePlayerData.class);
 			if (playerData.coins >= TOWER_COST) {
 
@@ -66,7 +69,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 				ecs.addEntity(te);
 			}
 
-		} else if (towerDefenceLevel.isBuildBlockPressed(player.inputMethod)) {
+		} else if (isBuildBlockPressed(player.inputMethod)) {
 			TowerDefencePlayerData playerData = (TowerDefencePlayerData)carrier.getComponent(TowerDefencePlayerData.class);
 			if (playerData.coins >= WALL_COST) {
 				// Check map is empty
@@ -90,6 +93,33 @@ public class BuildDefenceSystem extends AbstractSystem {
 				ecs.addEntity(te);
 			}
 
+		}
+
+	}
+
+	private boolean isBuildTowerPressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.T);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isCirclePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
+		}
+
+	}
+
+	
+	private boolean isBuildBlockPressed(IInputMethod input) {
+		if (input instanceof MouseAndKeyboardInputMethod) {
+			return input.isKeyJustPressed(Keys.B);
+		} else if (input instanceof ControllerInputMethod) {
+			return input.isTrianglePressed();
+		} else if (input instanceof NoInputMethod) {
+			return false;
+		} else {
+			throw new RuntimeException("Unknown input type");
 		}
 
 	}

@@ -9,7 +9,7 @@ public class TowerDefencePhaseSystem implements ISystem {
 	private static final long REST_PHASE_DURATION = 5000;
 	private static final long SPAWN_PHASE_DURATION = 15000;
 	
-	private boolean spawn_phase = false; // otherwise, rest phase
+	public boolean spawn_phase = false; // otherwise, rest phase
 	private long next_phase_time;
 	private TowerDefenceLevel towerDefenceLevel;
 	

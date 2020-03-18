@@ -47,7 +47,9 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
 	private List<String> instructions = new ArrayList<String>(); 
-
+	private CheckAltarSystem checkAltarSystem;
+	private TowerDefencePhaseSystem towerDefencePhaseSystem;
+	
 	public TowerDefenceLevel(Game _game) {
 		super(_game);
 
@@ -59,14 +61,15 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		}
 
 		instructions.add("Keyboard:");
-		instructions.add("1: Build Tower");
-		instructions.add("2: Build Wall");
+		instructions.add("W: Build Tower");
+		instructions.add("B: Build Wall");
 		instructions.add("");
 		instructions.add("Controllers:");
-		instructions.add("1: Build Tower");
-		instructions.add("2: Build Wall");
+		instructions.add("Todo: Build Tower");
+		instructions.add("Todo: Build Wall");
 
 		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, game, this);
+		this.towerDefencePhaseSystem = new TowerDefencePhaseSystem(this);
 	}
 
 
@@ -80,7 +83,11 @@ public final class TowerDefenceLevel extends AbstractLevel {
 
 	@Override
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		if (towerDefencePhaseSystem.spawn_phase) {
+			Gdx.gl.glClearColor(0, 0, 0, 1);
+		} else {
+			Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
+		}
 	}
 
 
@@ -91,6 +98,8 @@ public final class TowerDefenceLevel extends AbstractLevel {
 
 
 	private void loadMapFromFile(String file) {
+		checkAltarSystem = new CheckAltarSystem(game.ecs, game);
+		
 		String str = Gdx.files.internal(file).readString();
 		String[] str2 = str.split("\n");
 
@@ -143,6 +152,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 							game.ecs.addEntity(floor);							
 							AbstractEntity altar = TowerDefenceEntityFactory.createAltar(game.ecs, col, row);
 							game.ecs.addEntity(altar);
+							checkAltarSystem.altars.add(altar);
 						} else if (token.equals("S")) { // Spawn point
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false); // todo - diff tex
 							game.ecs.addEntity(floor);
@@ -161,12 +171,12 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	@Override
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new ShowFloorSelectorSystem(ecs));
-		ecs.addSystem(new BuildDefenceSystem(ecs, game, this));
+		ecs.addSystem(new BuildDefenceSystem(ecs, game));
 		ecs.addSystem(new TurretSystem(ecs, game));
 		ecs.addSystem(new TowerDefenceEnemySystem(ecs, game, targetPos));
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
 		ecs.addSystem(new BulletSystem(ecs));
-		ecs.addSystem(new CheckAltarSystem(ecs, game));
+		ecs.addSystem(checkAltarSystem);
 		ecs.addSystem(new TowerDefencePhaseSystem(this));
 	}
 
@@ -180,7 +190,8 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		game.ecs.processSystem(TowerDefenceEnemySystem.class);
 		game.ecs.processSystem(CollectCoinsSystem.class);
 		game.ecs.processSystem(BulletSystem.class);
-		game.ecs.processSystem(CheckAltarSystem.class);
+		//game.ecs.processSystem(CheckAltarSystem.class);
+		this.checkAltarSystem.process();
 		game.ecs.processSystem(TowerDefencePhaseSystem.class);
 	}
 
@@ -200,37 +211,16 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	@Override
 	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
 		game.font_med.setColor(1, 1, 1, 1);
-		game.font_med.draw(batch2d, "HELP!", 10, game.font_med.getLineHeight()*2);
-
-	}
-
-
-	public boolean isBuildTowerPressed(IInputMethod input) {
-		if (input instanceof MouseAndKeyboardInputMethod) {
-			return input.isKeyJustPressed(Keys.T);
-		} else if (input instanceof ControllerInputMethod) {
-			return input.isCirclePressed();
-		} else if (input instanceof NoInputMethod) {
-			return false;
-		} else {
-			throw new RuntimeException("Unknown input type");
+		//game.font_med.draw(batch2d, "HELP!", 10, game.font_med.getLineHeight()*2);
+		int x = (int)(Gdx.graphics.getWidth()*0.4);
+		int y = (int)(Gdx.graphics.getHeight()*0.8);
+		for (String s : this.instructions) {
+			game.font_med.draw(batch2d, s, x, y);
+			y -= this.game.font_med.getLineHeight();
 		}
 
 	}
 
-	
-	public boolean isBuildBlockPressed(IInputMethod input) {
-		if (input instanceof MouseAndKeyboardInputMethod) {
-			return input.isKeyJustPressed(Keys.B);
-		} else if (input instanceof ControllerInputMethod) {
-			return input.isTrianglePressed();
-		} else if (input instanceof NoInputMethod) {
-			return false;
-		} else {
-			throw new RuntimeException("Unknown input type");
-		}
-
-	}
 
 
 	public boolean isDismanstlePressed(IInputMethod input) {

@@ -134,11 +134,11 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(hasDecal);
 
 		float DIAM = 0.2f;
-		
+
 		MovementData md = new MovementData(DIAM);
 		md.must_move_x_and_z = true;
 		e.addComponent(md);
-		
+
 		e.addComponent(new AutoMoveComponent(offset));
 		CollidesComponent cc = new CollidesComponent(false, DIAM);
 		cc.dont_collide_with = shooter;
@@ -167,9 +167,10 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(new CollidesComponent(true, 0.2f));
 
 		e.addComponent(new CanBeDamagedByEnemyComponent(100));
-		
-		DrawTextIn3DSpaceComponent text = new DrawTextIn3DSpaceComponent("todo", new Vector3(0, 1, 0), 5);
-		e.addComponent(text);;
+
+		DrawTextIn3DSpaceComponent text = new DrawTextIn3DSpaceComponent("", new Vector3(0, 1, 0), 5);
+		e.addComponent(text);
+
 		return e;
 	}
 
@@ -178,8 +179,8 @@ public class TowerDefenceEntityFactory {
 		final float HEIGHT = .4f;
 		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
 
-		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("towerdefence/textures/SmallSPattern_S.jpg")));
-		
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("towerdefence/textures/ufo2_03.png")));
+
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1, HEIGHT, 1, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
@@ -188,7 +189,7 @@ public class TowerDefenceEntityFactory {
 
 		HasModelComponent model = new HasModelComponent("LowWall", instance);
 		e.addComponent(model);
-		
+
 		return e;
 	}
 

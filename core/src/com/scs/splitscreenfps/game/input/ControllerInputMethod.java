@@ -95,4 +95,9 @@ public class ControllerInputMethod implements IInputMethod {
 		return this.controller.getButton(3); // todo - check	
 	}
 
+	@Override
+	public boolean isKeyPressed(int key) {
+		return false;
+	}
+
 }

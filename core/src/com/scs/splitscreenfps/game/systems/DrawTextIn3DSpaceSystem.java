@@ -36,10 +36,15 @@ public class DrawTextIn3DSpaceSystem extends AbstractSystem {
 		PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 		tmp.add(posData.position);
 		
-		Camera cam = game.viewports[game.currentViewId].camera;
-		float dist = tmp.dst(cam.position);
+		Camera camera = game.viewports[game.currentViewId].camera;
+		
+		if (!camera.frustum.pointInFrustum(tmp)) {
+			return;
+		}
+
+		float dist = tmp.dst(camera.position);
 		if (data.range < 0 || dist <= data.range) {
-			cam.project(tmp);
+			camera.project(tmp);
 			//Settings.p("Pos: " + pos);
 			BitmapFont font = game.font_large;
 			font.setColor(new Color(1f, 1f, 1f, 1f));

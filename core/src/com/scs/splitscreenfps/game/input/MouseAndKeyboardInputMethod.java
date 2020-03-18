@@ -89,9 +89,15 @@ public class MouseAndKeyboardInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isKeyJustPressed(int key) {
+		return Gdx.input.isKeyJustPressed(key);
+	}
+
+	@Override
+	public boolean isKeyPressed(int key) {
 		return Gdx.input.isKeyPressed(key);
 	}
 
+	
 	@Override
 	public boolean isSquarePressed() {
 		return false;
