@@ -11,12 +11,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
@@ -72,14 +74,14 @@ public class Game implements IModule {
 	public CollisionCheckSystem collCheckSystem;
 	private DrawModelSystem drawModelSystem;
 	public RespawnSystem respawnSystem;
-	
+
 	public int currentViewId;
 	public AssetManager assetManager = new AssetManager();
 
 	public Game(BillBoardFPS_Main _main, List<IInputMethod> _inputs) {
 		main = _main;
 		inputs = _inputs;
-		
+
 		BillBoardFPS_Main.audio.startMusic("shared/Heroic Demise (New).mp3");
 
 		game_stage = 0;
@@ -185,7 +187,7 @@ public class Game implements IModule {
 			GridPoint2Static start_pos = currentLevel.getPlayerStartMap(idx); 
 			posData.position.set(start_pos.x + 0.5f, Settings.PLAYER_HEIGHT/2, start_pos.y + 0.5f); // Start in middle of square
 			players[idx].update();
-			
+
 			// Look down the z-axis
 			this.viewports[idx].camera.direction.x = 0;
 			this.viewports[idx].camera.direction.z = 1;
@@ -212,7 +214,7 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();
-		
+
 		currentLevel.update();
 
 		for (currentViewId=0 ; currentViewId<players.length ; currentViewId++) {
@@ -290,7 +292,7 @@ public class Game implements IModule {
 				}
 			}
 			batch2d.end();
-			
+
 		}
 	}
 
@@ -360,8 +362,8 @@ public class Game implements IModule {
 		this.game_stage = 1;
 		this.restartTime = System.currentTimeMillis() + 5000;
 	}
-	
-	
+
+
 	public List<AbstractEntity> getCollidedEntities(AbstractEntity e) {
 		List<AbstractEntity> list = new ArrayList<AbstractEntity>();
 		Iterator<AbstractEvent> it = ecs.events.iterator();
@@ -378,17 +380,28 @@ public class Game implements IModule {
 		}
 		return list;
 	}
-	
-	
-	public boolean isAreaEmpty(AbstractEntity e) {
-		float diameter = 0;
+
+
+	public boolean isAreaEmpty(AbstractEntity e) {//, float x, float z, float diameter) {
+		float diameter = 1;
 		MovementData md = (MovementData)e.getComponent(MovementData.class);
 		if (md != null) {
 			diameter = md.diameter;
 		}
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
-			if (collCheckSystem.collided(e, posData, false) == false) {
+			// Give them a temp CollidesComponent if required
+			CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
+			boolean addedCollidesComponent = cc == null;
+			if (cc == null) {
+				cc = new CollidesComponent(false, diameter/2);
+				e.addComponent(cc);
+			}
+			boolean empty = collCheckSystem.collided(e, posData, false) == false;
+			if (addedCollidesComponent) {
+				e.removeComponent(CollidesComponent.class);
+			}
+			if (empty) {
 				return true;
 			}
 		}

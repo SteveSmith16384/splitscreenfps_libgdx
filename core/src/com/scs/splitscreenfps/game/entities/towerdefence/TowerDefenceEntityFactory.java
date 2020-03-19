@@ -182,6 +182,10 @@ public class TowerDefenceEntityFactory {
 		final float HEIGHT = .4f;
 		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
 
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(mapPosX+.5f, 0, mapPosZ+.5f);
+		e.addComponent(pos);
+
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("towerdefence/textures/ufo2_03.png")));
 
 		ModelBuilder modelBuilder = new ModelBuilder();

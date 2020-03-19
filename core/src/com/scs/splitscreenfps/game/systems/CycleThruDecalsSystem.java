@@ -32,7 +32,11 @@ public class CycleThruDecalsSystem extends AbstractSystem {
 			hdc.animTimer -= hdc.interval;
 			hdc.decalIdx++;
 			if (hdc.decalIdx >= hdc.decals.length) {
-				hdc.decalIdx = 0;
+				if (hdc.remove_at_end_of_cycle) {
+					entity.remove();
+				} else {
+					hdc.decalIdx = 0;
+				}
 			}
 			hd.decal = hdc.decals[hdc.decalIdx];
 

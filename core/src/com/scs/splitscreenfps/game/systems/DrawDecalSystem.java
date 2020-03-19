@@ -18,15 +18,9 @@ public class DrawDecalSystem extends AbstractSystem {
 	private Game game;
 
 	public DrawDecalSystem(Game _game, BasicECS ecs) {
-		super(ecs);
+		super(ecs, HasDecal.class);
 
 		game = _game;
-	}
-
-
-	@Override
-	public Class<?> getComponentClass() {
-		return HasDecal.class;
 	}
 
 

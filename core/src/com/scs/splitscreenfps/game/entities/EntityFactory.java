@@ -121,7 +121,7 @@ public class EntityFactory {
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
 		entity.addComponent(posData);
 
-		TextureRegion[][] trs = GraphicsHelper.createSheet("ftl/fire.png", 8, 4);
+		TextureRegion[][] trs = GraphicsHelper.createSheet("shared/Explosion21.png", 4, 4);
 
 		HasDecal hasDecal = new HasDecal();
 		TextureRegion tr = trs[0][0];
@@ -132,7 +132,8 @@ public class EntityFactory {
 		hasDecal.dontLockYAxis = false;
 		entity.addComponent(hasDecal);
 
-		HasDecalCycle cycle = new HasDecalCycle(.05f, 8*4);
+		HasDecalCycle cycle = new HasDecalCycle(.05f, 4*4);
+		cycle.remove_at_end_of_cycle = true;
 		int idx = 0;
 		for (int y=0 ; y<trs[0].length ; y++) {
 			for (int x=0 ; x<trs.length ; x++) {
@@ -141,9 +142,6 @@ public class EntityFactory {
 			}
 		}
 		entity.addComponent(cycle);
-
-		CollidesComponent cc = new CollidesComponent(true, .5f);
-		entity.addComponent(cc);
 
 		return entity;	
 
