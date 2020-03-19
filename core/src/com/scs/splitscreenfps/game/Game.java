@@ -29,7 +29,7 @@ import com.scs.splitscreenfps.game.levels.CarParkLevel;
 import com.scs.splitscreenfps.game.levels.DeathChaseLevel;
 import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.FTLLevel;
-import com.scs.splitscreenfps.game.levels.FarmLevel;
+import com.scs.splitscreenfps.game.levels.FunnyFarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
 import com.scs.splitscreenfps.game.levels.StockCarLevel;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
@@ -103,7 +103,7 @@ public class Game implements IModule {
 			currentLevel = new DungeonLevel(this);
 			break;
 		case Settings.MODE_FUNNY_FARM:
-			currentLevel = new FarmLevel(this);
+			currentLevel = new FunnyFarmLevel(this);
 			break;
 		case Settings.MODE_FTL:
 			currentLevel = new FTLLevel(this);

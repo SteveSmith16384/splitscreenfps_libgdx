@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.entities.farm;
+package com.scs.splitscreenfps.game.entities.funnyfarm;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,9 +20,9 @@ import com.scs.splitscreenfps.game.components.monstermaze.MonsterMazeKeyComponen
 
 import ssmith.libgdx.GraphicsHelper;
 
-public class FarmEntityFactory {
+public class FunnyFarmEntityFactory {
 
-	private FarmEntityFactory() {
+	private FunnyFarmEntityFactory() {
 	}
 	
 	

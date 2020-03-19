@@ -9,7 +9,6 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.Wall;
 import com.scs.splitscreenfps.game.entities.ftl.Alien;
@@ -86,10 +85,10 @@ public class FTLLevel extends AbstractLevel {
 							game.ecs.addEntity(wall);
 						} else if (token.equals("C")) { // Chasm
 						} else if (token.equals("D1")) { // Door 1
-							AbstractEntity door = EntityFactory.createDoor(game.ecs, col, row, false);
+							AbstractEntity door = FTLEntityFactory.createDoor(game.ecs, col, row, false);
 							game.ecs.addEntity(door);
 						} else if (token.equals("D2")) { // Door 2
-							AbstractEntity door = EntityFactory.createDoor(game.ecs, col, row, true);
+							AbstractEntity door = FTLEntityFactory.createDoor(game.ecs, col, row, true);
 							game.ecs.addEntity(door);
 						} else if (token.equals("B")) { // Door 2
 							AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, col, row);

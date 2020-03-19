@@ -8,15 +8,15 @@ import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
-import com.scs.splitscreenfps.game.entities.farm.FarmEntityFactory;
+import com.scs.splitscreenfps.game.entities.funnyfarm.FunnyFarmEntityFactory;
 import com.scs.splitscreenfps.game.systems.farm.GrowCropsSystem;
 import com.scs.splitscreenfps.game.systems.farm.WanderingAnimalSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
-public class FarmLevel extends AbstractLevel {
+public class FunnyFarmLevel extends AbstractLevel {
 
-	public FarmLevel(Game _game) {
+	public FunnyFarmLevel(Game _game) {
 		super(_game);
 	}
 
@@ -49,7 +49,7 @@ public class FarmLevel extends AbstractLevel {
 			this.startPositions[i] = new GridPoint2Static(i+1, i+1);
 		}
 
-		AbstractEntity plant = FarmEntityFactory.createPlant(game, 3, 1);
+		AbstractEntity plant = FunnyFarmEntityFactory.createPlant(game, 3, 1);
 		game.ecs.addEntity(plant);
 
 		//game.ecs.addEntity(new Cow(game, game.ecs, map_width-2, map_height-2));

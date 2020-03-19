@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.entities.farm;
+package com.scs.splitscreenfps.game.entities.funnyfarm;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;

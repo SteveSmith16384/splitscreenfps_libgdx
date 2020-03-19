@@ -18,9 +18,9 @@ import com.scs.splitscreenfps.game.components.HasModelComponent;
 import com.scs.splitscreenfps.game.components.tag.TagableComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Ceiling;
-import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.alientag.AlienTagEntityFactory;
 import com.scs.splitscreenfps.game.systems.tag.TagSystem;
 import com.scs.splitscreenfps.mapgen.MazeGen1;
 
@@ -165,7 +165,7 @@ public class AlienTagLevel extends AbstractLevel {
 					} else if (rnd == 3) {
 						float offX = 0;//NumberFunctions.rndFloat(0, 0.5f);
 						float offZ = 0;//NumberFunctions.rndFloat(0, 0.5f);
-						AbstractEntity crate = EntityFactory.createCrate(game.ecs, x+offX, z+offZ);
+						AbstractEntity crate = AlienTagEntityFactory.createCrate(game.ecs, x+offX, z+offZ);
 						game.ecs.addEntity(crate);
 					}
 

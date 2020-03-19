@@ -115,6 +115,9 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(new IsTurretComponent());
 		e.addComponent(new CanBeDamagedByEnemyComponent(10));
 
+		DrawTextIn3DSpaceComponent text = new DrawTextIn3DSpaceComponent("", new Vector3(0, 1, 0), 5);
+		e.addComponent(text);
+
 		return e;
 	}
 

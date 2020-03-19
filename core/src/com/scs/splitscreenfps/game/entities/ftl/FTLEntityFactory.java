@@ -21,6 +21,7 @@ import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.CanBeCarried;
 import com.scs.splitscreenfps.game.components.CanShootComponent;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
+import com.scs.splitscreenfps.game.components.DoorComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
 import com.scs.splitscreenfps.game.components.HasGuiSpriteComponent;
 import com.scs.splitscreenfps.game.components.HasModelComponent;
@@ -36,6 +37,37 @@ public class FTLEntityFactory {
 	}
 	
 	
+	public static AbstractEntity createDoor(BasicECS ecs, float map_x, float map_z, boolean rot90) {
+		AbstractEntity entity = new AbstractEntity(ecs, "Door");
+
+		PositionComponent posData = new PositionComponent((map_x)+(0.5f), (map_z)+(0.5f));
+		entity.addComponent(posData);
+
+		HasDecal hasDecal = new HasDecal();
+		Texture tex = new Texture(Gdx.files.internal("ftl/textures/door1.jpg"));
+		TextureRegion tr = new TextureRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
+		hasDecal.decal = Decal.newDecal(tr, true);
+		hasDecal.decal.setScale(1f / tr.getRegionWidth());
+		hasDecal.decal.setPosition(posData.position);
+		hasDecal.faceCamera = false;
+		hasDecal.dontLockYAxis = false;
+		if (rot90) {
+			hasDecal.rotation = 90;
+		}
+		entity.addComponent(hasDecal);	
+
+		CollidesComponent cc = new CollidesComponent(true, .5f);
+		entity.addComponent(cc);
+
+		DoorComponent dc = new DoorComponent();
+		dc.max_height = .9f;
+		entity.addComponent(dc);
+
+		return entity;	
+
+	}
+
+
 	public static AbstractEntity createAlien(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "Alien");
 
