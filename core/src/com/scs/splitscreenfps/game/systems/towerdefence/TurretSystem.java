@@ -56,7 +56,7 @@ public class TurretSystem extends AbstractSystem {
 			tmp2.x -= targetPos.position.x;
 			tmp2.y -= targetPos.position.z;
 			float target_angle = -tmp2.angle();
-			turretPos.angle_degs += Math.signum(target_angle-turretPos.angle_degs) * .05f;
+			turretPos.angle_degs += Math.signum(target_angle-turretPos.angle_degs) * .15f;
 			//Settings.p("Angle: " + turretPos.angle_degs);
 			
 			if (itc.nextShotTime < System.currentTimeMillis()) {

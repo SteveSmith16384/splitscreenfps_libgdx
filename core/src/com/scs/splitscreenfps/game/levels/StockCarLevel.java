@@ -93,7 +93,7 @@ public class StockCarLevel extends AbstractLevel {
 					int itoken = Integer.parseInt(cell);
 					if (itoken < 0) { // Start pos
 						this.rndStartPositions.add(new GridPoint2Static(col, row));
-					} else if (itoken == 0 || itoken == -1 || itoken == 8 || itoken == 9) { // Road!
+					} else if (itoken == 0 || itoken == -1 || itoken == 5 || itoken == 6) { // Road!
 						Floor floor = new Floor(game.ecs, "stockcar/textures/road2.png", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 						if (itoken == -1) {
@@ -103,15 +103,15 @@ public class StockCarLevel extends AbstractLevel {
 						Floor floor = new Floor(game.ecs, "stockcar/textures/street010_lr.jpg", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 2) { // track edge!
-						game.mapData.map[col][row].blocked = true;
-						Floor floor = new Floor(game.ecs, "stockcar/textures/track_edge.jpg", col, row, 1, 1, false);
+						//game.mapData.map[col][row].blocked = true;
+						Floor floor = new Floor(game.ecs, "stockcar/textures/track_edge.png", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 1 || itoken == 3) { // Grass?
 						Floor floor = new Floor(game.ecs, "stockcar/textures/grass.jpg", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 4) { // wall
 						game.mapData.map[col][row].blocked = true;
-						Wall wall = new Wall(game.ecs, "stockcar/textures/track_edge.jpg", col, 0, row, false);
+						Wall wall = new Wall(game.ecs, "stockcar/textures/wall2.jpg", col, 0, row, false);
 						game.ecs.addEntity(wall);
 					} else {
 						throw new RuntimeException("Unknown cell type: " + itoken);
@@ -126,7 +126,7 @@ public class StockCarLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new VehicleMovementSystem(ecs, .0008f));
+		ecs.addSystem(new VehicleMovementSystem(ecs, .008f));
 		ecs.addSystem(new VehicleProcessCollisionSystem(ecs, game));
 	}
 
