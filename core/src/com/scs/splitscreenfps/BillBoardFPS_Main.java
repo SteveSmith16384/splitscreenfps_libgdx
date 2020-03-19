@@ -40,7 +40,10 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 			}
 			current_module = new Game(this, inputs);
 		} else {
-			current_module = new PreGameScreen(this);//Game();
+			if (Settings.RELEASE_MODE) {
+				this.setFullScreen();
+			}
+			current_module = new PreGameScreen(this);
 		}
 	}
 
@@ -74,19 +77,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 				Gdx.graphics.setWindowedMode(Settings.WINDOW_WIDTH_PIXELS, Settings.WINDOW_HEIGHT_PIXELS);
 				fullscreen = false;
 			} else {
-				DisplayMode m = null;
-				for(DisplayMode mode: Gdx.graphics.getDisplayModes()) {
-					if (m == null) {
-						m = mode;
-					} else {
-						if (m.width < mode.width) {
-							m = mode;
-						}
-					}
-				}
-
-				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-				fullscreen = true;
+				this.setFullScreen();
 			}
 			this.current_module.setFullScreen(fullscreen);
 		} else if (Gdx.input.isKeyJustPressed(Keys.F2)) {
@@ -112,6 +103,23 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 		}
 
 
+	}
+	
+	
+	private void setFullScreen() {
+		DisplayMode m = null;
+		for(DisplayMode mode: Gdx.graphics.getDisplayModes()) {
+			if (m == null) {
+				m = mode;
+			} else {
+				if (m.width < mode.width) {
+					m = mode;
+				}
+			}
+		}
+
+		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+		fullscreen = true;
 	}
 
 
