@@ -6,8 +6,8 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
-import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsBulletComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
@@ -25,11 +25,12 @@ public class BulletSystem extends AbstractSystem {
 		//IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
 
 		// Check collisions
-		List<AbstractEvent> colls = ecs.getEvents(EventCollision.class);
+		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
 			
 			if (coll.hitEntity == null) { // Hit wall
+				Settings.p("Bullet removed ater hitting wall");
 				entity.remove();
 				continue;
 			}
@@ -46,6 +47,7 @@ public class BulletSystem extends AbstractSystem {
 				return;
 			} else {
 				// Remove us anyway since we've hit something
+				Settings.p("Bullet removed ater hitting " + coll.hitEntity);
 				entity.remove();
 			}
 		}

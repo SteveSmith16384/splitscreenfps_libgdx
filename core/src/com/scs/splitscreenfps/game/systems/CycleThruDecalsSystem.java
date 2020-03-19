@@ -34,6 +34,7 @@ public class CycleThruDecalsSystem extends AbstractSystem {
 			if (hdc.decalIdx >= hdc.decals.length) {
 				if (hdc.remove_at_end_of_cycle) {
 					entity.remove();
+					return;
 				} else {
 					hdc.decalIdx = 0;
 				}

@@ -401,9 +401,7 @@ public class Game implements IModule {
 			if (addedCollidesComponent) {
 				e.removeComponent(CollidesComponent.class);
 			}
-			if (empty) {
-				return true;
-			}
+			return empty;
 		}
 		return false;
 	}

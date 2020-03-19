@@ -44,13 +44,9 @@ public class DoorSystem extends AbstractSystem {
 					//cc.bb_dirty = true;
 				}
 			}
-			List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
-			for (AbstractEvent e : it) {
-				EventCollision evt = (EventCollision)e;
-				if (evt.hitEntity == entity) {
-					dc.is_opening = true;
-					break;
-				}
+			List<AbstractEvent> it = ecs.getEventsForEntity(EventCollision.class, entity);
+			if (it.size() > 0) {
+				dc.is_opening = true;
 			}
 		}
 	}

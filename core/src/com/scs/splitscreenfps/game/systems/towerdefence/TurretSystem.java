@@ -24,7 +24,7 @@ public class TurretSystem extends AbstractSystem {
 
 	private Game game;
 	private Vector2 tmp2 = new Vector2();
-	private Vector3 tmp3 = new Vector3();
+	private Vector3 tmpBulletOffset = new Vector3();
 	private Vector3 startPos = new Vector3();
 
 	public TurretSystem(BasicECS ecs, Game _game) {
@@ -60,13 +60,15 @@ public class TurretSystem extends AbstractSystem {
 			//Settings.p("Angle: " + turretPos.angle_degs);
 			
 			if (itc.nextShotTime < System.currentTimeMillis()) {
+				Settings.p("Shot!");
 				itc.nextShotTime = System.currentTimeMillis() + NumberFunctions.rnd(900,  1100);
 				startPos.set(turretPos.position);
-				tmp3.set((float)Math.sin(Math.toRadians(turretPos.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(turretPos.angle_degs-90)));
-				tmp3.nor();
-				startPos.add(tmp3);
-				tmp3.scl(10);//todo BULLET_SPEED);
-				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, turret, startPos, tmp3);
+				
+				tmpBulletOffset.set((float)Math.sin(Math.toRadians(turretPos.angle_degs-90)), 0, (float)Math.cos(Math.toRadians(turretPos.angle_degs-90)));
+				tmpBulletOffset.nor();
+				//startPos.add(tmpBulletOffset);
+				tmpBulletOffset.scl(4);//todo BULLET_SPEED);
+				AbstractEntity bullet = TowerDefenceEntityFactory.createBullet(ecs, turret, startPos, tmpBulletOffset);
 				game.ecs.addEntity(bullet);
 			}
 		}

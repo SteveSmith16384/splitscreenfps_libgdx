@@ -68,14 +68,11 @@ public class TagSystem extends AbstractSystem {
 			game.playerHasLost(it_tagable.player);
 		}
 
-
 		// Check for collisions
-		List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
+		List<AbstractEvent> it = ecs.getEventsForEntity(EventCollision.class, currentIt);
 		for (AbstractEvent e : it) {
-			EventCollision evt = (EventCollision)e;
-			if (evt.movingEntity == currentIt || evt.hitEntity == currentIt) {
-				tagged(evt);
-			}
+			tagged((EventCollision)e);
+			break;
 		}
 	}
 

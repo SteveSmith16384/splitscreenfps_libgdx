@@ -62,8 +62,12 @@ public class PreGameScreen implements IModule {
 		//this.appendToLog("Looking for controllers...");
 		this.appendToLog("Press SPACE to play with keyboard/mouse");
 		this.appendToLog("Press X to play with controller");
+		this.appendToLog("F1 to toggle full-screen");
+		this.appendToLog("In game, press H for help");
 		if (!Settings.FIXED_GAME) {
-			this.appendToLog("Select a game once all players have joined!");
+			this.appendToLog("To start, select a game once all players have joined!");
+		} else {
+			this.appendToLog("To S to start once all players have joined!");
 		}
 	}
 
