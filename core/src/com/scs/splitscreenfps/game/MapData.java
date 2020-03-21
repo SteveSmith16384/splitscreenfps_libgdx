@@ -30,42 +30,47 @@ public class MapData implements IAStarMapInterface {
 
 
 	public boolean rectangleFree(float center_x, float center_z, float width, float depth) {
-		//Upper left
-		float x = (center_x)-(width/2);// + 0.5f;
-		float y = center_z-depth/2;// + 0.5f;
+		try {
+			//Upper left
+			float x = (center_x)-(width/2);// + 0.5f;
+			float y = center_z-depth/2;// + 0.5f;
 
-		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
-			return false;
+			if (getMapSquareAt((int)(x), (int)(y)).blocked) {
+				return false;
+			}
+
+			//Down left
+			x = center_x-width/2;// + 0.5f;
+			y = center_z+depth/2;// + 0.5f;
+
+			if (getMapSquareAt((int)(x), (int)(y)).blocked) {
+				return false;
+			}
+
+			//Upper right
+			x = center_x+width/2;// + 0.5f;
+			y = center_z-depth/2;// + 0.5f;
+
+			if (getMapSquareAt((int)(x), (int)(y)).blocked) {
+				return false;
+			}
+
+			//Down right
+			x = center_x+width/2;// + 0.5f;
+			y = center_z+depth/2;// + 0.5f;
+
+			if (getMapSquareAt((int)(x), (int)(y)).blocked) {
+				return false;
+			}
+
+			return true;
+		} catch (Exception ex) {
+			//ex.printStackTrace();
+			throw new RuntimeException("Error checking square", ex);
 		}
-
-		//Down left
-		x = center_x-width/2;// + 0.5f;
-		y = center_z+depth/2;// + 0.5f;
-
-		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
-			return false;
-		}
-
-		//Upper right
-		x = center_x+width/2;// + 0.5f;
-		y = center_z-depth/2;// + 0.5f;
-
-		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
-			return false;
-		}
-
-		//Down right
-		x = center_x+width/2;// + 0.5f;
-		y = center_z+depth/2;// + 0.5f;
-
-		if (getMapSquareAt((int)(x), (int)(y)).blocked) {
-			return false;
-		}
-
-		return true;
 	}
 
-/*
+	/*
 	public boolean rectangleFree_ORIG(float center_x, float center_z, float width, float depth) {
 		//Upper left
 		float x = (center_x)-(width/2) + 0.5f;
@@ -101,7 +106,7 @@ public class MapData implements IAStarMapInterface {
 
 		return true;
 	}
-*/
+	 */
 
 	public boolean canSee(Vector3 startPos, Vector3 endPos) {
 		tmpCurrentPos.set(startPos);
@@ -139,7 +144,7 @@ public class MapData implements IAStarMapInterface {
 			}
 		}
 	}
-	
+
 
 	//--- A Star
 

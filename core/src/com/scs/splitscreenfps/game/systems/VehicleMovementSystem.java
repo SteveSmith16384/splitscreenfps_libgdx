@@ -8,6 +8,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
@@ -61,14 +62,25 @@ public class VehicleMovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		//movementData.offset.setZero();
-		//if (veh.current_speed != 0) {
-		
 		tmpTargetMomentum.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
 		tmpTargetMomentum.nor().scl(veh.current_speed);
-		veh.momentum.lerp(tmpTargetMomentum, traction); // todo - adjust by fixed amount
+		
+		// MODE 1 veh.momentum.lerp(tmpTargetMomentum, traction); // todo - adjust by fixed amount
+		
+		// MODE 2
+		Vector3 diff = new Vector3(tmpTargetMomentum);
+		diff.sub(veh.momentum);
+		float d = diff.len();
+		Settings.p("Diff=" + d);
+		if (d < .01f) {
+			veh.momentum.set(tmpTargetMomentum);
+			Settings.p("SET!");
+		} else {
+			veh.momentum.add(diff.nor().scl(.02f));
+		}
+		
 		movementData.offset.add(veh.momentum);
-		//}
+
 	}
 
 }

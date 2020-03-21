@@ -382,25 +382,26 @@ public class Game implements IModule {
 	}
 
 
-	public boolean isAreaEmpty(AbstractEntity e) {//, float x, float z, float diameter) {
-		float diameter = 1;
-		MovementData md = (MovementData)e.getComponent(MovementData.class);
+	public boolean isAreaEmpty(AbstractEntity e) {
+		//float diameter = 1;
+		/*MovementData md = (MovementData)e.getComponent(MovementData.class);
 		if (md != null) {
 			diameter = md.diameter;
-		}
+		}*/
+		CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
+		/*boolean addedCollidesComponent = cc == null;
+		if (cc == null) {
+			cc = new CollidesComponent(false, .5f);
+			e.addComponent(cc);
+		}*/
+		float diameter = cc.rad * 2f;
 		PositionComponent posData = (PositionComponent)e.getComponent(PositionComponent.class);
 		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
 			// Give them a temp CollidesComponent if required
-			CollidesComponent cc = (CollidesComponent)e.getComponent(CollidesComponent.class);
-			boolean addedCollidesComponent = cc == null;
-			if (cc == null) {
-				cc = new CollidesComponent(false, diameter/2);
-				e.addComponent(cc);
-			}
 			boolean empty = collCheckSystem.collided(e, posData, false) == false;
-			if (addedCollidesComponent) {
+			/*if (addedCollidesComponent) {
 				e.removeComponent(CollidesComponent.class);
-			}
+			}*/
 			if (empty) {
 				return true;
 			}

@@ -89,10 +89,10 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		// Acc/dec
 		if (this.inputMethod.isCrossPressed() || this.inputMethod.isKeyPressed(Keys.ENTER)) {
 			veh.current_speed += dt * ACC;
-			Settings.p("Speed=" + veh.current_speed);
+			//Settings.p("Speed=" + veh.current_speed);
 		} else if (this.inputMethod.isCirclePressed() || this.inputMethod.isKeyPressed(Keys.SPACE)) {
 			veh.current_speed -= dt * ACC * 2;
-			Settings.p("Speed=" + veh.current_speed);
+			//Settings.p("Speed=" + veh.current_speed);
 		} else {
 			// tend towards 0
 			//veh.current_speed -= Math.signum(veh.current_speed) * dt * 0.2f;
