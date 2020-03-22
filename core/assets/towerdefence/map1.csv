@@ -1,7 +1,7 @@
 E	E	E	E	E	E	E	E	E	E	E	E	E	S	E	E	E	E	E	E	E	E	E	E	E	E
 E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
-E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
+E	E	F	F	F	F	F	F	F	F	F	F	W	W	W	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
@@ -9,9 +9,9 @@ E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	P1	F	F	F	F	F	F	F	F	F	F	F	E	E
-E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
-S	E	F	F	F	F	F	F	F	F	P4	F	D	F	P3	F	F	F	F	F	F	F	F	F	E	S
-E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
+E	E	W	F	F	F	F	F	F	F	F	E	E	E	F	F	F	F	F	F	F	F	F	W	E	E
+S	E	W	F	F	F	F	F	F	F	P4	E	D	E	P3	F	F	F	F	F	F	F	F	W	E	S
+E	E	W	F	F	F	F	F	F	F	F	E	E	E	F	F	F	F	F	F	F	F	F	W	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	P2	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
@@ -20,7 +20,7 @@ E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
-E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
+E	E	F	F	F	F	F	F	F	F	F	W	W	W	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	F	E	E
 E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E	E
 E	E	E	E	E	E	E	E	E	E	E	E	S	E	E	E	E	E	E	E	E	E	E	E	E	E

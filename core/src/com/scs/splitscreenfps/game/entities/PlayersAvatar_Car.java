@@ -43,14 +43,14 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		this.addCar(playerIdx);
 
 		this.addComponent(new VehicleComponent(playerIdx));
-		this.addComponent(new CollidesComponent(true, .7f));
+		this.addComponent(new CollidesComponent(true, .5f));
 
 		camera = _viewportData.camera;
 	}
 
 
 	private void addCar(int idx) {
-		ModelInstance instance = ModelFunctions.loadModel("shared/models/kenney_car_kit/race.g3db", true); // todo - diff car per player
+		ModelInstance instance = ModelFunctions.loadModel("shared/models/kenney_car_kit/hatchbackSports.g3db", true); // todo - diff car per player
 		float scale = ModelFunctions.getScaleForHeight(instance, .6f);
 		instance.transform.scl(scale);
 
@@ -115,8 +115,8 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		camera.position.set(tmpCamPos);
 		
 		// Bounce camera
-		float delta = veh.current_speed / VehicleMovementSystem.MAX_SPEED * MAX_CAM_BOUNCE;
-		camera.position.y += NumberFunctions.rndFloat(0, delta);
+		/*float delta = veh.current_speed / VehicleMovementSystem.MAX_SPEED * MAX_CAM_BOUNCE;
+		camera.position.y += NumberFunctions.rndFloat(0, delta);*/
 		camera.update();
 
 		// Rotate model to direction of camera

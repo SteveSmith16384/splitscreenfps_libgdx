@@ -20,16 +20,16 @@ public class Settings {
 	
 	public static final boolean RELEASE_MODE = new File("debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_TAG : MODE_TAG;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_STOCK_CAR;
 	public static boolean FIXED_GAME = RELEASE_MODE || true;
 	public static final String VERSION = "1.01";
 	
 	// Hacks
-	public static final boolean DEBUG_TAG = !RELEASE_MODE && true;
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
+	public static final boolean START_4_PLAYERS = !RELEASE_MODE && true;
+	public static final boolean DEBUG_TAG = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
 	public static final boolean DARKMODE = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
-	public static final boolean START_4_PLAYERS = !RELEASE_MODE && false;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && true;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;

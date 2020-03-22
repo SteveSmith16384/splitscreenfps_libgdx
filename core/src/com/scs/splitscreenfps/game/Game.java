@@ -214,6 +214,8 @@ public class Game implements IModule {
 		this.ecs.getSystem(MovementSystem.class).process();
 		this.ecs.getSystem(AnimationSystem.class).process();
 		this.ecs.getSystem(PickupDropSystem.class).process();
+		this.ecs.getSystem(CycleThruDecalsSystem.class).process();
+		this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 
 		currentLevel.update();
 
@@ -235,9 +237,7 @@ public class Game implements IModule {
 				viewportData.post.begin();
 			}
 
-			this.ecs.getSystem(CycleThroughModelsSystem.class).process();
 			this.drawModelSystem.process(viewportData.camera);
-			this.ecs.getSystem(CycleThruDecalsSystem.class).process();
 			this.ecs.getSystem(DrawDecalSystem.class).process();
 
 			batch2d.begin();

@@ -14,6 +14,7 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.stockcar.TrackComponent;
 import com.scs.splitscreenfps.game.input.ControllerInputMethod;
 import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
@@ -88,25 +89,28 @@ public class StockCarLevel extends AbstractLevel {
 					game.mapData.map[col][row] = new MapSquare(game.ecs);
 
 					String cell = cells[col];
-					/*String tokens[] = cell.split(Pattern.quote(","));
-					for (String token : tokens) {*/
 					int itoken = Integer.parseInt(cell);
 					if (itoken < 0) { // Start pos
+						game.mapData.map[col][row].entity.addComponent(new TrackComponent(1, 1));
 						this.rndStartPositions.add(new GridPoint2Static(col, row));
 					} else if (itoken == 0 || itoken == -1 || itoken == 5 || itoken == 6) { // Road!
+						game.mapData.map[col][row].entity.addComponent(new TrackComponent(1, 1));
 						Floor floor = new Floor(game.ecs, "stockcar/textures/road2.png", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 						if (itoken == -1) {
 							rndStartPositions.add(new GridPoint2Static(col, row));
 						}
 					} else if (itoken == 99) { // Starting grid
+						game.mapData.map[col][row].entity.addComponent(new TrackComponent(1, 1));
 						Floor floor = new Floor(game.ecs, "stockcar/textures/street010_lr.jpg", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 2) { // track edge!
+						game.mapData.map[col][row].entity.addComponent(new TrackComponent(1, .7f));
 						//game.mapData.map[col][row].blocked = true;
 						Floor floor = new Floor(game.ecs, "stockcar/textures/track_edge.png", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 1 || itoken == 3) { // Grass?
+						game.mapData.map[col][row].entity.addComponent(new TrackComponent(.5f, .5f));
 						Floor floor = new Floor(game.ecs, "stockcar/textures/grass.jpg", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 4) { // wall
@@ -116,7 +120,6 @@ public class StockCarLevel extends AbstractLevel {
 					} else {
 						throw new RuntimeException("Unknown cell type: " + itoken);
 					}
-					//}
 				}
 				row++;
 			}
@@ -126,7 +129,7 @@ public class StockCarLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new VehicleMovementSystem(ecs, .008f));
+		ecs.addSystem(new VehicleMovementSystem(ecs, game, .02f));
 		ecs.addSystem(new VehicleProcessCollisionSystem(ecs, game));
 	}
 
