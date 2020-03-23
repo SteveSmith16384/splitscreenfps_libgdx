@@ -115,7 +115,7 @@ public class EntityFactory {
 	}
 
 
-	public static AbstractEntity createExplosion(BasicECS ecs, Vector3 pos) {
+	public static AbstractEntity createNormalExplosion(BasicECS ecs, Vector3 pos) {
 		AbstractEntity entity = new AbstractEntity(ecs, "Explosion");
 
 		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
@@ -147,4 +147,58 @@ public class EntityFactory {
 
 	}
 
+
+	public static AbstractEntity createBlueExplosion(BasicECS ecs, Vector3 pos) {
+		AbstractEntity entity = new AbstractEntity(ecs, "BlueExplosion");
+
+		PositionComponent posData = new PositionComponent(pos.x, pos.y, pos.z);
+		entity.addComponent(posData);
+
+		TextureRegion[][] trs = GraphicsHelper.createSheet("shared/Effect95.png", 4, 4);
+
+		HasDecal hasDecal = new HasDecal();
+		TextureRegion tr = trs[0][0];
+		hasDecal.decal = Decal.newDecal(tr, true);
+		hasDecal.decal.setScale(1f / tr.getRegionWidth());
+		hasDecal.decal.setPosition(posData.position);
+		hasDecal.faceCamera = true;
+		hasDecal.dontLockYAxis = false;
+		entity.addComponent(hasDecal);
+
+		HasDecalCycle cycle = new HasDecalCycle(.05f, 4*4);
+		cycle.remove_at_end_of_cycle = true;
+		int idx = 0;
+		for (int y=0 ; y<trs[0].length ; y++) {
+			for (int x=0 ; x<trs.length ; x++) {
+				cycle.decals[idx] = GraphicsHelper.DecalHelper(trs[x][y], 1);
+				idx++;
+			}
+		}
+		entity.addComponent(cycle);
+
+		return entity;	
+
+	}
+
+
+	public static AbstractEntity createDebugSPhere(BasicECS ecs, float x, float y, float z, float diam) {
+		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
+
+		PositionComponent pos = new PositionComponent();
+		pos.position = new Vector3(x, y, z);
+		e.addComponent(pos);
+
+		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("towerdefence/textures/ufo2_03.png")));
+
+		ModelBuilder modelBuilder = new ModelBuilder();
+		Model box_model = modelBuilder.createSphere(diam, diam, diam, 5, 5,  black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
+
+		ModelInstance instance = new ModelInstance(box_model, pos.position);
+		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
+
+		HasModelComponent model = new HasModelComponent("LowWall", instance);
+		e.addComponent(model);
+
+		return e;
+	}
 }

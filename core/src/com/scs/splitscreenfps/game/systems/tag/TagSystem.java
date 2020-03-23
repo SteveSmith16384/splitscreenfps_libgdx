@@ -60,8 +60,10 @@ public class TagSystem extends AbstractSystem {
 
 		// Entity must be the current "it" by this point
 		TagableComponent it_tagable = (TagableComponent)it_entity.getComponent(TagableComponent.class);
-		it_tagable.timeLeftAsIt -= Gdx.graphics.getDeltaTime();
-
+		if (Settings.DEBUG_TAG == false) {
+			it_tagable.timeLeftAsIt -= Gdx.graphics.getDeltaTime();
+		}
+		
 		// Check for winner
 		if (it_tagable.timeLeftAsIt <= 0) {
 			this.ecs.removeSystem(TagSystem.class);

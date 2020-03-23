@@ -163,10 +163,12 @@ public class AlienTagLevel extends AbstractLevel {
 						//AbstractEntity door = game.entityFactory.createDoor(x, z, false);
 						//game.ecs.addEntity(door);
 					} else if (rnd == 3) {
-						float offX = 0;//NumberFunctions.rndFloat(0, 0.5f);
-						float offZ = 0;//NumberFunctions.rndFloat(0, 0.5f);
+						/*float offX = NumberFunctions.rndFloat(.2f, 0.4f);
+						float offZ = NumberFunctions.rndFloat(.2f, 0.4f);
 						AbstractEntity crate = AlienTagEntityFactory.createCrate(game.ecs, x+offX, z+offZ);
-						game.ecs.addEntity(crate);
+						if (game.isAreaEmpty(crate)) {
+							game.ecs.addEntity(crate);
+						}*/
 					}
 
 					Ceiling ceiling = new Ceiling(game.ecs, "tag/textures/corridor.jpg", x, z, 1, 1, false, 1f);

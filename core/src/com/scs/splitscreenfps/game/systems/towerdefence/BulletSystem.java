@@ -24,6 +24,8 @@ public class BulletSystem extends AbstractSystem {
 	public void processEntity(AbstractEntity entity) {
 		//IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
 
+		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
+
 		// Check collisions
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
@@ -32,16 +34,17 @@ public class BulletSystem extends AbstractSystem {
 			if (coll.hitEntity == null) { // Hit wall
 				Settings.p("Bullet removed ater hitting wall");
 				entity.remove();
+				AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
+				ecs.addEntity(expl);
 				continue;
 			}
-
+			
 			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, TowerEnemyComponent.class);
 			if (ents != null) {
 				ents[0].remove();
 				ents[1].remove();
 				
-				PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
-				AbstractEntity expl = EntityFactory.createExplosion(ecs, pos.position);
+				AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
 				ecs.addEntity(expl);
 				
 				return;
@@ -49,6 +52,10 @@ public class BulletSystem extends AbstractSystem {
 				// Remove us anyway since we've hit something
 				Settings.p("Bullet removed ater hitting " + coll.hitEntity);
 				entity.remove();
+
+				AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
+				ecs.addEntity(expl);
+				
 			}
 		}
 	}

@@ -8,22 +8,27 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
+import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.MovementData;
+import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
 import com.scs.splitscreenfps.game.entities.PlayersAvatar_Car;
+import com.scs.splitscreenfps.game.entities.stockcar.TrackComponent;
 
 public class VehicleMovementSystem extends AbstractSystem {
 
 	public static final float MAX_SPEED = 5;
-	//private static final float TRACTION = .0004f;
 
+	private Game game;
 	private float traction;
 	private Vector3 tmpTargetMomentum = new Vector3();
 
-	public VehicleMovementSystem(BasicECS ecs, float _traction) {
+	public VehicleMovementSystem(BasicECS ecs, Game _game, float _traction) {
 		super(ecs, VehicleComponent.class);
 		
+		game = _game;
 		traction = _traction;
 	}
 
@@ -48,11 +53,16 @@ public class VehicleMovementSystem extends AbstractSystem {
 				return;
 			}
 		}
+		
+		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
+		TrackComponent track = (TrackComponent)game.mapData.map[(int)pos.position.x][(int)pos.position.z].entity.getComponent(TrackComponent.class);
+		float this_max_speed = MAX_SPEED * track.max_speed;
+		float this_traction = traction * track.traction;
 
-		if (veh.current_speed > MAX_SPEED) { // todo - check momentum instead
-			veh.current_speed = MAX_SPEED;
-		} else if (veh.current_speed < -MAX_SPEED) {
-			veh.current_speed = -MAX_SPEED;
+		if (veh.current_speed > this_max_speed) { // todo - check momentum instead
+			veh.current_speed = this_max_speed;
+		} else if (veh.current_speed < -this_max_speed) {
+			veh.current_speed = -this_max_speed;
 		} else {
 			// set speed to 0 if close enough
 			if (Math.abs(veh.current_speed) < PlayersAvatar_Car.ACC * .5f * Gdx.graphics.getDeltaTime()) {
@@ -61,14 +71,25 @@ public class VehicleMovementSystem extends AbstractSystem {
 		}
 
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
-		//movementData.offset.setZero();
-		//if (veh.current_speed != 0) {
-		
 		tmpTargetMomentum.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
 		tmpTargetMomentum.nor().scl(veh.current_speed);
-		veh.momentum.lerp(tmpTargetMomentum, traction); // todo - adjust by fixed amount
+		
+		// MODE 1 veh.momentum.lerp(tmpTargetMomentum, traction); // todo - adjust by fixed amount
+		
+		// MODE 2
+		Vector3 diff = new Vector3(tmpTargetMomentum);
+		diff.sub(veh.momentum);
+		float d = diff.len();
+		Settings.p("Diff=" + d);
+		if (d < this_traction/2) {
+			veh.momentum.set(tmpTargetMomentum);
+			Settings.p("SET!");
+		} else {
+			veh.momentum.add(diff.nor().scl(this_traction));  // .02f
+		}
+		
 		movementData.offset.add(veh.momentum);
-		//}
+
 	}
 
 }
