@@ -68,7 +68,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 		//Rotation
 		if (veh.current_speed != 0) {
-			float turn_frac = veh.current_speed / VehicleMovementSystem.MAX_SPEED;
+			float turn_frac = veh.current_speed / veh.max_speed;
 			//if (this.inputMethod.isMouse()) {
 				if (inputMethod.getStrafeLeft() > Settings.MIN_AXIS) {
 					veh.angle_rads += inputMethod.getStrafeLeft() * ROT_SPEED_Y * dt * turn_frac;

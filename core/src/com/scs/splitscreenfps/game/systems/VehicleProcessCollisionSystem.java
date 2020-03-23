@@ -28,7 +28,6 @@ public class VehicleProcessCollisionSystem implements ISystem {
 			EventCollision evt = (EventCollision)e;
 			VehicleComponent veh_mover = (VehicleComponent)evt.movingEntity.getComponent(VehicleComponent.class);
 			if (veh_mover != null) {
-				//if (veh_mover.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
 				if (evt.hitEntity == null) {
 					veh_mover.current_speed = 0;
 					veh_mover.momentum.setZero();
@@ -36,13 +35,6 @@ public class VehicleProcessCollisionSystem implements ISystem {
 					VehicleComponent veh_hit = (VehicleComponent)evt.hitEntity.getComponent(VehicleComponent.class);
 					if (veh_hit != null) {
 						// Hit another car!
-						/*if (veh_mover.current_speed > veh_hit.current_speed) {
-								veh_hit.current_speed = 0;
-								veh_hit.momentum.setZero();
-							} else {
-								veh_mover.current_speed = 0;
-								veh_mover.momentum.setZero();
-							}*/
 						Vector3 mom_diff = new Vector3(veh_mover.momentum);
 						//mom_diff.sub(veh_hit.momentum);
 
@@ -54,7 +46,6 @@ public class VehicleProcessCollisionSystem implements ISystem {
 						veh_mover.momentum.setZero();
 					}
 				}
-				//}
 			}
 		}
 	}

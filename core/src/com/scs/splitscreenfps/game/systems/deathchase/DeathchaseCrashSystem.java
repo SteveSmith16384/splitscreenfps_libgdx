@@ -34,7 +34,7 @@ public class DeathchaseCrashSystem implements ISystem {
 			EventCollision evt = (EventCollision)e;
 			VehicleComponent veh_mover = (VehicleComponent)evt.movingEntity.getComponent(VehicleComponent.class);
 			if (veh_mover != null) {
-				if (veh_mover.current_speed > VehicleMovementSystem.MAX_SPEED/2) {
+				if (veh_mover.current_speed > veh_mover.max_speed/2) {
 					if (evt.hitEntity == null) {
 						veh_mover.current_speed = 0;
 						this.crash(evt.movingEntity, veh_mover.playerId);

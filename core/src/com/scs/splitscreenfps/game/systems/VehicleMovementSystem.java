@@ -19,17 +19,14 @@ import com.scs.splitscreenfps.game.entities.stockcar.TrackComponent;
 
 public class VehicleMovementSystem extends AbstractSystem {
 
-	public static final float MAX_SPEED = 5;
-
 	private Game game;
-	private float traction;
 	private Vector3 tmpTargetMomentum = new Vector3();
 
-	public VehicleMovementSystem(BasicECS ecs, Game _game, float _traction) {
+	public VehicleMovementSystem(BasicECS ecs, Game _game) {
 		super(ecs, VehicleComponent.class);
-		
+
 		game = _game;
-		traction = _traction;
+		//traction = _traction;
 	}
 
 
@@ -53,11 +50,11 @@ public class VehicleMovementSystem extends AbstractSystem {
 				return;
 			}
 		}
-		
+
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		TrackComponent track = (TrackComponent)game.mapData.map[(int)pos.position.x][(int)pos.position.z].entity.getComponent(TrackComponent.class);
-		float this_max_speed = MAX_SPEED * track.max_speed;
-		float this_traction = traction * track.traction;
+		float this_max_speed = veh.max_speed * track.max_speed;
+		float this_traction = veh.traction * track.traction;
 
 		if (veh.current_speed > this_max_speed) { // todo - check momentum instead
 			veh.current_speed = this_max_speed;
@@ -73,21 +70,22 @@ public class VehicleMovementSystem extends AbstractSystem {
 		MovementData movementData = (MovementData)entity.getComponent(MovementData.class);
 		tmpTargetMomentum.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
 		tmpTargetMomentum.nor().scl(veh.current_speed);
-		
+
 		// MODE 1 veh.momentum.lerp(tmpTargetMomentum, traction); // todo - adjust by fixed amount
-		
+
 		// MODE 2
 		Vector3 diff = new Vector3(tmpTargetMomentum);
 		diff.sub(veh.momentum);
 		float d = diff.len();
-		Settings.p("Diff=" + d);
-		if (d < this_traction/2) {
-			veh.momentum.set(tmpTargetMomentum);
-			Settings.p("SET!");
-		} else {
-			veh.momentum.add(diff.nor().scl(this_traction));  // .02f
+		if (d != 0) {
+			Settings.p("Diff=" + d);
+			if (d < this_traction/2) {
+				veh.momentum.set(tmpTargetMomentum);
+				Settings.p("SET!");
+			} else {
+				veh.momentum.add(diff.nor().scl(this_traction));  // .02f
+			}
 		}
-		
 		movementData.offset.add(veh.momentum);
 
 	}

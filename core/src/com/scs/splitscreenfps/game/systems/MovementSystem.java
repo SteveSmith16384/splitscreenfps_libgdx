@@ -47,15 +47,11 @@ public class MovementSystem extends AbstractSystem {
 		if (movementData.offset.x != 0 || movementData.offset.y != 0 || movementData.offset.z != 0) {
 			if (movementData.frozenUntil < System.currentTimeMillis()) {
 				CollidesComponent cc = (CollidesComponent)entity.getComponent(CollidesComponent.class);
-				/*if (cc != null) {
-					cc.bb_dirty = true;
-				}*/
 				if (movementData.must_move_x_and_z) {
 					this.tryMoveXAndZ(entity, game.mapData, movementData.offset, cc.rad*2);
 				} else {
 					this.tryMoveXOrZ(entity, game.mapData, movementData.offset, cc.rad*2);
 				}
-				//movementData.blocked_on_last_move = moved;
 			}
 		}
 

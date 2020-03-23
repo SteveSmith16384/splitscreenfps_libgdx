@@ -129,7 +129,7 @@ public class StockCarLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new VehicleMovementSystem(ecs, game, .02f));
+		ecs.addSystem(new VehicleMovementSystem(ecs, game));
 		ecs.addSystem(new VehicleProcessCollisionSystem(ecs, game));
 	}
 
