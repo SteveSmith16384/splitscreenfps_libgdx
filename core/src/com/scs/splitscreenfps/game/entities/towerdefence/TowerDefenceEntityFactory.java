@@ -143,9 +143,11 @@ public class TowerDefenceEntityFactory {
 		e.addComponent(md);
 
 		e.addComponent(new AutoMoveComponent(offset));
+		
 		CollidesComponent cc = new CollidesComponent(false, DIAM);
 		cc.dont_collide_with = shooter;
 		e.addComponent(cc);
+		
 		e.addComponent(new IsBulletComponent());
 
 
@@ -191,11 +193,13 @@ public class TowerDefenceEntityFactory {
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model box_model = modelBuilder.createBox(1, HEIGHT, 1, black_material, VertexAttributes.Usage.Position | VertexAttributes.Usage.TextureCoordinates);
 
-		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, HEIGHT/2, mapPosZ+0.5f));
+		ModelInstance instance = new ModelInstance(box_model, new Vector3(mapPosX+0.5f, HEIGHT*2, mapPosZ+0.5f));
 		//instance.transform.rotate(Vector3.Z, 90); // Rotates cube so textures are upright
 
 		HasModelComponent model = new HasModelComponent("LowWall", instance);
 		e.addComponent(model);
+
+		e.addComponent(new CollidesComponent(true, .5f));
 
 		return e;
 	}

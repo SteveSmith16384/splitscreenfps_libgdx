@@ -37,7 +37,7 @@ public final class TowerDefenceEnemySystem extends AbstractSystem {
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 
-		List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
+		List<AbstractEvent> it = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent e : it) {
 			EventCollision evt = (EventCollision)e;
 			if (evt.movingEntity == entity) {

@@ -32,7 +32,9 @@ public class CollisionCheckSystem extends AbstractSystem {
 	public boolean collided(AbstractEntity mover, PositionComponent ourPos, boolean raise_event) {
 		boolean blocked = false;
 		CollidesComponent moverCC = (CollidesComponent)mover.getComponent(CollidesComponent.class);
-
+		if (moverCC == null) {
+			throw new RuntimeException("Mover has no CollidesComponent");
+		}
 		Iterator<AbstractEntity> it = entities.iterator();
 		while (it.hasNext()) {
 			AbstractEntity e = it.next();

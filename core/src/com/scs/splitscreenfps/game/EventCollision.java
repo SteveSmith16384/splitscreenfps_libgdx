@@ -19,29 +19,16 @@ public class EventCollision extends AbstractEvent {
 	}
 
 
+	/*
+	 * Helper function, since a collision takes two entities and you need to know which is which.
+	 * Returns an array: [0] = entity with component of clazz1, [1] = entity with component of clazz2
+	 */
 	public AbstractEntity[] getEntitiesByComponent(Class<?> clazz1, Class<?> clazz2) {
 		if (this.hitEntity == null) {
 			return null;
 		}
 
 		AbstractEntity result[] = new AbstractEntity[2];
-		/*
-		if (this.movingEntity.getComponent(clazz1) != null) {
-			result[0] = this.movingEntity;
-		} else if (this.movingEntity.getComponent(clazz2) != null) {
-			result[1] = this.movingEntity;
-		} else {
-			return null;
-		}
-
-		if (this.hitEntity.getComponent(clazz1) != null) {
-			result[0] = this.hitEntity;
-		} else if (this.hitEntity.getComponent(clazz2) != null) {
-			result[1] = this.hitEntity;
-		} else {
-			return null;
-		}
-		 */
 		
 		if (this.movingEntity.getComponent(clazz1) != null) {
 			result[0] = this.movingEntity;

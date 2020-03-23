@@ -25,7 +25,7 @@ public class WanderingAnimalSystem extends AbstractSystem {
 		MovementData md = (MovementData)entity.getComponent(MovementData.class);
 		
 		boolean blocked_on_last_move = false;
-		List<AbstractEvent> it = ecs.getEvents(EventCollision.class);
+		List<AbstractEvent> it = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent e : it) {
 			EventCollision evt = (EventCollision)e;
 			if (evt.movingEntity == entity) {

@@ -2,6 +2,7 @@ package com.scs.splitscreenfps.game.systems.towerdefence;
 
 import java.util.List;
 
+import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
 import com.scs.basicecs.ISystem;
@@ -11,7 +12,7 @@ import com.scs.splitscreenfps.game.components.towerdefence.IsCoinComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerDefencePlayerData;
 
 public class CollectCoinsSystem implements ISystem {
-	
+
 	private final BasicECS ecs;
 	private final Game game;
 
@@ -27,30 +28,15 @@ public class CollectCoinsSystem implements ISystem {
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
 
-			if (coll.hitEntity == null) {
-				continue;
-			}
-			
-			Object coin = coll.movingEntity.getComponent(IsCoinComponent.class);
-			if (coin != null) {
-				TowerDefencePlayerData player = (TowerDefencePlayerData)coll.hitEntity.getComponent(TowerDefencePlayerData.class);
-				if (player != null) {
-					coll.movingEntity.remove();
-					player.coins++;
-				}
-			} else {
-				Object coin2 = coll.hitEntity.getComponent(IsCoinComponent.class);
-				if (coin2 != null) {
-					TowerDefencePlayerData player = (TowerDefencePlayerData)coll.movingEntity.getComponent(TowerDefencePlayerData.class);
-					if (player != null) {
-						coll.hitEntity.remove();
-						player.coins++;
-					}
-				
-				}
+			AbstractEntity[] ents = coll.getEntitiesByComponent(TowerDefencePlayerData.class, IsCoinComponent.class);
+			if (ents != null) {
+				//Object coin = ents[1].getComponent(IsCoinComponent.class);
+				TowerDefencePlayerData player = (TowerDefencePlayerData)ents[0].getComponent(TowerDefencePlayerData.class);
+				ents[1].remove();
+				player.coins++;
 			}
 		}
-		
+
 	}
 
 }

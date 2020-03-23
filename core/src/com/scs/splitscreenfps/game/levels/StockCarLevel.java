@@ -154,8 +154,12 @@ public class StockCarLevel extends AbstractLevel {
 	@Override
 	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
 		game.font_med.setColor(1, 1, 1, 1);
-		game.font_med.draw(batch2d, "HELP!", 10, game.font_med.getLineHeight()*2);
-	
+		int x = (int)(Gdx.graphics.getWidth()*0.4);
+		int y = (int)(Gdx.graphics.getHeight()*0.8);
+		for (String s : this.instructions) {
+			game.font_med.draw(batch2d, s, x, y);
+			y -= this.game.font_med.getLineHeight();
+		}
 	}
 
 	

@@ -399,12 +399,7 @@ public class Game implements IModule {
 		if (this.mapData.rectangleFree(posData.position.x, posData.position.z, diameter, diameter)) {
 			// Give them a temp CollidesComponent if required
 			boolean empty = collCheckSystem.collided(e, posData, false) == false;
-			/*if (addedCollidesComponent) {
-				e.removeComponent(CollidesComponent.class);
-			}*/
-			if (empty) {
-				return true;
-			}
+			return empty;
 		}
 		return false;
 	}

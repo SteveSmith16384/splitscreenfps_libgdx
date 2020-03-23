@@ -142,7 +142,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 							game.ecs.addEntity(floor);
 							if (Settings.DARKMODE == false) {
 								if (NumberFunctions.rnd(1,  5) == 1) {
-									AbstractEntity coin = TowerDefenceEntityFactory.createCoin(game.ecs, col, row);
+									AbstractEntity coin = TowerDefenceEntityFactory.createCoin(game.ecs, col+.5f, row+.5f);
 									game.ecs.addEntity(coin);
 								}
 							}
@@ -177,7 +177,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
 		ecs.addSystem(new BulletSystem(ecs));
 		ecs.addSystem(checkAltarSystem);
-		ecs.addSystem(new TowerDefencePhaseSystem(this));
+		ecs.addSystem(this.towerDefencePhaseSystem);
 	}
 
 
@@ -192,7 +192,8 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		game.ecs.processSystem(BulletSystem.class);
 		//game.ecs.processSystem(CheckAltarSystem.class);
 		this.checkAltarSystem.process();
-		game.ecs.processSystem(TowerDefencePhaseSystem.class);
+		//game.ecs.processSystem(TowerDefencePhaseSystem.class);
+		this.towerDefencePhaseSystem.process();
 	}
 
 
@@ -211,14 +212,12 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	@Override
 	public void renderHelp(SpriteBatch batch2d, int viewIndex) {
 		game.font_med.setColor(1, 1, 1, 1);
-		//game.font_med.draw(batch2d, "HELP!", 10, game.font_med.getLineHeight()*2);
 		int x = (int)(Gdx.graphics.getWidth()*0.4);
 		int y = (int)(Gdx.graphics.getHeight()*0.8);
 		for (String s : this.instructions) {
 			game.font_med.draw(batch2d, s, x, y);
 			y -= this.game.font_med.getLineHeight();
 		}
-
 	}
 
 
