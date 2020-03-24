@@ -12,6 +12,7 @@ public class HasModelComponent {
 	public int angleOffset;
 	public float scale;
 	public int dontDrawInViewId = -1; // Don't draw the player's own avatar!
+	public int onlyDrawInViewId = -1; // Don't draw td build targetter!
 	public BoundingBox bb; // For checking if in frustum  
 	public boolean always_draw = false;
 	

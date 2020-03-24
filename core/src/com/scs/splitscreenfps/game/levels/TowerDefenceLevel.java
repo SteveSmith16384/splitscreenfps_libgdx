@@ -121,12 +121,24 @@ public final class TowerDefenceLevel extends AbstractLevel {
 					for (String token : tokens) {
 						if (token.equals("P1")) { // Start pos
 							this.startPositions[0] = new GridPoint2Static(col, row);
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
 						} else if (token.equals("P2")) { // Start pos
 							this.startPositions[1] = new GridPoint2Static(col, row);
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
 						} else if (token.equals("P3")) { // Start pos
 							this.startPositions[2] = new GridPoint2Static(col, row);
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
 						} else if (token.equals("P4")) { // Start pos
 							this.startPositions[3] = new GridPoint2Static(col, row);
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
 						} else if (token.equals("W")) { // Wall
 							game.mapData.map[col][row].blocked = true;
 							Wall wall = new Wall(game.ecs, "towerdefence/textures/ufo2_03.png", col, 0, row, false);

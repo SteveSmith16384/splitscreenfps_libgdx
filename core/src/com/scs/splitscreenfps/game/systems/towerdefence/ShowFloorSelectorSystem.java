@@ -32,16 +32,16 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		ShowFloorSelectorComponent sfsc = (ShowFloorSelectorComponent)entity.getComponent(ShowFloorSelectorComponent.class);
+		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 		if (sfsc.actually_show) {
 			if (sfsc.floor_selector == null) {
-				sfsc.floor_selector = new FloorSelector(ecs);
+				sfsc.floor_selector = new FloorSelector(ecs, player.playerIdx);
 			}
 			sfsc.floor_selector.restoreComponent(HasModelComponent.class);
 
 			PositionComponent entityPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			PositionComponent selectorPos = (PositionComponent)sfsc.floor_selector.getComponent(PositionComponent.class);
 			
-			AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 			selectorPos.position.set((int)(entityPos.position.x)+1, 0, (int)(entityPos.position.z)+1); // todo - take into account direction
 
 			sfsc.pos.x = (int)(entityPos.position.x + player.camera.direction.x * 2);

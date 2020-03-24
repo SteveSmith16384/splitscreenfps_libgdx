@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Matrix3;
@@ -16,19 +17,22 @@ import com.scs.splitscreenfps.game.components.PositionComponent;
 public class FloorSelector extends AbstractEntity {
 
 
-	public FloorSelector(BasicECS ecs) {
+	public FloorSelector(BasicECS ecs, int playerIdx) {
 		super(ecs, FloorSelector.class.getSimpleName());
 
 		PositionComponent pos = new PositionComponent();
 		this.addComponent(pos);
 
-		Texture tex = new Texture("towerdefence/unit_highlighter_w.png");
+		BlendingAttribute blendingAttribute = new BlendingAttribute();
+		blendingAttribute.opacity = 1f;
+		
+		Texture tex = new Texture("towerdefence/crosshairs.png");
 		//tex.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		Material white_material = new Material(TextureAttribute.createDiffuse(tex));
+		Material white_material = new Material(TextureAttribute.createDiffuse(tex), blendingAttribute);
 
 		float w = 1f;
 		float d = 1f;
-		
+
 		ModelBuilder modelBuilder = new ModelBuilder();
 		Model floor = modelBuilder.createRect(
 				0f,0f, (float) d,
@@ -45,6 +49,7 @@ public class FloorSelector extends AbstractEntity {
 		ModelInstance instance = new ModelInstance(floor);
 
 		HasModelComponent model = new HasModelComponent(this.name, instance);
+		model.onlyDrawInViewId = playerIdx;
 		this.addComponent(model);
 		this.hideComponent(HasModelComponent.class); // Don't draw it just yet
 	}
