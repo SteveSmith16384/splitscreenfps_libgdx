@@ -1,7 +1,7 @@
 # Split-Screen FPS Games
-A 1-4 player split-screen FPS engine and games.
+A 1-4 player split-screen multiplayer games.
 
-I have a very short interest span when it comes to gamedev: this codebase contains various games, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  The games that are selectable from the first menu are typically mostly complete.  The rest may be barely started.
+This codebase contains various games that all use the same framework, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  The games that are selectable from the first menu are typically mostly complete.  The rest may be barely started.
 
 Currently, the following games are at various stages of progress:
 * 3D Monster maze: escape from the maze
@@ -27,6 +27,9 @@ It depends on the specific game selected, but controls are typically:-
 * Tested with PS4 controllers.
 * F1 - Toggle full Screen
 * F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
+
+## Notes for other Developers
+Gradle is a real pain to work with.  However, if you have trouble loading this project, I used Gradle v4.10.3.
 
 
 ## Licence
