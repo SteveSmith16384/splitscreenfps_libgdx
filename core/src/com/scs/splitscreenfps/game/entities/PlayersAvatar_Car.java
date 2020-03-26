@@ -35,7 +35,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		game = _game;
 		inputMethod = _inputMethod;
 
-		MovementData md = new MovementData(0.5f);
+		MovementData md = new MovementData();
 		md.must_move_x_and_z = true;
 		this.addComponent(md);
 		this.addComponent(new PositionComponent());
@@ -43,7 +43,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 		this.addCar(playerIdx);
 
 		this.addComponent(new VehicleComponent(playerIdx));
-		this.addComponent(new CollidesComponent(true, .5f));
+		this.addComponent(new CollidesComponent(true, .45f));
 
 		camera = _viewportData.camera;
 	}

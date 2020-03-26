@@ -88,9 +88,8 @@ public class FTLEntityFactory {
 		anim.animationController = animation;
 		e.addComponent(anim);
 
-		float DIAM = .4f;
-		e.addComponent(new MovementData(DIAM));
-		e.addComponent(new CollidesComponent(false, DIAM+.2f));//.5f, .5f, .5f));
+		e.addComponent(new MovementData());
+		e.addComponent(new CollidesComponent(false, 0.3f));//.5f, .5f, .5f));
 		
 		return e;
 	}

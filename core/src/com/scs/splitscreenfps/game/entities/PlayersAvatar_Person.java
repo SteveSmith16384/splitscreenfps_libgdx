@@ -32,7 +32,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 		game = _game;
 		inputMethod = _inputMethod;
 
-		this.addComponent(new MovementData(0.5f));
+		this.addComponent(new MovementData());
 		this.addComponent(new PositionComponent());
 		this.addComponent(new CanCarryComponent(playerIdx));
 

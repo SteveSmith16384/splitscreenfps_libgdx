@@ -50,9 +50,8 @@ public class BladeRunnerEntityFactory {
 		//MoveAStarComponent astar = new MoveAStarComponent(1.9f, false);
 		//e.addComponent(astar);
 
-		float DIAM = .4f;
-		e.addComponent(new MovementData(DIAM));
-		e.addComponent(new CollidesComponent(false, DIAM+.2f));
+		e.addComponent(new MovementData());
+		e.addComponent(new CollidesComponent(false, .2f));
 		e.addComponent(new IsCivilianComponent());
 
 		return e;

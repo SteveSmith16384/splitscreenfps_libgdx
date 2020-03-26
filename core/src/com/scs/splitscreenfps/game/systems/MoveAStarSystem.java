@@ -30,7 +30,7 @@ public class MoveAStarSystem extends AbstractSystem {
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
 		if (mac.route == null || mac.route.size() == 0) {
-			// DO NOTHING!  A* system should find route
+			// DO NOTHING!  Parent system should find route
 		} else {
 			GridPoint2 destpos = mac.route.get(0);
 			double dist = GeometryFuncs.distance(posdata.position.x, posdata.position.z, destpos.x+.5f, destpos.y+.5f);

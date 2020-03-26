@@ -44,9 +44,9 @@ public class TRex extends AbstractEntity {
 		MoveAStarComponent astar = new MoveAStarComponent(1.9f, false);
 		this.addComponent(astar);
 
-		float DIAM = .4f;
-		this.addComponent(new MovementData(DIAM));
-		this.addComponent(new CollidesComponent(false, DIAM+.2f));
+		//float DIAM = .4f;
+		this.addComponent(new MovementData());
+		this.addComponent(new CollidesComponent(false, 0.4f));
 		this.addComponent(new IsTRex());
 	}
 

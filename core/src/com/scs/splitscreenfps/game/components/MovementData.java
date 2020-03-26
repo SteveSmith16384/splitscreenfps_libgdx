@@ -10,7 +10,7 @@ public class MovementData {
 	public long frozenUntil = 0;
 	public boolean must_move_x_and_z = false;  // Movement is only successful if they can move on both axis
 	
-	public MovementData(float _diameter) {
+	public MovementData() {
 		/*diameter = _diameter;
 		
 		if (diameter > 1) {

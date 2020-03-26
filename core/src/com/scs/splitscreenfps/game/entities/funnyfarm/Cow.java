@@ -26,7 +26,7 @@ public class Cow extends AbstractEntity {
 
 		loadCow(game);
 
-		this.addComponent(new MovementData(.85f));
+		this.addComponent(new MovementData());
 
 		this.addComponent(new CollidesComponent(false, .3f));
 

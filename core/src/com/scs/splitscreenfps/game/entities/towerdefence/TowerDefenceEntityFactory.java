@@ -57,9 +57,9 @@ public class TowerDefenceEntityFactory {
 		anim.animationController = animation;
 		e.addComponent(anim);
 
-		float DIAM = .4f;
-		e.addComponent(new MovementData(DIAM));
-		e.addComponent(new CollidesComponent(false, DIAM+.2f));
+		//float DIAM = .4f;
+		e.addComponent(new MovementData());
+		e.addComponent(new CollidesComponent(false, 0.3f));
 		e.addComponent(new TowerEnemyComponent());
 		e.addComponent(new MoveAStarComponent(1, true));
 
@@ -136,15 +136,13 @@ public class TowerDefenceEntityFactory {
 		hasDecal.dontLockYAxis = false;
 		e.addComponent(hasDecal);
 
-		float DIAM = 0.2f;
-
-		MovementData md = new MovementData(DIAM);
+		MovementData md = new MovementData();
 		md.must_move_x_and_z = true;
 		e.addComponent(md);
 
 		e.addComponent(new AutoMoveComponent(offset));
 		
-		CollidesComponent cc = new CollidesComponent(false, DIAM);
+		CollidesComponent cc = new CollidesComponent(false, .1f);
 		cc.dont_collide_with = shooter;
 		e.addComponent(cc);
 		

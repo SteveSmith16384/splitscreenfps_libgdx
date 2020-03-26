@@ -25,7 +25,7 @@ public class Alien extends AbstractEntity {
 		loadModel();
 
 		float DIAM = .4f;
-		this.addComponent(new MovementData(DIAM));
+		this.addComponent(new MovementData());
 		this.addComponent(new CollidesComponent(false, DIAM+.2f));//.5f, .5f, .5f));
 	}
 
