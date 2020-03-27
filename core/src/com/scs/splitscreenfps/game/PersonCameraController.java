@@ -9,8 +9,6 @@ import com.scs.splitscreenfps.game.input.NoInputMethod;
 
 public class PersonCameraController {
 
-	//public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored - todo - move to settings
-	
 	private Camera camera;
 	private Vector3 tmp = new Vector3();
 
@@ -18,13 +16,6 @@ public class PersonCameraController {
 	private float rotSpeedY = 140f;
 
 	private float cursorSpeed = .15f;
-
-	/*float[] sensitivity = new float[]{
-			0.5f, 1f, 1.75f
-	};
-	float[] sensitivity2 = new float[]{
-			0.25f, 1f, 1.75f
-	};*/
 
 	private IInputMethod input;
 

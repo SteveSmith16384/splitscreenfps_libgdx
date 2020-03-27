@@ -1,49 +1,81 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.io.FileInputStream;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
+import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
+import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
-import com.scs.splitscreenfps.game.entities.Ceiling;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
-import com.scs.splitscreenfps.game.entities.ftl.Alien;
 import com.scs.splitscreenfps.game.entities.ftl.FTLEntityFactory;
-import com.scs.splitscreenfps.game.systems.DoorSystem;
+import com.scs.splitscreenfps.game.entities.ftl.RandomFloor;
+import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
+import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
+import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
+import com.scs.splitscreenfps.game.systems.monstermaze.MonsterGrowlsSystem;
+import com.scs.splitscreenfps.game.systems.monstermaze.MonsterMazeExitSystem;
+import com.scs.splitscreenfps.game.systems.monstermaze.RegenKeySystem;
+import com.scs.splitscreenfps.game.systems.monstermaze.TRexAISystem;
+import com.scs.splitscreenfps.game.systems.monstermaze.TRexHarmsPlayerSystem;
+import com.scs.splitscreenfps.mapgen.MazeGen1;
 
 import ssmith.libgdx.GridPoint2Static;
 
-public class FTLLevel extends AbstractLevel {
+public class StartLevel extends AbstractLevel {
 
-	public FTLLevel(Game _game) {
+	public static Properties prop;
+
+	public StartLevel(Game _game) {
 		super(_game);
+
+		prop = new Properties();
+		try {
+			prop.load(new FileInputStream("monstermaze/mm_config.txt"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
+
+
+	@Override
+	public void loadAvatars() {
+		super.loadAvatars();
+		for (int i=0 ; i<game.players.length ; i++) {
+			//game.players[i].addComponent(new CanUseMonsterMazeExitComponent(i));
+		}	
+	}
+
 
 	@Override
 	public void load() {
-		loadMapFromFile("ftl/map1.csv");
-
-		/*if (Settings.TEST_MODEL) {
-		AbstractEntity model = EntityFactory.createModel(game, "space-kit-1.0/Models/station.g3db", 3, 0, 2, 1f);
-		game.ecs.addEntity(model);
-	}*/
-
-	//AbstractEntity fire = EntityFactory.createFire(game.ecs, 1, 5);
-	//game.ecs.addEntity(fire);
-
-	AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, 1, 5);
-	game.ecs.addEntity(battery);
-
-	AbstractEntity alien = new Alien(game.ecs, 1, 3);
-	game.ecs.addEntity(alien);
+		loadMap(game, "start/map1.csv");
 	}
 
 
-	private void loadMapFromFile(String file) {
+	@Override
+	public void loadAssets() {
+	}
+
+
+	@Override
+	public void setBackgroundColour() {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+	}
+
+
+	private void loadMap(Game game, String file) {
 		String str = Gdx.files.internal(file).readString();
 		String[] str2 = str.split("\n");
 
@@ -98,21 +130,20 @@ public class FTLLevel extends AbstractLevel {
 
 		Floor floor = new Floor(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true);
 		game.ecs.addEntity(floor);
-
-		Ceiling ceiling = new Ceiling(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true, 1f);
-		game.ecs.addEntity(ceiling);
-
 	}
 
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		ecs.addSystem(new DoorSystem(ecs));
+		//game.ecs.addSystem(new TRexAISystem(ecs, game));
 	}
+
 
 	@Override
 	public void update() {
-		game.ecs.processSystem(DoorSystem.class);
+		//game.ecs.processSystem(TRexAISystem.class);
+
 	}
+
 
 }

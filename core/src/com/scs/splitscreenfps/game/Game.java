@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.BasicECS;
@@ -19,7 +18,6 @@ import com.scs.splitscreenfps.BillBoardFPS_Main;
 import com.scs.splitscreenfps.IModule;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
-import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfps.game.entities.TextEntity;
@@ -33,6 +31,7 @@ import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FunnyFarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
+import com.scs.splitscreenfps.game.levels.StartLevel;
 import com.scs.splitscreenfps.game.levels.StockCarLevel;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
 import com.scs.splitscreenfps.game.systems.AnimationSystem;
@@ -124,6 +123,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_STOCK_CAR:
 			currentLevel = new StockCarLevel(this);
+			break;
+		case Settings.MODE_START:
+			currentLevel = new StartLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);

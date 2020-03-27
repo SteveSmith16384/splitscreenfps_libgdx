@@ -95,7 +95,6 @@ public class NoInputMethod implements IInputMethod {
 
 	@Override
 	public boolean isKeyPressed(int key) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

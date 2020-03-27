@@ -71,7 +71,7 @@ public class VehicleMovementSystem extends AbstractSystem {
 		tmpTargetMomentum.set((float)Math.sin(veh.angle_rads), 0, (float)Math.cos(veh.angle_rads));
 		tmpTargetMomentum.nor().scl(veh.current_speed);
 
-		// MODE 1 veh.momentum.lerp(tmpTargetMomentum, traction); // todo - adjust by fixed amount
+		// MODE 1 veh.momentum.lerp(tmpTargetMomentum, traction);
 
 		// MODE 2
 		Vector3 diff = new Vector3(tmpTargetMomentum);

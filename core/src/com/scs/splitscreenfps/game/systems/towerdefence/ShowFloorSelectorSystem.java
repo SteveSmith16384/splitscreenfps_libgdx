@@ -42,7 +42,7 @@ public class ShowFloorSelectorSystem extends AbstractSystem {
 			PositionComponent entityPos = (PositionComponent)entity.getComponent(PositionComponent.class);
 			PositionComponent selectorPos = (PositionComponent)sfsc.floor_selector.getComponent(PositionComponent.class);
 			
-			selectorPos.position.set((int)(entityPos.position.x)+1, 0, (int)(entityPos.position.z)+1); // todo - take into account direction
+			selectorPos.position.set((int)(entityPos.position.x)+1, 0, (int)(entityPos.position.z)+1);
 
 			sfsc.pos.x = (int)(entityPos.position.x + player.camera.direction.x * 2);
 			sfsc.pos.y = (int)(entityPos.position.z + player.camera.direction.z * 2);

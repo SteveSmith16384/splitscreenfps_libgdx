@@ -78,8 +78,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 					game.mapData.map[sfsc.pos.x][sfsc.pos.y].entity.hideComponent(CanBuildOnComponent.class);
 
 					AbstractEntity wall = TowerDefenceEntityFactory.createLowWall(game.ecs, sfsc.pos.x, sfsc.pos.y);
-					// Check map is empty - todo - this won't work!
-					if (game.isAreaEmpty(wall)) {//.collCheckSystem.collided(wall, 0, 0, false) == false) {
+					if (game.isAreaEmpty(wall)) {
 						game.ecs.addEntity(wall);
 						playerData.coins -= WALL_COST;
 					} else {

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Settings {
 	
-	public static final int MODE_START = 0; // Finished
+	public static final int MODE_START = 0; // Barely started
 	public static final int MODE_TAG = 1; // Finished
 	public static final int MODE_MM = 2; // Finished
 	public static final int MODE_DUNGEON = 3; // Barely started
@@ -21,11 +21,12 @@ public class Settings {
 	
 	public static final boolean RELEASE_MODE = new File("../../debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_START : MODE_START;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_START;
 	public static boolean FIXED_GAME = RELEASE_MODE || true;
 	public static final String VERSION = "1.01";
 	
 	// Hacks
+	public static final boolean DEBUG_ALIEN_ASTAR = !RELEASE_MODE && false;
 	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final boolean START_4_PLAYERS = !RELEASE_MODE && true;
 	public static final boolean DEBUG_TAG = !RELEASE_MODE && false;
@@ -42,7 +43,7 @@ public class Settings {
 	
 	public static String TITLE;
 
-	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 512;
+	public static final int WINDOW_WIDTH_PIXELS = RELEASE_MODE ? 1024 : 1024;
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
 	public static Properties prop;

@@ -10,6 +10,7 @@ import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.IsBulletComponent;
+import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 
@@ -30,34 +31,36 @@ public class BulletSystem extends AbstractSystem {
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
-			
+
 			if (coll.hitEntity == null) { // Hit wall
-				Settings.p("Bullet removed ater hitting wall");
+				//Settings.p("Bullet removed after hitting wall");
 				entity.remove();
 				AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
 				ecs.addEntity(expl);
 				continue;
 			}
-			
+
 			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, TowerEnemyComponent.class);
 			if (ents != null) {
 				ents[0].remove();
 				ents[1].remove();
-				
+
 				AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
 				ecs.addEntity(expl);
-				
+
 				return;
 			} else {
-				// Remove us anyway since we've hit something
-				Settings.p("Bullet removed ater hitting " + coll.hitEntity);
-				entity.remove();
+				ents = coll.getEntitiesByComponent(IsBulletComponent.class, IsTurretComponent.class);
+				if (ents == null) {	// don't remove if hit ANY tower
+					// Remove us 
+					Settings.p("Bullet removed after hitting " + coll.hitEntity);
+					entity.remove();
 
-				AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
-				ecs.addEntity(expl);
-				
+					AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
+					ecs.addEntity(expl);
+				}				
 			}
 		}
 	}
-	
+
 }

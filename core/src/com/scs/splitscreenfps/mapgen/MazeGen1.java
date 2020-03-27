@@ -102,16 +102,18 @@ public class MazeGen1 {
 			int mx = 1+random.nextInt(width-2);
 			int my = 1+random.nextInt(height-2);
 			if (map[mx][my] == WALL) {
-				// Todo - check adjacent squares are empty to avoid lone squares (which cause problems when selecting a dest for A*)
-				map[mx][my] = PASSAGE;
-				numWallsToRemove--;
+				// check adjacent squares are empty to avoid lone squares (which cause problems when selecting a dest for A*)
+				if (map[mx+1][my] == PASSAGE || map[mx-1][my] == PASSAGE || map[mx][my+1] == PASSAGE || map[mx][my-1] == PASSAGE) {
+					map[mx][my] = PASSAGE;
+					numWallsToRemove--;
+				}
 			}
 		}
 
 		System.out.println(this.toString());
 	}
 
-	
+
 	@Override
 	public String toString() {
 		final StringBuffer b = new StringBuffer();

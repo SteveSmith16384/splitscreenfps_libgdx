@@ -31,7 +31,7 @@ import com.scs.splitscreenfps.game.systems.towerdefence.BulletSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CheckAltarSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
-import com.scs.splitscreenfps.game.systems.towerdefence.SpawnEnemiesSystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefenceEnemySpawnSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefenceEnemySystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefencePhaseSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.TurretSystem;
@@ -44,12 +44,12 @@ public final class TowerDefenceLevel extends AbstractLevel {
 	public static Properties prop;
 
 	public int levelNum = 1;
-	public SpawnEnemiesSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
+	public TowerDefenceEnemySpawnSystem spawnEnemiesSystem; // Gets process by the TowerDefenceLevelSystem
 	private GridPoint2Static targetPos;
 	private List<String> instructions = new ArrayList<String>(); 
 	private CheckAltarSystem checkAltarSystem;
 	private TowerDefencePhaseSystem towerDefencePhaseSystem;
-	
+
 	public TowerDefenceLevel(Game _game) {
 		super(_game);
 
@@ -68,7 +68,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		instructions.add("Todo: Build Tower");
 		instructions.add("Todo: Build Wall");
 
-		spawnEnemiesSystem = new SpawnEnemiesSystem(game.ecs, game, this);
+		spawnEnemiesSystem = new TowerDefenceEnemySpawnSystem(game.ecs, game, this);
 		this.towerDefencePhaseSystem = new TowerDefencePhaseSystem(this);
 	}
 
@@ -99,7 +99,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 
 	private void loadMapFromFile(String file) {
 		checkAltarSystem = new CheckAltarSystem(game.ecs, game);
-		
+
 		String str = Gdx.files.internal(file).readString();
 		String[] str2 = str.split("\n");
 
@@ -166,7 +166,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 							game.ecs.addEntity(altar);
 							checkAltarSystem.altars.add(altar);
 						} else if (token.equals("S")) { // Spawn point
-							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false); // todo - diff tex
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 							spawnEnemiesSystem.enemy_spawn_points.add(new GridPoint2Static(col, row));
 						} else {

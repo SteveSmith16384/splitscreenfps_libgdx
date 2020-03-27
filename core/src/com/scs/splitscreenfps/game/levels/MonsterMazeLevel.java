@@ -53,7 +53,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		for (int i=0 ; i<game.players.length ; i++) {
 			game.players[i].addComponent(new CanUseMonsterMazeExitComponent(i));
 			game.players[i].addComponent(new CanBeHarmedComponent(i));
-			game.ecs.addEntity(game.players[i]);
+			//game.ecs.addEntity(game.players[i]);
 		}	
 	}
 	
@@ -129,6 +129,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 			this.startPositions[i] = maze.start_pos;
 		}
 
+		// Start square 
 		GenericSquare sq = new GenericSquare(game.ecs, maze.start_pos.x, maze.start_pos.y, "monstermaze/wall.png");
 		game.ecs.addEntity(sq);
 
@@ -140,6 +141,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 		MonsterMazeExit exit = new MonsterMazeExit(game.ecs, maze.end_pos.x, maze.end_pos.y);
 		game.ecs.addEntity(exit);
 
+		// Floor
 		game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));
 	}
 

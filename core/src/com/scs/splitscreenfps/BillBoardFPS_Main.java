@@ -51,11 +51,10 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	@Override
 	public void render() {
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-			Gdx.input.setCursorCatched(true); // todo - don't do this in pre-game
+			Gdx.input.setCursorCatched(true);
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {// && Gdx.input.isCursorCatched()) {
 			Gdx.input.setCursorCatched(false);
-			//return;
 		}
 
 		if (next_module != null) {
