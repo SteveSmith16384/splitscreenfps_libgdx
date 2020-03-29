@@ -1,0 +1,239 @@
+RANARAMA 
+by Steve Turner 
+
+HINTS AND TIPS 
+--------------
+To play RanaRama you are advised to read the detailed instructions carefully. However, in order to get you 
+started, here are some brief hints and tips: 
+
+1. The aim of the game is to start on the top level of the dungeon and to defeat each warlock that you 
+   encounter. 
+2. Don't get sidetracked. The warlocks are the key to the game. Seek them out, destroy those around them, 
+   then jump on them. 
+3. Keep moving from room to room. As long as you are making new ground, you will come across energy 
+   crystals and warlocks. Use the maps to plan your progress. 
+4. Don't go down to other levels until you have plenty of runes and higher spells, or you won't last more 
+   than a few seconds. 
+5. If you lose your Power spell and are mortal, the first priority is to get a Glyph of Sorcery and fire up a 
+   new Power spell. 
+6. Use runes sparingly. Only increase your fire power or shields when you have runes to spare. 
+7. Use Glyphs of Power to attack all the creatures in a room in one go. 
+8. When the time comes to change levels, if the Glyph of Travel takes you too deep, return and try another. 
+
+Mervyn the sorcerer's apprentice is trapped in an evil dungeon after escaping from an invasion of warlocks. 
+Life wouldn't be so bad if he hadn't inadvertently changed himself into a frog, whilst concocting a potion to 
+improve his looks. Help Mervyn seek out the evil warlocks and destroy their mis-shapen guardian hordes. 
+Blast their looming weapon generators and defeat the warlocks themselves in ritual magic combat... and if 
+you have enough strength after all that - who knows, you might succeed in turning him back into a human 
+Mervyn - el Wimpo or Rambo? Only if he gets the right potion!! 
+The aim of the game is to start on the top level of the dungeon and defeat each warlock that you encounter. 
+Each warlock is guarded by groups of evil creatures - You earn extra points for destroying these creatures, 
+but they do not affect the main course of the game. Some of the rooms in the dungeon contain tomb-like 
+weapon generators which create vicious weapons such as spinning knives. Destruction of the weapons earns 
+you nothing but you can shoot the generators for extra points. 
+Some rooms also have mysterious symbols embedded in the floor. The symbols are called Floor Glyphs and 
+are of four different types. One type is used to weave magic spells, another may be fired to destroy some or 
+all your enemies in the room. The other two types are used to reveal a plan of the current level of the 
+dungeon or to transport you to a new level. When you defeat a warlock you should strive to capture the 
+magic runes which he releases because you may then use them to conjure spells to make yourself stronger in 
+attack and less vulnerable in defence. When you have cleared the top level of the dungeon you will be strong 
+enough to proceed downwards to tackle the more aggressive warlocks and their guardian creatures which 
+lurk below. 
+
+
+CONTROLS 
+--------
+The game can be controlled by joystick only on the Commodore. However, you may use either the Joystick 
+or computer keyboard on all other machines. Make your selection by pressing the appropriate key or FIRE 
+button when the control menu is displayed after the game has loaded, 
+
+JOYSTICK CONTROLS               KEYBOARD EQUIVALENT 
+UP                              A, S, D, F, G
+DOWN                            Z, X, C, V
+LEFT                            B, N
+RIGHT                           M
+FIRE                            H, J, K, L
+To fire an Offence Spell.       Press FIRE with a direction selected.
+To use an Effect spell.         Press FIRE with no direction selected. 
+To activate a Floor Glyph.      Stand on the Glyph and press FIRE with no direction selected. 
+To pause the game.              Press P key. Press FIRE to restart.
+(Inoperative during ritual combat)
+To set auto-fire.               Press W key. Press again to unset.
+During ritual combat.           Press LEFT or RIGHT to select a pair of letters and press FIRE to rearrange the pair. 
+
+
+PLAYING THE GAME
+---------------- 
+Mervyn the frog is transported to one of the rooms in the top level of the evil dungeon. Your aim is to 
+explore each room in turn to track down the evil warlocks but you will probably also have to battle with the 
+evil hordes which guard each warlock. In some rooms there are also squat, tomb-like weapon generators 
+which are the source of spinning knives and other weapons. You can destroy the generators to score extra 
+points. 
+Each room lights up as you enter it and the aerial viewpoint shows you the magic Floor Glyphs which you 
+may use to help you in your quest. The Floor Glyphs are square marking on the floor and to use one you 
+must be stationary on it before you press the FIRE button. They are explained in more detail below. 
+When you locate a warlock, leap on top of him and you will lock him in a ritual combat game. The letters of 
+the word RANARAMA will be scrambled before your eyes and you must put them back in order before the 
+time runs out. Press LEFT or RIGHT to select a pair of highlighted letters and press FIRE to reverse the 
+order of the pair. 
+Having defeated a warlock his runes are scattered to the four corners of the room he inhabited, Collect as 
+many of his runes as you can before they fade and die because you can use them to increase your power and 
+resilience. 
+
+
+FLOOR GLYPHS 
+------------
+To activate a Floor Glyph step on to it, stop and press FIRE. 
+
+GLYPH OF SEEING 
+All the room and doors (including invisible doors) which you have explored so far are shown on a map 
+together with your position. If you obtain the SEE Effects spell during the game the position of warlocks is 
+shown in red. 
+
+GLYPH OF POWER 
+A magic bolt of varying intensity is released killing, some or all of your opponents in the room. The Glyph 
+disappears after use. 
+
+GLYPH OF TRAVEL 
+A side view, of the dungeon appears and you may use UP or DOWN to travel to another level or press 
+FIRE to leave the Glyph. But be careful, you may not be able to return the way you came. Do not be 
+tempted to explore lower levels before you have won sufficient runes and spells. 
+
+GLYPH OF SORCERY 
+This Glyph is the key to building your power and resilience. At least five screens of information may be 
+accessed using UP or DOWN to scroll through the screens. The first screen shows the currently active 
+levels of the four types of spell available and the runes which you have collected to date. Subsequent 
+screens give more details on each currently active spell and on spells which may be cast using the runes 
+collected. For more details see the section headed ALL ABOUT SPELLS. 
+
+
+ALL ABOUT SPELLS 
+----------------
+SPELL TYPES AND LEVELS 
+There are four types of spells — Power, Offence, Defence and Effect you start the game with weak versions 
+of each spell but as you collect runes by defeating warlocks you may cast stronger versions. You need more 
+and more spells to build up your psychic powers so that you can safely tackle the stronger creatures which 
+you encounter at lower levels of the dungeon. 
+You must be careful to maintain a balance between the different types of spells. A strong, Offence spell for 
+example will enable you to destroy the more aggressive creatures more quickly but it will also drain a weak 
+power spell so rapidly that you may die. 
+You start the game with Psychic, the second weakest Power spell, with a Mortal Power spell (the weakest 
+Power spell) in reserve. If you do not succeed in boosting your power level by capturing energy crystals or 
+by casting a stronger Power spell you will eventually fade and die and drop from the Psychic level to the 
+Mortal power level. If you fall a second time you lose the game and must start over. 
+You also start the game with the weakest Offence spell (Zap) so that you will have to fire and strike the 
+stronger creatures or weapon generators several times before they are destroyed. Your Defence spell (Protect) 
+is also weak so that you are poorly shielded from the attacks of others. Your initial Effects spell is called 
+FIND and it enables you to locate invisible doors. If you suspect there is a door hidden in your current room, 
+stop. CENTRE the joystick and press FIRE. The FIND spell will then reveal any hidden doors. 
+
+CASTING NEW SPELLS 
+Find a Glyph of Sorcery, step on to it and press FIRE. The first screen shows the currently active levels of 
+the four types of spell. You may obtain more details on each spell by scrolling, up or down to new screens. 
+If you progress well in the game by defeating the warlocks and collecting the runes that they surrender then 
+new spells of each type become available to you. These are shown on new screens and an audible tone 
+informs you that you may cast the new spell in exchange for one or more of your runes. Press FIRE to cast 
+the new spell. 
+
+ENERGY CRYSTALS 
+As you explore you will stumble across these crystals floating in the rooms. When they sense your life 
+force they will close in on you, be absorbed and boost your power level. 
+
+
+THE EVIL GUARDIAN HORDES 
+------------------------
+DWARF WARRIOR 
+1st Level Fighter
+Recruited from the Kuri, a tribe of dwarfs long corrupted by the nether forces, not very intelligent, they
+lust for gold, drink and a good fight. 
+Score 100 points. 
+
+FIRE GOLLUM 
+2nd Level Fighter 
+But a pale shadow of a true elemental, these unfortunate creatures were the creation of the wise in their 
+attempt to overthrow the Netherlords at the end of the great Dark Age. Hateful of their creators, the few 
+that survive serve the Netherlords who cherish their abilities of constant light and warmth in the depths. 
+Score 200 points. 
+
+BISECT 
+3rd Level Fighter
+A hideous creation, of the Netherlords, spawned in the depths by mixing the life pattern of insects and
+man. Protected by their exoskeletons, they are formidable warriors. 
+Score 300 points. 
+
+GUARDIAN 
+4th Level Fighter 
+Not a living creature, but an armoured shell animated by the dark arts of the Netherlords. Protected by
+magic, they can resist the magical attacks of lesser creatures.
+Score 400 points. 
+
+DEATH SERPENT 
+5th Level Fighter 
+Spawned from the heads of dead warriors, these snake like creatures are fast and deadly. 
+Score 500 points. 
+
+GHOUL 
+6th Level Fighter 
+Almost invisible, these undead creatures drain the energy of living things at a shuddering rate. 
+Score 600 points. 
+
+ARACHNAE 
+7th Level Fighter 
+An ancient race of man eating spiders, these creatures are found in the deeper levels. Frogs are a particular
+delicacy of theirs. 
+Score 700 points. 
+
+GARGOYLE 
+8th Level Fighter 
+A magical creature created by dark forces, these are the epitome of evil. Most deadly of the creatures 
+lurking in the depths, they are fast and cunning. 
+Score 800 points. 
+
+
+WARLOCKS
+--------
+WIZARD 
+Levels 1 to 4 
+These cowardly leaders of the undead will only volunteer for ritual combat if you are of a lesser status 
+than they are. If they run from you they are weak. Equipped with various missile spells and attack spells 
+and resistent to missile attacks warlocks are best defeated by ritual combat. 
+Score 500 to 4000 points. 
+
+NECROMANCER 
+Levels 5 to 8 
+Powerful in attack, defence and magical combat, these towering Netherlords possess powerful runes which 
+are your key to ultimate success. Do not tackle them without a high Defence spell and Power level of 4 or 
+better. 
+Score 4500 to 8000 points. 
+
+
+MAGICAL WEAPONS 
+---------------
+Weapons are mostly impervious to your attack and their destruction wins you no points but you may prevent 
+their creation and earn 500 points by destroying their tomb-like generators. 
+
+MUNCHING MOUTH 
+To avoid its rapid strikes you must run from the room or hide. 
+
+SPINNING KNIVES 
+Slow as individuals they attack in large numbers if you do not destroy their generators. 
+
+ORBITER 
+Four glistening steel balls rotating round a pulsing ball of energy, an orbiter is slow enough to shoot. 
+
+ENERGY BALL 
+A spinning ball of pure energy renowned for its bodyline tactics. 
+
+
+CREDITS 
+-------
+Designed and programmed by Steve Turner. Published by Hewson Consultants Ltd. 
+(C) Craftgold Ltd., 1987 and (C) Hewson Consultants Ltd, 1987. 
+Commodore conversion by Gary Foreman. 
+The program and data are copyright and may not be reproduced in part or in total by any means without the
+written permission of Hewson Consultants Ltd. All rights reserved. No responsibility is accepted for any
+errors.
+Our policy is one of constant improvement. Therefore, we reserve the right to modify any product without
+notice. 
+Hewson Consultants Ltd., Hewson House. 568 Milton Trading Estate, Milton, Abingdon, Oxon. 0X14 4RX. 
+MADE IN GREAT BRITAIN.
