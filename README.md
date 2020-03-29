@@ -29,7 +29,8 @@ It depends on the specific game selected, but controls are typically:-
 * F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
 
 ## Notes for other Developers
-Gradle is a real pain to work with.  However, if you have trouble loading this project, I used Gradle v4.10.3.
+* Development is the cutting edge but possibly broken branch.  Master is the most stable but out of date.
+* Gradle is a real pain to work with.  However, if you have trouble loading this project, I used Gradle v4.10.3.
 
 
 ## Licence
