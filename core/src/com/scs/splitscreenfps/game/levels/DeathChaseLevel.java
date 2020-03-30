@@ -80,13 +80,13 @@ public class DeathChaseLevel extends AbstractLevel {
 			}
 		}
 
-		this.startPositions[0] = new GridPoint2Static(1, 1);
-		this.startPositions[1] = new GridPoint2Static(map_width-2, map_height-2);
-		this.startPositions[2] = new GridPoint2Static(map_width-2, 1);
-		this.startPositions[3] = new GridPoint2Static(1, map_height-2);
+		this.startPositions.add(new GridPoint2Static(1, 1));
+		this.startPositions.add(new GridPoint2Static(map_width-2, map_height-2));
+		this.startPositions.add(new GridPoint2Static(map_width-2, 1));
+		this.startPositions.add(new GridPoint2Static(1, map_height-2));
 
 		for (int i=0 ; i<this.game.players.length ; i++) {
-			game.players[i].addComponent(new CanRespawnComponent(new Vector3(this.startPositions[i].x+.5f, Settings.PLAYER_HEIGHT/2, this.startPositions[i].y+0.5f)));
+			game.players[i].addComponent(new CanRespawnComponent(new Vector3(this.startPositions.get(i).x+.5f, Settings.PLAYER_HEIGHT/2, this.startPositions.get(i).y+0.5f)));
 		}
 
 		if (Settings.DARKMODE == false) {

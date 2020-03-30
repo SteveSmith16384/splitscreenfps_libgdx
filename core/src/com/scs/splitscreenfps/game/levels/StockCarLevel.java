@@ -106,7 +106,6 @@ public class StockCarLevel extends AbstractLevel {
 						game.ecs.addEntity(floor);
 					} else if (itoken == 2) { // track edge!
 						game.mapData.map[col][row].entity.addComponent(new TrackComponent(1, .7f));
-						//game.mapData.map[col][row].blocked = true;
 						Floor floor = new Floor(game.ecs, "stockcar/textures/track_edge.png", col, row, 1, 1, false);
 						game.ecs.addEntity(floor);
 					} else if (itoken == 1 || itoken == 3) { // Grass?

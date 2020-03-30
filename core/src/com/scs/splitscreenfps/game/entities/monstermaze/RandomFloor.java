@@ -1,4 +1,4 @@
-package com.scs.splitscreenfps.game.entities.ftl;
+package com.scs.splitscreenfps.game.entities.monstermaze;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;

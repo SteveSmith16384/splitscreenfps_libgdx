@@ -60,7 +60,7 @@ public class TurretSystem extends AbstractSystem {
 			//Settings.p("Angle: " + turretPos.angle_degs);
 			
 			if (itc.nextShotTime < System.currentTimeMillis()) {
-				Settings.p("Shot!");
+				//Settings.p("Shot!");
 				itc.nextShotTime = System.currentTimeMillis() + NumberFunctions.rnd(900,  1100);
 				startPos.set(turretPos.position);
 				

@@ -76,9 +76,9 @@ public class DungeonLevel extends AbstractLevel {
 			}
 		}
 
-		for (int i=0 ; i<this.startPositions.length ; i++) {
+		for (int i=0 ; i<this.startPositions.size() ; i++) {
 			GridPoint2Static pos = maze.centres.get(0);
-			this.startPositions[i] = pos;
+			this.startPositions.add(pos);
 		}
 
 		game.ecs.addEntity(new Floor(game.ecs, "colours/white.png", 0, 0, map_width, map_height, false));

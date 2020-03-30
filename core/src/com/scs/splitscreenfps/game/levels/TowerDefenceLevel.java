@@ -119,23 +119,8 @@ public final class TowerDefenceLevel extends AbstractLevel {
 					String cell = cells[col];
 					String tokens[] = cell.split(Pattern.quote("+"));
 					for (String token : tokens) {
-						if (token.equals("P1")) { // Start pos
-							this.startPositions[0] = new GridPoint2Static(col, row);
-							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
-							game.ecs.addEntity(floor);
-							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
-						} else if (token.equals("P2")) { // Start pos
-							this.startPositions[1] = new GridPoint2Static(col, row);
-							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
-							game.ecs.addEntity(floor);
-							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
-						} else if (token.equals("P3")) { // Start pos
-							this.startPositions[2] = new GridPoint2Static(col, row);
-							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
-							game.ecs.addEntity(floor);
-							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());
-						} else if (token.equals("P4")) { // Start pos
-							this.startPositions[3] = new GridPoint2Static(col, row);
+						if (token.equals("P")) { // Start pos
+							this.startPositions.add(new GridPoint2Static(col, row));
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
 							game.mapData.map[col][row].entity.addComponent(new CanBuildOnComponent());

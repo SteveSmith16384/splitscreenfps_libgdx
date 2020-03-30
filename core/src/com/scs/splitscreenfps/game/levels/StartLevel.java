@@ -5,30 +5,19 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
-import com.scs.splitscreenfps.game.components.CanBeHarmedComponent;
-import com.scs.splitscreenfps.game.components.monstermaze.CanUseMonsterMazeExitComponent;
+import com.scs.splitscreenfps.game.components.start.CanStartNewLevelComponent;
+import com.scs.splitscreenfps.game.components.start.StartLevelExitComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
-import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
-import com.scs.splitscreenfps.game.entities.ftl.FTLEntityFactory;
-import com.scs.splitscreenfps.game.entities.ftl.RandomFloor;
-import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
-import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
-import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
-import com.scs.splitscreenfps.game.systems.monstermaze.MonsterGrowlsSystem;
-import com.scs.splitscreenfps.game.systems.monstermaze.MonsterMazeExitSystem;
-import com.scs.splitscreenfps.game.systems.monstermaze.RegenKeySystem;
-import com.scs.splitscreenfps.game.systems.monstermaze.TRexAISystem;
-import com.scs.splitscreenfps.game.systems.monstermaze.TRexHarmsPlayerSystem;
-import com.scs.splitscreenfps.mapgen.MazeGen1;
+import com.scs.splitscreenfps.game.entities.monstermaze.RandomFloor;
+import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
+import com.scs.splitscreenfps.game.systems.start.StartSpecificLevelSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -41,9 +30,9 @@ public class StartLevel extends AbstractLevel {
 
 		prop = new Properties();
 		try {
-			prop.load(new FileInputStream("monstermaze/mm_config.txt"));
+			prop.load(new FileInputStream("start/start_config.txt"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 	}
@@ -53,7 +42,7 @@ public class StartLevel extends AbstractLevel {
 	public void loadAvatars() {
 		super.loadAvatars();
 		for (int i=0 ; i<game.players.length ; i++) {
-			//game.players[i].addComponent(new CanUseMonsterMazeExitComponent(i));
+			game.players[i].addComponent(new CanStartNewLevelComponent());
 		}	
 	}
 
@@ -65,13 +54,8 @@ public class StartLevel extends AbstractLevel {
 
 
 	@Override
-	public void loadAssets() {
-	}
-
-
-	@Override
 	public void setBackgroundColour() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(.6f, .6f, 1, 1);
 	}
 
 
@@ -95,30 +79,47 @@ public class StartLevel extends AbstractLevel {
 					String cell = cells[col];
 					String tokens[] = cell.split(Pattern.quote("+"));
 					for (String token : tokens) {
-						if (token.equals("S1")) { // Start pos
-							this.startPositions[0] = new GridPoint2Static(col, row);
-						} else if (token.equals("S2")) { // Start pos
-							this.startPositions[1] = new GridPoint2Static(col, row);
-						} else if (token.equals("S3")) { // Start pos
-							this.startPositions[2] = new GridPoint2Static(col, row);
-						} else if (token.equals("S4")) { // Start pos
-							this.startPositions[3] = new GridPoint2Static(col, row);
-						} else if (token.equals("F")) { // Floor
-							// Do nothing
-						} else if (token.equals("W")) { // Wall
-							game.mapData.map[col][row].blocked = true;
-							Wall wall = new Wall(game.ecs, "ftl/textures/ufo2_03.png", col, 0, row, false);
+						if (token.equals("1")) { // Grass
+							Floor floor = new Floor(game.ecs, "stockcar/textures/grass.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+						} else if (token.equals("2")) { // Grass and start pos
+							Floor floor = new Floor(game.ecs, "stockcar/textures/grass.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							this.startPositions.add(new GridPoint2Static(col, row));
+						} else if (token.equals("3")) { // MM wall
+							Wall wall = new Wall(game.ecs, "monstermaze/wall.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
-						} else if (token.equals("C")) { // Chasm
-						} else if (token.equals("D1")) { // Door 1
-							AbstractEntity door = FTLEntityFactory.createDoor(game.ecs, col, row, false);
-							game.ecs.addEntity(door);
-						} else if (token.equals("D2")) { // Door 2
-							AbstractEntity door = FTLEntityFactory.createDoor(game.ecs, col, row, true);
-							game.ecs.addEntity(door);
-						} else if (token.equals("B")) { // Door 2
-							AbstractEntity battery = FTLEntityFactory.createBattery(game.ecs, col, row);
-							game.ecs.addEntity(battery);
+						} else if (token.equals("4")) { // MM floor
+							Floor floor = new Floor(game.ecs, "colours/white.png", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							RandomFloor rndfloor = new RandomFloor(game.ecs, col, row);
+							game.ecs.addEntity(rndfloor);
+						} else if (token.equals("9")) { // TD floor and turret
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							AbstractEntity turret = TowerDefenceEntityFactory.createTurret(game.ecs, col, row);
+							game.ecs.addEntity(turret);
+						} else if (token.equals("8")) { // TD floor
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+						} else if (token.equals("7")) { // TD floor and altar
+							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+							AbstractEntity altar = TowerDefenceEntityFactory.createAltar(game.ecs, col, row);
+							altar.addComponent(new StartLevelExitComponent(Settings.MODE_TOWER_DEFENCE));
+							game.ecs.addEntity(altar);
+						} else if (token.equals("11")) { // Track edge
+							Floor floor = new Floor(game.ecs, "stockcar/textures/track_edge.png", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+						} else if (token.equals("10")) { // Track
+							Floor floor = new Floor(game.ecs, "stockcar/textures/road2.png", col, row, 1, 1, false);
+							game.ecs.addEntity(floor);
+						} else if (token.equals("6")) { // Tag floor
+							Wall floor = new Wall(game.ecs, "tag/textures/floor3.jpg", col, -1, row, false);
+							game.ecs.addEntity(floor);
+						} else if (token.equals("5")) { // Tag wall
+							Wall wall = new Wall(game.ecs, "tag/textures/spacewall2.png", col, 0, row, false);
+							game.ecs.addEntity(wall);
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}
@@ -128,20 +129,20 @@ public class StartLevel extends AbstractLevel {
 			}
 		}
 
-		Floor floor = new Floor(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true);
-		game.ecs.addEntity(floor);
+		//Floor floor = new Floor(game.ecs, "ftl/textures/corridor.jpg", 0, 0, map_width, map_height, true);
+		//game.ecs.addEntity(floor);
 	}
 
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		//game.ecs.addSystem(new TRexAISystem(ecs, game));
+		game.ecs.addSystem(new StartSpecificLevelSystem(ecs, game));
 	}
 
 
 	@Override
 	public void update() {
-		//game.ecs.processSystem(TRexAISystem.class);
+		game.ecs.processSystem(StartSpecificLevelSystem.class);
 
 	}
 

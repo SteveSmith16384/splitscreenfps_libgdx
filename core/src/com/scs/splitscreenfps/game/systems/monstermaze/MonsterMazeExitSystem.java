@@ -19,7 +19,6 @@ import com.scs.splitscreenfps.game.entities.TextEntity;
 public class MonsterMazeExitSystem extends AbstractSystem {
 
 	private Game game;
-	//private CollisionResultsList crl = new CollisionResultsList();
 	
 	public MonsterMazeExitSystem(BasicECS ecs, Game _game) {
 		super(ecs, MonsterMazeExitComponent.class);

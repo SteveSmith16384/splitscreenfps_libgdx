@@ -17,9 +17,9 @@ import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
 import com.scs.splitscreenfps.game.entities.GenericSquare;
 import com.scs.splitscreenfps.game.entities.Wall;
-import com.scs.splitscreenfps.game.entities.ftl.RandomFloor;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeEntityFactory;
 import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
+import com.scs.splitscreenfps.game.entities.monstermaze.RandomFloor;
 import com.scs.splitscreenfps.game.entities.monstermaze.TRex;
 import com.scs.splitscreenfps.game.systems.monstermaze.MonsterGrowlsSystem;
 import com.scs.splitscreenfps.game.systems.monstermaze.MonsterMazeExitSystem;
@@ -125,8 +125,8 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 		game.mapData.map[maze.start_pos.x][maze.start_pos.y].spawn_point = true;
 
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = maze.start_pos;
+		for (int i=0 ; i<this.startPositions.size() ;i++) {
+			this.startPositions.add(maze.start_pos);
 		}
 
 		// Start square 
@@ -148,7 +148,7 @@ public class MonsterMazeLevel extends AbstractLevel {
 
 	@Override
 	public void addSystems(BasicECS ecs) {
-		game.ecs.addSystem(new TRexHarmsPlayerSystem(game.ecs, game, this.startPositions[0].x, this.startPositions[0].y));
+		game.ecs.addSystem(new TRexHarmsPlayerSystem(game.ecs, game, this.startPositions.get(0).x, this.startPositions.get(0).y));
 		game.ecs.addSystem(new MonsterMazeExitSystem(ecs, game));
 		game.ecs.addSystem(new MonsterGrowlsSystem());
 		game.ecs.addSystem(new RegenKeySystem(ecs, this));

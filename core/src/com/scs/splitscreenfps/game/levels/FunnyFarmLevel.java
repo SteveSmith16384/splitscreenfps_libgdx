@@ -45,8 +45,8 @@ public class FunnyFarmLevel extends AbstractLevel {
 			}
 		}
 
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2Static(i+1, i+1);
+		for (int i=0 ; i<this.startPositions.size() ;i++) {
+			this.startPositions.add(new GridPoint2Static(i+1, i+1));
 		}
 
 		AbstractEntity plant = FunnyFarmEntityFactory.createPlant(game, 3, 1);

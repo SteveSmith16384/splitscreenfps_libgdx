@@ -56,7 +56,7 @@ public class Game implements IModule {
 
 	private BillBoardFPS_Main main;
 	private SpriteBatch batch2d;
-	public BitmapFont font_small, font_med, font_large;
+	public BitmapFont font_small, font_med, font_large;// change to getFont()
 	public final ViewportData[] viewports;
 
 	public AbstractPlayersAvatar[] players;
@@ -311,9 +311,15 @@ public class Game implements IModule {
 			ViewportData viewportData = this.viewports[currentViewId];
 			viewportData.dispose();
 		}
-		font_small.dispose(); 
-		font_med.dispose(); 
-		font_large.dispose(); 
+		if (font_small != null) {
+			font_small.dispose();
+		}
+		if (font_med != null) {
+			font_med.dispose();
+		}
+		if (font_large != null) {
+			font_large.dispose();
+		}
 		batch2d.dispose();
 	}
 

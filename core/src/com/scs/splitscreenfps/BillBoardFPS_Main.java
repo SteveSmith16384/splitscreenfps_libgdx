@@ -23,7 +23,7 @@ public class BillBoardFPS_Main extends ApplicationAdapter {
 	public static final AudioSystem audio = new AudioSystem();
 
 	private IModule current_module;
-	public  IModule next_module;
+	public IModule next_module;
 	private boolean fullscreen = false;
 
 	@Override

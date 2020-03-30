@@ -178,8 +178,8 @@ public class AlienTagLevel extends AbstractLevel {
 			}
 		}
 
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = game.mapData.getRandomFloorPos();
+		for (int i=0 ; i<this.startPositions.size() ;i++) {
+			this.startPositions.add(game.mapData.getRandomFloorPos());
 		}
 	}
 

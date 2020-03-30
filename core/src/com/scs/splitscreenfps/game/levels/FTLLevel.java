@@ -64,13 +64,13 @@ public class FTLLevel extends AbstractLevel {
 					String tokens[] = cell.split(Pattern.quote("+"));
 					for (String token : tokens) {
 						if (token.equals("S1")) { // Start pos
-							this.startPositions[0] = new GridPoint2Static(col, row);
+							this.startPositions.add(new GridPoint2Static(col, row));
 						} else if (token.equals("S2")) { // Start pos
-							this.startPositions[1] = new GridPoint2Static(col, row);
+							this.startPositions.add(new GridPoint2Static(col, row));
 						} else if (token.equals("S3")) { // Start pos
-							this.startPositions[2] = new GridPoint2Static(col, row);
+							this.startPositions.add(new GridPoint2Static(col, row));
 						} else if (token.equals("S4")) { // Start pos
-							this.startPositions[3] = new GridPoint2Static(col, row);
+							this.startPositions.add(new GridPoint2Static(col, row));
 						} else if (token.equals("F")) { // Floor
 							// Do nothing
 						} else if (token.equals("W")) { // Wall

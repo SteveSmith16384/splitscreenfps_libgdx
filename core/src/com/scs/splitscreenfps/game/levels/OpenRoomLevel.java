@@ -19,8 +19,8 @@ public class OpenRoomLevel extends AbstractLevel {
 
 	@Override
 	public void load() {
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = new GridPoint2Static(i, 0);
+		for (int i=0 ; i<this.startPositions.size() ;i++) {
+			this.startPositions.add(new GridPoint2Static(i, 0));
 		}
 
 		this.map_width = 16;

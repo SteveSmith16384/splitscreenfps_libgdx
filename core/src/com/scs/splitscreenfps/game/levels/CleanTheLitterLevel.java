@@ -37,8 +37,8 @@ public class CleanTheLitterLevel extends AbstractLevel {
 
 		MazeGen1 maze = new MazeGen1(map_width, map_height, 10);
 
-		for (int i=0 ; i<this.startPositions.length ;i++) {
-			this.startPositions[i] = maze.start_pos;
+		for (int i=0 ; i<this.startPositions.size() ;i++) {
+			this.startPositions.add(maze.start_pos);
 		}
 
 		for (int z=0 ; z<map_height ; z++) {

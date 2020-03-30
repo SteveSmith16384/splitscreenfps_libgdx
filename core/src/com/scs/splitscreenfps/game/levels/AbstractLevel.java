@@ -1,5 +1,8 @@
 package com.scs.splitscreenfps.game.levels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -16,7 +19,7 @@ public abstract class AbstractLevel {
 	protected Game game;
 	protected int map_width;
 	protected int map_height;
-	protected GridPoint2Static startPositions[] = new GridPoint2Static[4];
+	protected List<GridPoint2Static> startPositions = new ArrayList<GridPoint2Static>();
 	
 	public AbstractLevel(Game _game) {
 		game = _game;
@@ -77,7 +80,7 @@ public abstract class AbstractLevel {
 	public void renderUI(SpriteBatch batch, int viewIndex) {}
 
 	public GridPoint2Static getPlayerStartMap(int idx) {
-		return this.startPositions[idx];
+		return this.startPositions.get(idx);
 	}
 	
 	public String getMusicFilename() {
