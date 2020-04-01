@@ -18,8 +18,7 @@ public class Alien extends AbstractEntity {
 	public Alien(BasicECS ecs, int x, int y) {
 		super(ecs, Alien.class.getSimpleName());
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x+0.5f, 0, y+0.5f);
+		PositionComponent pos = new PositionComponent(x+0.5f, 0, y+0.5f);
 		this.addComponent(pos);
 
 		loadModel();

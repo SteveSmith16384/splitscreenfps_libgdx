@@ -14,7 +14,10 @@ import com.scs.splitscreenfps.game.components.start.CanStartNewLevelComponent;
 import com.scs.splitscreenfps.game.components.start.StartLevelExitComponent;
 import com.scs.splitscreenfps.game.data.MapSquare;
 import com.scs.splitscreenfps.game.entities.Floor;
+import com.scs.splitscreenfps.game.entities.GenericModel;
 import com.scs.splitscreenfps.game.entities.Wall;
+import com.scs.splitscreenfps.game.entities.alientag.AlienTagEntityFactory;
+import com.scs.splitscreenfps.game.entities.monstermaze.MonsterMazeExit;
 import com.scs.splitscreenfps.game.entities.monstermaze.RandomFloor;
 import com.scs.splitscreenfps.game.entities.towerdefence.TowerDefenceEntityFactory;
 import com.scs.splitscreenfps.game.systems.start.StartSpecificLevelSystem;
@@ -94,6 +97,12 @@ public class StartLevel extends AbstractLevel {
 							game.ecs.addEntity(floor);
 							RandomFloor rndfloor = new RandomFloor(game.ecs, col, row);
 							game.ecs.addEntity(rndfloor);
+							
+						} else if (token.equals("MMS")) { // MM start
+							MonsterMazeExit exit = new MonsterMazeExit(game.ecs, col, row);
+							exit.addComponent(new StartLevelExitComponent(Settings.MODE_MONSTER_MAZE));
+							game.ecs.addEntity(exit);
+							
 						} else if (token.equals("9")) { // TD floor and turret
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/corridor.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
@@ -114,12 +123,22 @@ public class StartLevel extends AbstractLevel {
 						} else if (token.equals("10")) { // Track
 							Floor floor = new Floor(game.ecs, "stockcar/textures/road2.png", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
+						} else if (token.equals("CAR")) { // Car
+							GenericModel car = new GenericModel(game, game.ecs, "Car", "shared/models/kenney_car_kit/hatchbackSports.g3db", col, 0, row, .6f);
+							car.addComponent(new StartLevelExitComponent(Settings.MODE_STOCK_CAR));
+							game.ecs.addEntity(car);
+							
 						} else if (token.equals("6")) { // Tag floor
 							Wall floor = new Wall(game.ecs, "tag/textures/floor3.jpg", col, -1, row, false);
 							game.ecs.addEntity(floor);
 						} else if (token.equals("5")) { // Tag wall
 							Wall wall = new Wall(game.ecs, "tag/textures/spacewall2.png", col, 0, row, false);
 							game.ecs.addEntity(wall);
+						} else if (token.equals("ATS")) { // Tag start
+							AbstractEntity crate = AlienTagEntityFactory.createCrate(game.ecs, col+.5f, row+.5f);
+							crate.addComponent(new StartLevelExitComponent(Settings.MODE_ALIEN_TAG));
+							game.ecs.addEntity(crate);
+
 						} else {
 							throw new RuntimeException("Unknown cell type: " + token);
 						}

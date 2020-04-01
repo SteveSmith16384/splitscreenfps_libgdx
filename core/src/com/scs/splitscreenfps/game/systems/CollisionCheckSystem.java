@@ -46,6 +46,11 @@ public class CollisionCheckSystem extends AbstractSystem {
 					}
 					
 					PositionComponent theirPos = (PositionComponent)e.getComponent(PositionComponent.class);
+					if (Settings.STRICT) {
+						if (theirPos == null) {
+							throw new RuntimeException("Entity " + e + " does not have a " + PositionComponent.class.getSimpleName());
+						}
+					}
 					float len = tmp.set(theirPos.position).sub(ourPos.position).len();
 					
 					if (Settings.STRICT) {

@@ -15,12 +15,17 @@ public class PositionComponent {
 	
 	
 	public PositionComponent(float x, float z) {
-		this.position = new Vector3(x, 0, z);
+		this(x, 0, z);
 	}
 	
 	
 	public PositionComponent(float x, float y, float z) {
 		this.position = new Vector3(x, y, z);
+	}
+	
+	
+	public PositionComponent(Vector3 v) {
+		this(v.x, v.y, v.z);
 	}
 	
 	

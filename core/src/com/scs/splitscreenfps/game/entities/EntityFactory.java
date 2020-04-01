@@ -184,7 +184,7 @@ public class EntityFactory {
 	public static AbstractEntity createDebugSPhere(BasicECS ecs, float x, float y, float z, float diam) {
 		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
 
-		PositionComponent pos = new PositionComponent();
+		PositionComponent pos = new PositionComponent(x, y, z);
 		pos.position = new Vector3(x, y, z);
 		e.addComponent(pos);
 

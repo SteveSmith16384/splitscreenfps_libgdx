@@ -19,8 +19,7 @@ public class GenericWallScenery extends AbstractEntity {
 	public GenericWallScenery(BasicECS ecs, String name, String filename, int x, int y, Side side) {
 		super(ecs, name);
 		
-        PositionComponent pos = new PositionComponent();
-        pos.position = new Vector3(x, 0, y);
+        PositionComponent pos = new PositionComponent(x, 0, y);
         this.addComponent(pos);
         
         switch (side) {

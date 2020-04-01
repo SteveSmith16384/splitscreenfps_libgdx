@@ -41,8 +41,7 @@ public class TowerDefenceEntityFactory {
 	public static AbstractEntity createAlien(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "TD_Alien");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x+0.5f, 0, z+0.5f);
+		PositionComponent pos = new PositionComponent(x+0.5f, 0, z+0.5f);
 		e.addComponent(pos);
 
 		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/Alien.g3db", false);
@@ -70,8 +69,7 @@ public class TowerDefenceEntityFactory {
 	public static AbstractEntity createCoin(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "Coin");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x, 0, z);
+		PositionComponent pos = new PositionComponent(x, 0, z);
 		e.addComponent(pos);
 
 		TextureRegion[][] trs = GraphicsHelper.createSheet("towerdefence/Coin_16x16_Anim.png", 8, 1);
@@ -100,8 +98,7 @@ public class TowerDefenceEntityFactory {
 	public static AbstractEntity createTurret(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "Turret");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x+.5f, 0, z+.5f);
+		PositionComponent pos = new PositionComponent(x+.5f, 0, z+.5f);
 		e.addComponent(pos);
 
 		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/kenney_td_kit/weapon_blaster.g3db", true);
@@ -125,8 +122,7 @@ public class TowerDefenceEntityFactory {
 	public static AbstractEntity createBullet(BasicECS ecs, AbstractEntity shooter, Vector3 start, Vector3 offset) {
 		AbstractEntity e = new AbstractEntity(ecs, "Bullet");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(start);
+		PositionComponent pos = new PositionComponent(start);
 		e.addComponent(pos);
 
 		HasDecal hasDecal = new HasDecal();
@@ -156,8 +152,7 @@ public class TowerDefenceEntityFactory {
 	public static AbstractEntity createAltar(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "Altar");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x+.5f, 0, z+.5f);
+		PositionComponent pos = new PositionComponent(x+.5f, 0, z+.5f);
 		e.addComponent(pos);
 
 		ModelInstance instance = ModelFunctions.loadModel("towerdefence/models/kenney_td_kit/detail_crystalLarge.g3db", true);
@@ -182,8 +177,7 @@ public class TowerDefenceEntityFactory {
 		final float HEIGHT = .4f;
 		AbstractEntity e = new AbstractEntity(ecs, "LowWall");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(mapPosX+.5f, 0, mapPosZ+.5f);
+		PositionComponent pos = new PositionComponent(mapPosX+.5f, 0, mapPosZ+.5f);
 		e.addComponent(pos);
 
 		Material black_material = new Material(TextureAttribute.createDiffuse(new Texture("towerdefence/textures/ufo2_03.png")));

@@ -20,8 +20,7 @@ public class FloorSelector extends AbstractEntity {
 	public FloorSelector(BasicECS ecs, int playerIdx) {
 		super(ecs, FloorSelector.class.getSimpleName());
 
-		PositionComponent pos = new PositionComponent();
-		this.addComponent(pos);
+		this.addComponent(new PositionComponent());
 
 		BlendingAttribute blendingAttribute = new BlendingAttribute();
 		blendingAttribute.opacity = 1f;

@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class Settings {
 	
-	public static final int MODE_START = 0; // Barely started
-	public static final int MODE_TAG = 1; // Finished
-	public static final int MODE_MM = 2; // Finished
+	public static final int MODE_START = 0; // Started
+	public static final int MODE_ALIEN_TAG = 1; // Finished
+	public static final int MODE_MONSTER_MAZE = 2; // Finished
 	public static final int MODE_DUNGEON = 3; // Barely started
 	public static final int MODE_FUNNY_FARM = 4; // Barely started
 	public static final int MODE_FTL = 5; // Barely started
@@ -21,8 +21,8 @@ public class Settings {
 	
 	public static final boolean RELEASE_MODE = new File("../../debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MM : MODE_START;
-	public static boolean FIXED_GAME = RELEASE_MODE || true;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_MONSTER_MAZE : MODE_START;
+	//public static boolean FIXED_GAME = RELEASE_MODE || true;
 	public static final String VERSION = "1.01";
 	
 	// Hacks
@@ -69,10 +69,10 @@ public class Settings {
 		}
 		
 		switch (CURRENT_MODE) {
-		case MODE_TAG:
+		case MODE_ALIEN_TAG:
 			TITLE = "Tag";
 			break;
-		case MODE_MM:
+		case MODE_MONSTER_MAZE:
 			TITLE = "3D Monster Maze";
 			break;
 		case MODE_FUNNY_FARM:

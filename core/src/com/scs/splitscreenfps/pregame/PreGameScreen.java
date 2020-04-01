@@ -50,11 +50,8 @@ public class PreGameScreen implements IModule {
 
 		loadAssetsForResize();
 
-		if (Settings.FIXED_GAME) {
-			this.appendToLog("Welcome to " + Settings.TITLE);
-		} else {
-			this.appendToLog("Welcome to Split-Screen Games");// + Settings.TITLE);
-		}
+		this.appendToLog("Welcome to Split-Screen Games");// + Settings.TITLE);
+
 		this.appendToLog("v" + Settings.VERSION);
 		if (Settings.RELEASE_MODE == false) {
 			this.appendToLog("WARNING! Game in debug mode!");
@@ -64,11 +61,7 @@ public class PreGameScreen implements IModule {
 		this.appendToLog("Press X to play with controller");
 		this.appendToLog("F1 to toggle full-screen");
 		this.appendToLog("In game, press H for help");
-		if (!Settings.FIXED_GAME) {
-			this.appendToLog("To start, select a game once all players have joined!");
-		} else {
-			this.appendToLog("To S to start once all players have joined!");
-		}
+		this.appendToLog("To S to start once all players have joined!");
 	}
 
 
@@ -89,7 +82,7 @@ public class PreGameScreen implements IModule {
 		font_large = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-		if (Settings.FIXED_GAME) {
+		/*if (Settings.FIXED_GAME) {
 			String filename = "";
 			switch (Settings.CURRENT_MODE) {
 			case Settings.MODE_TAG:
@@ -107,7 +100,7 @@ public class PreGameScreen implements IModule {
 			logo = new Sprite(logoTex);
 			logo.setBounds(0,  0 , Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 			logo.setColor(0.4f, 0.4f, 0.4f, 1);
-		}
+		}*/
 	}
 
 
@@ -163,7 +156,7 @@ public class PreGameScreen implements IModule {
 		font_small.setColor(0,  1,  1,  1);
 		int x = (int)(Gdx.graphics.getWidth() * 0.7f);
 		y = (int)(Gdx.graphics.getHeight()*.3f);
-		if (Settings.FIXED_GAME == false) {
+		/*if (Settings.FIXED_GAME == false) {
 			font_small.draw(batch2d, "SELECT GAME:", x, y);
 			font_small.setColor(1,  1,  0,  1);
 			y -= this.font_small.getLineHeight();
@@ -171,9 +164,9 @@ public class PreGameScreen implements IModule {
 			y -= this.font_small.getLineHeight();
 			font_small.draw(batch2d, "2 - ALIEN TAG", x, y);
 			y -= this.font_small.getLineHeight();
-		} else {
+		} else {*/
 			font_small.draw(batch2d, "PRESS S TO START!", x, y);
-		}
+		//}
 
 		/*if (this.controllerManager.getInGameControllers().size() >= 1) {
 			font_large.draw(batch2d, "PRESS SPACE TO START GAME!", 10, y);
@@ -201,14 +194,14 @@ public class PreGameScreen implements IModule {
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE) && keyboard_player_joined == false) {
 			this.keyboard_player_joined = true;
 			this.appendToLog("Keyboard player joined!");
-		} else if (Gdx.input.isKeyJustPressed(Keys.S) && Settings.FIXED_GAME) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.S)) {
 			this.startGame();
-		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && Settings.FIXED_GAME == false) {
+		/*} else if (Gdx.input.isKeyJustPressed(Keys.NUM_1) && Settings.FIXED_GAME == false) {
 			Settings.CURRENT_MODE = Settings.MODE_MM;
 			this.startGame();
 		} else if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && Settings.FIXED_GAME == false) {
 			Settings.CURRENT_MODE = Settings.MODE_TAG;
-			this.startGame();
+			this.startGame();*/
 		} else {
 			//this.appendToLog("Unknown option selected");
 		}

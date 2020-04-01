@@ -53,7 +53,6 @@ public class MonsterMazeLevel extends AbstractLevel {
 		for (int i=0 ; i<game.players.length ; i++) {
 			game.players[i].addComponent(new CanUseMonsterMazeExitComponent(i));
 			game.players[i].addComponent(new CanBeHarmedComponent(i));
-			//game.ecs.addEntity(game.players[i]);
 		}	
 	}
 	

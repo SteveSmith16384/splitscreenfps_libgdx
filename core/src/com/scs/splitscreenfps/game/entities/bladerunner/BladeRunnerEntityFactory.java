@@ -31,8 +31,7 @@ public class BladeRunnerEntityFactory {
 	public static AbstractEntity createCiv(BasicECS ecs, float x, float z) {
 		AbstractEntity e = new AbstractEntity(ecs, "BR_Civilian");
 
-		PositionComponent pos = new PositionComponent();
-		pos.position = new Vector3(x+0.5f, 0, z+0.5f);
+		PositionComponent pos = new PositionComponent(x+0.5f, 0, z+0.5f);
 		e.addComponent(pos);
 
 		ModelInstance instance = ModelFunctions.loadModel("shared/models/quaternius/Smooth_Male_Shirt.g3db", false);

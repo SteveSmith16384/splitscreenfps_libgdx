@@ -41,8 +41,7 @@ public class StartSpecificLevelSystem extends AbstractSystem {
 			CanStartNewLevelComponent cumme = (CanStartNewLevelComponent)player.getComponent(CanStartNewLevelComponent.class);
 			if (cumme != null) {
 				StartLevelExitComponent slec = (StartLevelExitComponent)exit.getComponent(StartLevelExitComponent.class);
-				Settings.CURRENT_MODE = slec.level;
-				game.playerHasWon(player);
+				game.startSpecificLevel(slec.level);
 				return;
 
 			}

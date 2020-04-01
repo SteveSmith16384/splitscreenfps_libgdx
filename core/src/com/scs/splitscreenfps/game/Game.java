@@ -94,10 +94,10 @@ public class Game implements IModule {
 		}
 
 		switch (Settings.CURRENT_MODE) {
-		case Settings.MODE_TAG:
+		case Settings.MODE_ALIEN_TAG:
 			currentLevel = new AlienTagLevel(this);
 			break;
-		case Settings.MODE_MM:
+		case Settings.MODE_MONSTER_MAZE:
 			currentLevel = new MonsterMazeLevel(this);
 			break;
 		case Settings.MODE_DUNGEON:
@@ -367,11 +367,17 @@ public class Game implements IModule {
 				ecs.addEntity(te);
 			}
 		}
-		this.game_stage = 1;
-		this.restartTime = System.currentTimeMillis() + 5000;
 	}
 
 
+	public void startSpecificLevel(int level) {
+		Settings.CURRENT_MODE = level;
+		this.game_stage = 1;
+		this.restartTime = 0;
+		
+	}
+	
+	
 	public List<AbstractEntity> getCollidedEntities(AbstractEntity e) {
 		List<AbstractEntity> list = new ArrayList<AbstractEntity>();
 		Iterator<AbstractEvent> it = ecs.events.iterator();
