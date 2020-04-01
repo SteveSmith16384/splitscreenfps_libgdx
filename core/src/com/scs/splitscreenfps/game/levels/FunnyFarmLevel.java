@@ -45,7 +45,7 @@ public class FunnyFarmLevel extends AbstractLevel {
 			}
 		}
 
-		for (int i=0 ; i<this.startPositions.size() ;i++) {
+		for (int i=0 ; i<this.game.players.length ;i++) {
 			this.startPositions.add(new GridPoint2Static(i+1, i+1));
 		}
 

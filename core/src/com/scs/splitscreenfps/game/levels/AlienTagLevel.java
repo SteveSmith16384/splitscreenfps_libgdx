@@ -174,11 +174,10 @@ public class AlienTagLevel extends AbstractLevel {
 					Ceiling ceiling = new Ceiling(game.ecs, "tag/textures/corridor.jpg", x, z, 1, 1, false, 1f);
 					game.ecs.addEntity(ceiling);
 				}
-
 			}
 		}
 
-		for (int i=0 ; i<this.startPositions.size() ;i++) {
+		for (int i=0 ; i<this.game.players.length ;i++) {
 			this.startPositions.add(game.mapData.getRandomFloorPos());
 		}
 	}

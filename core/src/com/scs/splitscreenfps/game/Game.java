@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -49,6 +50,7 @@ import com.scs.splitscreenfps.game.systems.PickupDropSystem;
 import com.scs.splitscreenfps.game.systems.PlayerInputSystem;
 import com.scs.splitscreenfps.game.systems.RemoveEntityAfterTimeSystem;
 import com.scs.splitscreenfps.game.systems.RespawnSystem;
+import com.scs.splitscreenfps.pregame.PreGameScreen;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -200,6 +202,15 @@ public class Game implements IModule {
 
 	@Override
 	public void render() {
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			if (Settings.CURRENT_MODE == Settings.MODE_START) {
+				this.main.next_module = new PreGameScreen(main);
+			} else {
+				Settings.CURRENT_MODE = Settings.MODE_START;
+				this.main.next_module = new Game(main, this.inputs);
+			}
+		}
+
 		if (this.game_stage == 1) {
 			if (this.restartTime < System.currentTimeMillis()) {
 				this.main.next_module = new Game(main, this.inputs);
@@ -367,6 +378,8 @@ public class Game implements IModule {
 				ecs.addEntity(te);
 			}
 		}
+		this.game_stage = 1;
+		this.restartTime = System.currentTimeMillis() + 3000;
 	}
 
 
@@ -374,10 +387,10 @@ public class Game implements IModule {
 		Settings.CURRENT_MODE = level;
 		this.game_stage = 1;
 		this.restartTime = 0;
-		
+
 	}
-	
-	
+
+
 	public List<AbstractEntity> getCollidedEntities(AbstractEntity e) {
 		List<AbstractEntity> list = new ArrayList<AbstractEntity>();
 		Iterator<AbstractEvent> it = ecs.events.iterator();
