@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 public class VehicleComponent {
 
 	public float max_speed = 5;
-	public float traction = 0.2f;
+	public float traction = 2f;//0.2f;
 	public float current_speed;
 	public float angle_rads;
 	public int playerId;

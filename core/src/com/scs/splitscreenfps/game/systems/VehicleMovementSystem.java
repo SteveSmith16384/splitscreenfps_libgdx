@@ -26,7 +26,6 @@ public class VehicleMovementSystem extends AbstractSystem {
 		super(ecs, VehicleComponent.class);
 
 		game = _game;
-		//traction = _traction;
 	}
 
 
@@ -54,7 +53,7 @@ public class VehicleMovementSystem extends AbstractSystem {
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 		TrackComponent track = (TrackComponent)game.mapData.map[(int)pos.position.x][(int)pos.position.z].entity.getComponent(TrackComponent.class);
 		float this_max_speed = veh.max_speed * track.max_speed;
-		float this_traction = veh.traction * track.traction;
+		float this_traction = veh.traction * track.traction * Gdx.graphics.getDeltaTime();
 
 		if (veh.current_speed > this_max_speed) { // todo - check momentum instead
 			veh.current_speed = this_max_speed;
@@ -76,15 +75,18 @@ public class VehicleMovementSystem extends AbstractSystem {
 		// MODE 2
 		Vector3 diff = new Vector3(tmpTargetMomentum);
 		diff.sub(veh.momentum);
-		float d = diff.len();
-		if (d != 0) {
-			Settings.p("Diff=" + d);
-			if (d < this_traction/2) {
+		float length = diff.len();
+		if (length != 0) {
+			Settings.p("Diff=" + length);
+			Settings.p("this_traction=" + this_traction);
+			/*if (length < this_traction/200) {
 				veh.momentum.set(tmpTargetMomentum);
 				Settings.p("SET!");
-			} else {
-				veh.momentum.add(diff.nor().scl(this_traction));  // .02f
-			}
+			} else {*/
+			veh.momentum.add(diff.nor().scl(this_traction));  // .02f
+			//}
+		} else {
+			veh.momentum.set(0, 0, 0);
 		}
 		movementData.offset.add(veh.momentum);
 

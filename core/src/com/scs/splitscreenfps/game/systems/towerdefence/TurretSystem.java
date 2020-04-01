@@ -19,7 +19,7 @@ import ssmith.lang.NumberFunctions;
 
 public class TurretSystem extends AbstractSystem {
 
-	private static final float RANGE_SQ = (float)Math.pow(Float.parseFloat(TowerDefenceLevel.prop.getProperty("turret_range", "5")), 2);
+	private static final float RANGE_SQ = (float)Float.parseFloat(TowerDefenceLevel.prop.getProperty("turret_range", "5"));
 	private static final float BULLET_SPEED = (float)Float.parseFloat(TowerDefenceLevel.prop.getProperty("bullet_speed", "20"));
 
 	private Game game;
@@ -76,7 +76,7 @@ public class TurretSystem extends AbstractSystem {
 
 	private AbstractEntity getTarget(PositionComponent turretPos) {
 		AbstractEntity target = null;
-		float dist = 9999;
+		float dist = RANGE_SQ+1;
 
 		Iterator<AbstractEntity> it = ecs.getEntityIterator();
 		while (it.hasNext()) {
@@ -84,7 +84,7 @@ public class TurretSystem extends AbstractSystem {
 			if (ent.getComponent(TowerEnemyComponent.class) != null) {
 				PositionComponent enemyPos = (PositionComponent)ent.getComponent(PositionComponent.class);
 				float dst = enemyPos.position.dst2(turretPos.position);
-				if (dst < RANGE_SQ) {
+				if (dst < dist) {
 					target = ent;
 					dist = dst;
 				}
