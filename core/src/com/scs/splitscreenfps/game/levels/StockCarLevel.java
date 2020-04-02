@@ -45,7 +45,7 @@ public class StockCarLevel extends AbstractLevel {
 	@Override
 	public void loadAvatars() {
 		for (int i=0 ; i<game.players.length ; i++) {
-			game.players[i] = new PlayersAvatar_Car(game, i, game.viewports[i], game.inputs.get(i));
+			game.players[i] = new PlayersAvatar_Car(game, i, game.viewports[i], game.inputs.get(i), 2f);
 			game.ecs.addEntity(game.players[i]);
 		}	
 	}

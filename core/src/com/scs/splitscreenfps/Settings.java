@@ -30,7 +30,6 @@ public class Settings {
 	public static final boolean START_4_PLAYERS = !RELEASE_MODE && true;
 	public static final boolean DEBUG_TAG = !RELEASE_MODE && false;
 	public static final boolean STRICT = !RELEASE_MODE && true;
-	public static final boolean DARKMODE = !RELEASE_MODE && false;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
@@ -46,10 +45,6 @@ public class Settings {
 	public static final int WINDOW_HEIGHT_PIXELS = (int)(WINDOW_WIDTH_PIXELS * .68);
 
 	public static Properties prop;
-	
-	// Logical size of viewport
-	//public static final int LOGICAL_WIDTH_PIXELS = 320;//640;
-	//public static final int LOGICAL_HEIGHT_PIXELS = (int)(LOGICAL_WIDTH_PIXELS * .68);
 	
 	public static Random random = new Random();
 

@@ -77,13 +77,13 @@ public class VehicleMovementSystem extends AbstractSystem {
 		diff.sub(veh.momentum);
 		float length = diff.len();
 		if (length != 0) {
-			Settings.p("Diff=" + length);
-			Settings.p("this_traction=" + this_traction);
+			//Settings.p("Diff=" + length);
+			//Settings.p("this_traction=" + this_traction);
 			/*if (length < this_traction/200) {
 				veh.momentum.set(tmpTargetMomentum);
 				Settings.p("SET!");
 			} else {*/
-			veh.momentum.add(diff.nor().scl(this_traction));  // .02f
+			veh.momentum.add(diff.nor().scl(this_traction));
 			//}
 		} else {
 			veh.momentum.set(0, 0, 0);
