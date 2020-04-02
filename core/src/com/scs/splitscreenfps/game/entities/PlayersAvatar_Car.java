@@ -29,7 +29,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 	
 	private Vector3 tmpCamPos = new Vector3();
 
-	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod) {
+	public PlayersAvatar_Car(Game _game, int playerIdx, ViewportData _viewportData, IInputMethod _inputMethod, float traction) {
 		super(_game.ecs, playerIdx, PlayersAvatar_Car.class.getSimpleName() + "_" + playerIdx);
 
 		game = _game;
@@ -42,7 +42,7 @@ public class PlayersAvatar_Car extends AbstractPlayersAvatar {
 
 		this.addCar(playerIdx);
 
-		this.addComponent(new VehicleComponent(playerIdx));
+		this.addComponent(new VehicleComponent(playerIdx, traction));
 		this.addComponent(new CollidesComponent(true, .45f));
 
 		camera = _viewportData.camera;

@@ -1,17 +1,18 @@
 # Split-Screen FPS Games
 A 1-4 player split-screen multiplayer games.
 
-This codebase contains various games that all use the same framework, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  The games that are selectable from the first menu are typically mostly complete.  The rest may be barely started.
+This codebase contains various game modes that all use the same framework, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  When the game starts, you will begin in the "overworld".  To start a particular game mode, walk into the area that denotes that mode. 
 
 Currently, the following games are at various stages of progress:
-* 3D Monster maze: escape from the maze
-*  Alien Tag: Don't be the player who's been tagged the longest
-* Tower Defence: Build turrets to shoot the aliens
-* Funny Farm: Grow and harvest crops
-* FTL: An FTL-inspsired 3D game
-* Deathchase: Crash into other players
-* Bladerunner: Identify and kill the replicant
-* Stock car: Race around a track
+* 3D Monster maze: escape from the maze.  Status Complete
+* Alien Tag: Don't be the player who's been tagged the longest.  Status: Complete
+* Tower Defence: Build turrets to shoot the aliens.  Status: Can walk around and place turrets.
+* Funny Farm: Grow and harvest crops.  Status: You can walk around an empty field
+* FTL: An FTL-inspsired 3D game.  Status: You can walk around a spaceship 
+* Deathchase: Crash into other players.  Status: You can drive
+* Bladerunner: Identify and kill the replicant.  Status: Barely started
+* Stock car: Race around a track.  Status: You can drive
+* Dungeon: A 3D Roguelike.  Status: You can walk around a basic procedurally-generated dungeon.
 
 
 ### Example Videos
@@ -28,9 +29,11 @@ It depends on the specific game selected, but controls are typically:-
 * F1 - Toggle full Screen
 * F2 - Toggle full screen but still windowed (required if you want to record the screen using Windows)
 
+
 ## Notes for other Developers
-* Development is the cutting edge but possibly broken branch.  Master is the most stable but out of date.
+* Development branch is the cutting edge but possibly broken branch.  Master is the most stable but out of date.
 * Gradle is a real pain to work with.  However, if you have trouble loading this project, I used Gradle v4.10.3.
+* The file Settings.java contains various settings that determine what game mode the game starts in.
 
 
 ## Licence
@@ -43,11 +46,13 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Uses BasicECS from https://github.com/SteveSmith16384/BasicECS
 * Controller code from https://github.com/electronstudio/sdl2gdx
 
+
 ### Assets Credits
 * Car models taken from https://kenney.nl/assets/car-kit
 * All humanoid figures by Quaternius http://quaternius.com
 * Music by Matthew Pablo http://www.matthewpablo.com/ (Taken from https://opengameart.org/content/heroic-demise-updated-version)
 * Game-specific credits as follows:-
+
 
 #### 3D Monster Maze
 * Ascii-style T-Rex by Malcolm Evans
@@ -74,8 +79,4 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Models by Kenney - https://kenney.nl/assets/tower-defense-kit
 * Alien by Quaternius
 * Rotating coin by Master484: https://opengameart.org/content/cute-platformer-sisters
-
-
-## Notes for other developers
-* See Settings.java for settings that determine what game is selected.
 

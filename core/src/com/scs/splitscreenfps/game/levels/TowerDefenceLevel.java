@@ -137,11 +137,9 @@ public final class TowerDefenceLevel extends AbstractLevel {
 						} else if (token.equals("E")) { // Empty floor - cannot build
 							Floor floor = new Floor(game.ecs, "towerdefence/textures/wall2.jpg", col, row, 1, 1, false);
 							game.ecs.addEntity(floor);
-							if (Settings.DARKMODE == false) {
-								if (NumberFunctions.rnd(1,  5) == 1) {
-									AbstractEntity coin = TowerDefenceEntityFactory.createCoin(game.ecs, col+.5f, row+.5f);
-									game.ecs.addEntity(coin);
-								}
+							if (NumberFunctions.rnd(1,  5) == 1) {
+								AbstractEntity coin = TowerDefenceEntityFactory.createCoin(game.ecs, col+.5f, row+.5f);
+								game.ecs.addEntity(coin);
 							}
 						} else if (token.equals("D")) { // Centre for defending!
 							targetPos = new GridPoint2Static(col, row);
