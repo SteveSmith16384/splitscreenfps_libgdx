@@ -63,7 +63,7 @@ public class CollisionCheckSystem extends AbstractSystem {
 					}
 					
 					if (len < moverCC.rad + cc.rad) {
-						Settings.p(mover + " collided with " + e);
+						//Settings.p(mover + " collided with " + e);
 						blocked = cc.blocksMovement || blocked;
 						if (raise_event) {
 							ecs.events.add(new EventCollision(mover, e));

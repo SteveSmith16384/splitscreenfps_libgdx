@@ -128,6 +128,10 @@ public class MovementSystem extends AbstractSystem {
 			position.z -= offset.z;
 		}
 
+		if (Settings.DEBUG_TREX) {
+			Settings.p(mover + " at " + (int)position.x + ", " + (int)position.z);
+		}
+		
 		return resultX || resultZ;
 	}
 

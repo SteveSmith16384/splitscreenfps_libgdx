@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Vector3;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.components.CollidesComponent;
 import com.scs.splitscreenfps.game.components.HasDecal;
@@ -23,8 +24,11 @@ public class TRex extends AbstractEntity {
 	public TRex(Game game, BasicECS ecs, int x, int y) {
 		super(ecs, TRex.class.getSimpleName());
 
+		if (Settings.DEBUG_TREX) {
+			Settings.p("Trex at " + x + ", " + y);
+		}
+
 		PositionComponent pos = new PositionComponent(x+0.5f, 0, y+0.5f);
-		pos.position = new Vector3();
 		this.addComponent(pos);
 
 		HasDecal hasDecal = new HasDecal();
@@ -44,7 +48,6 @@ public class TRex extends AbstractEntity {
 		MoveAStarComponent astar = new MoveAStarComponent(1.9f, false);
 		this.addComponent(astar);
 
-		//float DIAM = .4f;
 		this.addComponent(new MovementData());
 		this.addComponent(new CollidesComponent(false, 0.4f));
 		this.addComponent(new IsTRex());
