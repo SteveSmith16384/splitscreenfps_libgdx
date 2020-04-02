@@ -1,6 +1,8 @@
 # Split-Screen FPS Games
 A 1-4 player split-screen multiplayer games.
 
+Gameplay video: https://twitter.com/stephencsmith
+
 This codebase contains various game modes that all use the same framework, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  When the game starts, you will begin in the "overworld".  To start a particular game mode, walk into the area that denotes that mode. 
 
 Currently, the following games are at various stages of progress:
@@ -13,10 +15,6 @@ Currently, the following games are at various stages of progress:
 * Bladerunner: Identify and kill the replicant.  Status: Barely started
 * Stock car: Race around a track.  Status: You can drive
 * Dungeon: A 3D Roguelike.  Status: You can walk around a basic procedurally-generated dungeon.
-
-
-### Example Videos
-* 3D Monster maze:  https://www.youtube.com/watch?v=YDUUCQZeCSI
 
 
 ## Controls
