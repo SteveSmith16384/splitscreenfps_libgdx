@@ -1,6 +1,8 @@
 # Split-Screen FPS Games
 A 1-4 player split-screen multiplayer games.
 
+Gameplay video: https://twitter.com/stephencsmith
+
 This codebase contains various games that all use the same framework, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  The games that are selectable from the first menu are typically mostly complete.  The rest may be barely started.
 
 Currently, the following games are at various stages of progress:
@@ -12,10 +14,6 @@ Currently, the following games are at various stages of progress:
 * Deathchase: Crash into other players
 * Bladerunner: Identify and kill the replicant
 * Stock car: Race around a track
-
-
-### Example Videos
-* 3D Monster maze:  https://www.youtube.com/watch?v=YDUUCQZeCSI
 
 
 ## Controls

@@ -21,7 +21,7 @@ public class Settings {
 	
 	public static final boolean RELEASE_MODE = new File("../../debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_START : MODE_STOCK_CAR;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_START : MODE_START;
 	public static final String VERSION = "1.01";
 	
 	// Hacks
@@ -32,7 +32,7 @@ public class Settings {
 	public static final boolean STRICT = !RELEASE_MODE && true;
 	public static final boolean DARKMODE = !RELEASE_MODE && false;
 	public static final boolean TEST_MODEL = !RELEASE_MODE && false;
-	public static final boolean SMALL_MAP = !RELEASE_MODE && true;
+	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
 	
