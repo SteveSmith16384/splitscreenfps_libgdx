@@ -19,6 +19,7 @@ Currently, the following games are at various stages of progress:
 
 ## Controls
 * Press Space at the start to use keyboard/mouse, or press X on your controller to use that.
+* Esc to exit back to the overworld, or to quit out.
 
 It depends on the specific game selected, but controls are typically:-
 
