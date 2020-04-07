@@ -3,18 +3,18 @@ A 1-4 player split-screen multiplayer games.
 
 Gameplay video: https://twitter.com/stephencsmith
 
-This codebase contains various game modes that all use the same framework, and I work on whichever one interests me at any moment in time (or sometimes start work on a new one).  When the game starts, you will begin in the "overworld".  To start a particular game mode, walk into the area that denotes that mode. 
+This codebase contains various game modes that all use the same framework.  When the game starts, you will begin in the "overworld".  To start a particular game mode, walk into the area that denotes that mode. 
 
 Currently, the following games are at various stages of progress:
 * 3D Monster maze: escape from the maze.  Status Complete
 * Alien Tag: Don't be the player who's been tagged the longest.  Status: Complete
 * Tower Defence: Build turrets to shoot the aliens.  Status: Can walk around and place turrets.
+* Stock car: Race around a track.  Status: You can drive
+* Deathchase: Crash into other players.  Status: You can drive around a track.
 * Funny Farm: Grow and harvest crops.  Status: You can walk around an empty field
 * FTL: An FTL-inspsired 3D game.  Status: You can walk around a spaceship 
-* Deathchase: Crash into other players.  Status: You can drive
-* Bladerunner: Identify and kill the replicant.  Status: Barely started
-* Stock car: Race around a track.  Status: You can drive
 * Dungeon: A 3D Roguelike.  Status: You can walk around a basic procedurally-generated dungeon.
+* Bladerunner: Identify and kill the replicant.  Status: Barely started
 
 
 ## Controls
