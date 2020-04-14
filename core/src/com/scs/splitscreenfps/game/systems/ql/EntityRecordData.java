@@ -12,6 +12,14 @@ public class EntityRecordData {
 	public int entityId;
 	public long time;
 	public Vector3 position = new Vector3();
-	public int direction;
+	public float direction;
+	
+	public EntityRecordData(int _cmd, int _entityId, long _time, Vector3 pos, float dir) {
+		cmd = _cmd;
+		entityId = _entityId;
+		time = _time;
+		this.position.set(pos);
+		this.direction = dir;
+	}
 	
 }

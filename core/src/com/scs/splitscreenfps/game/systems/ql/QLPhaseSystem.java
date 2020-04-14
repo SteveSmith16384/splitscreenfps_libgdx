@@ -6,8 +6,8 @@ import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class QLPhaseSystem implements ISystem {
 
-	private static final long GAME_PHASE_DURATION = 15000;
-	private static final long REST_PHASE_DURATION = 5000;
+	private static final long GAME_PHASE_DURATION = 5000;
+	private static final long REST_PHASE_DURATION = 1000;
 
 	public boolean game_phase = false; // otherwise, rewind phase
 	public long this_phase_start_time;
