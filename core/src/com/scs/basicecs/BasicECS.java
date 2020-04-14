@@ -185,4 +185,8 @@ public class BasicECS {
 		return this.entities.containsKey(e.entityId);
 	}
 
+
+	public boolean containsEntity(int id) {
+		return this.entities.containsKey(id);
+	}
 }

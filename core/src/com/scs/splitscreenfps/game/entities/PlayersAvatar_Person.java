@@ -130,7 +130,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 			tmpVector.y = 0;
 			movementData.offset.add(tmpVector.nor().scl(MOVE_SPEED * this.inputMethod.getStrafeRight()));
 		}
-
+/*
 		if (this.inputMethod.isCirclePressed()) {
 			CanCarryComponent cc = (CanCarryComponent)this.getComponent(CanCarryComponent.class);
 			if (cc != null) {
@@ -142,7 +142,7 @@ public class PlayersAvatar_Person extends AbstractPlayersAvatar {
 				cc.wantsToCarry = false; // todo - don't do this here
 			}
 		}
-
+*/
 		PositionComponent posData = (PositionComponent)this.getComponent(PositionComponent.class);
 		camera.position.set(posData.position.x, posData.position.y + (Settings.PLAYER_HEIGHT/2)+Settings.CAM_OFFSET, posData.position.z);
 

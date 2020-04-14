@@ -95,6 +95,7 @@ public class BuildDefenceSystem extends AbstractSystem {
 
 	}
 
+
 	private boolean isBuildTowerPressed(IInputMethod input) {
 		if (input instanceof MouseAndKeyboardInputMethod) {
 			return input.isKeyJustPressed(Keys.T);

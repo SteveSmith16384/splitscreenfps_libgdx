@@ -6,8 +6,8 @@ import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 
 public class QLPhaseSystem implements ISystem {
 
-	private static final long GAME_PHASE_DURATION = 5000;
-	private static final long REST_PHASE_DURATION = 1000;
+	private static final long GAME_PHASE_DURATION = 15000;
+	private static final long REWIND_PHASE_DURATION = 1000;
 
 	public boolean game_phase = false; // otherwise, rewind phase
 	public long this_phase_start_time;
@@ -17,7 +17,7 @@ public class QLPhaseSystem implements ISystem {
 
 	public QLPhaseSystem(QuantumLeagueLevel _level) {
 		qlLevel = _level;
-		next_phase_time = System.currentTimeMillis() + REST_PHASE_DURATION;
+		next_phase_time = System.currentTimeMillis() + REWIND_PHASE_DURATION;
 	}
 
 
@@ -38,7 +38,7 @@ public class QLPhaseSystem implements ISystem {
 			} else {
 				Settings.p("Rewind phase!");
 				qlLevel.nextRewindPhase();
-				next_phase_time = System.currentTimeMillis() + REST_PHASE_DURATION;
+				next_phase_time = System.currentTimeMillis() + REWIND_PHASE_DURATION;
 			}
 		}
 	}

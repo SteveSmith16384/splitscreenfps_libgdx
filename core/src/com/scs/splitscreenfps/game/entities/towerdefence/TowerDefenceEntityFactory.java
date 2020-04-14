@@ -142,7 +142,7 @@ public class TowerDefenceEntityFactory {
 		cc.dont_collide_with = shooter;
 		e.addComponent(cc);
 		
-		e.addComponent(new IsBulletComponent());
+		e.addComponent(new IsBulletComponent(shooter, -1));
 
 
 		return e;

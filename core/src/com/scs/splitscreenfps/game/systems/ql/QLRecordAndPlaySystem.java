@@ -5,15 +5,20 @@ import java.util.LinkedList;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
+import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
+import com.scs.splitscreenfps.game.entities.ql.QuantumLeagueEntityFactory;
 import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
+import com.scs.splitscreenfps.game.systems.ql.recorddata.AbstractRecordData;
+import com.scs.splitscreenfps.game.systems.ql.recorddata.BulletFiredRecordData;
+import com.scs.splitscreenfps.game.systems.ql.recorddata.EntityMovedRecordData;
 
 public class QLRecordAndPlaySystem extends AbstractSystem {
 
 	private QuantumLeagueLevel level;
-	private LinkedList<EntityRecordData> thisPhaseRecordData = new LinkedList<EntityRecordData>();
-	private LinkedList<EntityRecordData> prevPhaseRecordData = new LinkedList<EntityRecordData>();
+	private LinkedList<AbstractRecordData> thisPhaseRecordData = new LinkedList<AbstractRecordData>(); // todo - rename
+	private LinkedList<AbstractRecordData> prevPhaseRecordData = new LinkedList<AbstractRecordData>(); // todo - rename
 	private long currentPhaseTime;
 
 	public QLRecordAndPlaySystem(BasicECS _ecs, QuantumLeagueLevel _level) {
@@ -38,11 +43,11 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 		// Play from prev recording
 		if (this.level.qlPhaseSystem.phase_num_012 > 0) {
 			if (this.prevPhaseRecordData.size() > 0) {
-				EntityRecordData next = this.prevPhaseRecordData.getFirst();
+				AbstractRecordData next = this.prevPhaseRecordData.getFirst();
 				while (next.time < this.currentPhaseTime) {
 					next = this.prevPhaseRecordData.removeFirst();
 					thisPhaseRecordData.add(next); // Re-add ready for next time
-					moveEntity(next);
+					processEvent(next);
 					if (this.prevPhaseRecordData.size() == 0) {
 						break;
 					}
@@ -53,19 +58,28 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	}
 
 
-	private void moveEntity(EntityRecordData data) {
-		if (data.cmd == EntityRecordData.CMD_MOVED) {
-			AbstractEntity entity = ecs.get(data.entityId);
-			PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-			posData.position.set(data.position);
-			posData.angle_degs = data.direction;
-		} else if (data.cmd == EntityRecordData.CMD_CREATED) {
-			// todo
-		} else if (data.cmd == EntityRecordData.CMD_DESTROYED) {
-			AbstractEntity entity = ecs.get(data.entityId);
+	private void processEvent(AbstractRecordData data2) {
+		if (data2.cmd == AbstractRecordData.CMD_MOVED) {
+			EntityMovedRecordData data = (EntityMovedRecordData)data2;
+			if (ecs.containsEntity(data.entityId)) {
+				AbstractEntity entity = ecs.get(data.entityId);
+				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+				posData.position.set(data.position);
+				posData.angle_degs = data.direction;
+			} else {
+				Settings.p("No entity!");
+			}
+		} else if (data2.cmd == AbstractRecordData.CMD_BULLET_FIRED) {
+			BulletFiredRecordData data = (BulletFiredRecordData)data2;
+			AbstractEntity bullet = QuantumLeagueEntityFactory.createBullet(ecs, data.shooter, data.start, data.offset);
+			ecs.addEntity(bullet);
+		} else if (data2.cmd == AbstractRecordData.CMD_REMOVED) {
+			/*AbstractEntity entity = ecs.get(data.entityId);
 			IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
 			isRecordable.active = false;
-			entity.remove();
+			entity.remove();*/
+		} else {
+			throw new RuntimeException("Todo");
 		}
 	}
 
@@ -78,11 +92,16 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
 				if (isRecordable.active) {
 					PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-					EntityRecordData data = new EntityRecordData(EntityRecordData.CMD_MOVED, isRecordable.entity.entityId, currentPhaseTime, posData.position, posData.angle_degs);
+					EntityMovedRecordData data = new EntityMovedRecordData(isRecordable.entity.entityId, currentPhaseTime, posData.position, posData.angle_degs);
 					this.thisPhaseRecordData.add(data);
 				}
 			}
 		}
+	}
+
+
+	public void addEvent(AbstractRecordData data) {
+		this.thisPhaseRecordData.add(data);
 	}
 
 }

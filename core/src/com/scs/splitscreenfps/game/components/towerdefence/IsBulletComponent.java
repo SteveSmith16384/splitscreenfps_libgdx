@@ -1,11 +1,14 @@
 package com.scs.splitscreenfps.game.components.towerdefence;
 
+import com.scs.basicecs.AbstractEntity;
+
 public class IsBulletComponent {
-/*
-	public AbstractEntity shooter; // We don't collide with shooter
+
+	public int side;
+	public AbstractEntity shooter;
 	
-	public IsBulletComponent(AbstractEntity _shooter) {
+	public IsBulletComponent(AbstractEntity _shooter, int _side) {
 		shooter = _shooter;
+		side = _side;
 	}
-*/
 }

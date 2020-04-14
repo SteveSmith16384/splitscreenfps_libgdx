@@ -6,12 +6,10 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractEvent;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.EventCollision;
 import com.scs.splitscreenfps.game.components.PositionComponent;
+import com.scs.splitscreenfps.game.components.ql.QLPlayerData;
 import com.scs.splitscreenfps.game.components.towerdefence.IsBulletComponent;
-import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
-import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 
 public class QLBulletSystem extends AbstractSystem {
@@ -23,11 +21,8 @@ public class QLBulletSystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		//IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
-
 		PositionComponent pos = (PositionComponent)entity.getComponent(PositionComponent.class);
 
-		// Check collisions - todo - all this
 		List<AbstractEvent> colls = ecs.getEventsForEntity(EventCollision.class, entity);
 		for (AbstractEvent evt : colls) {
 			EventCollision coll = (EventCollision)evt;
@@ -40,25 +35,23 @@ public class QLBulletSystem extends AbstractSystem {
 				continue;
 			}
 
-			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, TowerEnemyComponent.class);
+			AbstractEntity[] ents = coll.getEntitiesByComponent(IsBulletComponent.class, QLPlayerData.class);
 			if (ents != null) {
-				ents[0].remove();
-				ents[1].remove();
+				IsBulletComponent bullet = (IsBulletComponent)entity.getComponent(IsBulletComponent.class);
+				// todo - check if shooter is alive
+				QLPlayerData shooterData = (QLPlayerData)bullet.shooter.getComponent(QLPlayerData.class);
+				if (shooterData.health > 0) {
+					QLPlayerData playerData = (QLPlayerData)ents[1].getComponent(QLPlayerData.class);
+					if (playerData.side != bullet.side) {
+						ents[0].remove();
+						playerData.health -= 10;
 
-				AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
-				ecs.addEntity(expl);
+						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
+						ecs.addEntity(expl);
 
-				return;
-			} else {
-				ents = coll.getEntitiesByComponent(IsBulletComponent.class, IsTurretComponent.class);
-				if (ents == null) {	// don't remove if hit ANY tower
-					// Remove us 
-					Settings.p("Bullet removed after hitting " + coll.hitEntity);
-					entity.remove();
-
-					AbstractEntity expl = EntityFactory.createBlueExplosion(ecs, pos.position);
-					ecs.addEntity(expl);
-				}				
+						return;
+					}
+				}
 			}
 		}
 	}
