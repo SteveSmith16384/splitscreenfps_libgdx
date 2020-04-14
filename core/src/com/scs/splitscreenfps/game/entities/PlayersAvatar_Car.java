@@ -13,10 +13,7 @@ import com.scs.splitscreenfps.game.components.MovementData;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
 import com.scs.splitscreenfps.game.input.IInputMethod;
-import com.scs.splitscreenfps.game.input.NoInputMethod;
-import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
-import ssmith.lang.NumberFunctions;
 import ssmith.libgdx.ModelFunctions;
 
 public class PlayersAvatar_Car extends AbstractPlayersAvatar {

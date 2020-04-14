@@ -83,6 +83,7 @@ public abstract class AbstractSystem implements ISystem {
 
 
 	public void processEntity(AbstractEntity entity) {
+		// Override if you want to process all entities with required component.
 	}
 
 	

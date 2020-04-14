@@ -14,7 +14,6 @@ import com.scs.splitscreenfps.game.components.CanRespawnComponent;
 import com.scs.splitscreenfps.game.components.VehicleComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 import com.scs.splitscreenfps.game.entities.TextEntity;
-import com.scs.splitscreenfps.game.systems.VehicleMovementSystem;
 
 public class DeathchaseCrashSystem implements ISystem {
 

@@ -11,7 +11,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
-import com.scs.splitscreenfps.Settings;
 import com.scs.splitscreenfps.game.Game;
 import com.scs.splitscreenfps.game.MapData;
 import com.scs.splitscreenfps.game.components.towerdefence.CanBuildComponent;
@@ -27,7 +26,7 @@ import com.scs.splitscreenfps.game.input.IInputMethod;
 import com.scs.splitscreenfps.game.input.MouseAndKeyboardInputMethod;
 import com.scs.splitscreenfps.game.input.NoInputMethod;
 import com.scs.splitscreenfps.game.systems.towerdefence.BuildDefenceSystem;
-import com.scs.splitscreenfps.game.systems.towerdefence.BulletSystem;
+import com.scs.splitscreenfps.game.systems.towerdefence.TowerDefenceBulletSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CheckAltarSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.CollectCoinsSystem;
 import com.scs.splitscreenfps.game.systems.towerdefence.ShowFloorSelectorSystem;
@@ -170,7 +169,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		ecs.addSystem(new TurretSystem(ecs, game));
 		ecs.addSystem(new TowerDefenceEnemySystem(ecs, game, targetPos));
 		ecs.addSystem(new CollectCoinsSystem(ecs, game));
-		ecs.addSystem(new BulletSystem(ecs));
+		ecs.addSystem(new TowerDefenceBulletSystem(ecs));
 		ecs.addSystem(checkAltarSystem);
 		ecs.addSystem(this.towerDefencePhaseSystem);
 	}
@@ -184,7 +183,7 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		game.ecs.processSystem(TurretSystem.class);
 		game.ecs.processSystem(TowerDefenceEnemySystem.class);
 		game.ecs.processSystem(CollectCoinsSystem.class);
-		game.ecs.processSystem(BulletSystem.class);
+		game.ecs.processSystem(TowerDefenceBulletSystem.class);
 		//game.ecs.processSystem(CheckAltarSystem.class);
 		this.checkAltarSystem.process();
 		//game.ecs.processSystem(TowerDefencePhaseSystem.class);
@@ -198,7 +197,6 @@ public final class TowerDefenceLevel extends AbstractLevel {
 		if (tc != null) {
 			game.font_med.setColor(1, 1, 1, 1);
 			game.font_med.draw(batch2d, "Coins: " + tc.coins, 10, game.font_med.getLineHeight()*2);
-			//String stage = ""
 			game.font_med.draw(batch2d, "Level: " + levelNum, 10, game.font_med.getLineHeight()*3);
 		}
 	}

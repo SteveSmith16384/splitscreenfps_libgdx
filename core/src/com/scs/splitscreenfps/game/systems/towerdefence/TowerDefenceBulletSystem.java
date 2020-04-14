@@ -14,9 +14,9 @@ import com.scs.splitscreenfps.game.components.towerdefence.IsTurretComponent;
 import com.scs.splitscreenfps.game.components.towerdefence.TowerEnemyComponent;
 import com.scs.splitscreenfps.game.entities.EntityFactory;
 
-public class BulletSystem extends AbstractSystem {
+public class TowerDefenceBulletSystem extends AbstractSystem {
 
-	public BulletSystem(BasicECS ecs) {
+	public TowerDefenceBulletSystem(BasicECS ecs) {
 		super(ecs, IsBulletComponent.class);
 	}
 

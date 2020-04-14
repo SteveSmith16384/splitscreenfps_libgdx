@@ -32,6 +32,7 @@ import com.scs.splitscreenfps.game.levels.DungeonLevel;
 import com.scs.splitscreenfps.game.levels.FTLLevel;
 import com.scs.splitscreenfps.game.levels.FunnyFarmLevel;
 import com.scs.splitscreenfps.game.levels.MonsterMazeLevel;
+import com.scs.splitscreenfps.game.levels.QuantumLeagueLevel;
 import com.scs.splitscreenfps.game.levels.StartLevel;
 import com.scs.splitscreenfps.game.levels.StockCarLevel;
 import com.scs.splitscreenfps.game.levels.TowerDefenceLevel;
@@ -128,6 +129,9 @@ public class Game implements IModule {
 			break;
 		case Settings.MODE_START:
 			currentLevel = new StartLevel(this);
+			break;
+		case Settings.MODE_QUANTUM_LEAGUE:
+			currentLevel = new QuantumLeagueLevel(this);
 			break;
 		default:
 			throw new RuntimeException("Unknown mode: " + Settings.CURRENT_MODE);
