@@ -8,7 +8,7 @@ import java.util.List;
 public class BasicECS {
 
 	private HashMap<Class<?>, ISystem> systems = new HashMap<Class<?>, ISystem>();
-	private List<AbstractEntity> entities = new ArrayList<AbstractEntity>();
+	private HashMap<Integer, AbstractEntity> entities = new HashMap<Integer, AbstractEntity>();
 	private List<AbstractEntity> to_add_entities = new ArrayList<AbstractEntity>();
 	public List<AbstractEvent> events = new ArrayList<AbstractEvent>();
 	
@@ -82,10 +82,13 @@ public class BasicECS {
 	 */
 	public void addAndRemoveEntities() {
 		// Remove any entities
-		for (int i = this.entities.size()-1 ; i >= 0; i--) {
-			AbstractEntity entity = this.entities.get(i);
+		Iterator<AbstractEntity> it = this.getEntityIterator();
+		//for (int i = this.entities.size()-1 ; i >= 0; i--) {
+		while (it.hasNext()) {
+			AbstractEntity entity = it.next();// this.entities.get(i);
 			if (entity.isMarkedForRemoval()) {
-				this.entities.remove(entity);
+				//this.entities.remove(entity);
+				it.remove();
 
 				// Remove from systems
 				for(ISystem isystem : this.systems.values()) {
@@ -114,7 +117,7 @@ public class BasicECS {
 					}
 				}
 			}
-			this.entities.add(e);
+			this.entities.put(e.entityId, e);
 		}
 
 		to_add_entities.clear();
@@ -138,7 +141,7 @@ public class BasicECS {
 
 
 	public Iterator<AbstractEntity> getEntityIterator() {
-		return this.entities.iterator();
+		return this.entities.values().iterator();
 	}
 
 	
@@ -171,7 +174,7 @@ public class BasicECS {
 
 	
 	public void removeAllEntities() {
-		for(AbstractEntity e : this.entities) {
+		for(AbstractEntity e : this.entities.values()) {
 			e.remove();
 		}
 		this.to_add_entities.clear();
@@ -179,7 +182,7 @@ public class BasicECS {
 	
 	
 	public boolean containsEntity(AbstractEntity e) {
-		return this.entities.contains(e);
+		return this.entities.containsKey(e.entityId);
 	}
 
 }

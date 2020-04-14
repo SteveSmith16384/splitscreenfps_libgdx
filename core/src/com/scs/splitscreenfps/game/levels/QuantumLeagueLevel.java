@@ -29,8 +29,9 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public static Properties prop;
 
 	private List<String> instructions = new ArrayList<String>(); 
-	private QLPhaseSystem qlPhaseSystem;
+	public QLPhaseSystem qlPhaseSystem;
 	private QLRecordAndPlaySystem qlRecordAndPlaySystem;
+	private AbstractEntity[][] shadows; // Player, phase
 
 	public QuantumLeagueLevel(Game _game) {
 		super(_game);
@@ -44,6 +45,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		instructions.add("Todo");
 
+		this.shadows = new AbstractEntity[game.players.length][2];
+
 		this.qlPhaseSystem = new QLPhaseSystem(this);
 		this.qlRecordAndPlaySystem = new QLRecordAndPlaySystem(game.ecs, this);
 	}
@@ -51,8 +54,16 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	@Override
 	public void setupAvatars(AbstractEntity player, int playerIdx) {
-		player.addComponent(new IsRecordable());
 		player.addComponent(new QLPlayerData(playerIdx));
+
+		// Create shadows ready for phase
+		GridPoint2Static start = this.startPositions.get(playerIdx);
+		for (int phase=0 ; phase<2 ; phase++) {
+			AbstractEntity shadow = QuantumLeagueEntityFactory.createShadow(game.ecs, playerIdx, phase, start.x, start.y);
+			this.shadows[playerIdx][phase] = shadow;
+		}
+
+		player.addComponent(new IsRecordable("Player " + playerIdx + "_recordable", this.shadows[playerIdx][0]));
 	}
 
 
@@ -129,8 +140,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	@Override
 	public void update() {
 		game.ecs.processSystem(QLBulletSystem.class);
+		qlRecordAndPlaySystem.process(); // Must be before phase system!ddddd
 		this.qlPhaseSystem.process();
-		qlRecordAndPlaySystem.process();
 	}
 
 
@@ -146,20 +157,41 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	}
 
 
-	public void nextPhase() {
-		this.qlRecordAndPlaySystem.loadNewRecordData();
-		if (this.qlPhaseSystem.phase_num > 1) {
+	public void nextRewindPhase() {
+		// todo - remove this?
+		if (this.qlPhaseSystem.phase_num_012 > 0) {
 			for (int i=0 ; i<game.players.length ; i++) {
 				GridPoint2Static start = this.startPositions.get(i);
-				// Create shadow avatars
-				AbstractEntity shadow = QuantumLeagueEntityFactory.createShadow(game.ecs, i, start.x, start.y);
-				game.ecs.addEntity(shadow);
 
-				// Move players avatars back to start
-				PositionComponent posData = (PositionComponent)game.players[i].getComponent(PositionComponent.class);
-				posData.position.x = start.x;
-				posData.position.z = start.y;
 			}
+		}
+	}
+
+
+	public void nextGamePhase() {
+		this.qlRecordAndPlaySystem.loadNewRecordData();
+		for (int playerIdx=0 ; playerIdx<game.players.length ; playerIdx++) {
+			GridPoint2Static start = this.startPositions.get(playerIdx);
+			// Add shadow avatars to ECS
+			if (this.qlPhaseSystem.phase_num_012 > 0) {
+				AbstractEntity shadow = this.shadows[playerIdx][this.qlPhaseSystem.phase_num_012-1];
+				game.ecs.addEntity(shadow);
+			}
+
+			// Record against next shadow
+			IsRecordable isRecordable = (IsRecordable)game.players[playerIdx].getComponent(IsRecordable.class);
+			if (this.qlPhaseSystem.phase_num_012 <= 1) {
+				isRecordable.entity = this.shadows[playerIdx][this.qlPhaseSystem.phase_num_012];
+			} else {
+				isRecordable.entity = null; // No need to record any more.
+			}
+
+			//this.shadows[playerIdx][this.qlPhaseSystem.phase_num_012] = null; // Prevent re-use
+
+			// Move players avatars back to start
+			PositionComponent posData = (PositionComponent)game.players[playerIdx].getComponent(PositionComponent.class);
+			posData.position.x = start.x;
+			posData.position.z = start.y;
 		}
 	}
 

@@ -24,7 +24,8 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 
 
 	public void loadNewRecordData() {
-		this.prevPhaseRecordData = this.thisPhaseRecordData;
+		this.prevPhaseRecordData.clear();
+		this.prevPhaseRecordData.addAll(this.thisPhaseRecordData);
 		this.thisPhaseRecordData.clear();
 	}
 
@@ -36,15 +37,17 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 		super.process();
 
 		// Play from prev recording
-		if (this.prevPhaseRecordData.size() > 0) {
-			EntityRecordData next = this.prevPhaseRecordData.getFirst();
-			while (next.time < this.currentPhaseTime) {
-				next = this.prevPhaseRecordData.removeFirst();
-				moveEntity(next);
-				if (this.prevPhaseRecordData.size() == 0) {
-					break;
+		if (this.level.qlPhaseSystem.phase_num_012 > 0) {
+			if (this.prevPhaseRecordData.size() > 0) {
+				EntityRecordData next = this.prevPhaseRecordData.getFirst();
+				while (next.time < this.currentPhaseTime) {
+					next = this.prevPhaseRecordData.removeFirst();
+					moveEntity(next);
+					if (this.prevPhaseRecordData.size() == 0) {
+						break;
+					}
+					next = this.prevPhaseRecordData.getFirst();
 				}
-				next = this.prevPhaseRecordData.getFirst();
 			}
 		}
 	}
@@ -69,16 +72,18 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 	@Override
 	public void processEntity(AbstractEntity entity) {
 		if (level.isGamePhase()) {
-			IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
-			if (isRecordable.active) {
-				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
-				EntityRecordData data = new EntityRecordData();
-				data.entityId = entity.entityId;
-				data.cmd = EntityRecordData.CMD_MOVED;
-				data.time = currentPhaseTime;
-				data.position.set(posData.position);
+			if (level.qlPhaseSystem.phase_num_012 < 2) {
+				IsRecordable isRecordable = (IsRecordable)entity.getComponent(IsRecordable.class);
+				if (isRecordable.active) {
+					PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+					EntityRecordData data = new EntityRecordData();
+					data.entityId = isRecordable.entity.entityId;
+					data.cmd = EntityRecordData.CMD_MOVED;
+					data.time = currentPhaseTime;
+					data.position.set(posData.position);
 
-				this.thisPhaseRecordData.add(data);
+					this.thisPhaseRecordData.add(data);
+				}
 			}
 		}
 	}

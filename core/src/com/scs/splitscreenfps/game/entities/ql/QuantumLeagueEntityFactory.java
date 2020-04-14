@@ -16,8 +16,8 @@ import ssmith.libgdx.ModelFunctions;
 
 public class QuantumLeagueEntityFactory {
 
-	public static AbstractEntity createShadow(BasicECS ecs, int side, float x, float z) {
-		AbstractEntity e = new AbstractEntity(ecs, "Shadow");
+	public static AbstractEntity createShadow(BasicECS ecs, int side, int phase, float x, float z) {
+		AbstractEntity e = new AbstractEntity(ecs, "P" + side + "_Phase" + phase + "_Shadow");
 
 		PositionComponent pos = new PositionComponent(x+0.5f, 0, z+0.5f);
 		e.addComponent(pos);
