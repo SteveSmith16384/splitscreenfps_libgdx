@@ -32,10 +32,6 @@ public class TRexAISystem extends AbstractSystem {
 
 	@Override
 	public void processEntity(AbstractEntity entity) {
-		if (Settings.DEBUG_TREX) {
-			return;
-		}
-		
 		PositionComponent posdata = (PositionComponent)entity.getComponent(PositionComponent.class);
 		MoveAStarComponent mac = (MoveAStarComponent)entity.getComponent(MoveAStarComponent.class);
 

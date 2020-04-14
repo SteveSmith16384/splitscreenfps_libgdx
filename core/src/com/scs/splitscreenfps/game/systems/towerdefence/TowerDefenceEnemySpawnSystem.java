@@ -41,9 +41,7 @@ public class TowerDefenceEnemySpawnSystem implements ISystem {
 			if (game.isAreaEmpty(next_alien)) {
 				nextSpawnTime = System.currentTimeMillis() + 2000;//TowerDefenceLevel.prop.getProperty("spawn_interval", 3000);
 				ecs.addEntity(next_alien);
-				if (Settings.DEBUG_ALIEN_ASTAR == false) {
-					next_alien = null;
-				}
+				next_alien = null;
 			} else {
 				Settings.p("Area not empty");
 			}

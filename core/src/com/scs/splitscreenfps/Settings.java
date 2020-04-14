@@ -18,24 +18,22 @@ public class Settings {
 	public static final int MODE_TOWER_DEFENCE = 8; // Started
 	public static final int MODE_BLADE_RUNNER = 9; // Barely started
 	public static final int MODE_STOCK_CAR = 10; // Can race around track
+	public static final int MODE_QUANTUM_LEAGUE = 11; // Barely started
 	
 	public static final boolean RELEASE_MODE = new File("../../debug_mode.tmp").exists() == false;
 
-	public static int CURRENT_MODE = RELEASE_MODE ? MODE_START : MODE_START;
+	public static int CURRENT_MODE = RELEASE_MODE ? MODE_START : MODE_QUANTUM_LEAGUE;
 	public static final String VERSION = "1.01";
 	
-	// Hacks
-	public static final boolean DEBUG_TREX = !RELEASE_MODE && false;
-	public static final boolean DEBUG_ALIEN_ASTAR = !RELEASE_MODE && false;
-	public static final boolean AUTO_START = !RELEASE_MODE && false;
+	// Debugging Hacks
+	public static final boolean AUTO_START = !RELEASE_MODE && true;
 	public static final boolean START_4_PLAYERS = !RELEASE_MODE && false;
-	public static final boolean DEBUG_TAG = !RELEASE_MODE && false;
-	public static final boolean STRICT = !RELEASE_MODE && true;
-	public static final boolean TEST_MODEL = !RELEASE_MODE && false;
 	public static final boolean SMALL_MAP = !RELEASE_MODE && false;
 	public static final boolean TEST_SCREEN_COORDS = !RELEASE_MODE && false;
 	public static final boolean SHOW_FPS = !RELEASE_MODE && false;
 	
+	public static final boolean STRICT = !RELEASE_MODE && true;
+
 	public static final float MIN_AXIS = 0.2f; // Movement less than this is ignored
 	public static final float PLAYER_HEIGHT = 0.52f;
 	public static final float CAM_OFFSET = 0.14f;

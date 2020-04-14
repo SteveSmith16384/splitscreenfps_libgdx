@@ -24,10 +24,6 @@ public class TRex extends AbstractEntity {
 	public TRex(Game game, BasicECS ecs, int x, int y) {
 		super(ecs, TRex.class.getSimpleName());
 
-		if (Settings.DEBUG_TREX) {
-			Settings.p("Trex at " + x + ", " + y);
-		}
-
 		PositionComponent pos = new PositionComponent(x+0.5f, 0, y+0.5f);
 		this.addComponent(pos);
 
