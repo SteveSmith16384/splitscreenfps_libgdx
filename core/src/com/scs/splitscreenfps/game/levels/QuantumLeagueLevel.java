@@ -138,7 +138,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void addSystems(BasicECS ecs) {
 		ecs.addSystem(new QLBulletSystem(ecs));
 		ecs.addSystem(new QLShootingSystem(ecs, game, this));
-		
+
 	}
 
 
@@ -153,8 +153,11 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 	public void renderUI(SpriteBatch batch2d, int viewIndex) {
 		game.font_med.setColor(1, 1, 1, 1);
-		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.game_phase, 10, 60);
-		game.font_med.draw(batch2d, "Time: " + (int)(this.getPhaseTime() / 1000), 10, 30);
+		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.game_phase, 10, 30);
+		game.font_med.draw(batch2d, "Time: " + (int)(this.getPhaseTime() / 1000), 10, 60);
+
+		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
+		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, 90);
 	}
 
 
@@ -174,10 +177,14 @@ public class QuantumLeagueLevel extends AbstractLevel {
 			QLPlayerData playerData = (QLPlayerData)game.players[playerIdx].getComponent(QLPlayerData.class);
 			playerData.health = 100;
 			for (int phase = 0 ; phase<2 ; phase++) {
-				playerData = (QLPlayerData)this.shadows[playerIdx][this.qlPhaseSystem.phase_num_012].getComponent(QLPlayerData.class);
+				//try {
+				playerData = (QLPlayerData)this.shadows[playerIdx][phase].getComponent(QLPlayerData.class);
 				playerData.health = 100;
+				/*} catch (ArrayIndexOutOfBoundsException ex) {
+					ex.printStackTrace();
+				}*/
 			}
-			
+
 			GridPoint2Static start = this.startPositions.get(playerIdx);
 			// Add shadow avatars to ECS
 			if (this.qlPhaseSystem.phase_num_012 > 0) {

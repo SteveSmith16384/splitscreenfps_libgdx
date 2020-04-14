@@ -6,6 +6,7 @@ import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.AbstractSystem;
 import com.scs.basicecs.BasicECS;
 import com.scs.splitscreenfps.Settings;
+import com.scs.splitscreenfps.game.components.AnimatedComponent;
 import com.scs.splitscreenfps.game.components.PositionComponent;
 import com.scs.splitscreenfps.game.components.ql.IsRecordable;
 import com.scs.splitscreenfps.game.entities.ql.QuantumLeagueEntityFactory;
@@ -17,8 +18,8 @@ import com.scs.splitscreenfps.game.systems.ql.recorddata.EntityMovedRecordData;
 public class QLRecordAndPlaySystem extends AbstractSystem {
 
 	private QuantumLeagueLevel level;
-	private LinkedList<AbstractRecordData> thisPhaseRecordData = new LinkedList<AbstractRecordData>(); // todo - rename
-	private LinkedList<AbstractRecordData> prevPhaseRecordData = new LinkedList<AbstractRecordData>(); // todo - rename
+	private LinkedList<AbstractRecordData> dataBeingRecorded = new LinkedList<AbstractRecordData>();
+	private LinkedList<AbstractRecordData> dataBeingPlayedBack = new LinkedList<AbstractRecordData>();
 	private long currentPhaseTime;
 
 	public QLRecordAndPlaySystem(BasicECS _ecs, QuantumLeagueLevel _level) {
@@ -29,8 +30,8 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 
 
 	public void loadNewRecordData() {
-		this.prevPhaseRecordData.addAll(this.thisPhaseRecordData);
-		this.thisPhaseRecordData.clear();
+		this.dataBeingPlayedBack.addAll(this.dataBeingRecorded);
+		this.dataBeingRecorded.clear();
 	}
 
 
@@ -42,16 +43,16 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 
 		// Play from prev recording
 		if (this.level.qlPhaseSystem.phase_num_012 > 0) {
-			if (this.prevPhaseRecordData.size() > 0) {
-				AbstractRecordData next = this.prevPhaseRecordData.getFirst();
+			if (this.dataBeingPlayedBack.size() > 0) {
+				AbstractRecordData next = this.dataBeingPlayedBack.getFirst();
 				while (next.time < this.currentPhaseTime) {
-					next = this.prevPhaseRecordData.removeFirst();
-					thisPhaseRecordData.add(next); // Re-add ready for next time
+					next = this.dataBeingPlayedBack.removeFirst();
+					dataBeingRecorded.add(next); // Re-add ready for next time
 					processEvent(next);
-					if (this.prevPhaseRecordData.size() == 0) {
+					if (this.dataBeingPlayedBack.size() == 0) {
 						break;
 					}
-					next = this.prevPhaseRecordData.getFirst();
+					next = this.dataBeingPlayedBack.getFirst();
 				}
 			}
 		}
@@ -64,6 +65,12 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 			if (ecs.containsEntity(data.entityId)) {
 				AbstractEntity entity = ecs.get(data.entityId);
 				PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
+				AnimatedComponent anim = (AnimatedComponent)entity.getComponent(AnimatedComponent.class);
+				if (posData.position.equals(data.position)) {
+					anim.next_animation = anim.walk_anim_name;
+				} else {
+					anim.next_animation = anim.idle_anim_name;
+				}
 				posData.position.set(data.position);
 				posData.angle_degs = data.direction;
 			} else {
@@ -93,7 +100,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 				if (isRecordable.active) {
 					PositionComponent posData = (PositionComponent)entity.getComponent(PositionComponent.class);
 					EntityMovedRecordData data = new EntityMovedRecordData(isRecordable.entity.entityId, currentPhaseTime, posData.position, posData.angle_degs);
-					this.thisPhaseRecordData.add(data);
+					this.dataBeingRecorded.add(data);
 				}
 			}
 		}
@@ -101,7 +108,7 @@ public class QLRecordAndPlaySystem extends AbstractSystem {
 
 
 	public void addEvent(AbstractRecordData data) {
-		this.thisPhaseRecordData.add(data);
+		this.dataBeingRecorded.add(data);
 	}
 
 }

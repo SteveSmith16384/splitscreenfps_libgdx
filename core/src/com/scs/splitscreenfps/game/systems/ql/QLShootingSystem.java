@@ -45,7 +45,7 @@ public class QLShootingSystem extends AbstractSystem {
 		AbstractPlayersAvatar player = (AbstractPlayersAvatar)entity;
 
 		if (isShootPressed(player.inputMethod)) {
-			Settings.p("Shot!");
+			//Settings.p("Shot!");
 			
 			cc.lastShotTime = System.currentTimeMillis();
 

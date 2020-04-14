@@ -44,7 +44,7 @@ public class QLBulletSystem extends AbstractSystem {
 					QLPlayerData playerData = (QLPlayerData)ents[1].getComponent(QLPlayerData.class);
 					if (playerData.side != bullet.side) {
 						ents[0].remove();
-						playerData.health -= 10;
+						playerData.health -= 50;
 
 						AbstractEntity expl = EntityFactory.createNormalExplosion(ecs, pos.position);
 						ecs.addEntity(expl);
