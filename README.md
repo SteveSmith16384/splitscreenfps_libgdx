@@ -1,7 +1,7 @@
 # Split-Screen FPS Games
 A 1-4 player split-screen multiplayer games.
 
-Gameplay video: https://twitter.com/stephencsmith
+Gameplay video: https://www.youtube.com/watch?v=7QjTzDJY9y0
 
 This codebase contains various game modes that all use the same framework.  When the game starts, you will begin in the "overworld".  To start a particular game mode, walk into the area that denotes that mode. 
 
