@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.scs.basicecs.AbstractEntity;
 import com.scs.basicecs.BasicECS;
@@ -23,6 +24,7 @@ import com.scs.splitscreenfps.game.systems.ql.QLBulletSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLPhaseSystem;
 import com.scs.splitscreenfps.game.systems.ql.QLRecordAndPlaySystem;
 import com.scs.splitscreenfps.game.systems.ql.QLShootingSystem;
+import com.scs.splitscreenfps.game.systems.tag.TagSystem;
 
 import ssmith.libgdx.GridPoint2Static;
 
@@ -34,6 +36,7 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public QLPhaseSystem qlPhaseSystem;
 	public QLRecordAndPlaySystem qlRecordAndPlaySystem;
 	private AbstractEntity[][] shadows; // Player, phase
+	private Texture white_box;
 
 	public QuantumLeagueLevel(Game _game) {
 		super(_game);
@@ -51,6 +54,8 @@ public class QuantumLeagueLevel extends AbstractLevel {
 
 		this.qlPhaseSystem = new QLPhaseSystem(this);
 		this.qlRecordAndPlaySystem = new QLRecordAndPlaySystem(game.ecs, this);
+
+		white_box = new Texture(Gdx.files.internal("shared/white.png"));
 	}
 
 
@@ -146,17 +151,24 @@ public class QuantumLeagueLevel extends AbstractLevel {
 	public void update() {
 		game.ecs.processSystem(QLBulletSystem.class);
 		game.ecs.processSystem(QLShootingSystem.class);
-		qlRecordAndPlaySystem.process(); // Must be before phase system!ddddd
+		qlRecordAndPlaySystem.process(); // Must be before phase system!
 		this.qlPhaseSystem.process();
 	}
 
 
 	public void renderUI(SpriteBatch batch2d, int viewIndex) {
+		// Draw faded if de-syncd
+		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
+		if (playerData.health < 0) {
+			batch2d.setColor(1, 1, 1, 0.3f);
+			batch2d.draw(white_box, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			batch2d.setColor(1, 1, 1, 1f);
+		}
+
 		game.font_med.setColor(1, 1, 1, 1);
 		game.font_med.draw(batch2d, "In-Game?: " + this.qlPhaseSystem.game_phase, 10, 30);
 		game.font_med.draw(batch2d, "Time: " + (int)(this.getPhaseTime() / 1000), 10, 60);
 
-		QLPlayerData playerData = (QLPlayerData)game.players[viewIndex].getComponent(QLPlayerData.class);
 		game.font_med.draw(batch2d, "Health: " + (int)(playerData.health), 10, 90);
 	}
 

@@ -73,6 +73,7 @@ This project uses the MIT licence.  See LICENCE.txt.
 * Alien by Quaternius
 * Spaceship furniture by Kenney (www.kenney.nl)
 * Battery by [TODO]
+* Fire from https://opengameart.org/content/animated-fireball
 
 #### Tower Defence
 * Models by Kenney - https://kenney.nl/assets/tower-defense-kit
